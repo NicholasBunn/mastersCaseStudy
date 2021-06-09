@@ -1,0 +1,4 @@
+# Default ignored files
+certification/*.pem
+certification/*.srl
+*.pyc
