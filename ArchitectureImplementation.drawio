@@ -1,0 +1,319 @@
+<mxfile>
+    <diagram id="dsrl2bsn8HHQjmTc-GfR" name="Page-1">
+        <mxGraphModel dx="2766" dy="771" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="320" y="90" width="460" height="390" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="470" y="200" width="160" height="230" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-670" y="670" width="280" height="350" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-670" y="780" width="140" height="190" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-530" y="780" width="140" height="190" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="&lt;b&gt;Vessel Motion Estimation Service (Keith)&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="-610" y="670" width="160" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="Motion estimate (foresight)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-670" y="720" width="90" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="Motion tracking (insight)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-580" y="720" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="Motion estimate evaluation (hindsight)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-480" y="720" width="90" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" value="Inputs" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="-620" y="780" width="40" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" value="&lt;ul style=&quot;font-size: 11px&quot;&gt;&lt;li&gt;&lt;font color=&quot;#ff0000&quot;&gt;Port prop motor power&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font color=&quot;#00ff00&quot;&gt;Rel. wind speed&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font color=&quot;#00ff00&quot;&gt;Rel. wind dir.&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font color=&quot;#ffff00&quot;&gt;Latitude&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font color=&quot;#ffff00&quot;&gt;Heading (COG)&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font color=&quot;#00ff00&quot;&gt;Wave Height&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font color=&quot;#ffff00&quot;&gt;Location on ship&lt;/font&gt;&lt;/li&gt;&lt;/ul&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="-670" y="800" width="140" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" value="Outputs" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="-480" y="780" width="40" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="14" value="&lt;ul&gt;&lt;li&gt;&lt;font style=&quot;font-size: 11px&quot; color=&quot;#00ffff&quot;&gt;(High frequency) Acceleration estimate at a location&lt;/font&gt;&lt;/li&gt;&lt;/ul&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="-530" y="800" width="140" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="15" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-310" y="670" width="460" height="390" as="geometry"/>
+                </mxCell>
+                <mxCell id="16" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-310" y="780" width="230" height="230" as="geometry"/>
+                </mxCell>
+                <mxCell id="17" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-80" y="780" width="230" height="230" as="geometry"/>
+                </mxCell>
+                <mxCell id="18" value="&lt;b&gt;Power-Train Estimation Service (Gerhard)&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="-160" y="670" width="160" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="19" value="Power estimate (foresight)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-310" y="720" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="20" value="Power tracking&amp;nbsp;(insight)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-80" y="720" width="110" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="21" value="Power estimate evaluation (hindsight)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="30" y="720" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="22" value="Inputs" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="-215" y="780" width="40" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="23" value="&lt;ul style=&quot;font-size: 11px&quot;&gt;&lt;li&gt;&lt;font color=&quot;#ffff00&quot;&gt;Port prop motor speed&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font color=&quot;#ffff00&quot;&gt;Stbd prop motor speed&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font color=&quot;#ffff00&quot;&gt;Port prop motor pitch&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font color=&quot;#ffff00&quot;&gt;Stbd prop Motor Pitch&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font color=&quot;#ffff00&quot;&gt;SOG&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font color=&quot;#00ff00&quot;&gt;Rel. wind dir.&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font color=&quot;#00ff00&quot;&gt;Wind speed&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font color=&quot;#00ff00&quot;&gt;Beaufort number&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font color=&quot;#00ff00&quot;&gt;Wave dir&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font color=&quot;#00ff00&quot;&gt;Wave length&lt;/font&gt;&lt;/li&gt;&lt;/ul&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="-310" y="800" width="230" height="190" as="geometry"/>
+                </mxCell>
+                <mxCell id="24" value="Outputs" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="15" y="780" width="40" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="25" value="&lt;ul&gt;&lt;li&gt;&lt;span style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#ff0000&quot;&gt;Motor power estimate&lt;/font&gt;&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#ff0000&quot;&gt;Cost Estimate&lt;/font&gt;&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="-80" y="800" width="230" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="26" value="Cost estimate (foresight)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-190" y="720" width="110" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="27" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="230" y="670" width="280" height="350" as="geometry"/>
+                </mxCell>
+                <mxCell id="28" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="230" y="780" width="140" height="190" as="geometry"/>
+                </mxCell>
+                <mxCell id="29" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="370" y="780" width="140" height="190" as="geometry"/>
+                </mxCell>
+                <mxCell id="30" value="&lt;b&gt;Wave Information Service&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="290" y="670" width="160" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="31" value="Wave estimate (foresight)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="230" y="720" width="90" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="32" value="Wave tracking&amp;nbsp;(insight)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="320" y="720" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="33" value="Historical wave analysis (hindsight)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="420" y="720" width="90" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="34" value="Inputs" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="280" y="780" width="40" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="35" value="&lt;ul style=&quot;font-size: 11px&quot;&gt;&lt;li&gt;&lt;font color=&quot;#ffff00&quot;&gt;Latitude&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font color=&quot;#ffff00&quot;&gt;Longitude&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font color=&quot;#ffff00&quot;&gt;Time&lt;/font&gt;&lt;/li&gt;&lt;/ul&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="230" y="800" width="140" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="36" value="Outputs" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="420" y="780" width="40" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="37" value="&lt;ul&gt;&lt;li&gt;&lt;span style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#00ff00&quot;&gt;Wind dir.&lt;/font&gt;&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#00ff00&quot;&gt;Wind speed&lt;/font&gt;&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#00ff00&quot;&gt;(Beaufort number)&lt;/font&gt;&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#00ff00&quot;&gt;Wave dir.&lt;/font&gt;&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#00ff00&quot;&gt;Wave length&lt;/font&gt;&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#00ff00&quot;&gt;Wave height&lt;/font&gt;&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#00ff00&quot;&gt;Wave frequency&lt;/font&gt;&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#00ff00&quot;&gt;Wave period&lt;/font&gt;&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="370" y="800" width="140" height="170" as="geometry"/>
+                </mxCell>
+                <mxCell id="38" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="590" y="670" width="280" height="350" as="geometry"/>
+                </mxCell>
+                <mxCell id="39" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="590" y="780" width="140" height="190" as="geometry"/>
+                </mxCell>
+                <mxCell id="40" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="730" y="780" width="140" height="190" as="geometry"/>
+                </mxCell>
+                <mxCell id="41" value="&lt;b&gt;Rigid Body Motion Service (Alex)&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="650" y="670" width="160" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="42" value="Pitch tracking (insight)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="590" y="720" width="70" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="43" value="Historical RMB analysis (hindsight)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="800" y="720" width="70" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="44" value="Inputs" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="640" y="780" width="40" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="45" value="&lt;ul style=&quot;font-size: 11px&quot;&gt;&lt;li&gt;&lt;font color=&quot;#00ff00&quot;&gt;Wave frequency&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font color=&quot;#ffff00&quot;&gt;SOG&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font color=&quot;#ffff00&quot;&gt;COG (indicent angle of waves)&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font color=&quot;#ffff00&quot;&gt;Draft&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font color=&quot;#00ff00&quot;&gt;Wave height&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font color=&quot;#00ff00&quot;&gt;Wave period&lt;/font&gt;&lt;/li&gt;&lt;/ul&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="590" y="800" width="140" height="170" as="geometry"/>
+                </mxCell>
+                <mxCell id="46" value="Outputs" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="780" y="780" width="40" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="47" value="&lt;ul&gt;&lt;li&gt;&lt;span style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#ff8000&quot;&gt;(Low freqency) Acceleration estimate&lt;/font&gt;&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="730" y="800" width="140" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="48" value="Heave tracking (insight)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="660" y="720" width="70" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="49" value="Roll tracking (insight)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="730" y="720" width="70" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="50" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="950" y="670" width="280" height="250" as="geometry"/>
+                </mxCell>
+                <mxCell id="51" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="950" y="780" width="140" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="52" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="1090" y="780" width="140" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="53" value="&lt;b&gt;MSDV Service (Nicole)&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="1010" y="670" width="160" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="54" value="MSDV tracking (insight)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="950" y="720" width="140" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="55" value="Historical MSDV analysis (hindsight)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="1090" y="720" width="140" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="56" value="Inputs" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="1000" y="780" width="40" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="57" value="&lt;ul style=&quot;font-size: 11px&quot;&gt;&lt;li&gt;&lt;font color=&quot;#ffff00&quot;&gt;Location on ship&lt;/font&gt;&lt;/li&gt;&lt;li&gt;(Sample rate)&lt;/li&gt;&lt;li&gt;&lt;font color=&quot;#ff8000&quot;&gt;(Low frequency) Acceleration&lt;/font&gt;&lt;/li&gt;&lt;/ul&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="950" y="800" width="140" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="58" value="Outputs" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="1140" y="780" width="40" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="59" value="&lt;ul&gt;&lt;li&gt;&lt;span style=&quot;font-size: 11px&quot;&gt;&lt;font color=&quot;#ff00ff&quot;&gt;MSDV&lt;/font&gt;&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="1090" y="800" width="140" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="60" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="1310" y="670" width="280" height="250" as="geometry"/>
+                </mxCell>
+                <mxCell id="61" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="1310" y="780" width="140" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="62" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="1450" y="780" width="140" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="63" value="&lt;b&gt;Propeller Monitoring Service (Brendon)&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="1370" y="670" width="160" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="64" value="Propellor monitoring service (insight)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="1310" y="720" width="280" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="65" value="Inputs" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="1360" y="780" width="40" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="66" value="&lt;ul style=&quot;font-size: 11px&quot;&gt;&lt;li&gt;Shaft torque&lt;/li&gt;&lt;li&gt;Angular velocity&lt;/li&gt;&lt;/ul&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="1310" y="800" width="140" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="67" value="Outputs" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="1500" y="780" width="40" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="68" value="&lt;ul&gt;&lt;li&gt;&lt;span style=&quot;font-size: 11px&quot;&gt;Induced propeller moment&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="1450" y="800" width="140" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="69" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-220" y="90" width="460" height="390" as="geometry"/>
+                </mxCell>
+                <mxCell id="70" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-220" y="200" width="150" height="230" as="geometry"/>
+                </mxCell>
+                <mxCell id="71" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="90" y="200" width="150" height="230" as="geometry"/>
+                </mxCell>
+                <mxCell id="72" value="&lt;b&gt;Route Information Aggregator&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="-70" y="90" width="160" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="73" value="Route analyser (foresight)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-220" y="140" width="150" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="74" value="Historical route analysis (hindsight)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="90" y="140" width="150" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="75" value="Inputs" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="-125" y="200" width="40" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="76" value="&lt;ul style=&quot;font-size: 11px&quot;&gt;&lt;li&gt;&lt;font color=&quot;#ffff00&quot;&gt;Latitude&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font color=&quot;#ffff00&quot;&gt;Longitude&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font color=&quot;#ffff00&quot;&gt;Assosciated time&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font color=&quot;#ffff00&quot;&gt;Heading (COG)&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font color=&quot;#ffff00&quot;&gt;(Parameter preference)&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font color=&quot;#ffff00&quot;&gt;Propellor pitch&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font color=&quot;#ffff00&quot;&gt;Motor speed&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font color=&quot;#ffff00&quot;&gt;Planned SOG&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font color=&quot;#ffff00&quot;&gt;Location on ship&lt;/font&gt;&lt;/li&gt;&lt;/ul&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="-220" y="220" width="150" height="210" as="geometry"/>
+                </mxCell>
+                <mxCell id="77" value="Outputs" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="140" y="200" width="40" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="78" value="&lt;ul&gt;&lt;li&gt;&lt;br&gt;&lt;/li&gt;&lt;/ul&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="10" y="220" width="230" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="79" value="Route comparison (foresight)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-70" y="140" width="160" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="80" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="320" y="200" width="150" height="230" as="geometry"/>
+                </mxCell>
+                <mxCell id="81" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="630" y="200" width="150" height="230" as="geometry"/>
+                </mxCell>
+                <mxCell id="82" value="&lt;b&gt;Comfort Monitor Aggregator&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="470" y="90" width="160" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="83" value="Route analyser (foresight)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="320" y="140" width="150" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="84" value="Historical route analysis (hindsight)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="630" y="140" width="150" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="85" value="Inputs" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="375" y="200" width="40" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="86" value="&lt;ul style=&quot;font-size: 11px&quot;&gt;&lt;li&gt;&lt;span style=&quot;color: rgb(255 , 255 , 0)&quot;&gt;Latitude&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;color: rgb(255 , 255 , 0)&quot;&gt;Heading (COG)&lt;/span&gt;&lt;br&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;color: rgb(255 , 255 , 0)&quot;&gt;Planned SOG&lt;/span&gt;&lt;br&gt;&lt;/li&gt;&lt;li&gt;&lt;font color=&quot;#ffff00&quot;&gt;Location on ship&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font color=&quot;#ffff00&quot;&gt;Draft&lt;/font&gt;&lt;/li&gt;&lt;/ul&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="320" y="220" width="230" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="87" value="Outputs" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="675" y="200" width="40" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="88" value="Route comparison (foresight)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="470" y="140" width="160" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="89" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-70" y="200" width="160" height="230" as="geometry"/>
+                </mxCell>
+                <mxCell id="90" value="Call order" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="-15" y="200" width="40" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="91" value="&lt;ol&gt;&lt;li&gt;Wave Forecast Service&lt;/li&gt;&lt;li&gt;Power-Train Estimation Service&lt;/li&gt;&lt;li&gt;Vessel Motion Estimation Service&lt;/li&gt;&lt;li&gt;Vibration comfort service????&lt;/li&gt;&lt;/ol&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="-70" y="220" width="160" height="210" as="geometry"/>
+                </mxCell>
+                <mxCell id="92" value="Call order" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="525" y="200" width="40" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="93" value="&lt;ol&gt;&lt;li&gt;Wave Forecast Service&lt;/li&gt;&lt;li&gt;Power-Train Estimation Service | Rigid Body Motion Service&lt;/li&gt;&lt;li&gt;Vessel Motion Estimation Service | MSDV Service&lt;/li&gt;&lt;li&gt;Vibration comfort service????&lt;/li&gt;&lt;/ol&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="470" y="220" width="160" height="210" as="geometry"/>
+                </mxCell>
+                <mxCell id="94" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-1030" y="670" width="280" height="350" as="geometry"/>
+                </mxCell>
+                <mxCell id="95" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-1030" y="780" width="140" height="190" as="geometry"/>
+                </mxCell>
+                <mxCell id="96" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-890" y="780" width="140" height="190" as="geometry"/>
+                </mxCell>
+                <mxCell id="97" value="&lt;b&gt;VDV Service (Keith)&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="-970" y="670" width="160" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="98" value="Comfort sstimation (foresight)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-1030" y="720" width="90" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="99" value="Comfort tracking (insight)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-940" y="720" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="100" value="Comfort estimate evaluation (hindsight)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-840" y="720" width="90" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="101" value="Inputs" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="-980" y="780" width="40" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="102" value="&lt;ul style=&quot;font-size: 11px&quot;&gt;&lt;li&gt;&lt;font color=&quot;#00ffff&quot;&gt;(High frequency) Acceleration&lt;/font&gt;&lt;/li&gt;&lt;/ul&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="-1030" y="800" width="140" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="103" value="Outputs" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="-840" y="780" width="40" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="104" value="&lt;ul&gt;&lt;li&gt;&lt;font style=&quot;font-size: 11px&quot; color=&quot;#ffffff&quot;&gt;Health guidance caution zones? (Annex B of ISO 2631-1&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font style=&quot;font-size: 11px&quot; color=&quot;#ffffff&quot;&gt;Comfort classification (Annex C of ISO2631-1&lt;/font&gt;&lt;/li&gt;&lt;/ul&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="-890" y="805" width="140" height="115" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
