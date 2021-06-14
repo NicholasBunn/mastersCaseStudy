@@ -1,13 +1,17 @@
 # Make commands relating to proto files
 protoGenGo:
+	# Wave service
+	protoc --go_out=. --go-grpc_out=. apis/waveServiceAPI/v1/waveServiceAPI_v1.proto
 
 protoGenPy:
+	# Wave service
+	python3 -m grpc_tools.protoc -I=apis/waveServiceAPI/v1 --python_out=apis/waveServiceAPI/v1/python  --grpc_python_out=apis/waveServiceAPI/v1/python apis/waveServiceAPI/v1/waveServiceAPI_v1.proto
 
 protoGenAll:
+	make protoGenGo; make protoGenPy
 
 protoCleanGo:
 	find . -type f -name '*.pb.go' -delete
-
 
 protoCleanPy:
 	find . -type f -name '*_grpc.py' -delete
@@ -31,6 +35,9 @@ testGo:
 testPy:
 
 # Make commands relating to running the program
+runWaveService:
+	python3 /home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/waveService/waveService.py
+	
 runPrometheus:
 
 runPushGateway:
