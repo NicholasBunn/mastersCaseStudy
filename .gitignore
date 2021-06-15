@@ -4,3 +4,4 @@ certification/*.srl
 *.pyc
 *.log
 configuration.yaml
+apiQueryTest.py
