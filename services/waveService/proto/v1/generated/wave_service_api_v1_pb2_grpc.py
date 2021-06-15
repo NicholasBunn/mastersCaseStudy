@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import waveServiceAPI_v1_pb2 as waveServiceAPI__v1__pb2
+from . import wave_service_api_v1_pb2 as wave__service__api__v1__pb2
 
 
 class WaveServiceStub(object):
@@ -17,13 +17,13 @@ class WaveServiceStub(object):
         """
         self.WaveEstimate = channel.unary_unary(
                 '/waveServiceAPI.v1.WaveService/WaveEstimate',
-                request_serializer=waveServiceAPI__v1__pb2.WaveInformationRequest.SerializeToString,
-                response_deserializer=waveServiceAPI__v1__pb2.WaveInformationResponse.FromString,
+                request_serializer=wave__service__api__v1__pb2.WaveInformationRequest.SerializeToString,
+                response_deserializer=wave__service__api__v1__pb2.WaveInformationResponse.FromString,
                 )
         self.WaveHistory = channel.unary_unary(
                 '/waveServiceAPI.v1.WaveService/WaveHistory',
-                request_serializer=waveServiceAPI__v1__pb2.WaveInformationRequest.SerializeToString,
-                response_deserializer=waveServiceAPI__v1__pb2.WaveInformationResponse.FromString,
+                request_serializer=wave__service__api__v1__pb2.WaveInformationRequest.SerializeToString,
+                response_deserializer=wave__service__api__v1__pb2.WaveInformationResponse.FromString,
                 )
 
 
@@ -50,13 +50,13 @@ def add_WaveServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'WaveEstimate': grpc.unary_unary_rpc_method_handler(
                     servicer.WaveEstimate,
-                    request_deserializer=waveServiceAPI__v1__pb2.WaveInformationRequest.FromString,
-                    response_serializer=waveServiceAPI__v1__pb2.WaveInformationResponse.SerializeToString,
+                    request_deserializer=wave__service__api__v1__pb2.WaveInformationRequest.FromString,
+                    response_serializer=wave__service__api__v1__pb2.WaveInformationResponse.SerializeToString,
             ),
             'WaveHistory': grpc.unary_unary_rpc_method_handler(
                     servicer.WaveHistory,
-                    request_deserializer=waveServiceAPI__v1__pb2.WaveInformationRequest.FromString,
-                    response_serializer=waveServiceAPI__v1__pb2.WaveInformationResponse.SerializeToString,
+                    request_deserializer=wave__service__api__v1__pb2.WaveInformationRequest.FromString,
+                    response_serializer=wave__service__api__v1__pb2.WaveInformationResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -81,8 +81,8 @@ class WaveService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/waveServiceAPI.v1.WaveService/WaveEstimate',
-            waveServiceAPI__v1__pb2.WaveInformationRequest.SerializeToString,
-            waveServiceAPI__v1__pb2.WaveInformationResponse.FromString,
+            wave__service__api__v1__pb2.WaveInformationRequest.SerializeToString,
+            wave__service__api__v1__pb2.WaveInformationResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -98,7 +98,7 @@ class WaveService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/waveServiceAPI.v1.WaveService/WaveHistory',
-            waveServiceAPI__v1__pb2.WaveInformationRequest.SerializeToString,
-            waveServiceAPI__v1__pb2.WaveInformationResponse.FromString,
+            wave__service__api__v1__pb2.WaveInformationRequest.SerializeToString,
+            wave__service__api__v1__pb2.WaveInformationResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

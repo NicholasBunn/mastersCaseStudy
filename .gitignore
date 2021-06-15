@@ -2,3 +2,5 @@
 certification/*.pem
 certification/*.srl
 *.pyc
+*.log
+configuration.yaml
