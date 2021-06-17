@@ -11,6 +11,7 @@ import yaml
 # Local application imports
 import waveService
 
+# ToDo: Use mock tests (from unittest.mock import patch) to run these tests so that they are not reliant on Stormglass's servers or an internet connection.
 def loadConfigFile(filepath):
 	with open(os.path.join(sys.path[0], filepath), "r") as f:
 		config = yaml.safe_load(f)
@@ -19,14 +20,30 @@ def loadConfigFile(filepath):
 
 class TestWaveService(unittest.TestCase):
 	config = loadConfigFile("configuration.yaml")
-	# TODO: Choose relevant points and time
-	testLat = 58.7984
-	testLong = 17.8081
-	startTimeUnix = time.mktime(datetime.strptime("22:00:03 21 December 2020", "%H:%M:%S %d %B %Y").timetuple())
+
+	def setUp(self):
+		''' This function sets up variables for the tests to use. It runs at the beginning of each test function
+		'''
+
+		print("Wave Service Test Setup")
+		# TODO: Choose relevant points and time
+		self.testLat = 58.7984
+		self.testLong = 17.8081
+		self.startTimeUnix = time.mktime(datetime.strptime("22:00:03 21 December 2020", "%H:%M:%S %d %B %Y").timetuple())
+
+	def tearDown(self):
+		''' This function tears down variables that the tests use. It runs at the end of each test function
+		'''
+
+		print("Wave Service Test Teardown")
+		pass
 
 	def test_queryWaveAPI(self):
 		''' This tests for a succesful API call. This test should pass as long as the historical wave data and the API's response (JSON structure) remain unchanged.
 		'''		
+
+		print("Wave Service Query Wave API Test")
+
 		jsonWaveData = waveService.queryWaveAPI(self.testLat, self.testLong, self.startTimeUnix, self.config["authentication"]["stormglass"]["apiKey"])
 
 		# This is just here while we're working with a limited number of API queries
@@ -42,20 +59,21 @@ class TestWaveService(unittest.TestCase):
 	def test_invalidAPIKey(self):
 		''' This tests the error handling of an invalid API key.
 		'''
-		errorResponse = waveService.queryWaveAPI(self.testLat, self.testLong, self.startTimeUnix, "Wrong API key")
 
-		self.assertEqual(errorResponse, "HTTP Error 403: Provided API key does not authenticate the request.")
+		print("Wave Service Invalid API Key Test")
+
+		with self.assertRaises(Exception):
+			waveService.queryWaveAPI(self.testLat, self.testLong, self.startTimeUnix, "Wrong API key")
 
 	def test_invalidAPIRequest(self):
 		''' This tests the error handling of an invalid API request for the case where the provided latitude, longitude, or unixTime variables are of the incorrect type.
 		'''
-		errorResponseLatLong = waveService.queryWaveAPI("Lets give it a string", "Here's another string for fun", self.startTimeUnix, self.config["authentication"]["stormglass"]["apiKey"])
-		errorResponseUnixTime = waveService.queryWaveAPI(self.testLat, self.testLong, "Incorrect data type",  self.config["authentication"]["stormglass"]["apiKey"])
 
-		self.assertEqual(errorResponseLatLong, "HTTP Error 422: Server can't process request (Most likely because of incorrect lat/long type.)")
-		self.assertEqual(errorResponseUnixTime, "Requested time is not of the correct type (should be float).")
-
-
+		print("Wave Service Invalid API Request Test")
+		
+		with self.assertRaises(ValueError):
+			waveService.queryWaveAPI("Lets give it a string", "Here's another string for fun", self.startTimeUnix, self.config["authentication"]["stormglass"]["apiKey"])
+			waveService.queryWaveAPI(self.testLat, self.testLong, "Incorrect data type",  self.config["authentication"]["stormglass"]["apiKey"])
 
 if __name__ == '__main__':
 	unittest.main()

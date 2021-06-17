@@ -25,7 +25,7 @@ def queryWaveAPI(latitude, longitude, unixTime, apiKey):
     	
 	# Check if the provided unixTime is a float (the request can't be built if it isn't as the end parameter is a concatenation of this input)
 	if (type(unixTime) != float):
-		return "Requested time is not of the correct type (should be float)."
+		raise ValueError("Requested time is not of the correct type (should be float).")
 
 	try:
 		response = requests.get(
@@ -45,23 +45,23 @@ def queryWaveAPI(latitude, longitude, unixTime, apiKey):
 		response.raise_for_status()
 	except requests.HTTPError as exception:
 		if (exception.response.status_code == 400):
-			return f"HTTP Error {exception.response.status_code}: Invalid request."
+			raise Exception(f"HTTP Error {exception.response.status_code}: Invalid request.")
 		elif (exception.response.status_code == 401):
-			return f"HTTP Error {exception.response.status_code}: Missing authentication credentials (Most likely that API key has not been provided)."
+			raise Exception(f"HTTP Error {exception.response.status_code}: Missing authentication credentials (Most likely that API key has not been provided).")
 		elif (exception.response.status_code == 402):
-			return f"HTTP Error {exception.response.status_code}: You've reached the daily limit of your trial API, Stormglass wants you to pay to increase the daily request limit."
+			raise Exception(f"HTTP Error {exception.response.status_code}: You've reached the daily limit of your trial API, Stormglass wants you to pay to increase the daily request limit.")
 		elif (exception.response.status_code == 403):
-			return f"HTTP Error {exception.response.status_code}: Provided API key does not authenticate the request."
+			raise Exception( f"HTTP Error {exception.response.status_code}: Provided API key does not authenticate the request.")
 		elif (exception.response.status_code == 422):
-			return f"HTTP Error {exception.response.status_code}: Server can't process request (Most likely because of incorrect lat/long type.)"
+			raise ValueError(f"HTTP Error {exception.response.status_code}: Server can't process request (Most likely because of incorrect lat/long type.)")
 		elif (exception.response.status_code == 429):
-			return f"HTTP Error {exception.response.status_code}: You have exhausted your daily API query limit."
+			raise Exception(f"HTTP Error {exception.response.status_code}: You have exhausted your daily API query limit.")
 		elif (exception.response.status_code == 500):
-			return f"HTTP Error {exception.response.status_code}: There was an error on Stormglass's side, not much we can until they fix it."
+			raise Exception(f"HTTP Error {exception.response.status_code}: There was an error on Stormglass's side, not much we can until they fix it.")
 		elif (exception.response.status_code == 503):
-			return f"HTTP Error {exception.response.status_code}: Stormglass's servers are down for maintenance, we'll have to wait this one out."
+			raise Exception(f"HTTP Error {exception.response.status_code}: Stormglass's servers are down for maintenance, we'll have to wait this one out.")
 		else:
-			return exception
+			raise Exception(exception)
 	except requests.ConnectionError:
 		raise ConnectionError("Failed to connect to Stormglass.")
 	except requests.Timeout:
@@ -93,55 +93,52 @@ class WaveServiceServicer(wave_service_api_v1_pb2_grpc.WaveServiceServicer):
 		# Create response message
 		responseMessage = wave_service_api_v1_pb2.WaveInformationResponse()
 
-		testLat = 58.7984 # Extract this from request
-		testLong = 17.8081 # Extract this from request
+		# Iterate through all the requested points, fetching the weather data for each. This approach uses one query per point of interest (not particularly efficient)
+		for testLat, testLong, startTimeUnix in zip(request.latitude, request.longitude, request.timestamp):
+			try:
+				# Query Stormglass API
+				jsonWaveData = queryWaveAPI(testLat, testLong, startTimeUnix, config["authentication"]["stormglass"]["apiKey"])
 
-		startDate = "22:00:03 21 December 2020"
-		startTime = datetime.strptime(startDate, "%H:%M:%S %d %B %Y")
-		startTimeUnix = time.mktime(startTime.timetuple())  # Extract this from request
-		try:
-			jsonWaveData = queryWaveAPI(testLat, testLong, startTimeUnix, config["authentication"]["stormglass"]["apiKey"])
-		except Exception as e:
-			logger.debug(f"Failed to query Stormglass API: \n{e}")
-			context.set_code(grpc.StatusCode.INTERNAL)
-			# context.set_details("bla bla")
-			raise e
+				# Populate response message  
+				responseMessage.wind_direction.append(jsonWaveData["windDirection"]["icon"])
+				responseMessage.wind_speed.append(jsonWaveData["windSpeed"]["icon"])
+				responseMessage.wave_direction.append(jsonWaveData["swellDirection"]["icon"])
+				responseMessage.wave_height.append(jsonWaveData["swellHeight"]["icon"])
+				responseMessage.wave_frequency.append(1/jsonWaveData["swellPeriod"]["icon"])
+				responseMessage.wave_period.append(jsonWaveData["swellPeriod"]["icon"])
 
-		# Populate response message  
-		responseMessage.wind_direction = jsonWaveData["windDirection"]["icon"]
-		responseMessage.wind_speed = jsonWaveData["windSpeed"]["icon"]
-		responseMessage.wave_direction = jsonWaveData["swellDirection"]["icon"]
-		responseMessage.wave_height = jsonWaveData["swellHeight"]["icon"]
-		responseMessage.wave_frequency = 1/jsonWaveData["swellPeriod"]["icon"]
-		responseMessage.wave_period = jsonWaveData["swellPeriod"]["icon"]
-		# responseMessage.wave_length = 
-		# Set the beaufort number based on the wind speed
-		if(jsonWaveData["windSpeed"]["icon"] < 0.5):
-			responseMessage.beaufort_number = 0
-		elif(jsonWaveData["windSpeed"]["icon"] < 1.5):
-			responseMessage.beaufort_number = 1
-		elif(jsonWaveData["windSpeed"]["icon"] < 3.3):
-			responseMessage.beaufort_number = 2
-		elif(jsonWaveData["windSpeed"]["icon"] < 5.5):
-			responseMessage.beaufort_number = 3
-		elif(jsonWaveData["windSpeed"]["icon"] < 7.9):
-			responseMessage.beaufort_number = 4
-		elif(jsonWaveData["windSpeed"]["icon"] < 10.7):
-			responseMessage.beaufort_number = 5
-		elif(jsonWaveData["windSpeed"]["icon"] < 13.8):
-			responseMessage.beaufort_number = 6
-		elif(jsonWaveData["windSpeed"]["icon"] < 17.1):
-			responseMessage.beaufort_number = 7
-		elif(jsonWaveData["windSpeed"]["icon"] < 20.7):
-			responseMessage.beaufort_number = 8
-		elif(jsonWaveData["windSpeed"]["icon"] < 24.4):
-			responseMessage.beaufort_number = 9
-		elif(jsonWaveData["windSpeed"]["icon"] < 28.4):
-			responseMessage.beaufort_number = 10
-		elif(jsonWaveData["windSpeed"]["icon"] < 32.6):
-			responseMessage.beaufort_number = 11
-		else:
-			responseMessage.beaufort_number = 12
+				# Set the beaufort number based on the wind speed
+				if(jsonWaveData["windSpeed"]["icon"] < 0.5):
+					responseMessage.beaufort_number.append(0)
+				elif(jsonWaveData["windSpeed"]["icon"] < 1.5):
+					responseMessage.beaufort_number.append(1)
+				elif(jsonWaveData["windSpeed"]["icon"] < 3.3):
+					responseMessage.beaufort_number.append(2)
+				elif(jsonWaveData["windSpeed"]["icon"] < 5.5):
+					responseMessage.beaufort_number.append(3)
+				elif(jsonWaveData["windSpeed"]["icon"] < 7.9):
+					responseMessage.beaufort_number.append(4)
+				elif(jsonWaveData["windSpeed"]["icon"] < 10.7):
+					responseMessage.beaufort_number.append(5)
+				elif(jsonWaveData["windSpeed"]["icon"] < 13.8):
+					responseMessage.beaufort_number.append(6)
+				elif(jsonWaveData["windSpeed"]["icon"] < 17.1):
+					responseMessage.beaufort_number.append(7)
+				elif(jsonWaveData["windSpeed"]["icon"] < 20.7):
+					responseMessage.beaufort_number.append(8)
+				elif(jsonWaveData["windSpeed"]["icon"] < 24.4):
+					responseMessage.beaufort_number.append(9)
+				elif(jsonWaveData["windSpeed"]["icon"] < 28.4):
+					responseMessage.beaufort_number.append(10)
+				elif(jsonWaveData["windSpeed"]["icon"] < 32.6):
+					responseMessage.beaufort_number.append(11)
+				else:
+					responseMessage.beaufort_number.append(12)
+			except Exception as e:
+				logger.debug(f"Failed to query Stormglass API: \n{e}")
+				context.set_code(grpc.StatusCode.INTERNAL)
+				# context.set_details("bla bla")
+				raise e
 
 		return responseMessage
 
