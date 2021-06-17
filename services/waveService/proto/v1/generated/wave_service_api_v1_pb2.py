@@ -11,7 +11,6 @@ from google.protobuf import symbol_database as _symbol_database
 _sym_db = _symbol_database.Default()
 
 
-from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
@@ -20,9 +19,8 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x19wave_service_api_v1.proto\x12\x11waveServiceAPI.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"l\n\x16WaveInformationRequest\x12\x10\n\x08latitude\x18\x01 \x03(\x02\x12\x11\n\tlongitude\x18\x02 \x03(\x02\x12-\n\ttimestamp\x18\x03 \x03(\x0b\x32\x1a.google.protobuf.Timestamp\"\xcd\x01\n\x17WaveInformationResponse\x12\x16\n\x0ewind_direction\x18\x01 \x03(\x02\x12\x12\n\nwind_speed\x18\x02 \x03(\x02\x12\x17\n\x0f\x62\x65\x61ufort_number\x18\x03 \x03(\r\x12\x16\n\x0ewave_direction\x18\x04 \x03(\x02\x12\x13\n\x0bwave_length\x18\x05 \x03(\x02\x12\x13\n\x0bwave_height\x18\x06 \x03(\x02\x12\x16\n\x0ewave_frequency\x18\x07 \x03(\x02\x12\x13\n\x0bwave_period\x18\x08 \x03(\x02\x32\xda\x01\n\x0bWaveService\x12\x65\n\x0cWaveEstimate\x12).waveServiceAPI.v1.WaveInformationRequest\x1a*.waveServiceAPI.v1.WaveInformationResponse\x12\x64\n\x0bWaveHistory\x12).waveServiceAPI.v1.WaveInformationRequest\x1a*.waveServiceAPI.v1.WaveInformationResponseb\x06proto3'
-  ,
-  dependencies=[google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,])
+  serialized_pb=b'\n\x19wave_service_api_v1.proto\x12\x11waveServiceAPI.v1\"P\n\x16WaveInformationRequest\x12\x10\n\x08latitude\x18\x01 \x03(\x02\x12\x11\n\tlongitude\x18\x02 \x03(\x02\x12\x11\n\ttimestamp\x18\x03 \x03(\x02\"\xcd\x01\n\x17WaveInformationResponse\x12\x16\n\x0ewind_direction\x18\x01 \x03(\x02\x12\x12\n\nwind_speed\x18\x02 \x03(\x02\x12\x17\n\x0f\x62\x65\x61ufort_number\x18\x03 \x03(\r\x12\x16\n\x0ewave_direction\x18\x04 \x03(\x02\x12\x13\n\x0bwave_length\x18\x05 \x03(\x02\x12\x13\n\x0bwave_height\x18\x06 \x03(\x02\x12\x16\n\x0ewave_frequency\x18\x07 \x03(\x02\x12\x13\n\x0bwave_period\x18\x08 \x03(\x02\x32\xda\x01\n\x0bWaveService\x12\x65\n\x0cWaveEstimate\x12).waveServiceAPI.v1.WaveInformationRequest\x1a*.waveServiceAPI.v1.WaveInformationResponse\x12\x64\n\x0bWaveHistory\x12).waveServiceAPI.v1.WaveInformationRequest\x1a*.waveServiceAPI.v1.WaveInformationResponseb\x06proto3'
+)
 
 
 
@@ -51,7 +49,7 @@ _WAVEINFORMATIONREQUEST = _descriptor.Descriptor(
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
       name='timestamp', full_name='waveServiceAPI.v1.WaveInformationRequest.timestamp', index=2,
-      number=3, type=11, cpp_type=10, label=3,
+      number=3, type=2, cpp_type=6, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -68,8 +66,8 @@ _WAVEINFORMATIONREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=81,
-  serialized_end=189,
+  serialized_start=48,
+  serialized_end=128,
 )
 
 
@@ -149,11 +147,10 @@ _WAVEINFORMATIONRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=192,
-  serialized_end=397,
+  serialized_start=131,
+  serialized_end=336,
 )
 
-_WAVEINFORMATIONREQUEST.fields_by_name['timestamp'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 DESCRIPTOR.message_types_by_name['WaveInformationRequest'] = _WAVEINFORMATIONREQUEST
 DESCRIPTOR.message_types_by_name['WaveInformationResponse'] = _WAVEINFORMATIONRESPONSE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
@@ -181,8 +178,8 @@ _WAVESERVICE = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=400,
-  serialized_end=618,
+  serialized_start=339,
+  serialized_end=557,
   methods=[
   _descriptor.MethodDescriptor(
     name='WaveEstimate',

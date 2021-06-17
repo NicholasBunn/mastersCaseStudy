@@ -2,14 +2,15 @@ syntax = "proto3";
 
 package waveServiceAPI.v1;
 
-import "google/protobuf/timestamp.proto";
+// import "google/protobuf/timestamp.proto";
 
 // option go_package = "service/waveService/proto/v1";
 
 message WaveInformationRequest {
     repeated float latitude = 1;
     repeated float longitude = 2;
-    repeated google.protobuf.Timestamp timestamp = 3;
+    // repeated google.protobuf.Timestamp timestamp = 3;
+    repeated float timestamp = 3;
 }
 
 message WaveInformationResponse {
