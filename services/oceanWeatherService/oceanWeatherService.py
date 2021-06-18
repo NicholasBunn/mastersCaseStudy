@@ -12,10 +12,10 @@ import yaml
 from urllib.error import HTTPError
 
 # Local application imports
-import proto.v1.generated.wave_service_api_v1_pb2 as wave_service_api_v1_pb2
-import proto.v1.generated.wave_service_api_v1_pb2_grpc as wave_service_api_v1_pb2_grpc
+import proto.v1.generated.ocean_weather_service_api_v1_pb2 as ocean_weather_service_api_v1_pb2
+import proto.v1.generated.ocean_weather_service_api_v1_pb2_grpc as ocean_weather_service_api_v1_pb2_grpc
 
-# ToDo: Add wave_length to response message for WaveHistory
+# ToDo: Add wave_length to response message for OceanWeatherHistory
 
 def loadConfigFile(filepath):
 	with open(os.path.join(sys.path[0], filepath), "r") as f:
@@ -73,66 +73,66 @@ def queryWaveAPI(latitude, longitude, unixTime, apiKey):
 
 	return response.json()["hours"][0]
 
-class WaveServiceServicer(wave_service_api_v1_pb2_grpc.WaveServiceServicer):
-	"""'Wave Service' offers two service calls that provide information about wave conditions for use in route planning.
+class OceanWeatherServiceServicer(ocean_weather_service_api_v1_pb2_grpc.OceanWeatherServiceServicer):
+	"""'Ocean Weather Service' offers two service calls that provide information about ocean weather conditions for use in route planning.
 	"""
 
-	def WaveEstimate(self, request, context):
-		"""The 'Wave Estimate' call provides foresight for tactical decision-making by providing future wave conditions along a requested route
+	def OceanWeatherEstimate(self, request, context):
+		"""The 'Ocean Weather Estimate' call provides foresight for tactical decision-making by providing future ocean weather conditions along a requested route
 		"""
 
-		logging.info("Received Wave Estimate service call.")
+		logging.info("Received Ocean Weather Estimate service call.")
 		context.set_code(grpc.StatusCode.UNIMPLEMENTED)
 		context.set_details('Method not implemented!')
 		raise NotImplementedError('Method not implemented!')
 
-	def WaveHistory(self, request, context):
-		"""The 'Wave History' call provides hindsight for stategic decision-making by providing historical wave conditions that the ship would have encountered along a requested route
+	def OceanWeatherHistory(self, request, context):
+		"""The 'Ocean Weather History' call provides hindsight for stategic decision-making by providing historical ocean weather conditions that the ship would have encountered along a requested route
 		"""
 		
-		logging.info("Received Wave History service call.")
+		logging.info("Received Ocean Weather History service call.")
 		
 		# Create response message
-		responseMessage = wave_service_api_v1_pb2.WaveInformationResponse()
+		responseMessage = ocean_weather_service_api_v1_pb2.OceanWeatherInformationResponse()
 
 		# Iterate through all the requested points, fetching the weather data for each. This approach uses one query per point of interest (not particularly efficient)
 		for testLat, testLong, startTimeUnix in zip(request.latitude, request.longitude, request.timestamp):
 			try:
 				# Query Stormglass API
-				jsonWaveData = queryWaveAPI(testLat, testLong, startTimeUnix, config["authentication"]["stormglass"]["apiKey"])
+				jsonOceanData = queryWaveAPI(testLat, testLong, startTimeUnix, config["authentication"]["stormglass"]["apiKey"])
 
 				# Populate response message  
-				responseMessage.wind_direction.append(jsonWaveData["windDirection"]["icon"])
-				responseMessage.wind_speed.append(jsonWaveData["windSpeed"]["icon"])
-				responseMessage.swell_direction.append(jsonWaveData["swellDirection"]["icon"])
-				responseMessage.swell_height.append(jsonWaveData["swellHeight"]["icon"])
-				responseMessage.swell_frequency.append(1/jsonWaveData["swellPeriod"]["icon"])
-				responseMessage.swell_period.append(jsonWaveData["swellPeriod"]["icon"])
+				responseMessage.wind_direction.append(jsonOceanData["windDirection"]["icon"])
+				responseMessage.wind_speed.append(jsonOceanData["windSpeed"]["icon"])
+				responseMessage.swell_direction.append(jsonOceanData["swellDirection"]["icon"])
+				responseMessage.swell_height.append(jsonOceanData["swellHeight"]["icon"])
+				responseMessage.swell_frequency.append(1/jsonOceanData["swellPeriod"]["icon"])
+				responseMessage.swell_period.append(jsonOceanData["swellPeriod"]["icon"])
 
 				# Set the beaufort number based on the wind speed
-				if(jsonWaveData["windSpeed"]["icon"] < 0.5):
+				if(jsonOceanData["windSpeed"]["icon"] < 0.5):
 					responseMessage.beaufort_number.append(0)
-				elif(jsonWaveData["windSpeed"]["icon"] < 1.5):
+				elif(jsonOceanData["windSpeed"]["icon"] < 1.5):
 					responseMessage.beaufort_number.append(1)
-				elif(jsonWaveData["windSpeed"]["icon"] < 3.3):
+				elif(jsonOceanData["windSpeed"]["icon"] < 3.3):
 					responseMessage.beaufort_number.append(2)
-				elif(jsonWaveData["windSpeed"]["icon"] < 5.5):
+				elif(jsonOceanData["windSpeed"]["icon"] < 5.5):
 					responseMessage.beaufort_number.append(3)
-				elif(jsonWaveData["windSpeed"]["icon"] < 7.9):
+				elif(jsonOceanData["windSpeed"]["icon"] < 7.9):
 					responseMessage.beaufort_number.append(4)
-				elif(jsonWaveData["windSpeed"]["icon"] < 10.7):
+				elif(jsonOceanData["windSpeed"]["icon"] < 10.7):
 					responseMessage.beaufort_number.append(5)
-				elif(jsonWaveData["windSpeed"]["icon"] < 13.8):
+				elif(jsonOceanData["windSpeed"]["icon"] < 13.8):
 					responseMessage.beaufort_number.append(6)
-				elif(jsonWaveData["windSpeed"]["icon"] < 17.1):
+				elif(jsonOceanData["windSpeed"]["icon"] < 17.1):
 					responseMessage.beaufort_number.append(7)
-				elif(jsonWaveData["windSpeed"]["icon"] < 20.7):
+				elif(jsonOceanData["windSpeed"]["icon"] < 20.7):
 					responseMessage.beaufort_number.append(8)
-				elif(jsonWaveData["windSpeed"]["icon"] < 24.4):
+				elif(jsonOceanData["windSpeed"]["icon"] < 24.4):
 					responseMessage.beaufort_number.append(9)
-				elif(jsonWaveData["windSpeed"]["icon"] < 28.4):
+				elif(jsonOceanData["windSpeed"]["icon"] < 28.4):
 					responseMessage.beaufort_number.append(10)
-				elif(jsonWaveData["windSpeed"]["icon"] < 32.6):
+				elif(jsonOceanData["windSpeed"]["icon"] < 32.6):
 					responseMessage.beaufort_number.append(11)
 				else:
 					responseMessage.beaufort_number.append(12)
@@ -156,9 +156,9 @@ def serve():
 	)
 	logging.debug("Successfully created server.")
 
-	# Register a wave service on the server
-	wave_service_api_v1_pb2_grpc.add_WaveServiceServicer_to_server(WaveServiceServicer(), server)
-	logging.debug("Successfully registered wave service to server.")
+	# Register an ocean weather service on the server
+	ocean_weather_service_api_v1_pb2_grpc.add_OceanWeatherServiceServicer_to_server(OceanWeatherServiceServicer(), server)
+	logging.debug("Successfully registered ocean weather service to server.")
 
 	# Create an insecure connection on port
 	fetchDataHost = os.getenv(key = "FETCHDATAHOST", default = "localhost") # Receives the hostname from the environmental variables (for Docker network), or defaults to localhost for local testing
@@ -185,7 +185,7 @@ if __name__ == '__main__':
 	# ________LOGGER SETUP________
 	serviceName = __file__.rsplit("/")[-2].rsplit(".")[0]
 
-	logging.basicConfig(filename="services/waveService/program logs/" + serviceName + ".log", format="%(asctime)s:%(name)s:%(levelname)s:%(module)s:%(funcName)s:%(message)s", level=logging.DEBUG)
+	logging.basicConfig(filename="services/oceanWeatherService/program logs/" + serviceName + ".log", format="%(asctime)s:%(name)s:%(levelname)s:%(module)s:%(funcName)s:%(message)s", level=logging.DEBUG)
 
 	# ________SERVE REQUEST________
 	serve() # Finish initialisation by serving the request

@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package oceanWeatherServiceAPI.v1;
+
+// option go_package = "service/oceanWeatherService/proto/v1";
+
+message OceanWeatherInformationRequest {
+    repeated float latitude = 1;
+    repeated float longitude = 2;
+    repeated float timestamp = 3;
+}
+
+message OceanWeatherInformationResponse {
+    repeated float wind_direction = 1;
+    repeated float wind_speed = 2;
+    repeated uint32 beaufort_number = 3;
+    repeated float swell_direction = 4;
+    repeated float wave_length = 5;
+    repeated float swell_height = 6;
+    repeated float swell_frequency = 7;
+    repeated float swell_period = 8;
+}
+
+// 'Ocean Weather Service' offers two service calls that provide information about ocean weather conditions for use in route planning.
+service OceanWeatherService {
+    // The 'Ocean Weather Estimate' call provides foresight for tactical decision-making by providing future ocean weather conditions along a requested route
+    rpc OceanWeatherEstimate(OceanWeatherInformationRequest) returns (OceanWeatherInformationResponse);
+    // The 'OceanWeather History' call provides hindsight for stategic decision-making by providing historical ocean weather conditions that the ship would have encountered along a requested route
+    rpc OceanWeatherHistory(OceanWeatherInformationRequest) returns (OceanWeatherInformationResponse);
+}
