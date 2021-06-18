@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x19wave_service_api_v1.proto\x12\x11waveServiceAPI.v1\"P\n\x16WaveInformationRequest\x12\x10\n\x08latitude\x18\x01 \x03(\x02\x12\x11\n\tlongitude\x18\x02 \x03(\x02\x12\x11\n\ttimestamp\x18\x03 \x03(\x02\"\xcd\x01\n\x17WaveInformationResponse\x12\x16\n\x0ewind_direction\x18\x01 \x03(\x02\x12\x12\n\nwind_speed\x18\x02 \x03(\x02\x12\x17\n\x0f\x62\x65\x61ufort_number\x18\x03 \x03(\r\x12\x16\n\x0ewave_direction\x18\x04 \x03(\x02\x12\x13\n\x0bwave_length\x18\x05 \x03(\x02\x12\x13\n\x0bwave_height\x18\x06 \x03(\x02\x12\x16\n\x0ewave_frequency\x18\x07 \x03(\x02\x12\x13\n\x0bwave_period\x18\x08 \x03(\x02\x32\xda\x01\n\x0bWaveService\x12\x65\n\x0cWaveEstimate\x12).waveServiceAPI.v1.WaveInformationRequest\x1a*.waveServiceAPI.v1.WaveInformationResponse\x12\x64\n\x0bWaveHistory\x12).waveServiceAPI.v1.WaveInformationRequest\x1a*.waveServiceAPI.v1.WaveInformationResponseb\x06proto3'
+  serialized_pb=b'\n\x19wave_service_api_v1.proto\x12\x11waveServiceAPI.v1\"P\n\x16WaveInformationRequest\x12\x10\n\x08latitude\x18\x01 \x03(\x02\x12\x11\n\tlongitude\x18\x02 \x03(\x02\x12\x11\n\ttimestamp\x18\x03 \x03(\x02\"\xd2\x01\n\x17WaveInformationResponse\x12\x16\n\x0ewind_direction\x18\x01 \x03(\x02\x12\x12\n\nwind_speed\x18\x02 \x03(\x02\x12\x17\n\x0f\x62\x65\x61ufort_number\x18\x03 \x03(\r\x12\x17\n\x0fswell_direction\x18\x04 \x03(\x02\x12\x14\n\x0cswell_length\x18\x05 \x03(\x02\x12\x14\n\x0cswell_height\x18\x06 \x03(\x02\x12\x17\n\x0fswell_frequency\x18\x07 \x03(\x02\x12\x14\n\x0cswell_period\x18\x08 \x03(\x02\x32\xda\x01\n\x0bWaveService\x12\x65\n\x0cWaveEstimate\x12).waveServiceAPI.v1.WaveInformationRequest\x1a*.waveServiceAPI.v1.WaveInformationResponse\x12\x64\n\x0bWaveHistory\x12).waveServiceAPI.v1.WaveInformationRequest\x1a*.waveServiceAPI.v1.WaveInformationResponseb\x06proto3'
 )
 
 
@@ -101,35 +101,35 @@ _WAVEINFORMATIONRESPONSE = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='wave_direction', full_name='waveServiceAPI.v1.WaveInformationResponse.wave_direction', index=3,
+      name='swell_direction', full_name='waveServiceAPI.v1.WaveInformationResponse.swell_direction', index=3,
       number=4, type=2, cpp_type=6, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='wave_length', full_name='waveServiceAPI.v1.WaveInformationResponse.wave_length', index=4,
+      name='swell_length', full_name='waveServiceAPI.v1.WaveInformationResponse.swell_length', index=4,
       number=5, type=2, cpp_type=6, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='wave_height', full_name='waveServiceAPI.v1.WaveInformationResponse.wave_height', index=5,
+      name='swell_height', full_name='waveServiceAPI.v1.WaveInformationResponse.swell_height', index=5,
       number=6, type=2, cpp_type=6, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='wave_frequency', full_name='waveServiceAPI.v1.WaveInformationResponse.wave_frequency', index=6,
+      name='swell_frequency', full_name='waveServiceAPI.v1.WaveInformationResponse.swell_frequency', index=6,
       number=7, type=2, cpp_type=6, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='wave_period', full_name='waveServiceAPI.v1.WaveInformationResponse.wave_period', index=7,
+      name='swell_period', full_name='waveServiceAPI.v1.WaveInformationResponse.swell_period', index=7,
       number=8, type=2, cpp_type=6, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -148,7 +148,7 @@ _WAVEINFORMATIONRESPONSE = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=131,
-  serialized_end=336,
+  serialized_end=341,
 )
 
 DESCRIPTOR.message_types_by_name['WaveInformationRequest'] = _WAVEINFORMATIONREQUEST
@@ -178,8 +178,8 @@ _WAVESERVICE = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=339,
-  serialized_end=557,
+  serialized_start=344,
+  serialized_end=562,
   methods=[
   _descriptor.MethodDescriptor(
     name='WaveEstimate',

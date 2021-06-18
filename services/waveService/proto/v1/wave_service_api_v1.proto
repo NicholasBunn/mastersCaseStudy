@@ -2,14 +2,11 @@ syntax = "proto3";
 
 package waveServiceAPI.v1;
 
-// import "google/protobuf/timestamp.proto";
-
 // option go_package = "service/waveService/proto/v1";
 
 message WaveInformationRequest {
     repeated float latitude = 1;
     repeated float longitude = 2;
-    // repeated google.protobuf.Timestamp timestamp = 3;
     repeated float timestamp = 3;
 }
 
@@ -17,11 +14,11 @@ message WaveInformationResponse {
     repeated float wind_direction = 1;
     repeated float wind_speed = 2;
     repeated uint32 beaufort_number = 3;
-    repeated float wave_direction = 4;
-    repeated float wave_length = 5;
-    repeated float wave_height = 6;
-    repeated float wave_frequency = 7;
-    repeated float wave_period = 8;
+    repeated float swell_direction = 4;
+    repeated float swell_length = 5;
+    repeated float swell_height = 6;
+    repeated float swell_frequency = 7;
+    repeated float swell_period = 8;
 }
 
 // 'Wave Service' offers two service calls that provide information about wave conditions for use in route planning.

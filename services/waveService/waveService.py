@@ -15,6 +15,8 @@ from urllib.error import HTTPError
 import proto.v1.generated.wave_service_api_v1_pb2 as wave_service_api_v1_pb2
 import proto.v1.generated.wave_service_api_v1_pb2_grpc as wave_service_api_v1_pb2_grpc
 
+# ToDo: Add wave_length to response message for WaveHistory
+
 def loadConfigFile(filepath):
 	with open(os.path.join(sys.path[0], filepath), "r") as f:
 		config = yaml.safe_load(f)
@@ -79,7 +81,7 @@ class WaveServiceServicer(wave_service_api_v1_pb2_grpc.WaveServiceServicer):
 		"""The 'Wave Estimate' call provides foresight for tactical decision-making by providing future wave conditions along a requested route
 		"""
 
-		logger.info("Received Wave Estimate service call.")
+		logging.info("Received Wave Estimate service call.")
 		context.set_code(grpc.StatusCode.UNIMPLEMENTED)
 		context.set_details('Method not implemented!')
 		raise NotImplementedError('Method not implemented!')
@@ -88,7 +90,7 @@ class WaveServiceServicer(wave_service_api_v1_pb2_grpc.WaveServiceServicer):
 		"""The 'Wave History' call provides hindsight for stategic decision-making by providing historical wave conditions that the ship would have encountered along a requested route
 		"""
 		
-		logger.info("Received Wave History service call.")
+		logging.info("Received Wave History service call.")
 		
 		# Create response message
 		responseMessage = wave_service_api_v1_pb2.WaveInformationResponse()
@@ -102,10 +104,10 @@ class WaveServiceServicer(wave_service_api_v1_pb2_grpc.WaveServiceServicer):
 				# Populate response message  
 				responseMessage.wind_direction.append(jsonWaveData["windDirection"]["icon"])
 				responseMessage.wind_speed.append(jsonWaveData["windSpeed"]["icon"])
-				responseMessage.wave_direction.append(jsonWaveData["swellDirection"]["icon"])
-				responseMessage.wave_height.append(jsonWaveData["swellHeight"]["icon"])
-				responseMessage.wave_frequency.append(1/jsonWaveData["swellPeriod"]["icon"])
-				responseMessage.wave_period.append(jsonWaveData["swellPeriod"]["icon"])
+				responseMessage.swell_direction.append(jsonWaveData["swellDirection"]["icon"])
+				responseMessage.swell_height.append(jsonWaveData["swellHeight"]["icon"])
+				responseMessage.swell_frequency.append(1/jsonWaveData["swellPeriod"]["icon"])
+				responseMessage.swell_period.append(jsonWaveData["swellPeriod"]["icon"])
 
 				# Set the beaufort number based on the wind speed
 				if(jsonWaveData["windSpeed"]["icon"] < 0.5):
@@ -135,7 +137,7 @@ class WaveServiceServicer(wave_service_api_v1_pb2_grpc.WaveServiceServicer):
 				else:
 					responseMessage.beaufort_number.append(12)
 			except Exception as e:
-				logger.debug(f"Failed to query Stormglass API: \n{e}")
+				logging.debug(f"Failed to query Stormglass API: \n{e}")
 				context.set_code(grpc.StatusCode.INTERNAL)
 				# context.set_details("bla bla")
 				raise e
@@ -152,29 +154,29 @@ def serve():
 		futures.ThreadPoolExecutor(max_workers=10),
 		# interceptors = activeInterceptors
 	)
-	logger.debug("Successfully created server.")
+	logging.debug("Successfully created server.")
 
 	# Register a wave service on the server
 	wave_service_api_v1_pb2_grpc.add_WaveServiceServicer_to_server(WaveServiceServicer(), server)
-	logger.debug("Successfully registered wave service to server.")
+	logging.debug("Successfully registered wave service to server.")
 
 	# Create an insecure connection on port
 	fetchDataHost = os.getenv(key = "FETCHDATAHOST", default = "localhost") # Receives the hostname from the environmental variables (for Docker network), or defaults to localhost for local testing
 	try:
 		server.add_insecure_port(f'{fetchDataHost}:{config["port"]["myself"]}')
 		logging.debug("Succesfully added (insecure) port to server.")
-	except error as e:
-		logger.debug(f"Failed to add (insecure) port to server: \n{e}")
+	except Exception as e:
+		logging.debug(f"Failed to add (insecure) port to server: \n{e}")
 
 	try:
 		# Start server and listen for calls on the specified port
 		server.start()
-		logger.info(f'Server started on port {config["port"]["myself"]}')
+		logging.info(f'Server started on port {config["port"]["myself"]}')
 
 		# Defer termination for a 'persistent' service
 		server.wait_for_termination()
-	except error as e:
-		logger.debug(f'Failed to start server on port {config["port"]["myself:"]}: \n{e}')
+	except Exception as e:
+		logging.debug(f'Failed to start server on port {config["port"]["myself:"]}: \n{e}')
 		
 if __name__ == '__main__':
 	# ________LOAD CONFIG FILE________
@@ -182,17 +184,8 @@ if __name__ == '__main__':
 
 	# ________LOGGER SETUP________
 	serviceName = __file__.rsplit("/")[-2].rsplit(".")[0]
-	logger = logging.getLogger(serviceName)
-	logger.setLevel(logging.DEBUG)
 
-	# Set the fields to be included in the logs
-	formatter = logging.Formatter('%(asctime)s:%(name)s:%(levelname)s:%(module)s:%(funcName)s:%(message)s')
-
-	# Create/set the file in which the log will be stored
-	fileHandler = logging.FileHandler("services/waveService/program logs/" + serviceName + ".log")
-	fileHandler.setFormatter(formatter)
-
-	logger.addHandler(fileHandler)
+	logging.basicConfig(filename="services/waveService/program logs/" + serviceName + ".log", format="%(asctime)s:%(name)s:%(levelname)s:%(module)s:%(funcName)s:%(message)s", level=logging.DEBUG)
 
 	# ________SERVE REQUEST________
 	serve() # Finish initialisation by serving the request
