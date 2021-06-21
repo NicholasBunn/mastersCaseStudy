@@ -15,8 +15,8 @@ class OceanWeatherServiceStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.OceanWeatherEstimate = channel.unary_unary(
-                '/oceanWeatherServiceAPI.v1.OceanWeatherService/OceanWeatherEstimate',
+        self.OceanWeatherPrediction = channel.unary_unary(
+                '/oceanWeatherServiceAPI.v1.OceanWeatherService/OceanWeatherPrediction',
                 request_serializer=ocean__weather__service__api__v1__pb2.OceanWeatherInformationRequest.SerializeToString,
                 response_deserializer=ocean__weather__service__api__v1__pb2.OceanWeatherInformationResponse.FromString,
                 )
@@ -31,8 +31,8 @@ class OceanWeatherServiceServicer(object):
     """'Ocean Weather Service' offers two service calls that provide information about ocean weather conditions for use in route planning.
     """
 
-    def OceanWeatherEstimate(self, request, context):
-        """The 'Ocean Weather Estimate' call provides foresight for tactical decision-making by providing future ocean weather conditions along a requested route
+    def OceanWeatherPrediction(self, request, context):
+        """The 'Ocean Weather Prediction' call provides foresight for tactical decision-making by providing future ocean weather conditions along a requested route
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -48,8 +48,8 @@ class OceanWeatherServiceServicer(object):
 
 def add_OceanWeatherServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'OceanWeatherEstimate': grpc.unary_unary_rpc_method_handler(
-                    servicer.OceanWeatherEstimate,
+            'OceanWeatherPrediction': grpc.unary_unary_rpc_method_handler(
+                    servicer.OceanWeatherPrediction,
                     request_deserializer=ocean__weather__service__api__v1__pb2.OceanWeatherInformationRequest.FromString,
                     response_serializer=ocean__weather__service__api__v1__pb2.OceanWeatherInformationResponse.SerializeToString,
             ),
@@ -70,7 +70,7 @@ class OceanWeatherService(object):
     """
 
     @staticmethod
-    def OceanWeatherEstimate(request,
+    def OceanWeatherPrediction(request,
             target,
             options=(),
             channel_credentials=None,
@@ -80,7 +80,7 @@ class OceanWeatherService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/oceanWeatherServiceAPI.v1.OceanWeatherService/OceanWeatherEstimate',
+        return grpc.experimental.unary_unary(request, target, '/oceanWeatherServiceAPI.v1.OceanWeatherService/OceanWeatherPrediction',
             ocean__weather__service__api__v1__pb2.OceanWeatherInformationRequest.SerializeToString,
             ocean__weather__service__api__v1__pb2.OceanWeatherInformationResponse.FromString,
             options, channel_credentials,

@@ -77,11 +77,11 @@ class OceanWeatherServiceServicer(ocean_weather_service_api_v1_pb2_grpc.OceanWea
 	"""'Ocean Weather Service' offers two service calls that provide information about ocean weather conditions for use in route planning.
 	"""
 
-	def OceanWeatherEstimate(self, request, context):
-		"""The 'Ocean Weather Estimate' call provides foresight for tactical decision-making by providing future ocean weather conditions along a requested route
+	def OceanWeatherPrediction(self, request, context):
+		"""The 'Ocean Weather Prediction' call provides foresight for tactical decision-making by providing future ocean weather conditions along a requested route
 		"""
 
-		logging.info("Received Ocean Weather Estimate service call.")
+		logging.info("Received Ocean Weather Prediction service call.")
 		context.set_code(grpc.StatusCode.UNIMPLEMENTED)
 		context.set_details('Method not implemented!')
 		raise NotImplementedError('Method not implemented!')

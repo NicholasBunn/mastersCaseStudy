@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\"ocean_weather_service_api_v1.proto\x12\x19oceanWeatherServiceAPI.v1\"X\n\x1eOceanWeatherInformationRequest\x12\x10\n\x08latitude\x18\x01 \x03(\x02\x12\x11\n\tlongitude\x18\x02 \x03(\x02\x12\x11\n\ttimestamp\x18\x03 \x03(\x02\"\xd9\x01\n\x1fOceanWeatherInformationResponse\x12\x16\n\x0ewind_direction\x18\x01 \x03(\x02\x12\x12\n\nwind_speed\x18\x02 \x03(\x02\x12\x17\n\x0f\x62\x65\x61ufort_number\x18\x03 \x03(\r\x12\x17\n\x0fswell_direction\x18\x04 \x03(\x02\x12\x13\n\x0bwave_length\x18\x05 \x03(\x02\x12\x14\n\x0cswell_height\x18\x06 \x03(\x02\x12\x17\n\x0fswell_frequency\x18\x07 \x03(\x02\x12\x14\n\x0cswell_period\x18\x08 \x03(\x02\x32\xb4\x02\n\x13OceanWeatherService\x12\x8d\x01\n\x14OceanWeatherEstimate\x12\x39.oceanWeatherServiceAPI.v1.OceanWeatherInformationRequest\x1a:.oceanWeatherServiceAPI.v1.OceanWeatherInformationResponse\x12\x8c\x01\n\x13OceanWeatherHistory\x12\x39.oceanWeatherServiceAPI.v1.OceanWeatherInformationRequest\x1a:.oceanWeatherServiceAPI.v1.OceanWeatherInformationResponseb\x06proto3'
+  serialized_pb=b'\n\"ocean_weather_service_api_v1.proto\x12\x19oceanWeatherServiceAPI.v1\"X\n\x1eOceanWeatherInformationRequest\x12\x10\n\x08latitude\x18\x01 \x03(\x02\x12\x11\n\tlongitude\x18\x02 \x03(\x02\x12\x11\n\ttimestamp\x18\x03 \x03(\x02\"\xd9\x01\n\x1fOceanWeatherInformationResponse\x12\x16\n\x0ewind_direction\x18\x01 \x03(\x02\x12\x12\n\nwind_speed\x18\x02 \x03(\x02\x12\x17\n\x0f\x62\x65\x61ufort_number\x18\x03 \x03(\r\x12\x17\n\x0fswell_direction\x18\x04 \x03(\x02\x12\x13\n\x0bwave_length\x18\x05 \x03(\x02\x12\x14\n\x0cswell_height\x18\x06 \x03(\x02\x12\x17\n\x0fswell_frequency\x18\x07 \x03(\x02\x12\x14\n\x0cswell_period\x18\x08 \x03(\x02\x32\xb6\x02\n\x13OceanWeatherService\x12\x8f\x01\n\x16OceanWeatherPrediction\x12\x39.oceanWeatherServiceAPI.v1.OceanWeatherInformationRequest\x1a:.oceanWeatherServiceAPI.v1.OceanWeatherInformationResponse\x12\x8c\x01\n\x13OceanWeatherHistory\x12\x39.oceanWeatherServiceAPI.v1.OceanWeatherInformationRequest\x1a:.oceanWeatherServiceAPI.v1.OceanWeatherInformationResponseb\x06proto3'
 )
 
 
@@ -179,11 +179,11 @@ _OCEANWEATHERSERVICE = _descriptor.ServiceDescriptor(
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
   serialized_start=376,
-  serialized_end=684,
+  serialized_end=686,
   methods=[
   _descriptor.MethodDescriptor(
-    name='OceanWeatherEstimate',
-    full_name='oceanWeatherServiceAPI.v1.OceanWeatherService.OceanWeatherEstimate',
+    name='OceanWeatherPrediction',
+    full_name='oceanWeatherServiceAPI.v1.OceanWeatherService.OceanWeatherPrediction',
     index=0,
     containing_service=None,
     input_type=_OCEANWEATHERINFORMATIONREQUEST,

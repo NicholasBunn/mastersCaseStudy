@@ -23,8 +23,8 @@ message OceanWeatherInformationResponse {
 
 // 'Ocean Weather Service' offers two service calls that provide information about ocean weather conditions for use in route planning.
 service OceanWeatherService {
-    // The 'Ocean Weather Estimate' call provides foresight for tactical decision-making by providing future ocean weather conditions along a requested route
-    rpc OceanWeatherEstimate(OceanWeatherInformationRequest) returns (OceanWeatherInformationResponse);
+    // The 'Ocean Weather Prediction' call provides foresight for tactical decision-making by providing future ocean weather conditions along a requested route
+    rpc OceanWeatherPrediction(OceanWeatherInformationRequest) returns (OceanWeatherInformationResponse);
     // The 'OceanWeather History' call provides hindsight for stategic decision-making by providing historical ocean weather conditions that the ship would have encountered along a requested route
     rpc OceanWeatherHistory(OceanWeatherInformationRequest) returns (OceanWeatherInformationResponse);
 }
