@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+package powerTrainService.v1;
+
+// option go_package = "service/powerTrainService/proto/v1";
+
+message EstimateRequest {
+    repeated float time_and_date = 1;
+    repeated float port_prop_motor_speed = 2;
+    repeated float stbd_prop_motor_speed = 3;
+    repeated float propeller_pitch_port = 4;
+    repeated float propeller_pitch_stbd = 5;
+    repeated float sog = 6;
+    repeated float wind_direction_relative = 7;
+    repeated float wind_speed = 8;
+    repeated float beaufort_number = 9;
+    repeated float wave_direction = 10;
+    repeated float wave_length = 11;
+    ModelTypeEnum model_type = 12;
+}
+
+message TrackingRequest {
+
+}
+
+message PowerEstimateResponse {
+    repeated float power_estimate = 1;
+}
+
+message CostEstimateResponse {
+    repeated float power_estimate = 1;
+    repeated float cost_estimate = 2;
+}
+
+message PowerEvaluationResponse {
+    repeated float power_estimate = 1;
+    repeated float power_actual = 2;
+}
+
+message TrackingResponse {
+    repeated float power_actual = 1;
+}
+
+// 'Power Train Service; offers four service calls that provide information about the power train of the vessel (namely power requirements and their assosciated costs)
+service PowerTrainService {
+    // The 'Power Estimate' call provides foresight for tactical decision-making by providing power estimates for a requested route and sailing conditions
+    rpc PowerEstimate(EstimateRequest) returns (PowerEstimateResponse);
+    // The 'Cost Estimate' call provides foresight for ?? decision-making by providing cost estimates for a requested route and sailign conditions
+    rpc CostEstimate(EstimateRequest) returns (CostEstimateResponse);
+    // The 'Power Tracking' call provides insight for ?? decision-making by providing real-time power use by the vessel
+    rpc PowerTracking(TrackingRequest) returns (TrackingResponse);
+    // The 'Power Estimate Evaluation' call provdes ?? for ?? decision-making by evaluating the accuracy of the models predictions
+    rpc PowerEstimateEvaluation(EstimateRequest) returns (PowerEvaluationResponse);
+}
+
+enum ModelTypeEnum {
+    UNKNOWN = 0;
+    OPENWATER = 1;
+    ICE = 2;
+}

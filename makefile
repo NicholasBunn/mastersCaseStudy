@@ -7,6 +7,9 @@ protoGenPy:
 	# Ocean weather service
 	python3 -m grpc_tools.protoc -I=services/oceanWeatherService/proto/v1 --python_out=services/oceanWeatherService/proto/v1/generated  --grpc_python_out=services/oceanWeatherService/proto/v1/generated services/oceanWeatherService/proto/v1/ocean_weather_service_api_v1.proto # add 'from .' to line 5 of the _grpc.py file
 
+	# Power train service
+	python3 -m grpc_tools.protoc -I=services/powerTrainService/proto/v1 --python_out=services/powerTrainService/proto/v1/generated  --grpc_python_out=services/powerTrainService/proto/v1/generated services/powerTrainService/proto/v1/power_train_service_api_v1.proto # add 'from .' to line 5 of the _grpc.py file
+
 protoGenAll:
 	make protoGenGo; make protoGenPy
 
@@ -32,11 +35,15 @@ certClean:
 testOceanWeatherService:
 	/usr/bin/python3 /home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/oceanWeatherService/test_oceanWeatherService.py
 
+testPowerTrainService:
+	/usr/bin/python3 /home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/powerTrainService/test_powerTrainService.py
+
 testGo:
 	go test ./...
 
 testPy:
 	make testOceanWeatherService
+	make testPowerTrainService
 
 testAll:
 	make testPy

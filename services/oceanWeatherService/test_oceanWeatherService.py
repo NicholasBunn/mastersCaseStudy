@@ -7,7 +7,6 @@ from datetime import datetime
 
 # Third party imports
 import yaml
-from google.protobuf.timestamp_pb2 import Timestamp
 
 # Local application imports
 import oceanWeatherService
@@ -35,7 +34,7 @@ class OceanWeatherServiceUnitTest(unittest.TestCase):
 		pass
 
 	def test_queryWaveAPI(self):
-		''' This tests for a succesful API call. This test should pass as long as the historical ocean weather data and the API's response (JSON structure) remain unchanged.
+		''' This tests for a succesful API call. This test should pass as long as the historical ocean weather data and the API's response (JSON structure) remain unchanged
 		'''		
 
 		print("Testing Ocean Weather Service: Query Wave API (Function Test)")
@@ -53,7 +52,7 @@ class OceanWeatherServiceUnitTest(unittest.TestCase):
 		self.assertEqual(jsonOceanData["swellPeriod"]["icon"], 5.89)
 
 	def test_invalidAPIKey(self):
-		''' This tests the error handling of an invalid API key.
+		''' This tests the error handling of an invalid API key
 		'''
 
 		print("Testing Ocean Weather Service: Invalid API Key (Error Handling Test)")
@@ -62,7 +61,7 @@ class OceanWeatherServiceUnitTest(unittest.TestCase):
 			oceanWeatherService.queryWaveAPI(self.testLat, self.testLong, self.startTimeUnix, "Wrong API key")
 
 	def test_invalidAPIRequest(self):
-		''' This tests the error handling of an invalid API request for the case where the provided latitude, longitude, or unixTime variables are of the incorrect type.
+		''' This tests the error handling of an invalid API request for the case where the provided latitude, longitude, or unixTime variables are of the incorrect type
 		'''
 
 		print("Testing Ocean Weather Service: Invalid API Request (Error Handling Test)")
@@ -71,7 +70,7 @@ class OceanWeatherServiceUnitTest(unittest.TestCase):
 			oceanWeatherService.queryWaveAPI("Lets give it a string", "Here's another string, just for fun", self.startTimeUnix, self.config["authentication"]["stormglass"]["apiKey"])
 			oceanWeatherService.queryWaveAPI(self.testLat, self.testLong, "Incorrect data type",  self.config["authentication"]["stormglass"]["apiKey"])
 
-class oceanWeatherServiceIntegrationTest(unittest.TestCase):
+class OceanWeatherServiceIntegrationTest(unittest.TestCase):
 	config = loadConfigFile("configuration.yaml")
 	serverClass = oceanWeatherService.OceanWeatherServiceServicer
 	hostName = os.getenv(key = "FETCHDATAHOST", default = "localhost")

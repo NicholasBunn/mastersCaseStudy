@@ -161,9 +161,9 @@ def serve():
 	logging.debug("Successfully registered ocean weather service to server.")
 
 	# Create an insecure connection on port
-	fetchDataHost = os.getenv(key = "FETCHDATAHOST", default = "localhost") # Receives the hostname from the environmental variables (for Docker network), or defaults to localhost for local testing
+	oceanWeatherHost = os.getenv(key = "OCEANWEATHERHOST", default = "localhost") # Receives the hostname from the environmental variables (for Docker network), or defaults to localhost for local testing
 	try:
-		server.add_insecure_port(f'{fetchDataHost}:{config["port"]["myself"]}')
+		server.add_insecure_port(f'{oceanWeatherHost}:{config["port"]["myself"]}')
 		logging.debug("Succesfully added (insecure) port to server.")
 	except Exception as e:
 		logging.debug(f"Failed to add (insecure) port to server: \n{e}")

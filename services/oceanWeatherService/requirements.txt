@@ -1,0 +1,9 @@
+pyjwt
+pyyaml
+grpcio
+grpcio-tools
+grpc_interceptor
+prometheus_client
+
+
+
