@@ -1,0 +1,10 @@
+pyjwt
+pyyaml
+grpcio
+numpy
+pandas
+keras
+sklearn.preprocessing
+grpcio-tools
+grpc_interceptor
+prometheus_client
