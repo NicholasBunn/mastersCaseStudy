@@ -191,21 +191,21 @@ class PowerTrainServiceServicer(power_train_service_api_v1_pb2_grpc.PowerTrainSe
 		return responseMessage
 
 	def CostEstimate(self, request, context):
-		"""The 'Cost Estimate' call provides foresight for ?? decision-making by providing cost estimates for a requested route and sailign conditions
+		"""The 'Cost Estimate' call provides foresight for tactical decision-making by providing cost estimates for a requested route and sailing conditions
 		"""
 		context.set_code(grpc.StatusCode.UNIMPLEMENTED)
 		context.set_details('Method not implemented!')
 		raise NotImplementedError('Method not implemented!')
 
 	def PowerTracking(self, request, context):
-		"""The 'Power Tracking' call provides insight for ?? decision-making by providing real-time power use by the vessel
+		"""The 'Power Tracking' call provides insight for tactical and operational decision-making by providing real-time power use by the vessel
 		"""
 		context.set_code(grpc.StatusCode.UNIMPLEMENTED)
 		context.set_details('Method not implemented!')
 		raise NotImplementedError('Method not implemented!')
 
 	def PowerEstimateEvaluation(self, request, context):
-		"""The 'Power Estimate Evaluation' call provdes ?? for ?? decision-making by evaluating the accuracy of the models predictions
+		"""The 'Power Estimate Evaluation' call provdes hindsight for strategic decision-making by evaluating the accuracy of the models predictions
 		"""
 		context.set_code(grpc.StatusCode.UNIMPLEMENTED)
 		context.set_details('Method not implemented!')

@@ -1,0 +1,2 @@
+obj/Debug/net5.0/proto/VesselMotionServiceApiV1.cs \
+obj/Debug/net5.0/proto/VesselMotionServiceApiV1Grpc.cs: proto/vessel_motion_service_api_v1.proto

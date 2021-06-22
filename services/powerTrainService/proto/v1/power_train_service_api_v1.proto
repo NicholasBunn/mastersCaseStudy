@@ -45,11 +45,11 @@ message TrackingResponse {
 service PowerTrainService {
     // The 'Power Estimate' call provides foresight for tactical decision-making by providing power estimates for a requested route and sailing conditions
     rpc PowerEstimate(EstimateRequest) returns (PowerEstimateResponse);
-    // The 'Cost Estimate' call provides foresight for ?? decision-making by providing cost estimates for a requested route and sailign conditions
+    // The 'Cost Estimate' call provides foresight for tactical decision-making by providing cost estimates for a requested route and sailing conditions
     rpc CostEstimate(EstimateRequest) returns (CostEstimateResponse);
-    // The 'Power Tracking' call provides insight for ?? decision-making by providing real-time power use by the vessel
+    // The 'Power Tracking' call provides insight for tactical and operational decision-making by providing real-time power use by the vessel
     rpc PowerTracking(TrackingRequest) returns (TrackingResponse);
-    // The 'Power Estimate Evaluation' call provdes ?? for ?? decision-making by evaluating the accuracy of the models predictions
+    // The 'Power Estimate Evaluation' call provdes hindsight for strategic decision-making by evaluating the accuracy of the models predictions
     rpc PowerEstimateEvaluation(EstimateRequest) returns (PowerEvaluationResponse);
 }
 

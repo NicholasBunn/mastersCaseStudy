@@ -10,8 +10,13 @@ protoGenPy:
 	# Power train service
 	python3 -m grpc_tools.protoc -I=services/powerTrainService/proto/v1 --python_out=services/powerTrainService/proto/v1/generated  --grpc_python_out=services/powerTrainService/proto/v1/generated services/powerTrainService/proto/v1/power_train_service_api_v1.proto # add 'from .' to line 5 of the _grpc.py file
 
+protoGenCSharp:
+	# protoc -I=services/vesselMotionService/proto/v1 services/vesselMotionService/proto/v1/vessel_motion_service_api_v1.proto --csharp_out=services/vesselMotionService/proto/v1/generated # --grpc_out=services/vesselMotionService/proto/v1/generated --plugin=protoc-gen-grpc=tools\grpc_csharp_plugin.exe
+	# NEED TO ADD A COMMAND HERE TO CREATE CLIENT STUBS FOR AGGREGATORS
+	
+
 protoGenAll:
-	make protoGenGo; make protoGenPy
+	make protoGenGo; make protoGenPy; protoGenCSharp
 
 protoCleanGo:
 	find . -type f -name '*.pb.go' -delete
@@ -55,6 +60,8 @@ runOceanWeatherService:
 runPowerTrainService:
 	/usr/bin/python3 /home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/powerTrainService/powerTrainService.py
 
+runVesselMotionService:
+	cd services/vesselMotionService; dotnet run; cd ..
 
 runPrometheus:
 
@@ -62,7 +69,7 @@ runPushGateway:
 
 runPy:
 	make runOceanWeatherService
-	runPowerTrainService
+	make runPowerTrainService
 
 runAll:
 	make runPy
