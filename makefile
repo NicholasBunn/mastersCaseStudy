@@ -52,12 +52,17 @@ testAll:
 runOceanWeatherService:
 	/usr/bin/python3 /home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/oceanWeatherService/oceanWeatherService.py
 	
+runPowerTrainService:
+	/usr/bin/python3 /home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/powerTrainService/powerTrainService.py
+
+
 runPrometheus:
 
 runPushGateway:
 
 runPy:
 	make runOceanWeatherService
+	runPowerTrainService
 
 runAll:
 	make runPy

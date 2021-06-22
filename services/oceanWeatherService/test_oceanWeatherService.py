@@ -105,7 +105,11 @@ class OceanWeatherServiceIntegrationTest(unittest.TestCase):
 
 		with oceanWeatherService.grpc.insecure_channel(self.port) as channel:
 			stub = oceanWeatherService.ocean_weather_service_api_v1_pb2_grpc.OceanWeatherServiceStub(channel)
-			response = stub.OceanWeatherHistory(oceanWeatherService.ocean_weather_service_api_v1_pb2.OceanWeatherInformationRequest(latitude={self.testLat}, longitude={self.testLong}, timestamp = {self.startTimeUnix}))
+			response = stub.OceanWeatherHistory(oceanWeatherService.ocean_weather_service_api_v1_pb2.OceanWeatherInformationRequest(
+				latitude={self.testLat},
+				longitude={self.testLong},
+				timestamp = {self.startTimeUnix},
+				))
 
 		self.assertEqual(response.wind_direction, [222.41000366210938])
 		self.assertEqual(response.wind_speed, [7.679999828338623])

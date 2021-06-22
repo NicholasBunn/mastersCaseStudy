@@ -144,16 +144,16 @@ class PowerTrainServiceServicer(power_train_service_api_v1_pb2_grpc.PowerTrainSe
 		responseMessage = power_train_service_api_v1_pb2.PowerEstimateResponse()
 
 		# Map the request message data to a dictionary
-		inputData = {'PortPropMotorSpeed': responseMessage[:,0], 
-					'StbdPropMotorSpeed': responseMessage[:,1], 
-					'PropellerPitchPort': responseMessage[:,2], 
-					'PropellerPitchStbd': responseMessage[:,3], 
-					'SOG': responseMessage[:,4], 
-					'WindDirRel': responseMessage[:,5], 
-					'WindSpeed': responseMessage[:,6], 
-					'Beaufort number': responseMessage[:,7], 
-					'Wave direction':  responseMessage[:,8], 
-					'Wave length': responseMessage[:,9]}
+		inputData = {'PortPropMotorSpeed': request.port_prop_motor_speed, 
+					'StbdPropMotorSpeed': request.stbd_prop_motor_speed, 
+					'PropellerPitchPort': request.propeller_pitch_port, 
+					'PropellerPitchStbd': request.propeller_pitch_stbd, 
+					'SOG': request.sog, 
+					'WindDirRel': request.wind_direction_relative, 
+					'WindSpeed': request.wind_speed, 
+					'Beaufort number': request.beaufort_number, 
+					'Wave direction':  request.wave_direction, 
+					'Wave length': request.wave_length}
 		
 		# ________PREPARE THE DATA________
 		try:
