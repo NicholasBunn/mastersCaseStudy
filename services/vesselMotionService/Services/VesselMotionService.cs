@@ -100,6 +100,11 @@ namespace vesselMotionService
             /* This function calculates the vibration response of the vessel for open water sailing conditions. In this implementation, only the y-axis acceleration in the bridge is required, purely as a means to demonstrate the design's ability to aggregate and coordinate information effectively. The study carried out by Soal (2014) offers models/coefficients that account for acceleration in multiple axis at multiple locations on the vessel; these, however, were not implemented to save time. This function would need to be refactored to include these (by taking location and axis as inputs and by selecting the coefficients based on these).
             */
 
+            if((portPropMotorPower < 0F) || (relativeWindSpeed < 0) || (relativeWindDirection < 0) || (heading < 0) || (waveHeight < 0))
+            {
+                throw new ArgumentException("The only input that can have a negative value is latitude");
+            }
+
             // Define coefficients for a z-axis estimate on the bridge in open water
             float intercept = 1.7605F;
             float alpha = 0.0010F;
