@@ -1,0 +1,86 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/vesselMotionService/vesselMotionServiceTests/vesselMotionServiceTests.csproj": {}
+  },
+  "projects": {
+    "/home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/vesselMotionService/vesselMotionServiceTests/vesselMotionServiceTests.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/vesselMotionService/vesselMotionServiceTests/vesselMotionServiceTests.csproj",
+        "projectName": "vesselMotionServiceTests",
+        "projectPath": "/home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/vesselMotionService/vesselMotionServiceTests/vesselMotionServiceTests.csproj",
+        "packagesPath": "/home/nic/.nuget/packages/",
+        "outputPath": "/home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/vesselMotionService/vesselMotionServiceTests/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/nic/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "dependencies": {
+            "../vesselMotionService/vesselMotionService.csproj": {
+              "target": "Package",
+              "version": "(, )"
+            },
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[16.9.4, )"
+            },
+            "NUnit": {
+              "target": "Package",
+              "version": "[3.13.2, )"
+            },
+            "NUnit.Console": {
+              "target": "Package",
+              "version": "[3.12.0, )"
+            },
+            "NUnit3TestAdapter": {
+              "target": "Package",
+              "version": "[4.0.0, )"
+            },
+            "coverlet.collector": {
+              "target": "Package",
+              "version": "[3.0.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/5.0.301/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
