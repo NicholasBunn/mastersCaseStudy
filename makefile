@@ -43,6 +43,9 @@ testOceanWeatherService:
 testPowerTrainService:
 	/usr/bin/python3 /home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/powerTrainService/test_powerTrainService.py
 
+testVesselMotionService:
+	cd services/vesselMotionService; dotnet test; cd ..
+
 testGo:
 	go test ./...
 
@@ -50,8 +53,12 @@ testPy:
 	make testOceanWeatherService
 	make testPowerTrainService
 
+testCSharp:
+	make testVesselMotionService
+
 testAll:
 	make testPy
+	make testCSharp
 
 # Make commands relating to running the program
 runOceanWeatherService:
