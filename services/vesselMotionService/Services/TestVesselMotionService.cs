@@ -2,10 +2,10 @@ using System;
 using Xunit;
 using vesselMotionService;
 
-public class TestVesselMotionService
+public class VesselMotionServiceUnitTest
 {
     [Fact]
-    public void TestCalculateOpenWaterRespone()
+    public void Test_CalculateOpenWaterResponse()
     {
         /* This tests that the 'CalculateOpenWater' function is functioning as expected.
         */
@@ -27,7 +27,7 @@ public class TestVesselMotionService
     [InlineData(2431.24975585937F, -35.53165F, 13.5F, 337F, 212F, -1.5F)]
     [InlineData(2431.24975585937F, -35.53165F, -13.5F, 337F, -212F, -1.5F)]
     [InlineData(-2431.24975585937F, -35.53165F, -13.5F, -337F, -212F, -1.5F)]
-    public void TestCalculatOpenWaterResponse_NegativeInput(float portPropMotorPower, float latitude, float relativeWindSpeed, float relativeWindDirection, float heading, float waveHeight)
+    public void Test_CalculatOpenWaterResponse_NegativeInput(float portPropMotorPower, float latitude, float relativeWindSpeed, float relativeWindDirection, float heading, float waveHeight)
     {
         /* This tests that the 'CalculateOpenWater' function correctlty throws an error when a negative value is passed in for 
         any input other than latitude
