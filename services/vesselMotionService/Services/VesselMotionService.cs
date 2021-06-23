@@ -27,7 +27,7 @@ namespace vesselMotionService
             acceleration estimates for a requested sailing conditions at a requested location on the ship 
             */
 
-            _logger.LogInformation("Received Motion Estimate Service Call")
+            _logger.LogInformation("Received Motion Estimate Service Call");
 
             // Create a response object            
             var response = new MotionResponse();  
