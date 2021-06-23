@@ -1,4 +1,5 @@
 # Default ignored files
+.vscode
 certification/*.pem
 certification/*.srl
 *.pyc

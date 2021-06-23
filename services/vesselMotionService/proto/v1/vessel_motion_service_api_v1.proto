@@ -11,6 +11,7 @@ message MotionEstimateRequest {
     repeated float Heading = 4;
     repeated float wave_height = 5;
     LocationOnShipEnum query_location = 6;
+    repeated float wind_direction_relative = 7;
 }
 
 message MotionTrackingRequest {

@@ -27,7 +27,31 @@ namespace vesselMotionService
             acceleration estimates for a requested sailing conditions at a requested location on the ship 
             */
 
-            return base.MotionEstimate(request, context);
+            _logger.LogInformation("Received Motion Estimate Service Call")
+
+            // Create a response object            
+            var response = new MotionResponse();  
+
+            try
+            {
+                // Iterate through the provided inputs and produce estimates for each set
+                for(int i = 0; i < request.PortPropMotorPower.Count; i++)
+                {
+                    // For the current set of input variables, add the estimate to the response
+                    response.Acceleration.Add(CalculateVibrationResponse("OpenWater", request.PortPropMotorPower[i], request.Latitude[i], request.WindSpeedRelative[i], request.WindDirectionRelative[i], request.Heading[i], request.WaveHeight[i]));
+                }
+            }
+            catch (RpcException err) when (err.StatusCode == StatusCode.Internal)
+            {
+                _logger.LogDebug($"Internal Error, need to actually interpret this error properly: \n {err}");
+                throw err;
+            }
+            catch (RpcException err)
+            {
+                _logger.LogDebug($"Unaccounted for error, please contact a developer and let them know about this \n {err}");
+            }
+            
+            return Task.FromResult(response);
         }
 
         public override Task<MotionResponse> MotionTracking(MotionTrackingRequest request, ServerCallContext context)
@@ -47,5 +71,64 @@ namespace vesselMotionService
             return base.MotionEstimateEvaluation(request, context);
         }
 
+        private float CalculateVibrationResponse(string modelType, float portPropMotorPower, float latitude, float relativeWindSpeed, float relativeWindDirection, float heading, float waveHeight)
+        {  
+            /* This function selects a model type based on the requested sailing environment (be it openwater or ice). This case study does not 
+            make use of the ice functionality as only open water route comparison is demonstrated, but the provision has been included here to 
+            make provision for future expansion
+            */
+
+            switch(modelType)
+            {
+                case "OpenWater": 
+                    return CalculateOpenWaterRespone(portPropMotorPower, latitude, relativeWindSpeed, relativeWindDirection, heading, waveHeight);
+
+                case "Ice":
+
+                    break;
+                default:
+                    return CalculateOpenWaterRespone(portPropMotorPower, latitude, relativeWindSpeed, relativeWindDirection, heading, waveHeight);
+                
+            }
+
+            throw new RpcException(new Status(StatusCode.Internal, "Requested model does not have an implemented method."));
+
+        }
+
+        private float CalculateOpenWaterRespone(float portPropMotorPower, float latitude, float relativeWindSpeed, float relativeWindDirection, float heading, float waveHeight)
+        {
+            /* This function calculates the vibration response of the vessel for open water sailing conditions. In this implementation, only the y-axis acceleration in the bridge is required, purely as a means to demonstrate the design's ability to aggregate and coordinate information effectively. The study carried out by Soal (2014) offers models/coefficients that account for acceleration in multiple axis at multiple locations on the vessel; these, however, were not implemented to save time. This function would need to be refactored to include these (by taking location and axis as inputs and by selecting the coefficients based on these).
+            */
+
+            // Define coefficients for a z-axis estimate on the bridge in open water
+            float intercept = 1.7605F;
+            float alpha = 0.0010F;
+            float beta = -0.0004F;
+            float gamma = 0.2050F;
+            float delta = -0.0008F;
+            float zeta = 0.0017F;
+            float eta = 0F;
+            
+            return (intercept + (alpha*portPropMotorPower) + (beta*latitude) + (gamma*relativeWindSpeed) + (delta*relativeWindDirection) + (zeta*heading) + (eta*waveHeight));
+        }
+
+        private float CalculateIceResponse(float s10Bow, float s15SternShoulder, float portPropMotorPower, float longitude, float relativeWindSpeed, float relativeWindDirection, float gpsSOG, float floeSize)
+        {
+            /* This function calculates the vibration response of the vessel for ice sailing conditions. This model requires estimates for accelerometer values on the vessel, and until an estimation model for these sensors is developed this call cannnot be used. In this implementation, only the y-axis acceleration in the bridge is required, purely as a means to demonstrate the design's ability to aggregate and coordinate information effectively. The study carried out by Soal (2014) offers models/coefficients that account for acceleration in multiple axis at multiple locations on the vessel; these, however, were not implemented to save time. This function would need to be refactored to include these (by taking location and axis as inputs and by selecting the coefficients based on these)
+            */
+
+            // Define coefficients for a z-axis estimate on the bridge in open water
+            float intercept = 0.4014F;
+            float alpha = 0.0015F;
+            float beta = 0.0001F;
+            float gamma = 0F;
+            float delta = 0F;
+            float zeta = -0.0151F;
+            float eta = 0.0001F;
+            float theta = 0F;
+            float phi = 0F;
+
+            return (intercept + (alpha*s10Bow) + (beta*s15SternShoulder) + (gamma*portPropMotorPower) + (delta*longitude) + (zeta*relativeWindSpeed) + (eta*relativeWindDirection) + (theta*gpsSOG) + (phi*floeSize));
+        }
     }
 }
