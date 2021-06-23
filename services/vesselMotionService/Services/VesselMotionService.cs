@@ -71,7 +71,7 @@ namespace vesselMotionService
             return base.MotionEstimateEvaluation(request, context);
         }
 
-        private float CalculateVibrationResponse(string modelType, float portPropMotorPower, float latitude, float relativeWindSpeed, float relativeWindDirection, float heading, float waveHeight)
+        internal float CalculateVibrationResponse(string modelType, float portPropMotorPower, float latitude, float relativeWindSpeed, float relativeWindDirection, float heading, float waveHeight)
         {  
             /* This function selects a model type based on the requested sailing environment (be it openwater or ice). This case study does not 
             make use of the ice functionality as only open water route comparison is demonstrated, but the provision has been included here to 
@@ -81,13 +81,13 @@ namespace vesselMotionService
             switch(modelType)
             {
                 case "OpenWater": 
-                    return CalculateOpenWaterRespone(portPropMotorPower, latitude, relativeWindSpeed, relativeWindDirection, heading, waveHeight);
+                    return CalculateOpenWaterResponse(portPropMotorPower, latitude, relativeWindSpeed, relativeWindDirection, heading, waveHeight);
 
                 case "Ice":
 
                     break;
                 default:
-                    return CalculateOpenWaterRespone(portPropMotorPower, latitude, relativeWindSpeed, relativeWindDirection, heading, waveHeight);
+                    return CalculateOpenWaterResponse(portPropMotorPower, latitude, relativeWindSpeed, relativeWindDirection, heading, waveHeight);
                 
             }
 
@@ -95,7 +95,7 @@ namespace vesselMotionService
 
         }
 
-        private float CalculateOpenWaterRespone(float portPropMotorPower, float latitude, float relativeWindSpeed, float relativeWindDirection, float heading, float waveHeight)
+        internal float CalculateOpenWaterResponse(float portPropMotorPower, float latitude, float relativeWindSpeed, float relativeWindDirection, float heading, float waveHeight)
         {
             /* This function calculates the vibration response of the vessel for open water sailing conditions. In this implementation, only the y-axis acceleration in the bridge is required, purely as a means to demonstrate the design's ability to aggregate and coordinate information effectively. The study carried out by Soal (2014) offers models/coefficients that account for acceleration in multiple axis at multiple locations on the vessel; these, however, were not implemented to save time. This function would need to be refactored to include these (by taking location and axis as inputs and by selecting the coefficients based on these).
             */
@@ -112,7 +112,7 @@ namespace vesselMotionService
             return (intercept + (alpha*portPropMotorPower) + (beta*latitude) + (gamma*relativeWindSpeed) + (delta*relativeWindDirection) + (zeta*heading) + (eta*waveHeight));
         }
 
-        private float CalculateIceResponse(float s10Bow, float s15SternShoulder, float portPropMotorPower, float longitude, float relativeWindSpeed, float relativeWindDirection, float gpsSOG, float floeSize)
+        internal float CalculateIceResponse(float s10Bow, float s15SternShoulder, float portPropMotorPower, float longitude, float relativeWindSpeed, float relativeWindDirection, float gpsSOG, float floeSize)
         {
             /* This function calculates the vibration response of the vessel for ice sailing conditions. This model requires estimates for accelerometer values on the vessel, and until an estimation model for these sensors is developed this call cannnot be used. In this implementation, only the y-axis acceleration in the bridge is required, purely as a means to demonstrate the design's ability to aggregate and coordinate information effectively. The study carried out by Soal (2014) offers models/coefficients that account for acceleration in multiple axis at multiple locations on the vessel; these, however, were not implemented to save time. This function would need to be refactored to include these (by taking location and axis as inputs and by selecting the coefficients based on these)
             */
