@@ -5,7 +5,7 @@ package powerTrainService.v1;
 // option go_package = "service/powerTrainService/proto/v1";
 
 message PowerTrainEstimateRequest {
-    repeated float time_and_date = 1;
+    repeated double unix_time = 1;
     repeated float port_prop_motor_speed = 2;
     repeated float stbd_prop_motor_speed = 3;
     repeated float propeller_pitch_port = 4;
@@ -24,17 +24,20 @@ message PowerTrackingRequest {
 }
 
 message PowerEstimateResponse {
-    repeated float power_estimate = 1;
+    repeated double unix_time = 1;
+    repeated float power_estimate = 2;
 }
 
 message CostEstimateResponse {
-    repeated float power_estimate = 1;
-    repeated float cost_estimate = 2;
+    repeated double unix_time = 1;
+    repeated float power_estimate = 2;
+    repeated float cost_estimate = 3;
 }
 
 message PowerEvaluationResponse {
-    repeated float power_estimate = 1;
-    repeated float power_actual = 2;
+    repeated double unix_time = 1;
+    repeated float power_estimate = 2;
+    repeated float power_actual = 3;
 }
 
 message PowerTrackingResponse {

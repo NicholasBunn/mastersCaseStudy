@@ -186,6 +186,7 @@ class PowerTrainServiceServicer(power_train_service_api_v1_pb2_grpc.PowerTrainSe
 			raise e
 
 		# Populate response message
+		responseMessage.unix_time.extend(request.unix_time)
 		responseMessage.power_estimate.extend(estimatedPower)
 
 		return responseMessage
@@ -193,6 +194,18 @@ class PowerTrainServiceServicer(power_train_service_api_v1_pb2_grpc.PowerTrainSe
 	def CostEstimate(self, request, context):
 		"""The 'Cost Estimate' call provides foresight for tactical decision-making by providing cost estimates for a requested route and sailing conditions
 		"""
+		hourlyCrewCost = 10000 # Cost of crew salaries per hour, in R
+		fuelDensity = 0.8323 # Density of diesel, in kg/litre
+		dieselPrice = 13 # Price of Diesel, in R/litler
+		fuelConsumption = 179 # Fuel consumption of the S.A. Agulhas II, in g/kWh
+		costPerkW = (dieselPrice/fuelDensity)*(fuelConsumption/1000) # Cost of running the ship, in R/kWh
+
+
+		# for unixTime, portPropMotorSpeed, sbtdPropMotorSpeed, propPitchPort, propPitchStbd, sog, relativeWindDirection, windSpeed, beaufortNumber, waveDirection, waveLength, modelType in zip(request.time_and_data, request.port_prop_motor_speed, request.stbd_prop_motor_speed, request.propeller_pitch_port, request.propeller_pitch_stbd, request.sog, request.wind_direction_relative, request.wind_speed, request.beaufort_number, request.wave_direction, request.wave_length, request.model_type):
+    	# 	pass
+
+		totalCost = hourlyCrewCost*(timeInHours) + (costPerkWh*powerInkW*timeInHours)
+
 		context.set_code(grpc.StatusCode.UNIMPLEMENTED)
 		context.set_details('Method not implemented!')
 		raise NotImplementedError('Method not implemented!')

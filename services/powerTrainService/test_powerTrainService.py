@@ -128,6 +128,7 @@ class PowerTrainIntegrationTEst(unittest.TestCase):
 		with powerTrainService.grpc.insecure_channel(self.port) as channel:
 			stub = powerTrainService.power_train_service_api_v1_pb2_grpc.PowerTrainServiceStub(channel)
 			response = stub.PowerEstimate(powerTrainService.power_train_service_api_v1_pb2.PowerTrainEstimateRequest(
+				unix_time = [1608811845, 1608812145, 1609157745], # These are taken from the dataset but are not unix time! It's fine because the values are not used here, they're just used to check that the function returns the correct time points
 				port_prop_motor_speed = [83.5450057983399, 83.7725067138672, 120.443740844727],
 				stbd_prop_motor_speed = [84.4112548828125, 84.3762435913086, 120.522499084473],
 				propeller_pitch_port = [-40.5200004577637, 0.0300000011920929, 95.3400039672852],
@@ -140,11 +141,13 @@ class PowerTrainIntegrationTEst(unittest.TestCase):
 				wave_length = [0.0, 0.0, 69.3333333333333],
 				model_type = powerTrainService.power_train_service_api_v1_pb2.OPENWATER,
 			))
-			
+		
 		self.assertEqual(response.power_estimate[0], 415.4642639160156)
 		self.assertEqual(response.power_estimate[1], -6.391994476318359)
 		self.assertEqual(response.power_estimate[2], 3718.072509765625)
-
+		self.assertEqual(response.unix_time[0], 1608811845)
+		self.assertEqual(response.unix_time[1], 1608812145)
+		self.assertEqual(response.unix_time[2], 1609157745)
 
 	def test_CostEstimate(self):
 		pass
