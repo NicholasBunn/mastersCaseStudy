@@ -55,8 +55,11 @@ public class VesselMotionServiceUnitTest
 public class VesselMotionServiceIntegrationTest
 {
 
-    [Fact]
-    public async Task Test_MotionEstimate()
+    [Theory]
+    [InlineData(2431.24975585937F, -35.53165F, 13.5F, 337F, 212F, 1.5F, vesselMotionService.ModelTypeEnum.Openwater)]
+    [InlineData(2431.24975585937F, -35.53165F, 13.5F, 337F, 212F, 1.5F, vesselMotionService.ModelTypeEnum.UnknownModel)]
+    [InlineData(2431.24975585937F, -35.53165F, 13.5F, 337F, 212F, 1.5F, null)]
+    public async Task Test_MotionEstimate(float portPropMotorPower, float latitude, float relativeWindSpeed, float relativeWindDirection, float heading, float waveHeight, vesselMotionService.ModelTypeEnum modelType)
     {
 
         System.Console.WriteLine("Testing Vessel Motion Service: Motion Estimate (Service Call Test)");
@@ -66,13 +69,13 @@ public class VesselMotionServiceIntegrationTest
 
         // Create motion estimate request message
         var testRequestMessage = new MotionEstimateRequest();
-        testRequestMessage.PortPropMotorPower.Add(2431.24975585937F);
-        testRequestMessage.WindSpeedRelative.Add(13.5F);
-        testRequestMessage.Latitude.Add(-35.53165F);
-        testRequestMessage.Heading.Add(212F);
-        testRequestMessage.WaveHeight.Add(7.0642624F);
-        testRequestMessage.WindDirectionRelative.Add(337F);
-        testRequestMessage.ModelType = vesselMotionService.ModelTypeEnum.Openwater;
+        testRequestMessage.PortPropMotorPower.Add(portPropMotorPower);
+        testRequestMessage.WindSpeedRelative.Add(relativeWindSpeed);
+        testRequestMessage.Latitude.Add(latitude);
+        testRequestMessage.Heading.Add(heading);
+        testRequestMessage.WaveHeight.Add(waveHeight);
+        testRequestMessage.WindDirectionRelative.Add(relativeWindDirection);
+        testRequestMessage.ModelType = modelType;
 
         var response = await testInstance.MotionEstimate(testRequestMessage, null);
 

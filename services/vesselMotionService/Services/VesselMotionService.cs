@@ -40,10 +40,13 @@ namespace vesselMotionService
                     case ModelTypeEnum.Openwater: 
                         // Iterate through the provided inputs and produce estimates for each set
                         for(int i = 0; i < request.PortPropMotorPower.Count; i++)
-                        {
+                        {   
                             // For the current set of input variables, add the estimate to the response
                             response.Acceleration.Add(CalculateOpenWaterResponse(request.PortPropMotorPower[i], request.Latitude[i], request.WindSpeedRelative[i], request.WindDirectionRelative[i], request.Heading[i], request.WaveHeight[i]));
                         }
+
+                        // _logger.LogInformation("Succesfully calculated response for open water model");
+
                         break;
 
                     case ModelTypeEnum.Ice:
@@ -55,6 +58,8 @@ namespace vesselMotionService
                         {
                             response.Acceleration.Add(CalculateOpenWaterResponse(request.PortPropMotorPower[i], request.Latitude[i], request.WindSpeedRelative[i], request.WindDirectionRelative[i], request.Heading[i], request.WaveHeight[i]));
                         }
+
+                        // _logger.LogInformation("Succesfully calculated response for unknown model (defaulted to open water)");
                         break;
                     
                     default:   
@@ -63,6 +68,8 @@ namespace vesselMotionService
                         {
                             response.Acceleration.Add(CalculateOpenWaterResponse(request.PortPropMotorPower[i], request.Latitude[i], request.WindSpeedRelative[i], request.WindDirectionRelative[i], request.Heading[i], request.WaveHeight[i]));
                         }
+
+                        // _logger.LogInformation("Succesfully calculated response for no provided model (defaulted to open water)");
                         break;
                 }
             }
