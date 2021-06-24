@@ -131,6 +131,18 @@ def runModel(myModel, modelInputs):
 
 	return estimatedPower
 
+def evaluateModel(myModel, modelInputs, actualPortMotorPower, actualStbdMotorPower):
+	''' This function takes a model object, the model's inputs, and the actual power for evaluation as inputs. It evaluates the model's prediction against	the actual power, returning the real power.
+	'''
+
+	realPower = (actualPortMotorPower + actualStbdMotorPower)/2 # realPower holds the actual (average) power, as recorded by the MCU, used here to compare to the model's estimates
+
+	# Evaluate the model's estimate against the actual power
+	scores = myModel.evaluate(modelInputs, realPower, verbose=0)
+	print("%s: %.2f%%" % (myModel.metrics_names[1], scores[1]))
+
+	return scores
+
 class PowerTrainServiceServicer(power_train_service_api_v1_pb2_grpc.PowerTrainServiceServicer):
 	"""'Power Train Service; offers four service calls that provide information about the power train of the vessel (namely power requirements and their assosciated costs)
 	"""
@@ -208,10 +220,6 @@ class PowerTrainServiceServicer(power_train_service_api_v1_pb2_grpc.PowerTrainSe
 		fuelConsumption = 179 # Fuel consumption of the S.A. Agulhas II, in g/kWh
 		costPerkWh = (dieselPrice/fuelDensity)*(fuelConsumption/1000) # Cost of running the ship, in R/kWh
 
-
-		# for unixTime, portPropMotorSpeed, sbtdPropMotorSpeed, propPitchPort, propPitchStbd, sog, relativeWindDirection, windSpeed, beaufortNumber, waveDirection, waveLength, modelType in zip(request.time_and_data, request.port_prop_motor_speed, request.stbd_prop_motor_speed, request.propeller_pitch_port, request.propeller_pitch_stbd, request.sog, request.wind_direction_relative, request.wind_speed, request.beaufort_number, request.wave_direction, request.wave_length, request.model_type):
-    	# 	pass
-
 		requiredPowerSet = self.PowerEstimate(request, context)
 
 		# Loop through requested points
@@ -241,7 +249,6 @@ class PowerTrainServiceServicer(power_train_service_api_v1_pb2_grpc.PowerTrainSe
 		responseMessage.total_cost = totalCost
 
 		return responseMessage
-
 
 	def PowerTracking(self, request, context):
 		"""The 'Power Tracking' call provides insight for tactical and operational decision-making by providing real-time power use by the vessel
