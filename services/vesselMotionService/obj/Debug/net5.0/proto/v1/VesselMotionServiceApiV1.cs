@@ -32,27 +32,30 @@ namespace vesselMotionService {
             "dGlvbhgGIAEoDjIqLnZlc3NlbE1vdGlvblNlcnZpY2UudjEuTG9jYXRpb25P",
             "blNoaXBFbnVtEh8KF3dpbmRfZGlyZWN0aW9uX3JlbGF0aXZlGAcgAygCEjkK",
             "Cm1vZGVsX3R5cGUYCCABKA4yJS52ZXNzZWxNb3Rpb25TZXJ2aWNlLnYxLk1v",
-            "ZGVsVHlwZUVudW0iFwoVTW90aW9uVHJhY2tpbmdSZXF1ZXN0IiYKDk1vdGlv",
-            "blJlc3BvbnNlEhQKDGFjY2VsZXJhdGlvbhgBIAMoAiJWChhNb3Rpb25FdmFs",
-            "dWF0aW9uUmVzcG9uc2USHQoVYWNjZWxlcmF0aW9uX2VzdGltYXRlGAEgAygC",
-            "EhsKE2FjY2VsZXJhdGlvbl9hY3R1YWwYAiADKAIqOQoSTG9jYXRpb25PblNo",
-            "aXBFbnVtEhQKEFVOS05PV05fTE9DQVRJT04QABINCglTT01FV0hFUkUQASo6",
-            "Cg1Nb2RlbFR5cGVFbnVtEhEKDVVOS05PV05fTU9ERUwQABINCglPUEVOV0FU",
-            "RVIQARIHCgNJQ0UQAjLkAgoTdmVzc2VsTW90aW9uU2VydmljZRJnCg5Nb3Rp",
-            "b25Fc3RpbWF0ZRItLnZlc3NlbE1vdGlvblNlcnZpY2UudjEuTW90aW9uRXN0",
-            "aW1hdGVSZXF1ZXN0GiYudmVzc2VsTW90aW9uU2VydmljZS52MS5Nb3Rpb25S",
-            "ZXNwb25zZRJnCg5Nb3Rpb25UcmFja2luZxItLnZlc3NlbE1vdGlvblNlcnZp",
-            "Y2UudjEuTW90aW9uVHJhY2tpbmdSZXF1ZXN0GiYudmVzc2VsTW90aW9uU2Vy",
-            "dmljZS52MS5Nb3Rpb25SZXNwb25zZRJ7ChhNb3Rpb25Fc3RpbWF0ZUV2YWx1",
-            "YXRpb24SLS52ZXNzZWxNb3Rpb25TZXJ2aWNlLnYxLk1vdGlvbkVzdGltYXRl",
-            "UmVxdWVzdBowLnZlc3NlbE1vdGlvblNlcnZpY2UudjEuTW90aW9uRXZhbHVh",
-            "dGlvblJlc3BvbnNlQhaqAhN2ZXNzZWxNb3Rpb25TZXJ2aWNlYgZwcm90bzM="));
+            "ZGVsVHlwZUVudW0iFwoVTW90aW9uVHJhY2tpbmdSZXF1ZXN0IjcKFk1vdGlv",
+            "bkVzdGltYXRlUmVzcG9uc2USHQoVYWNjZWxlcmF0aW9uX2VzdGltYXRlGAEg",
+            "AygCIjUKFk1vdGlvblRyYWNraW5nUmVzcG9uc2USGwoTYWNjZWxlcmF0aW9u",
+            "X2FjdHVhbBgBIAMoAiJWChhNb3Rpb25FdmFsdWF0aW9uUmVzcG9uc2USHQoV",
+            "YWNjZWxlcmF0aW9uX2VzdGltYXRlGAEgAygCEhsKE2FjY2VsZXJhdGlvbl9h",
+            "Y3R1YWwYAiADKAIqOQoSTG9jYXRpb25PblNoaXBFbnVtEhQKEFVOS05PV05f",
+            "TE9DQVRJT04QABINCglTT01FV0hFUkUQASo6Cg1Nb2RlbFR5cGVFbnVtEhEK",
+            "DVVOS05PV05fTU9ERUwQABINCglPUEVOV0FURVIQARIHCgNJQ0UQAjL0AgoT",
+            "dmVzc2VsTW90aW9uU2VydmljZRJvCg5Nb3Rpb25Fc3RpbWF0ZRItLnZlc3Nl",
+            "bE1vdGlvblNlcnZpY2UudjEuTW90aW9uRXN0aW1hdGVSZXF1ZXN0Gi4udmVz",
+            "c2VsTW90aW9uU2VydmljZS52MS5Nb3Rpb25Fc3RpbWF0ZVJlc3BvbnNlEm8K",
+            "Dk1vdGlvblRyYWNraW5nEi0udmVzc2VsTW90aW9uU2VydmljZS52MS5Nb3Rp",
+            "b25UcmFja2luZ1JlcXVlc3QaLi52ZXNzZWxNb3Rpb25TZXJ2aWNlLnYxLk1v",
+            "dGlvblRyYWNraW5nUmVzcG9uc2USewoYTW90aW9uRXN0aW1hdGVFdmFsdWF0",
+            "aW9uEi0udmVzc2VsTW90aW9uU2VydmljZS52MS5Nb3Rpb25Fc3RpbWF0ZVJl",
+            "cXVlc3QaMC52ZXNzZWxNb3Rpb25TZXJ2aWNlLnYxLk1vdGlvbkV2YWx1YXRp",
+            "b25SZXNwb25zZUIWqgITdmVzc2VsTW90aW9uU2VydmljZWIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::vesselMotionService.LocationOnShipEnum), typeof(global::vesselMotionService.ModelTypeEnum), }, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::vesselMotionService.MotionEstimateRequest), global::vesselMotionService.MotionEstimateRequest.Parser, new[]{ "PortPropMotorPower", "WindSpeedRelative", "Latitude", "Heading", "WaveHeight", "QueryLocation", "WindDirectionRelative", "ModelType" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::vesselMotionService.MotionTrackingRequest), global::vesselMotionService.MotionTrackingRequest.Parser, null, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::vesselMotionService.MotionResponse), global::vesselMotionService.MotionResponse.Parser, new[]{ "Acceleration" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::vesselMotionService.MotionEstimateResponse), global::vesselMotionService.MotionEstimateResponse.Parser, new[]{ "AccelerationEstimate" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::vesselMotionService.MotionTrackingResponse), global::vesselMotionService.MotionTrackingResponse.Parser, new[]{ "AccelerationActual" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::vesselMotionService.MotionEvaluationResponse), global::vesselMotionService.MotionEvaluationResponse.Parser, new[]{ "AccelerationEstimate", "AccelerationActual" }, null, null, null, null)
           }));
     }
@@ -580,15 +583,15 @@ namespace vesselMotionService {
 
   }
 
-  public sealed partial class MotionResponse : pb::IMessage<MotionResponse>
+  public sealed partial class MotionEstimateResponse : pb::IMessage<MotionEstimateResponse>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
   #endif
   {
-    private static readonly pb::MessageParser<MotionResponse> _parser = new pb::MessageParser<MotionResponse>(() => new MotionResponse());
+    private static readonly pb::MessageParser<MotionEstimateResponse> _parser = new pb::MessageParser<MotionEstimateResponse>(() => new MotionEstimateResponse());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<MotionResponse> Parser { get { return _parser; } }
+    public static pb::MessageParser<MotionEstimateResponse> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
@@ -601,54 +604,54 @@ namespace vesselMotionService {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public MotionResponse() {
+    public MotionEstimateResponse() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public MotionResponse(MotionResponse other) : this() {
-      acceleration_ = other.acceleration_.Clone();
+    public MotionEstimateResponse(MotionEstimateResponse other) : this() {
+      accelerationEstimate_ = other.accelerationEstimate_.Clone();
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public MotionResponse Clone() {
-      return new MotionResponse(this);
+    public MotionEstimateResponse Clone() {
+      return new MotionEstimateResponse(this);
     }
 
-    /// <summary>Field number for the "acceleration" field.</summary>
-    public const int AccelerationFieldNumber = 1;
-    private static readonly pb::FieldCodec<float> _repeated_acceleration_codec
+    /// <summary>Field number for the "acceleration_estimate" field.</summary>
+    public const int AccelerationEstimateFieldNumber = 1;
+    private static readonly pb::FieldCodec<float> _repeated_accelerationEstimate_codec
         = pb::FieldCodec.ForFloat(10);
-    private readonly pbc::RepeatedField<float> acceleration_ = new pbc::RepeatedField<float>();
+    private readonly pbc::RepeatedField<float> accelerationEstimate_ = new pbc::RepeatedField<float>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<float> Acceleration {
-      get { return acceleration_; }
+    public pbc::RepeatedField<float> AccelerationEstimate {
+      get { return accelerationEstimate_; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
-      return Equals(other as MotionResponse);
+      return Equals(other as MotionEstimateResponse);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(MotionResponse other) {
+    public bool Equals(MotionEstimateResponse other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if(!acceleration_.Equals(other.acceleration_)) return false;
+      if(!accelerationEstimate_.Equals(other.accelerationEstimate_)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      hash ^= acceleration_.GetHashCode();
+      hash ^= accelerationEstimate_.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -665,7 +668,7 @@ namespace vesselMotionService {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      acceleration_.WriteTo(output, _repeated_acceleration_codec);
+      accelerationEstimate_.WriteTo(output, _repeated_accelerationEstimate_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -675,7 +678,7 @@ namespace vesselMotionService {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      acceleration_.WriteTo(ref output, _repeated_acceleration_codec);
+      accelerationEstimate_.WriteTo(ref output, _repeated_accelerationEstimate_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -685,7 +688,7 @@ namespace vesselMotionService {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      size += acceleration_.CalculateSize(_repeated_acceleration_codec);
+      size += accelerationEstimate_.CalculateSize(_repeated_accelerationEstimate_codec);
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -693,11 +696,11 @@ namespace vesselMotionService {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(MotionResponse other) {
+    public void MergeFrom(MotionEstimateResponse other) {
       if (other == null) {
         return;
       }
-      acceleration_.Add(other.acceleration_);
+      accelerationEstimate_.Add(other.accelerationEstimate_);
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -714,7 +717,7 @@ namespace vesselMotionService {
             break;
           case 10:
           case 13: {
-            acceleration_.AddEntriesFrom(input, _repeated_acceleration_codec);
+            accelerationEstimate_.AddEntriesFrom(input, _repeated_accelerationEstimate_codec);
             break;
           }
         }
@@ -733,7 +736,170 @@ namespace vesselMotionService {
             break;
           case 10:
           case 13: {
-            acceleration_.AddEntriesFrom(ref input, _repeated_acceleration_codec);
+            accelerationEstimate_.AddEntriesFrom(ref input, _repeated_accelerationEstimate_codec);
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
+  public sealed partial class MotionTrackingResponse : pb::IMessage<MotionTrackingResponse>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<MotionTrackingResponse> _parser = new pb::MessageParser<MotionTrackingResponse>(() => new MotionTrackingResponse());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<MotionTrackingResponse> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::vesselMotionService.VesselMotionServiceApiV1Reflection.Descriptor.MessageTypes[3]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MotionTrackingResponse() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MotionTrackingResponse(MotionTrackingResponse other) : this() {
+      accelerationActual_ = other.accelerationActual_.Clone();
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MotionTrackingResponse Clone() {
+      return new MotionTrackingResponse(this);
+    }
+
+    /// <summary>Field number for the "acceleration_actual" field.</summary>
+    public const int AccelerationActualFieldNumber = 1;
+    private static readonly pb::FieldCodec<float> _repeated_accelerationActual_codec
+        = pb::FieldCodec.ForFloat(10);
+    private readonly pbc::RepeatedField<float> accelerationActual_ = new pbc::RepeatedField<float>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<float> AccelerationActual {
+      get { return accelerationActual_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as MotionTrackingResponse);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(MotionTrackingResponse other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if(!accelerationActual_.Equals(other.accelerationActual_)) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      hash ^= accelerationActual_.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      accelerationActual_.WriteTo(output, _repeated_accelerationActual_codec);
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      accelerationActual_.WriteTo(ref output, _repeated_accelerationActual_codec);
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      size += accelerationActual_.CalculateSize(_repeated_accelerationActual_codec);
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(MotionTrackingResponse other) {
+      if (other == null) {
+        return;
+      }
+      accelerationActual_.Add(other.accelerationActual_);
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10:
+          case 13: {
+            accelerationActual_.AddEntriesFrom(input, _repeated_accelerationActual_codec);
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 10:
+          case 13: {
+            accelerationActual_.AddEntriesFrom(ref input, _repeated_accelerationActual_codec);
             break;
           }
         }
@@ -755,7 +921,7 @@ namespace vesselMotionService {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::vesselMotionService.VesselMotionServiceApiV1Reflection.Descriptor.MessageTypes[3]; }
+      get { return global::vesselMotionService.VesselMotionServiceApiV1Reflection.Descriptor.MessageTypes[4]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

@@ -21,7 +21,7 @@ namespace vesselMotionService
             _logger = logger;
         }
 
-        public override Task<MotionResponse> MotionEstimate(MotionEstimateRequest request, ServerCallContext context)
+        public override Task<MotionEstimateResponse> MotionEstimate(MotionEstimateRequest request, ServerCallContext context)
         {
             /* The 'Motion Estimate' call provides foresight for tactical decision-making by providing high-frequency 
             acceleration estimates for a requested sailing conditions at a requested location on the ship 
@@ -30,7 +30,7 @@ namespace vesselMotionService
             // _logger.LogInformation("Received Motion Estimate Service Call");
 
             // Create a response object            
-            var response = new MotionResponse();  
+            var response = new MotionEstimateResponse();  
 
             try
             {
@@ -42,7 +42,7 @@ namespace vesselMotionService
                         for(int i = 0; i < request.PortPropMotorPower.Count; i++)
                         {   
                             // For the current set of input variables, add the estimate to the response
-                            response.Acceleration.Add(CalculateOpenWaterResponse(request.PortPropMotorPower[i], request.Latitude[i], request.WindSpeedRelative[i], request.WindDirectionRelative[i], request.Heading[i], request.WaveHeight[i]));
+                            response.AccelerationEstimate.Add(CalculateOpenWaterResponse(request.PortPropMotorPower[i], request.Latitude[i], request.WindSpeedRelative[i], request.WindDirectionRelative[i], request.Heading[i], request.WaveHeight[i]));
                         }
 
                         // _logger.LogInformation("Succesfully calculated response for open water model");
@@ -56,7 +56,7 @@ namespace vesselMotionService
                         // Iterate through the provided inputs and produce estimates for each set
                         for(int i = 0; i < request.PortPropMotorPower.Count; i++)
                         {
-                            response.Acceleration.Add(CalculateOpenWaterResponse(request.PortPropMotorPower[i], request.Latitude[i], request.WindSpeedRelative[i], request.WindDirectionRelative[i], request.Heading[i], request.WaveHeight[i]));
+                            response.AccelerationEstimate.Add(CalculateOpenWaterResponse(request.PortPropMotorPower[i], request.Latitude[i], request.WindSpeedRelative[i], request.WindDirectionRelative[i], request.Heading[i], request.WaveHeight[i]));
                         }
 
                         // _logger.LogInformation("Succesfully calculated response for unknown model (defaulted to open water)");
@@ -66,7 +66,7 @@ namespace vesselMotionService
                         // Iterate through the provided inputs and produce estimates for each set                         
                         for(int i = 0; i < request.PortPropMotorPower.Count; i++)
                         {
-                            response.Acceleration.Add(CalculateOpenWaterResponse(request.PortPropMotorPower[i], request.Latitude[i], request.WindSpeedRelative[i], request.WindDirectionRelative[i], request.Heading[i], request.WaveHeight[i]));
+                            response.AccelerationEstimate.Add(CalculateOpenWaterResponse(request.PortPropMotorPower[i], request.Latitude[i], request.WindSpeedRelative[i], request.WindDirectionRelative[i], request.Heading[i], request.WaveHeight[i]));
                         }
 
                         // _logger.LogInformation("Succesfully calculated response for no provided model (defaulted to open water)");
@@ -86,7 +86,7 @@ namespace vesselMotionService
             return Task.FromResult(response);
         }
 
-        public override Task<MotionResponse> MotionTracking(MotionTrackingRequest request, ServerCallContext context)
+        public override Task<MotionTrackingResponse> MotionTracking(MotionTrackingRequest request, ServerCallContext context)
         {
             /* The 'Motion Tracking' call provides insight for tactical decision-making by providing real-time, 
             high-frequency acceleration readings for a requested location on the ship

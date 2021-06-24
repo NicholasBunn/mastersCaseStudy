@@ -46,23 +46,24 @@ namespace vesselMotionService {
     }
 
     static readonly grpc::Marshaller<global::vesselMotionService.MotionEstimateRequest> __Marshaller_vesselMotionService_v1_MotionEstimateRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::vesselMotionService.MotionEstimateRequest.Parser));
-    static readonly grpc::Marshaller<global::vesselMotionService.MotionResponse> __Marshaller_vesselMotionService_v1_MotionResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::vesselMotionService.MotionResponse.Parser));
+    static readonly grpc::Marshaller<global::vesselMotionService.MotionEstimateResponse> __Marshaller_vesselMotionService_v1_MotionEstimateResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::vesselMotionService.MotionEstimateResponse.Parser));
     static readonly grpc::Marshaller<global::vesselMotionService.MotionTrackingRequest> __Marshaller_vesselMotionService_v1_MotionTrackingRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::vesselMotionService.MotionTrackingRequest.Parser));
+    static readonly grpc::Marshaller<global::vesselMotionService.MotionTrackingResponse> __Marshaller_vesselMotionService_v1_MotionTrackingResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::vesselMotionService.MotionTrackingResponse.Parser));
     static readonly grpc::Marshaller<global::vesselMotionService.MotionEvaluationResponse> __Marshaller_vesselMotionService_v1_MotionEvaluationResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::vesselMotionService.MotionEvaluationResponse.Parser));
 
-    static readonly grpc::Method<global::vesselMotionService.MotionEstimateRequest, global::vesselMotionService.MotionResponse> __Method_MotionEstimate = new grpc::Method<global::vesselMotionService.MotionEstimateRequest, global::vesselMotionService.MotionResponse>(
+    static readonly grpc::Method<global::vesselMotionService.MotionEstimateRequest, global::vesselMotionService.MotionEstimateResponse> __Method_MotionEstimate = new grpc::Method<global::vesselMotionService.MotionEstimateRequest, global::vesselMotionService.MotionEstimateResponse>(
         grpc::MethodType.Unary,
         __ServiceName,
         "MotionEstimate",
         __Marshaller_vesselMotionService_v1_MotionEstimateRequest,
-        __Marshaller_vesselMotionService_v1_MotionResponse);
+        __Marshaller_vesselMotionService_v1_MotionEstimateResponse);
 
-    static readonly grpc::Method<global::vesselMotionService.MotionTrackingRequest, global::vesselMotionService.MotionResponse> __Method_MotionTracking = new grpc::Method<global::vesselMotionService.MotionTrackingRequest, global::vesselMotionService.MotionResponse>(
+    static readonly grpc::Method<global::vesselMotionService.MotionTrackingRequest, global::vesselMotionService.MotionTrackingResponse> __Method_MotionTracking = new grpc::Method<global::vesselMotionService.MotionTrackingRequest, global::vesselMotionService.MotionTrackingResponse>(
         grpc::MethodType.Unary,
         __ServiceName,
         "MotionTracking",
         __Marshaller_vesselMotionService_v1_MotionTrackingRequest,
-        __Marshaller_vesselMotionService_v1_MotionResponse);
+        __Marshaller_vesselMotionService_v1_MotionTrackingResponse);
 
     static readonly grpc::Method<global::vesselMotionService.MotionEstimateRequest, global::vesselMotionService.MotionEvaluationResponse> __Method_MotionEstimateEvaluation = new grpc::Method<global::vesselMotionService.MotionEstimateRequest, global::vesselMotionService.MotionEvaluationResponse>(
         grpc::MethodType.Unary,
@@ -87,7 +88,7 @@ namespace vesselMotionService {
       /// <param name="request">The request received from the client.</param>
       /// <param name="context">The context of the server-side call handler being invoked.</param>
       /// <returns>The response to send back to the client (wrapped by a task).</returns>
-      public virtual global::System.Threading.Tasks.Task<global::vesselMotionService.MotionResponse> MotionEstimate(global::vesselMotionService.MotionEstimateRequest request, grpc::ServerCallContext context)
+      public virtual global::System.Threading.Tasks.Task<global::vesselMotionService.MotionEstimateResponse> MotionEstimate(global::vesselMotionService.MotionEstimateRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -98,7 +99,7 @@ namespace vesselMotionService {
       /// <param name="request">The request received from the client.</param>
       /// <param name="context">The context of the server-side call handler being invoked.</param>
       /// <returns>The response to send back to the client (wrapped by a task).</returns>
-      public virtual global::System.Threading.Tasks.Task<global::vesselMotionService.MotionResponse> MotionTracking(global::vesselMotionService.MotionTrackingRequest request, grpc::ServerCallContext context)
+      public virtual global::System.Threading.Tasks.Task<global::vesselMotionService.MotionTrackingResponse> MotionTracking(global::vesselMotionService.MotionTrackingRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -132,8 +133,8 @@ namespace vesselMotionService {
     /// <param name="serviceImpl">An object implementing the server-side handling logic.</param>
     public static void BindService(grpc::ServiceBinderBase serviceBinder, vesselMotionServiceBase serviceImpl)
     {
-      serviceBinder.AddMethod(__Method_MotionEstimate, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::vesselMotionService.MotionEstimateRequest, global::vesselMotionService.MotionResponse>(serviceImpl.MotionEstimate));
-      serviceBinder.AddMethod(__Method_MotionTracking, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::vesselMotionService.MotionTrackingRequest, global::vesselMotionService.MotionResponse>(serviceImpl.MotionTracking));
+      serviceBinder.AddMethod(__Method_MotionEstimate, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::vesselMotionService.MotionEstimateRequest, global::vesselMotionService.MotionEstimateResponse>(serviceImpl.MotionEstimate));
+      serviceBinder.AddMethod(__Method_MotionTracking, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::vesselMotionService.MotionTrackingRequest, global::vesselMotionService.MotionTrackingResponse>(serviceImpl.MotionTracking));
       serviceBinder.AddMethod(__Method_MotionEstimateEvaluation, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::vesselMotionService.MotionEstimateRequest, global::vesselMotionService.MotionEvaluationResponse>(serviceImpl.MotionEstimateEvaluation));
     }
 

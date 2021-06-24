@@ -127,7 +127,7 @@ class PowerTrainIntegrationTEst(unittest.TestCase):
 
 		with powerTrainService.grpc.insecure_channel(self.port) as channel:
 			stub = powerTrainService.power_train_service_api_v1_pb2_grpc.PowerTrainServiceStub(channel)
-			response = stub.PowerEstimate(powerTrainService.power_train_service_api_v1_pb2.EstimateRequest(
+			response = stub.PowerEstimate(powerTrainService.power_train_service_api_v1_pb2.PowerTrainEstimateRequest(
 				port_prop_motor_speed = [83.5450057983399, 83.7725067138672, 120.443740844727],
 				stbd_prop_motor_speed = [84.4112548828125, 84.3762435913086, 120.522499084473],
 				propeller_pitch_port = [-40.5200004577637, 0.0300000011920929, 95.3400039672852],

@@ -17,22 +17,22 @@ class PowerTrainServiceStub(object):
         """
         self.PowerEstimate = channel.unary_unary(
                 '/powerTrainService.v1.PowerTrainService/PowerEstimate',
-                request_serializer=power__train__service__api__v1__pb2.EstimateRequest.SerializeToString,
+                request_serializer=power__train__service__api__v1__pb2.PowerTrainEstimateRequest.SerializeToString,
                 response_deserializer=power__train__service__api__v1__pb2.PowerEstimateResponse.FromString,
                 )
         self.CostEstimate = channel.unary_unary(
                 '/powerTrainService.v1.PowerTrainService/CostEstimate',
-                request_serializer=power__train__service__api__v1__pb2.EstimateRequest.SerializeToString,
+                request_serializer=power__train__service__api__v1__pb2.PowerTrainEstimateRequest.SerializeToString,
                 response_deserializer=power__train__service__api__v1__pb2.CostEstimateResponse.FromString,
                 )
         self.PowerTracking = channel.unary_unary(
                 '/powerTrainService.v1.PowerTrainService/PowerTracking',
-                request_serializer=power__train__service__api__v1__pb2.TrackingRequest.SerializeToString,
-                response_deserializer=power__train__service__api__v1__pb2.TrackingResponse.FromString,
+                request_serializer=power__train__service__api__v1__pb2.PowerTrackingRequest.SerializeToString,
+                response_deserializer=power__train__service__api__v1__pb2.PowerTrackingResponse.FromString,
                 )
         self.PowerEstimateEvaluation = channel.unary_unary(
                 '/powerTrainService.v1.PowerTrainService/PowerEstimateEvaluation',
-                request_serializer=power__train__service__api__v1__pb2.EstimateRequest.SerializeToString,
+                request_serializer=power__train__service__api__v1__pb2.PowerTrainEstimateRequest.SerializeToString,
                 response_deserializer=power__train__service__api__v1__pb2.PowerEvaluationResponse.FromString,
                 )
 
@@ -49,21 +49,21 @@ class PowerTrainServiceServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def CostEstimate(self, request, context):
-        """The 'Cost Estimate' call provides foresight for ?? decision-making by providing cost estimates for a requested route and sailign conditions
+        """The 'Cost Estimate' call provides foresight for tactical decision-making by providing cost estimates for a requested route and sailing conditions
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def PowerTracking(self, request, context):
-        """The 'Power Tracking' call provides insight for ?? decision-making by providing real-time power use by the vessel
+        """The 'Power Tracking' call provides insight for tactical and operational decision-making by providing real-time power use by the vessel
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def PowerEstimateEvaluation(self, request, context):
-        """The 'Power Estimate Evaluation' call provdes ?? for ?? decision-making by evaluating the accuracy of the models predictions
+        """The 'Power Estimate Evaluation' call provdes hindsight for strategic decision-making by evaluating the accuracy of the models predictions
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -74,22 +74,22 @@ def add_PowerTrainServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'PowerEstimate': grpc.unary_unary_rpc_method_handler(
                     servicer.PowerEstimate,
-                    request_deserializer=power__train__service__api__v1__pb2.EstimateRequest.FromString,
+                    request_deserializer=power__train__service__api__v1__pb2.PowerTrainEstimateRequest.FromString,
                     response_serializer=power__train__service__api__v1__pb2.PowerEstimateResponse.SerializeToString,
             ),
             'CostEstimate': grpc.unary_unary_rpc_method_handler(
                     servicer.CostEstimate,
-                    request_deserializer=power__train__service__api__v1__pb2.EstimateRequest.FromString,
+                    request_deserializer=power__train__service__api__v1__pb2.PowerTrainEstimateRequest.FromString,
                     response_serializer=power__train__service__api__v1__pb2.CostEstimateResponse.SerializeToString,
             ),
             'PowerTracking': grpc.unary_unary_rpc_method_handler(
                     servicer.PowerTracking,
-                    request_deserializer=power__train__service__api__v1__pb2.TrackingRequest.FromString,
-                    response_serializer=power__train__service__api__v1__pb2.TrackingResponse.SerializeToString,
+                    request_deserializer=power__train__service__api__v1__pb2.PowerTrackingRequest.FromString,
+                    response_serializer=power__train__service__api__v1__pb2.PowerTrackingResponse.SerializeToString,
             ),
             'PowerEstimateEvaluation': grpc.unary_unary_rpc_method_handler(
                     servicer.PowerEstimateEvaluation,
-                    request_deserializer=power__train__service__api__v1__pb2.EstimateRequest.FromString,
+                    request_deserializer=power__train__service__api__v1__pb2.PowerTrainEstimateRequest.FromString,
                     response_serializer=power__train__service__api__v1__pb2.PowerEvaluationResponse.SerializeToString,
             ),
     }
@@ -115,7 +115,7 @@ class PowerTrainService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/powerTrainService.v1.PowerTrainService/PowerEstimate',
-            power__train__service__api__v1__pb2.EstimateRequest.SerializeToString,
+            power__train__service__api__v1__pb2.PowerTrainEstimateRequest.SerializeToString,
             power__train__service__api__v1__pb2.PowerEstimateResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
@@ -132,7 +132,7 @@ class PowerTrainService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/powerTrainService.v1.PowerTrainService/CostEstimate',
-            power__train__service__api__v1__pb2.EstimateRequest.SerializeToString,
+            power__train__service__api__v1__pb2.PowerTrainEstimateRequest.SerializeToString,
             power__train__service__api__v1__pb2.CostEstimateResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
@@ -149,8 +149,8 @@ class PowerTrainService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/powerTrainService.v1.PowerTrainService/PowerTracking',
-            power__train__service__api__v1__pb2.TrackingRequest.SerializeToString,
-            power__train__service__api__v1__pb2.TrackingResponse.FromString,
+            power__train__service__api__v1__pb2.PowerTrackingRequest.SerializeToString,
+            power__train__service__api__v1__pb2.PowerTrackingResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -166,7 +166,7 @@ class PowerTrainService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/powerTrainService.v1.PowerTrainService/PowerEstimateEvaluation',
-            power__train__service__api__v1__pb2.EstimateRequest.SerializeToString,
+            power__train__service__api__v1__pb2.PowerTrainEstimateRequest.SerializeToString,
             power__train__service__api__v1__pb2.PowerEvaluationResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

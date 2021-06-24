@@ -4,7 +4,7 @@ package powerTrainService.v1;
 
 // option go_package = "service/powerTrainService/proto/v1";
 
-message EstimateRequest {
+message PowerTrainEstimateRequest {
     repeated float time_and_date = 1;
     repeated float port_prop_motor_speed = 2;
     repeated float stbd_prop_motor_speed = 3;
@@ -19,7 +19,7 @@ message EstimateRequest {
     ModelTypeEnum model_type = 12;
 }
 
-message TrackingRequest {
+message PowerTrackingRequest {
 
 }
 
@@ -37,20 +37,20 @@ message PowerEvaluationResponse {
     repeated float power_actual = 2;
 }
 
-message TrackingResponse {
+message PowerTrackingResponse {
     repeated float power_actual = 1;
 }
 
 // 'Power Train Service; offers four service calls that provide information about the power train of the vessel (namely power requirements and their assosciated costs)
 service PowerTrainService {
     // The 'Power Estimate' call provides foresight for tactical decision-making by providing power estimates for a requested route and sailing conditions
-    rpc PowerEstimate(EstimateRequest) returns (PowerEstimateResponse);
+    rpc PowerEstimate(PowerTrainEstimateRequest) returns (PowerEstimateResponse);
     // The 'Cost Estimate' call provides foresight for tactical decision-making by providing cost estimates for a requested route and sailing conditions
-    rpc CostEstimate(EstimateRequest) returns (CostEstimateResponse);
+    rpc CostEstimate(PowerTrainEstimateRequest) returns (CostEstimateResponse);
     // The 'Power Tracking' call provides insight for tactical and operational decision-making by providing real-time power use by the vessel
-    rpc PowerTracking(TrackingRequest) returns (TrackingResponse);
+    rpc PowerTracking(PowerTrackingRequest) returns (PowerTrackingResponse);
     // The 'Power Estimate Evaluation' call provdes hindsight for strategic decision-making by evaluating the accuracy of the models predictions
-    rpc PowerEstimateEvaluation(EstimateRequest) returns (PowerEvaluationResponse);
+    rpc PowerEstimateEvaluation(PowerTrainEstimateRequest) returns (PowerEvaluationResponse);
 }
 
 enum ModelTypeEnum {

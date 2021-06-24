@@ -81,6 +81,6 @@ public class VesselMotionServiceIntegrationTest
 
         var response = await testInstance.MotionEstimate(testRequestMessage, null);
 
-        Assert.Equal(7.064262390136719F, response.Acceleration[0]);
+        Assert.Equal(7.064262390136719F, response.AccelerationEstimate[0]);
     }
 }

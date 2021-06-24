@@ -19,8 +19,12 @@ message MotionTrackingRequest {
 
 }
 
-message MotionResponse {
-    repeated float acceleration = 1;
+message MotionEstimateResponse {
+    repeated float acceleration_estimate = 1;
+}
+
+message MotionTrackingResponse {
+    repeated float acceleration_actual = 1;
 }
 
 message MotionEvaluationResponse {
@@ -31,9 +35,9 @@ message MotionEvaluationResponse {
 // 'Vessel Motion Service; offers three service calls that provide information about the vessel's motion in response to her sailing conditions (mainly regarding the high frequency component of the vessel's acceleration/vibration)
 service vesselMotionService {
     // The 'Motion Estimate' call provides foresight for tactical decision-making by providing high-frequency acceleration estimates for a requested sailing conditions at a requested location on the ship
-    rpc MotionEstimate(MotionEstimateRequest) returns (MotionResponse);
+    rpc MotionEstimate(MotionEstimateRequest) returns (MotionEstimateResponse);
     // The 'Motion Tracking' call provides insight for tactical decision-making by providing real-time, high-frequency acceleration readings for a requested location on the ship
-    rpc MotionTracking(MotionTrackingRequest) returns (MotionResponse);
+    rpc MotionTracking(MotionTrackingRequest) returns (MotionTrackingResponse);
     // The 'Motion Estimation Evaluation' call provides hindsight for strategic decision-making by evaluating the accuracy of the models predictions
     rpc MotionEstimateEvaluation(MotionEstimateRequest) returns (MotionEvaluationResponse);
 }

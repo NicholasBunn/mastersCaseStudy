@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n power_train_service_api_v1.proto\x12\x14powerTrainService.v1\"\xe3\x02\n\x0f\x45stimateRequest\x12\x15\n\rtime_and_date\x18\x01 \x03(\x02\x12\x1d\n\x15port_prop_motor_speed\x18\x02 \x03(\x02\x12\x1d\n\x15stbd_prop_motor_speed\x18\x03 \x03(\x02\x12\x1c\n\x14propeller_pitch_port\x18\x04 \x03(\x02\x12\x1c\n\x14propeller_pitch_stbd\x18\x05 \x03(\x02\x12\x0b\n\x03sog\x18\x06 \x03(\x02\x12\x1f\n\x17wind_direction_relative\x18\x07 \x03(\x02\x12\x12\n\nwind_speed\x18\x08 \x03(\x02\x12\x17\n\x0f\x62\x65\x61ufort_number\x18\t \x03(\x02\x12\x16\n\x0ewave_direction\x18\n \x03(\x02\x12\x13\n\x0bwave_length\x18\x0b \x03(\x02\x12\x37\n\nmodel_type\x18\x0c \x01(\x0e\x32#.powerTrainService.v1.ModelTypeEnum\"\x11\n\x0fTrackingRequest\"/\n\x15PowerEstimateResponse\x12\x16\n\x0epower_estimate\x18\x01 \x03(\x02\"E\n\x14\x43ostEstimateResponse\x12\x16\n\x0epower_estimate\x18\x01 \x03(\x02\x12\x15\n\rcost_estimate\x18\x02 \x03(\x02\"G\n\x17PowerEvaluationResponse\x12\x16\n\x0epower_estimate\x18\x01 \x03(\x02\x12\x14\n\x0cpower_actual\x18\x02 \x03(\x02\"(\n\x10TrackingResponse\x12\x14\n\x0cpower_actual\x18\x01 \x03(\x02*4\n\rModelTypeEnum\x12\x0b\n\x07UNKNOWN\x10\x00\x12\r\n\tOPENWATER\x10\x01\x12\x07\n\x03ICE\x10\x02\x32\xac\x03\n\x11PowerTrainService\x12\x63\n\rPowerEstimate\x12%.powerTrainService.v1.EstimateRequest\x1a+.powerTrainService.v1.PowerEstimateResponse\x12\x61\n\x0c\x43ostEstimate\x12%.powerTrainService.v1.EstimateRequest\x1a*.powerTrainService.v1.CostEstimateResponse\x12^\n\rPowerTracking\x12%.powerTrainService.v1.TrackingRequest\x1a&.powerTrainService.v1.TrackingResponse\x12o\n\x17PowerEstimateEvaluation\x12%.powerTrainService.v1.EstimateRequest\x1a-.powerTrainService.v1.PowerEvaluationResponseb\x06proto3'
+  serialized_pb=b'\n power_train_service_api_v1.proto\x12\x14powerTrainService.v1\"\xed\x02\n\x19PowerTrainEstimateRequest\x12\x15\n\rtime_and_date\x18\x01 \x03(\x02\x12\x1d\n\x15port_prop_motor_speed\x18\x02 \x03(\x02\x12\x1d\n\x15stbd_prop_motor_speed\x18\x03 \x03(\x02\x12\x1c\n\x14propeller_pitch_port\x18\x04 \x03(\x02\x12\x1c\n\x14propeller_pitch_stbd\x18\x05 \x03(\x02\x12\x0b\n\x03sog\x18\x06 \x03(\x02\x12\x1f\n\x17wind_direction_relative\x18\x07 \x03(\x02\x12\x12\n\nwind_speed\x18\x08 \x03(\x02\x12\x17\n\x0f\x62\x65\x61ufort_number\x18\t \x03(\x02\x12\x16\n\x0ewave_direction\x18\n \x03(\x02\x12\x13\n\x0bwave_length\x18\x0b \x03(\x02\x12\x37\n\nmodel_type\x18\x0c \x01(\x0e\x32#.powerTrainService.v1.ModelTypeEnum\"\x16\n\x14PowerTrackingRequest\"/\n\x15PowerEstimateResponse\x12\x16\n\x0epower_estimate\x18\x01 \x03(\x02\"E\n\x14\x43ostEstimateResponse\x12\x16\n\x0epower_estimate\x18\x01 \x03(\x02\x12\x15\n\rcost_estimate\x18\x02 \x03(\x02\"G\n\x17PowerEvaluationResponse\x12\x16\n\x0epower_estimate\x18\x01 \x03(\x02\x12\x14\n\x0cpower_actual\x18\x02 \x03(\x02\"-\n\x15PowerTrackingResponse\x12\x14\n\x0cpower_actual\x18\x01 \x03(\x02*4\n\rModelTypeEnum\x12\x0b\n\x07UNKNOWN\x10\x00\x12\r\n\tOPENWATER\x10\x01\x12\x07\n\x03ICE\x10\x02\x32\xd4\x03\n\x11PowerTrainService\x12m\n\rPowerEstimate\x12/.powerTrainService.v1.PowerTrainEstimateRequest\x1a+.powerTrainService.v1.PowerEstimateResponse\x12k\n\x0c\x43ostEstimate\x12/.powerTrainService.v1.PowerTrainEstimateRequest\x1a*.powerTrainService.v1.CostEstimateResponse\x12h\n\rPowerTracking\x12*.powerTrainService.v1.PowerTrackingRequest\x1a+.powerTrainService.v1.PowerTrackingResponse\x12y\n\x17PowerEstimateEvaluation\x12/.powerTrainService.v1.PowerTrainEstimateRequest\x1a-.powerTrainService.v1.PowerEvaluationResponseb\x06proto3'
 )
 
 _MODELTYPEENUM = _descriptor.EnumDescriptor(
@@ -48,8 +48,8 @@ _MODELTYPEENUM = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=670,
-  serialized_end=722,
+  serialized_start=690,
+  serialized_end=742,
 )
 _sym_db.RegisterEnumDescriptor(_MODELTYPEENUM)
 
@@ -60,93 +60,93 @@ ICE = 2
 
 
 
-_ESTIMATEREQUEST = _descriptor.Descriptor(
-  name='EstimateRequest',
-  full_name='powerTrainService.v1.EstimateRequest',
+_POWERTRAINESTIMATEREQUEST = _descriptor.Descriptor(
+  name='PowerTrainEstimateRequest',
+  full_name='powerTrainService.v1.PowerTrainEstimateRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='time_and_date', full_name='powerTrainService.v1.EstimateRequest.time_and_date', index=0,
+      name='time_and_date', full_name='powerTrainService.v1.PowerTrainEstimateRequest.time_and_date', index=0,
       number=1, type=2, cpp_type=6, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='port_prop_motor_speed', full_name='powerTrainService.v1.EstimateRequest.port_prop_motor_speed', index=1,
+      name='port_prop_motor_speed', full_name='powerTrainService.v1.PowerTrainEstimateRequest.port_prop_motor_speed', index=1,
       number=2, type=2, cpp_type=6, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='stbd_prop_motor_speed', full_name='powerTrainService.v1.EstimateRequest.stbd_prop_motor_speed', index=2,
+      name='stbd_prop_motor_speed', full_name='powerTrainService.v1.PowerTrainEstimateRequest.stbd_prop_motor_speed', index=2,
       number=3, type=2, cpp_type=6, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='propeller_pitch_port', full_name='powerTrainService.v1.EstimateRequest.propeller_pitch_port', index=3,
+      name='propeller_pitch_port', full_name='powerTrainService.v1.PowerTrainEstimateRequest.propeller_pitch_port', index=3,
       number=4, type=2, cpp_type=6, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='propeller_pitch_stbd', full_name='powerTrainService.v1.EstimateRequest.propeller_pitch_stbd', index=4,
+      name='propeller_pitch_stbd', full_name='powerTrainService.v1.PowerTrainEstimateRequest.propeller_pitch_stbd', index=4,
       number=5, type=2, cpp_type=6, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='sog', full_name='powerTrainService.v1.EstimateRequest.sog', index=5,
+      name='sog', full_name='powerTrainService.v1.PowerTrainEstimateRequest.sog', index=5,
       number=6, type=2, cpp_type=6, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='wind_direction_relative', full_name='powerTrainService.v1.EstimateRequest.wind_direction_relative', index=6,
+      name='wind_direction_relative', full_name='powerTrainService.v1.PowerTrainEstimateRequest.wind_direction_relative', index=6,
       number=7, type=2, cpp_type=6, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='wind_speed', full_name='powerTrainService.v1.EstimateRequest.wind_speed', index=7,
+      name='wind_speed', full_name='powerTrainService.v1.PowerTrainEstimateRequest.wind_speed', index=7,
       number=8, type=2, cpp_type=6, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='beaufort_number', full_name='powerTrainService.v1.EstimateRequest.beaufort_number', index=8,
+      name='beaufort_number', full_name='powerTrainService.v1.PowerTrainEstimateRequest.beaufort_number', index=8,
       number=9, type=2, cpp_type=6, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='wave_direction', full_name='powerTrainService.v1.EstimateRequest.wave_direction', index=9,
+      name='wave_direction', full_name='powerTrainService.v1.PowerTrainEstimateRequest.wave_direction', index=9,
       number=10, type=2, cpp_type=6, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='wave_length', full_name='powerTrainService.v1.EstimateRequest.wave_length', index=10,
+      name='wave_length', full_name='powerTrainService.v1.PowerTrainEstimateRequest.wave_length', index=10,
       number=11, type=2, cpp_type=6, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='model_type', full_name='powerTrainService.v1.EstimateRequest.model_type', index=11,
+      name='model_type', full_name='powerTrainService.v1.PowerTrainEstimateRequest.model_type', index=11,
       number=12, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -165,13 +165,13 @@ _ESTIMATEREQUEST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=59,
-  serialized_end=414,
+  serialized_end=424,
 )
 
 
-_TRACKINGREQUEST = _descriptor.Descriptor(
-  name='TrackingRequest',
-  full_name='powerTrainService.v1.TrackingRequest',
+_POWERTRACKINGREQUEST = _descriptor.Descriptor(
+  name='PowerTrackingRequest',
+  full_name='powerTrainService.v1.PowerTrackingRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
@@ -189,8 +189,8 @@ _TRACKINGREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=416,
-  serialized_end=433,
+  serialized_start=426,
+  serialized_end=448,
 )
 
 
@@ -221,8 +221,8 @@ _POWERESTIMATERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=435,
-  serialized_end=482,
+  serialized_start=450,
+  serialized_end=497,
 )
 
 
@@ -260,8 +260,8 @@ _COSTESTIMATERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=484,
-  serialized_end=553,
+  serialized_start=499,
+  serialized_end=568,
 )
 
 
@@ -299,21 +299,21 @@ _POWEREVALUATIONRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=555,
-  serialized_end=626,
+  serialized_start=570,
+  serialized_end=641,
 )
 
 
-_TRACKINGRESPONSE = _descriptor.Descriptor(
-  name='TrackingResponse',
-  full_name='powerTrainService.v1.TrackingResponse',
+_POWERTRACKINGRESPONSE = _descriptor.Descriptor(
+  name='PowerTrackingResponse',
+  full_name='powerTrainService.v1.PowerTrackingResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='power_actual', full_name='powerTrainService.v1.TrackingResponse.power_actual', index=0,
+      name='power_actual', full_name='powerTrainService.v1.PowerTrackingResponse.power_actual', index=0,
       number=1, type=2, cpp_type=6, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -331,33 +331,33 @@ _TRACKINGRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=628,
-  serialized_end=668,
+  serialized_start=643,
+  serialized_end=688,
 )
 
-_ESTIMATEREQUEST.fields_by_name['model_type'].enum_type = _MODELTYPEENUM
-DESCRIPTOR.message_types_by_name['EstimateRequest'] = _ESTIMATEREQUEST
-DESCRIPTOR.message_types_by_name['TrackingRequest'] = _TRACKINGREQUEST
+_POWERTRAINESTIMATEREQUEST.fields_by_name['model_type'].enum_type = _MODELTYPEENUM
+DESCRIPTOR.message_types_by_name['PowerTrainEstimateRequest'] = _POWERTRAINESTIMATEREQUEST
+DESCRIPTOR.message_types_by_name['PowerTrackingRequest'] = _POWERTRACKINGREQUEST
 DESCRIPTOR.message_types_by_name['PowerEstimateResponse'] = _POWERESTIMATERESPONSE
 DESCRIPTOR.message_types_by_name['CostEstimateResponse'] = _COSTESTIMATERESPONSE
 DESCRIPTOR.message_types_by_name['PowerEvaluationResponse'] = _POWEREVALUATIONRESPONSE
-DESCRIPTOR.message_types_by_name['TrackingResponse'] = _TRACKINGRESPONSE
+DESCRIPTOR.message_types_by_name['PowerTrackingResponse'] = _POWERTRACKINGRESPONSE
 DESCRIPTOR.enum_types_by_name['ModelTypeEnum'] = _MODELTYPEENUM
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
-EstimateRequest = _reflection.GeneratedProtocolMessageType('EstimateRequest', (_message.Message,), {
-  'DESCRIPTOR' : _ESTIMATEREQUEST,
+PowerTrainEstimateRequest = _reflection.GeneratedProtocolMessageType('PowerTrainEstimateRequest', (_message.Message,), {
+  'DESCRIPTOR' : _POWERTRAINESTIMATEREQUEST,
   '__module__' : 'power_train_service_api_v1_pb2'
-  # @@protoc_insertion_point(class_scope:powerTrainService.v1.EstimateRequest)
+  # @@protoc_insertion_point(class_scope:powerTrainService.v1.PowerTrainEstimateRequest)
   })
-_sym_db.RegisterMessage(EstimateRequest)
+_sym_db.RegisterMessage(PowerTrainEstimateRequest)
 
-TrackingRequest = _reflection.GeneratedProtocolMessageType('TrackingRequest', (_message.Message,), {
-  'DESCRIPTOR' : _TRACKINGREQUEST,
+PowerTrackingRequest = _reflection.GeneratedProtocolMessageType('PowerTrackingRequest', (_message.Message,), {
+  'DESCRIPTOR' : _POWERTRACKINGREQUEST,
   '__module__' : 'power_train_service_api_v1_pb2'
-  # @@protoc_insertion_point(class_scope:powerTrainService.v1.TrackingRequest)
+  # @@protoc_insertion_point(class_scope:powerTrainService.v1.PowerTrackingRequest)
   })
-_sym_db.RegisterMessage(TrackingRequest)
+_sym_db.RegisterMessage(PowerTrackingRequest)
 
 PowerEstimateResponse = _reflection.GeneratedProtocolMessageType('PowerEstimateResponse', (_message.Message,), {
   'DESCRIPTOR' : _POWERESTIMATERESPONSE,
@@ -380,12 +380,12 @@ PowerEvaluationResponse = _reflection.GeneratedProtocolMessageType('PowerEvaluat
   })
 _sym_db.RegisterMessage(PowerEvaluationResponse)
 
-TrackingResponse = _reflection.GeneratedProtocolMessageType('TrackingResponse', (_message.Message,), {
-  'DESCRIPTOR' : _TRACKINGRESPONSE,
+PowerTrackingResponse = _reflection.GeneratedProtocolMessageType('PowerTrackingResponse', (_message.Message,), {
+  'DESCRIPTOR' : _POWERTRACKINGRESPONSE,
   '__module__' : 'power_train_service_api_v1_pb2'
-  # @@protoc_insertion_point(class_scope:powerTrainService.v1.TrackingResponse)
+  # @@protoc_insertion_point(class_scope:powerTrainService.v1.PowerTrackingResponse)
   })
-_sym_db.RegisterMessage(TrackingResponse)
+_sym_db.RegisterMessage(PowerTrackingResponse)
 
 
 
@@ -396,15 +396,15 @@ _POWERTRAINSERVICE = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=725,
-  serialized_end=1153,
+  serialized_start=745,
+  serialized_end=1213,
   methods=[
   _descriptor.MethodDescriptor(
     name='PowerEstimate',
     full_name='powerTrainService.v1.PowerTrainService.PowerEstimate',
     index=0,
     containing_service=None,
-    input_type=_ESTIMATEREQUEST,
+    input_type=_POWERTRAINESTIMATEREQUEST,
     output_type=_POWERESTIMATERESPONSE,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
@@ -414,7 +414,7 @@ _POWERTRAINSERVICE = _descriptor.ServiceDescriptor(
     full_name='powerTrainService.v1.PowerTrainService.CostEstimate',
     index=1,
     containing_service=None,
-    input_type=_ESTIMATEREQUEST,
+    input_type=_POWERTRAINESTIMATEREQUEST,
     output_type=_COSTESTIMATERESPONSE,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
@@ -424,8 +424,8 @@ _POWERTRAINSERVICE = _descriptor.ServiceDescriptor(
     full_name='powerTrainService.v1.PowerTrainService.PowerTracking',
     index=2,
     containing_service=None,
-    input_type=_TRACKINGREQUEST,
-    output_type=_TRACKINGRESPONSE,
+    input_type=_POWERTRACKINGREQUEST,
+    output_type=_POWERTRACKINGRESPONSE,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
   ),
@@ -434,7 +434,7 @@ _POWERTRAINSERVICE = _descriptor.ServiceDescriptor(
     full_name='powerTrainService.v1.PowerTrainService.PowerEstimateEvaluation',
     index=3,
     containing_service=None,
-    input_type=_ESTIMATEREQUEST,
+    input_type=_POWERTRAINESTIMATEREQUEST,
     output_type=_POWEREVALUATIONRESPONSE,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
