@@ -61,6 +61,8 @@ public class VesselMotionServiceIntegrationTest
     [InlineData(2431.24975585937F, -35.53165F, 13.5F, 337F, 212F, 1.5F, null)]
     public async Task Test_MotionEstimate(float portPropMotorPower, float latitude, float relativeWindSpeed, float relativeWindDirection, float heading, float waveHeight, vesselMotionService.ModelTypeEnum modelType)
     {
+        /* This function tests the MotionEstimate-specific functionality. It ensures that the service call selects the correct model and makes the correct function calls to serve the request.
+        */
 
         System.Console.WriteLine("Testing Vessel Motion Service: Motion Estimate (Service Call Test)");
 

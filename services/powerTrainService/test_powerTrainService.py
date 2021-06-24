@@ -120,7 +120,7 @@ class PowerTrainIntegrationTEst(unittest.TestCase):
 		self.server.stop(None)
 
 	def test_PowerEstimate(self):
-		''' This function tests the PowerEstimate-soecific functionality. It ensures that the service call takes the correct inputs, processes them as is required for the model, and makes the correct estimates based on the provided inputs.
+		''' This function tests the PowerEstimate-specific functionality. It ensures that the service call takes the correct inputs, processes them as is required for the model, and makes the correct estimates based on the provided inputs.
 		'''
 
 		print("Testing Power Train Service: Power Estimate (Service Call Test)")
