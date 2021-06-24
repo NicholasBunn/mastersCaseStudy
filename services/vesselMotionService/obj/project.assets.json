@@ -6555,6 +6555,7 @@
     "net5.0": [
       "Grpc.AspNetCore >= 2.34.0",
       "Microsoft.NET.Test.Sdk >= 16.10.0",
+      "System.Threading.Tasks >= 4.3.0",
       "xunit >= 2.4.1",
       "xunit.runner.visualstudio >= 2.4.3"
     ]
@@ -6603,6 +6604,10 @@
           "Microsoft.NET.Test.Sdk": {
             "target": "Package",
             "version": "[16.10.0, )"
+          },
+          "System.Threading.Tasks": {
+            "target": "Package",
+            "version": "[4.3.0, )"
           },
           "xunit": {
             "target": "Package",

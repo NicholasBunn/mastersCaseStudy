@@ -12,6 +12,7 @@ message MotionEstimateRequest {
     repeated float wave_height = 5;
     LocationOnShipEnum query_location = 6;
     repeated float wind_direction_relative = 7;
+    ModelTypeEnum model_type = 8;
 }
 
 message MotionTrackingRequest {
@@ -38,8 +39,14 @@ service vesselMotionService {
 }
 
 enum LocationOnShipEnum {
-    UNKNOWN = 0;
+    UNKNOWN_LOCATION = 0;
     SOMEWHERE = 1;
+}
+
+enum ModelTypeEnum {
+    UNKNOWN_MODEL = 0;
+    OPENWATER = 1;
+    ICE = 2;
 }
 
 

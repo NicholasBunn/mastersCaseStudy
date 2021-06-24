@@ -25,30 +25,32 @@ namespace vesselMotionService {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "Citwcm90by92MS92ZXNzZWxfbW90aW9uX3NlcnZpY2VfYXBpX3YxLnByb3Rv",
-            "EhZ2ZXNzZWxNb3Rpb25TZXJ2aWNlLnYxIvABChVNb3Rpb25Fc3RpbWF0ZVJl",
+            "EhZ2ZXNzZWxNb3Rpb25TZXJ2aWNlLnYxIqsCChVNb3Rpb25Fc3RpbWF0ZVJl",
             "cXVlc3QSHQoVcG9ydF9wcm9wX21vdG9yX3Bvd2VyGAEgAygCEhsKE3dpbmRf",
             "c3BlZWRfcmVsYXRpdmUYAiADKAISEAoIbGF0aXR1ZGUYAyADKAISDwoHSGVh",
             "ZGluZxgEIAMoAhITCgt3YXZlX2hlaWdodBgFIAMoAhJCCg5xdWVyeV9sb2Nh",
             "dGlvbhgGIAEoDjIqLnZlc3NlbE1vdGlvblNlcnZpY2UudjEuTG9jYXRpb25P",
-            "blNoaXBFbnVtEh8KF3dpbmRfZGlyZWN0aW9uX3JlbGF0aXZlGAcgAygCIhcK",
-            "FU1vdGlvblRyYWNraW5nUmVxdWVzdCImCg5Nb3Rpb25SZXNwb25zZRIUCgxh",
-            "Y2NlbGVyYXRpb24YASADKAIiVgoYTW90aW9uRXZhbHVhdGlvblJlc3BvbnNl",
-            "Eh0KFWFjY2VsZXJhdGlvbl9lc3RpbWF0ZRgBIAMoAhIbChNhY2NlbGVyYXRp",
-            "b25fYWN0dWFsGAIgAygCKjAKEkxvY2F0aW9uT25TaGlwRW51bRILCgdVTktO",
-            "T1dOEAASDQoJU09NRVdIRVJFEAEy5AIKE3Zlc3NlbE1vdGlvblNlcnZpY2US",
-            "ZwoOTW90aW9uRXN0aW1hdGUSLS52ZXNzZWxNb3Rpb25TZXJ2aWNlLnYxLk1v",
-            "dGlvbkVzdGltYXRlUmVxdWVzdBomLnZlc3NlbE1vdGlvblNlcnZpY2UudjEu",
-            "TW90aW9uUmVzcG9uc2USZwoOTW90aW9uVHJhY2tpbmcSLS52ZXNzZWxNb3Rp",
-            "b25TZXJ2aWNlLnYxLk1vdGlvblRyYWNraW5nUmVxdWVzdBomLnZlc3NlbE1v",
-            "dGlvblNlcnZpY2UudjEuTW90aW9uUmVzcG9uc2USewoYTW90aW9uRXN0aW1h",
-            "dGVFdmFsdWF0aW9uEi0udmVzc2VsTW90aW9uU2VydmljZS52MS5Nb3Rpb25F",
-            "c3RpbWF0ZVJlcXVlc3QaMC52ZXNzZWxNb3Rpb25TZXJ2aWNlLnYxLk1vdGlv",
-            "bkV2YWx1YXRpb25SZXNwb25zZUIWqgITdmVzc2VsTW90aW9uU2VydmljZWIG",
-            "cHJvdG8z"));
+            "blNoaXBFbnVtEh8KF3dpbmRfZGlyZWN0aW9uX3JlbGF0aXZlGAcgAygCEjkK",
+            "Cm1vZGVsX3R5cGUYCCABKA4yJS52ZXNzZWxNb3Rpb25TZXJ2aWNlLnYxLk1v",
+            "ZGVsVHlwZUVudW0iFwoVTW90aW9uVHJhY2tpbmdSZXF1ZXN0IiYKDk1vdGlv",
+            "blJlc3BvbnNlEhQKDGFjY2VsZXJhdGlvbhgBIAMoAiJWChhNb3Rpb25FdmFs",
+            "dWF0aW9uUmVzcG9uc2USHQoVYWNjZWxlcmF0aW9uX2VzdGltYXRlGAEgAygC",
+            "EhsKE2FjY2VsZXJhdGlvbl9hY3R1YWwYAiADKAIqOQoSTG9jYXRpb25PblNo",
+            "aXBFbnVtEhQKEFVOS05PV05fTE9DQVRJT04QABINCglTT01FV0hFUkUQASo6",
+            "Cg1Nb2RlbFR5cGVFbnVtEhEKDVVOS05PV05fTU9ERUwQABINCglPUEVOV0FU",
+            "RVIQARIHCgNJQ0UQAjLkAgoTdmVzc2VsTW90aW9uU2VydmljZRJnCg5Nb3Rp",
+            "b25Fc3RpbWF0ZRItLnZlc3NlbE1vdGlvblNlcnZpY2UudjEuTW90aW9uRXN0",
+            "aW1hdGVSZXF1ZXN0GiYudmVzc2VsTW90aW9uU2VydmljZS52MS5Nb3Rpb25S",
+            "ZXNwb25zZRJnCg5Nb3Rpb25UcmFja2luZxItLnZlc3NlbE1vdGlvblNlcnZp",
+            "Y2UudjEuTW90aW9uVHJhY2tpbmdSZXF1ZXN0GiYudmVzc2VsTW90aW9uU2Vy",
+            "dmljZS52MS5Nb3Rpb25SZXNwb25zZRJ7ChhNb3Rpb25Fc3RpbWF0ZUV2YWx1",
+            "YXRpb24SLS52ZXNzZWxNb3Rpb25TZXJ2aWNlLnYxLk1vdGlvbkVzdGltYXRl",
+            "UmVxdWVzdBowLnZlc3NlbE1vdGlvblNlcnZpY2UudjEuTW90aW9uRXZhbHVh",
+            "dGlvblJlc3BvbnNlQhaqAhN2ZXNzZWxNb3Rpb25TZXJ2aWNlYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
-          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::vesselMotionService.LocationOnShipEnum), }, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::vesselMotionService.MotionEstimateRequest), global::vesselMotionService.MotionEstimateRequest.Parser, new[]{ "PortPropMotorPower", "WindSpeedRelative", "Latitude", "Heading", "WaveHeight", "QueryLocation", "WindDirectionRelative" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::vesselMotionService.LocationOnShipEnum), typeof(global::vesselMotionService.ModelTypeEnum), }, null, new pbr::GeneratedClrTypeInfo[] {
+            new pbr::GeneratedClrTypeInfo(typeof(global::vesselMotionService.MotionEstimateRequest), global::vesselMotionService.MotionEstimateRequest.Parser, new[]{ "PortPropMotorPower", "WindSpeedRelative", "Latitude", "Heading", "WaveHeight", "QueryLocation", "WindDirectionRelative", "ModelType" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::vesselMotionService.MotionTrackingRequest), global::vesselMotionService.MotionTrackingRequest.Parser, null, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::vesselMotionService.MotionResponse), global::vesselMotionService.MotionResponse.Parser, new[]{ "Acceleration" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::vesselMotionService.MotionEvaluationResponse), global::vesselMotionService.MotionEvaluationResponse.Parser, new[]{ "AccelerationEstimate", "AccelerationActual" }, null, null, null, null)
@@ -59,8 +61,14 @@ namespace vesselMotionService {
   }
   #region Enums
   public enum LocationOnShipEnum {
-    [pbr::OriginalName("UNKNOWN")] Unknown = 0,
+    [pbr::OriginalName("UNKNOWN_LOCATION")] UnknownLocation = 0,
     [pbr::OriginalName("SOMEWHERE")] Somewhere = 1,
+  }
+
+  public enum ModelTypeEnum {
+    [pbr::OriginalName("UNKNOWN_MODEL")] UnknownModel = 0,
+    [pbr::OriginalName("OPENWATER")] Openwater = 1,
+    [pbr::OriginalName("ICE")] Ice = 2,
   }
 
   #endregion
@@ -102,6 +110,7 @@ namespace vesselMotionService {
       waveHeight_ = other.waveHeight_.Clone();
       queryLocation_ = other.queryLocation_;
       windDirectionRelative_ = other.windDirectionRelative_.Clone();
+      modelType_ = other.modelType_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -162,7 +171,7 @@ namespace vesselMotionService {
 
     /// <summary>Field number for the "query_location" field.</summary>
     public const int QueryLocationFieldNumber = 6;
-    private global::vesselMotionService.LocationOnShipEnum queryLocation_ = global::vesselMotionService.LocationOnShipEnum.Unknown;
+    private global::vesselMotionService.LocationOnShipEnum queryLocation_ = global::vesselMotionService.LocationOnShipEnum.UnknownLocation;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::vesselMotionService.LocationOnShipEnum QueryLocation {
       get { return queryLocation_; }
@@ -179,6 +188,17 @@ namespace vesselMotionService {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::RepeatedField<float> WindDirectionRelative {
       get { return windDirectionRelative_; }
+    }
+
+    /// <summary>Field number for the "model_type" field.</summary>
+    public const int ModelTypeFieldNumber = 8;
+    private global::vesselMotionService.ModelTypeEnum modelType_ = global::vesselMotionService.ModelTypeEnum.UnknownModel;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::vesselMotionService.ModelTypeEnum ModelType {
+      get { return modelType_; }
+      set {
+        modelType_ = value;
+      }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -201,6 +221,7 @@ namespace vesselMotionService {
       if(!waveHeight_.Equals(other.waveHeight_)) return false;
       if (QueryLocation != other.QueryLocation) return false;
       if(!windDirectionRelative_.Equals(other.windDirectionRelative_)) return false;
+      if (ModelType != other.ModelType) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -212,8 +233,9 @@ namespace vesselMotionService {
       hash ^= latitude_.GetHashCode();
       hash ^= heading_.GetHashCode();
       hash ^= waveHeight_.GetHashCode();
-      if (QueryLocation != global::vesselMotionService.LocationOnShipEnum.Unknown) hash ^= QueryLocation.GetHashCode();
+      if (QueryLocation != global::vesselMotionService.LocationOnShipEnum.UnknownLocation) hash ^= QueryLocation.GetHashCode();
       hash ^= windDirectionRelative_.GetHashCode();
+      if (ModelType != global::vesselMotionService.ModelTypeEnum.UnknownModel) hash ^= ModelType.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -235,11 +257,15 @@ namespace vesselMotionService {
       latitude_.WriteTo(output, _repeated_latitude_codec);
       heading_.WriteTo(output, _repeated_heading_codec);
       waveHeight_.WriteTo(output, _repeated_waveHeight_codec);
-      if (QueryLocation != global::vesselMotionService.LocationOnShipEnum.Unknown) {
+      if (QueryLocation != global::vesselMotionService.LocationOnShipEnum.UnknownLocation) {
         output.WriteRawTag(48);
         output.WriteEnum((int) QueryLocation);
       }
       windDirectionRelative_.WriteTo(output, _repeated_windDirectionRelative_codec);
+      if (ModelType != global::vesselMotionService.ModelTypeEnum.UnknownModel) {
+        output.WriteRawTag(64);
+        output.WriteEnum((int) ModelType);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -254,11 +280,15 @@ namespace vesselMotionService {
       latitude_.WriteTo(ref output, _repeated_latitude_codec);
       heading_.WriteTo(ref output, _repeated_heading_codec);
       waveHeight_.WriteTo(ref output, _repeated_waveHeight_codec);
-      if (QueryLocation != global::vesselMotionService.LocationOnShipEnum.Unknown) {
+      if (QueryLocation != global::vesselMotionService.LocationOnShipEnum.UnknownLocation) {
         output.WriteRawTag(48);
         output.WriteEnum((int) QueryLocation);
       }
       windDirectionRelative_.WriteTo(ref output, _repeated_windDirectionRelative_codec);
+      if (ModelType != global::vesselMotionService.ModelTypeEnum.UnknownModel) {
+        output.WriteRawTag(64);
+        output.WriteEnum((int) ModelType);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -273,10 +303,13 @@ namespace vesselMotionService {
       size += latitude_.CalculateSize(_repeated_latitude_codec);
       size += heading_.CalculateSize(_repeated_heading_codec);
       size += waveHeight_.CalculateSize(_repeated_waveHeight_codec);
-      if (QueryLocation != global::vesselMotionService.LocationOnShipEnum.Unknown) {
+      if (QueryLocation != global::vesselMotionService.LocationOnShipEnum.UnknownLocation) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) QueryLocation);
       }
       size += windDirectionRelative_.CalculateSize(_repeated_windDirectionRelative_codec);
+      if (ModelType != global::vesselMotionService.ModelTypeEnum.UnknownModel) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) ModelType);
+      }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -293,10 +326,13 @@ namespace vesselMotionService {
       latitude_.Add(other.latitude_);
       heading_.Add(other.heading_);
       waveHeight_.Add(other.waveHeight_);
-      if (other.QueryLocation != global::vesselMotionService.LocationOnShipEnum.Unknown) {
+      if (other.QueryLocation != global::vesselMotionService.LocationOnShipEnum.UnknownLocation) {
         QueryLocation = other.QueryLocation;
       }
       windDirectionRelative_.Add(other.windDirectionRelative_);
+      if (other.ModelType != global::vesselMotionService.ModelTypeEnum.UnknownModel) {
+        ModelType = other.ModelType;
+      }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -345,6 +381,10 @@ namespace vesselMotionService {
             windDirectionRelative_.AddEntriesFrom(input, _repeated_windDirectionRelative_codec);
             break;
           }
+          case 64: {
+            ModelType = (global::vesselMotionService.ModelTypeEnum) input.ReadEnum();
+            break;
+          }
         }
       }
     #endif
@@ -391,6 +431,10 @@ namespace vesselMotionService {
           case 58:
           case 61: {
             windDirectionRelative_.AddEntriesFrom(ref input, _repeated_windDirectionRelative_codec);
+            break;
+          }
+          case 64: {
+            ModelType = (global::vesselMotionService.ModelTypeEnum) input.ReadEnum();
             break;
           }
         }

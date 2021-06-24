@@ -27,18 +27,43 @@ namespace vesselMotionService
             acceleration estimates for a requested sailing conditions at a requested location on the ship 
             */
 
-            _logger.LogInformation("Received Motion Estimate Service Call");
+            // _logger.LogInformation("Received Motion Estimate Service Call");
 
             // Create a response object            
             var response = new MotionResponse();  
 
             try
             {
-                // Iterate through the provided inputs and produce estimates for each set
-                for(int i = 0; i < request.PortPropMotorPower.Count; i++)
+                // Select the correct model to call (openwater vs ice). Defaults to open water
+                switch(request.ModelType)
                 {
-                    // For the current set of input variables, add the estimate to the response
-                    response.Acceleration.Add(CalculateVibrationResponse("OpenWater", request.PortPropMotorPower[i], request.Latitude[i], request.WindSpeedRelative[i], request.WindDirectionRelative[i], request.Heading[i], request.WaveHeight[i]));
+                    case ModelTypeEnum.Openwater: 
+                        // Iterate through the provided inputs and produce estimates for each set
+                        for(int i = 0; i < request.PortPropMotorPower.Count; i++)
+                        {
+                            // For the current set of input variables, add the estimate to the response
+                            response.Acceleration.Add(CalculateOpenWaterResponse(request.PortPropMotorPower[i], request.Latitude[i], request.WindSpeedRelative[i], request.WindDirectionRelative[i], request.Heading[i], request.WaveHeight[i]));
+                        }
+                        break;
+
+                    case ModelTypeEnum.Ice:
+                        throw new RpcException(new Status(StatusCode.Unimplemented, "Ice estimation logic has not been implemented yet"));
+
+                    case ModelTypeEnum.UnknownModel:
+                        // Iterate through the provided inputs and produce estimates for each set
+                        for(int i = 0; i < request.PortPropMotorPower.Count; i++)
+                        {
+                            response.Acceleration.Add(CalculateOpenWaterResponse(request.PortPropMotorPower[i], request.Latitude[i], request.WindSpeedRelative[i], request.WindDirectionRelative[i], request.Heading[i], request.WaveHeight[i]));
+                        }
+                        break;
+                    
+                    default:   
+                        // Iterate through the provided inputs and produce estimates for each set                         
+                        for(int i = 0; i < request.PortPropMotorPower.Count; i++)
+                        {
+                            response.Acceleration.Add(CalculateOpenWaterResponse(request.PortPropMotorPower[i], request.Latitude[i], request.WindSpeedRelative[i], request.WindDirectionRelative[i], request.Heading[i], request.WaveHeight[i]));
+                        }
+                        break;
                 }
             }
             catch (RpcException err) when (err.StatusCode == StatusCode.Internal)
@@ -69,30 +94,6 @@ namespace vesselMotionService
             */
 
             return base.MotionEstimateEvaluation(request, context);
-        }
-
-        internal float CalculateVibrationResponse(string modelType, float portPropMotorPower, float latitude, float relativeWindSpeed, float relativeWindDirection, float heading, float waveHeight)
-        {  
-            /* This function selects a model type based on the requested sailing environment (be it openwater or ice). This case study does not 
-            make use of the ice functionality as only open water route comparison is demonstrated, but the provision has been included here to 
-            make provision for future expansion
-            */
-
-            switch(modelType)
-            {
-                case "OpenWater": 
-                    return CalculateOpenWaterResponse(portPropMotorPower, latitude, relativeWindSpeed, relativeWindDirection, heading, waveHeight);
-
-                case "Ice":
-
-                    break;
-                default:
-                    return CalculateOpenWaterResponse(portPropMotorPower, latitude, relativeWindSpeed, relativeWindDirection, heading, waveHeight);
-                
-            }
-
-            throw new RpcException(new Status(StatusCode.Internal, "Requested model does not have an implemented method."));
-
         }
 
         internal float CalculateOpenWaterResponse(float portPropMotorPower, float latitude, float relativeWindSpeed, float relativeWindDirection, float heading, float waveHeight)
