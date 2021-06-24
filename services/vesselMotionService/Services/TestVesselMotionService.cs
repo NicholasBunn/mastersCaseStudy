@@ -17,7 +17,7 @@ public class VesselMotionServiceUnitTest
         VesselMotionService testInstance = new VesselMotionService(null);
 
         // Call the CalcuateOpenWaterResponse function and check the result
-        Assert.Equal(testInstance.CalculateOpenWaterResponse(2431.24975585937F, -35.53165F, 13.5F, 337F, 212F, 1.5F), 7.0642624F);
+        Assert.Equal(7.0642624F, testInstance.CalculateOpenWaterResponse(2431.24975585937F, -35.53165F, 13.5F, 337F, 212F, 1.5F));
     }
 
     [Theory]
@@ -45,7 +45,7 @@ public class VesselMotionServiceUnitTest
         }
         catch (Exception err)
         {
-            Assert.Equal(err.GetType(), typeof(ArgumentException));
+            Assert.Equal(typeof(ArgumentException), err.GetType());
         }
 
     }
@@ -79,6 +79,6 @@ public class VesselMotionServiceIntegrationTest
 
         var response = await testInstance.MotionEstimate(testRequestMessage, null);
 
-        Assert.Equal(response.Acceleration[0], 7.064262390136719F);
+        Assert.Equal(7.064262390136719F, response.Acceleration[0]);
     }
 }
