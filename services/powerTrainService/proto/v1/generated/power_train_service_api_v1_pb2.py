@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n power_train_service_api_v1.proto\x12\x14powerTrainService.v1\"\xe9\x02\n\x19PowerTrainEstimateRequest\x12\x11\n\tunix_time\x18\x01 \x03(\x01\x12\x1d\n\x15port_prop_motor_speed\x18\x02 \x03(\x02\x12\x1d\n\x15stbd_prop_motor_speed\x18\x03 \x03(\x02\x12\x1c\n\x14propeller_pitch_port\x18\x04 \x03(\x02\x12\x1c\n\x14propeller_pitch_stbd\x18\x05 \x03(\x02\x12\x0b\n\x03sog\x18\x06 \x03(\x02\x12\x1f\n\x17wind_direction_relative\x18\x07 \x03(\x02\x12\x12\n\nwind_speed\x18\x08 \x03(\x02\x12\x17\n\x0f\x62\x65\x61ufort_number\x18\t \x03(\x02\x12\x16\n\x0ewave_direction\x18\n \x03(\x02\x12\x13\n\x0bwave_length\x18\x0b \x03(\x02\x12\x37\n\nmodel_type\x18\x0c \x01(\x0e\x32#.powerTrainService.v1.ModelTypeEnum\"\x16\n\x14PowerTrackingRequest\"B\n\x15PowerEstimateResponse\x12\x11\n\tunix_time\x18\x01 \x03(\x01\x12\x16\n\x0epower_estimate\x18\x02 \x03(\x02\"X\n\x14\x43ostEstimateResponse\x12\x11\n\tunix_time\x18\x01 \x03(\x01\x12\x16\n\x0epower_estimate\x18\x02 \x03(\x02\x12\x15\n\rcost_estimate\x18\x03 \x03(\x02\"Z\n\x17PowerEvaluationResponse\x12\x11\n\tunix_time\x18\x01 \x03(\x01\x12\x16\n\x0epower_estimate\x18\x02 \x03(\x02\x12\x14\n\x0cpower_actual\x18\x03 \x03(\x02\"-\n\x15PowerTrackingResponse\x12\x14\n\x0cpower_actual\x18\x01 \x03(\x02*4\n\rModelTypeEnum\x12\x0b\n\x07UNKNOWN\x10\x00\x12\r\n\tOPENWATER\x10\x01\x12\x07\n\x03ICE\x10\x02\x32\xd4\x03\n\x11PowerTrainService\x12m\n\rPowerEstimate\x12/.powerTrainService.v1.PowerTrainEstimateRequest\x1a+.powerTrainService.v1.PowerEstimateResponse\x12k\n\x0c\x43ostEstimate\x12/.powerTrainService.v1.PowerTrainEstimateRequest\x1a*.powerTrainService.v1.CostEstimateResponse\x12h\n\rPowerTracking\x12*.powerTrainService.v1.PowerTrackingRequest\x1a+.powerTrainService.v1.PowerTrackingResponse\x12y\n\x17PowerEstimateEvaluation\x12/.powerTrainService.v1.PowerTrainEstimateRequest\x1a-.powerTrainService.v1.PowerEvaluationResponseb\x06proto3'
+  serialized_pb=b'\n power_train_service_api_v1.proto\x12\x14powerTrainService.v1\"\xe9\x02\n\x19PowerTrainEstimateRequest\x12\x11\n\tunix_time\x18\x01 \x03(\x01\x12\x1d\n\x15port_prop_motor_speed\x18\x02 \x03(\x02\x12\x1d\n\x15stbd_prop_motor_speed\x18\x03 \x03(\x02\x12\x1c\n\x14propeller_pitch_port\x18\x04 \x03(\x02\x12\x1c\n\x14propeller_pitch_stbd\x18\x05 \x03(\x02\x12\x0b\n\x03sog\x18\x06 \x03(\x02\x12\x1f\n\x17wind_direction_relative\x18\x07 \x03(\x02\x12\x12\n\nwind_speed\x18\x08 \x03(\x02\x12\x17\n\x0f\x62\x65\x61ufort_number\x18\t \x03(\x02\x12\x16\n\x0ewave_direction\x18\n \x03(\x02\x12\x13\n\x0bwave_length\x18\x0b \x03(\x02\x12\x37\n\nmodel_type\x18\x0c \x01(\x0e\x32#.powerTrainService.v1.ModelTypeEnum\"\x16\n\x14PowerTrackingRequest\"B\n\x15PowerEstimateResponse\x12\x11\n\tunix_time\x18\x01 \x03(\x01\x12\x16\n\x0epower_estimate\x18\x02 \x03(\x02\"l\n\x14\x43ostEstimateResponse\x12\x11\n\tunix_time\x18\x01 \x03(\x01\x12\x16\n\x0epower_estimate\x18\x02 \x03(\x02\x12\x15\n\rcost_estimate\x18\x03 \x03(\x02\x12\x12\n\ntotal_cost\x18\x04 \x01(\x02\"Z\n\x17PowerEvaluationResponse\x12\x11\n\tunix_time\x18\x01 \x03(\x01\x12\x16\n\x0epower_estimate\x18\x02 \x03(\x02\x12\x14\n\x0cpower_actual\x18\x03 \x03(\x02\"-\n\x15PowerTrackingResponse\x12\x14\n\x0cpower_actual\x18\x01 \x03(\x02*4\n\rModelTypeEnum\x12\x0b\n\x07UNKNOWN\x10\x00\x12\r\n\tOPENWATER\x10\x01\x12\x07\n\x03ICE\x10\x02\x32\xd4\x03\n\x11PowerTrainService\x12m\n\rPowerEstimate\x12/.powerTrainService.v1.PowerTrainEstimateRequest\x1a+.powerTrainService.v1.PowerEstimateResponse\x12k\n\x0c\x43ostEstimate\x12/.powerTrainService.v1.PowerTrainEstimateRequest\x1a*.powerTrainService.v1.CostEstimateResponse\x12h\n\rPowerTracking\x12*.powerTrainService.v1.PowerTrackingRequest\x1a+.powerTrainService.v1.PowerTrackingResponse\x12y\n\x17PowerEstimateEvaluation\x12/.powerTrainService.v1.PowerTrainEstimateRequest\x1a-.powerTrainService.v1.PowerEvaluationResponseb\x06proto3'
 )
 
 _MODELTYPEENUM = _descriptor.EnumDescriptor(
@@ -48,8 +48,8 @@ _MODELTYPEENUM = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=743,
-  serialized_end=795,
+  serialized_start=763,
+  serialized_end=815,
 )
 _sym_db.RegisterEnumDescriptor(_MODELTYPEENUM)
 
@@ -262,6 +262,13 @@ _COSTESTIMATERESPONSE = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='total_cost', full_name='powerTrainService.v1.CostEstimateResponse.total_cost', index=3,
+      number=4, type=2, cpp_type=6, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -275,7 +282,7 @@ _COSTESTIMATERESPONSE = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=514,
-  serialized_end=602,
+  serialized_end=622,
 )
 
 
@@ -320,8 +327,8 @@ _POWEREVALUATIONRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=604,
-  serialized_end=694,
+  serialized_start=624,
+  serialized_end=714,
 )
 
 
@@ -352,8 +359,8 @@ _POWERTRACKINGRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=696,
-  serialized_end=741,
+  serialized_start=716,
+  serialized_end=761,
 )
 
 _POWERTRAINESTIMATEREQUEST.fields_by_name['model_type'].enum_type = _MODELTYPEENUM
@@ -417,8 +424,8 @@ _POWERTRAINSERVICE = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=798,
-  serialized_end=1266,
+  serialized_start=818,
+  serialized_end=1286,
   methods=[
   _descriptor.MethodDescriptor(
     name='PowerEstimate',

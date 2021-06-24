@@ -2,6 +2,7 @@
 import sys
 import os
 import logging
+import time
 from concurrent import futures
 
 # Third party imports
@@ -194,21 +195,53 @@ class PowerTrainServiceServicer(power_train_service_api_v1_pb2_grpc.PowerTrainSe
 	def CostEstimate(self, request, context):
 		"""The 'Cost Estimate' call provides foresight for tactical decision-making by providing cost estimates for a requested route and sailing conditions
 		"""
+
+		logging.info("Received Power Estimate service call.")
+
+		# Create the response message
+		responseMessage = power_train_service_api_v1_pb2.CostEstimateResponse()
+
+		startingCost = 100000 # Cost to start a voyage, in R
 		hourlyCrewCost = 10000 # Cost of crew salaries per hour, in R
 		fuelDensity = 0.8323 # Density of diesel, in kg/litre
 		dieselPrice = 13 # Price of Diesel, in R/litler
 		fuelConsumption = 179 # Fuel consumption of the S.A. Agulhas II, in g/kWh
-		costPerkW = (dieselPrice/fuelDensity)*(fuelConsumption/1000) # Cost of running the ship, in R/kWh
+		costPerkWh = (dieselPrice/fuelDensity)*(fuelConsumption/1000) # Cost of running the ship, in R/kWh
 
 
 		# for unixTime, portPropMotorSpeed, sbtdPropMotorSpeed, propPitchPort, propPitchStbd, sog, relativeWindDirection, windSpeed, beaufortNumber, waveDirection, waveLength, modelType in zip(request.time_and_data, request.port_prop_motor_speed, request.stbd_prop_motor_speed, request.propeller_pitch_port, request.propeller_pitch_stbd, request.sog, request.wind_direction_relative, request.wind_speed, request.beaufort_number, request.wave_direction, request.wave_length, request.model_type):
     	# 	pass
 
-		totalCost = hourlyCrewCost*(timeInHours) + (costPerkWh*powerInkW*timeInHours)
+		requiredPowerSet = self.PowerEstimate(request, context)
 
-		context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-		context.set_details('Method not implemented!')
-		raise NotImplementedError('Method not implemented!')
+		# Loop through requested points
+		for count, powerEstimate in enumerate(requiredPowerSet.power_estimate):
+			if(count != 0):
+    			# For every requested point after the first point, work out how long it's been since the previous point. Assume constant operating conditions for that time period, calculate the cost for the power required over that period, and increment the total cost by that. 
+
+				timeSpan = requiredPowerSet.unix_time[count] - requiredPowerSet.unix_time[count-1] # The time (in seconds) between the current timestamp and the previous one
+				additionalCost = hourlyCrewCost*( timeSpan/3600 ) + ( costPerkWh*powerEstimate*(timeSpan/3600) ) # The additional cost incurred over the above time period
+
+				# Increment the total cost 
+				totalCost += additionalCost
+
+				# Add the new values to the response message
+				responseMessage.unix_time.append(requiredPowerSet.unix_time[count])
+				responseMessage.power_estimate.append(powerEstimate)
+				responseMessage.cost_estimate.append(additionalCost)
+			else:
+    			# For the first point, set the total cost as the starting cost
+				totalCost = startingCost 
+
+				# Add the new values to the response message
+				responseMessage.unix_time.append(requiredPowerSet.unix_time[count])
+				responseMessage.power_estimate.append(powerEstimate)
+				responseMessage.cost_estimate.append(startingCost)
+
+		responseMessage.total_cost = totalCost
+
+		return responseMessage
+
 
 	def PowerTracking(self, request, context):
 		"""The 'Power Tracking' call provides insight for tactical and operational decision-making by providing real-time power use by the vessel

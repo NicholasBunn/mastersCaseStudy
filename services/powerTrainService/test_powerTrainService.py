@@ -98,7 +98,7 @@ class PowerTrainServiceUnitTest(unittest.TestCase):
 		self.assertEqual(float(testResults[0,0]), 356.5527648925781)
 		self.assertEqual(float(testResults[1,0]), 173.1065216064453)
 
-class PowerTrainIntegrationTEst(unittest.TestCase):
+class PowerTrainIntegrationTest(unittest.TestCase):
 	config = loadConfigFile("configuration.yaml")
 	serverClass = powerTrainService.PowerTrainServiceServicer
 	hostName = os.getenv(key = "POWERTRAINHOST", default="localhost")
@@ -128,29 +128,60 @@ class PowerTrainIntegrationTEst(unittest.TestCase):
 		with powerTrainService.grpc.insecure_channel(self.port) as channel:
 			stub = powerTrainService.power_train_service_api_v1_pb2_grpc.PowerTrainServiceStub(channel)
 			response = stub.PowerEstimate(powerTrainService.power_train_service_api_v1_pb2.PowerTrainEstimateRequest(
-				unix_time = [1608811845, 1608812145, 1609157745], # These are taken from the dataset but are not unix time! It's fine because the values are not used here, they're just used to check that the function returns the correct time points
-				port_prop_motor_speed = [83.5450057983399, 83.7725067138672, 120.443740844727],
-				stbd_prop_motor_speed = [84.4112548828125, 84.3762435913086, 120.522499084473],
-				propeller_pitch_port = [-40.5200004577637, 0.0300000011920929, 95.3400039672852],
-				propeller_pitch_stbd = [-46.2599983215332, 0.359999984502792, 92.3999938964844],
-				sog = [0.545311111064, 1.707955555408, 13.756244443256],
-				wind_direction_relative = [15.0, 5.0, 332],
-				wind_speed = [2.5, 1.2, 13.6],
+				unix_time = [1608811845, 1608812145, 1609157745],
+				port_prop_motor_speed = [83.5450057983399, 104.089996337891, 120.443740844727],
+				stbd_prop_motor_speed = [84.4112548828125, 105.743743896484, 120.522499084473],
+				propeller_pitch_port = [-40.5200004577637, 51.3299980163574, 95.3400039672852],
+				propeller_pitch_stbd = [-46.2599983215332, 50.5299987792969, 92.3999938964844],
+				sog = [0.545311111064, 2.973488888632, 13.756244443256],
+				wind_direction_relative = [15.0, 337, 332],
+				wind_speed = [2.5, 4.2, 13.6],
 				beaufort_number = [0.0, 0.0, 3],
 				wave_direction = [0.0, 0.0, 255],
 				wave_length = [0.0, 0.0, 69.3333333333333],
 				model_type = powerTrainService.power_train_service_api_v1_pb2.OPENWATER,
 			))
-		
-		self.assertEqual(response.power_estimate[0], 415.4642639160156)
-		self.assertEqual(response.power_estimate[1], -6.391994476318359)
-		self.assertEqual(response.power_estimate[2], 3718.072509765625)
+
+		self.assertEqual(response.power_estimate[0], 396.0102233886719)
+		self.assertEqual(response.power_estimate[1], 280.8825988769531)
+		self.assertEqual(response.power_estimate[2], 3716.98291015625)
 		self.assertEqual(response.unix_time[0], 1608811845)
 		self.assertEqual(response.unix_time[1], 1608812145)
 		self.assertEqual(response.unix_time[2], 1609157745)
 
 	def test_CostEstimate(self):
-		pass
+		''' This function tests the CostEstimate-specific functionality. It ensures that the service call correctly calculates the cost for a hypothetical route
+		'''
+
+		print("Testing Power Train Service: Cost Estimate (Service Call Test)")
+
+		with powerTrainService.grpc.insecure_channel(self.port) as channel:
+			stub = powerTrainService.power_train_service_api_v1_pb2_grpc.PowerTrainServiceStub(channel)
+			response = stub.CostEstimate(powerTrainService.power_train_service_api_v1_pb2.PowerTrainEstimateRequest(
+				unix_time = [1608811845, 1608812145, 1609157745],
+				port_prop_motor_speed = [83.5450057983399, 104.089996337891, 120.443740844727],
+				stbd_prop_motor_speed = [84.4112548828125, 105.743743896484, 120.522499084473],
+				propeller_pitch_port = [-40.5200004577637, 51.3299980163574, 95.3400039672852],
+				propeller_pitch_stbd = [-46.2599983215332, 50.5299987792969, 92.3999938964844],
+				sog = [0.545311111064, 2.973488888632, 13.756244443256],
+				wind_direction_relative = [15.0, 337, 332],
+				wind_speed = [2.5, 4.2, 13.6],
+				beaufort_number = [0.0, 0.0, 3],
+				wave_direction = [0.0, 0.0, 255],
+				wave_length = [0.0, 0.0, 69.3333333333333],
+				model_type = powerTrainService.power_train_service_api_v1_pb2.OPENWATER,
+			))
+
+		self.assertEqual(response.unix_time[0], 1608811845)
+		self.assertEqual(response.unix_time[1], 1608812145)
+		self.assertEqual(response.unix_time[2], 1609157745)
+		self.assertEqual(response.power_estimate[0], 396.0102233886719)
+		self.assertEqual(response.power_estimate[1], 280.8825988769531)
+		self.assertEqual(response.power_estimate[2], 3716.98291015625)
+		self.assertEqual(response.cost_estimate[0], 100000)
+		self.assertEqual(response.cost_estimate[1], 898.77587890625)
+		self.assertEqual(response.cost_estimate[2], 1957650.125)
+		self.assertEqual(response.total_cost, 2058549.0)
 
 	def test_PowerTracking(self):
 		pass

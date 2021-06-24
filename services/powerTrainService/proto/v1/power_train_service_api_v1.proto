@@ -32,6 +32,7 @@ message CostEstimateResponse {
     repeated double unix_time = 1;
     repeated float power_estimate = 2;
     repeated float cost_estimate = 3;
+    float total_cost = 4;
 }
 
 message PowerEvaluationResponse {
