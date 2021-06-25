@@ -28,8 +28,6 @@ Drop me a message on either of the following:
 - Email: nicholasbunn04@gmail.com
 - LinkedIn: https://www.linkedin.com/in/nicholasbunn/
 
-What a function do
-What the function's parameters or arguments are
-What a function returns
-
-bla bla
+- What a function do
+- What the function's parameters or arguments are
+- What a function returns
