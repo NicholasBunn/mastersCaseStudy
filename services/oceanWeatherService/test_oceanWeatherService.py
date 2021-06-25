@@ -11,39 +11,31 @@ import yaml
 # Local application imports
 import oceanWeatherService
 
+# ToDo: Choose relevant points and time
 # ToDo: Use mock tests (from unittest.mock import patch) to run these tests so that they are not reliant on Stormglass's servers or an internet connection.
 # ToDo: Add assertEqual for wave_length in test_oceanWeatherHistory once the logic has been added
 
-def loadConfigFile(filepath):
-	with open(os.path.join(sys.path[0], filepath), "r") as f:
-		config = yaml.safe_load(f)
-	serverConfig = config["server"]
-	return serverConfig
-
 class OceanWeatherServiceUnitTest(unittest.TestCase):
-	config = loadConfigFile("configuration.yaml")
-	# TODO: Choose relevant points and time
+	''' This class is used to execute all unit tests on the Ocean Weather Service. Put any tests used to verify functions in this class.
+	'''
+
+	config = oceanWeatherService.loadConfigFile("configuration.yaml") # Load in the config file. This is needed for the Stormglass API key
+
 	testLat = 58.7984
 	testLong = 17.8081
 	startTimeUnix = time.mktime(datetime.strptime("22:00:03 21 December 2020", "%H:%M:%S %d %B %Y").timetuple())
 
-	def setUp(self):
-		pass
-
-	def tearDown(self):
-		pass
-
-	def test_queryWaveAPI(self):
+	def test_queryStormglassAPI(self):
 		''' This tests for a succesful API call. This test should pass as long as the historical ocean weather data and the API's response (JSON structure) remain unchanged
 		'''		
 
-		print("Testing Ocean Weather Service: Query Wave API (Function Test)")
+		print("Testing Ocean Weather Service: Unit Test: Query Stormglass API (Function Test)")
 
-		jsonOceanData = oceanWeatherService.queryWaveAPI(self.testLat, self.testLong, self.startTimeUnix, self.config["authentication"]["stormglass"]["apiKey"])
+		jsonOceanData = oceanWeatherService.queryStormglassAPI(self.testLat, self.testLong, self.startTimeUnix, self.config["authentication"]["stormglass"]["apiKey"])
 
 		# This is just here while we're working with a limited number of API queries
 		if(jsonOceanData == "HTTP Error 402: You've reached the daily limit of your trial API, Stormglass wants you to pay to increase the daily request limit."):
-			self.fail("Can't run queryWaveAPI test as daily query limit has been reached.")
+			self.fail("Can't run queryStormglassAPI test as daily query limit has been reached. :(")
 
 		self.assertEqual(jsonOceanData["windDirection"]["icon"], 222.41)
 		self.assertEqual(jsonOceanData["windSpeed"]["icon"], 7.68)
@@ -55,28 +47,29 @@ class OceanWeatherServiceUnitTest(unittest.TestCase):
 		''' This tests the error handling of an invalid API key
 		'''
 
-		print("Testing Ocean Weather Service: Invalid API Key (Error Handling Test)")
+		print("Testing Ocean Weather Service: Unit Test: Invalid API Key (Error Handling Test)")
 
 		with self.assertRaises(Exception):
-			oceanWeatherService.queryWaveAPI(self.testLat, self.testLong, self.startTimeUnix, "Wrong API key")
+			oceanWeatherService.queryStormglassAPI(self.testLat, self.testLong, self.startTimeUnix, "Wrong API key")
 
 	def test_invalidAPIRequest(self):
 		''' This tests the error handling of an invalid API request for the case where the provided latitude, longitude, or unixTime variables are of the incorrect type
 		'''
 
-		print("Testing Ocean Weather Service: Invalid API Request (Error Handling Test)")
+		print("Testing Ocean Weather Service: Unit Test: Invalid API Request (Error Handling Test)")
 		
 		with self.assertRaises(ValueError):
-			oceanWeatherService.queryWaveAPI("Lets give it a string", "Here's another string, just for fun", self.startTimeUnix, self.config["authentication"]["stormglass"]["apiKey"])
-			oceanWeatherService.queryWaveAPI(self.testLat, self.testLong, "Incorrect data type",  self.config["authentication"]["stormglass"]["apiKey"])
+			oceanWeatherService.queryStormglassAPI("Lets give it a string", "Here's another string, just for fun", self.startTimeUnix, self.config["authentication"]["stormglass"]["apiKey"])
+			oceanWeatherService.queryStormglassAPI(self.testLat, self.testLong, "Incorrect data type",  self.config["authentication"]["stormglass"]["apiKey"])
 
 class OceanWeatherServiceIntegrationTest(unittest.TestCase):
-	config = loadConfigFile("configuration.yaml")
+	''' This class is used to execute all integration tests on the Ocean Weather Service. Put any tests used to verify the gRPC/server implementation in this class.
+	'''
+	config = oceanWeatherService.loadConfigFile("configuration.yaml")
 	serverClass = oceanWeatherService.OceanWeatherServiceServicer
 	hostName = os.getenv(key = "FETCHDATAHOST", default = "localhost")
 	port = f'{hostName}:{config["port"]["myself"]}'
 	
-	# TODO: Choose relevant points and time
 	testLat = 58.7984
 	testLong = 17.8081
 	startTimeUnix = time.mktime(datetime.strptime("22:00:03 21 December 2020", "%H:%M:%S %d %B %Y").timetuple())
@@ -101,7 +94,7 @@ class OceanWeatherServiceIntegrationTest(unittest.TestCase):
 		''' This function tests the OceanWeatherHistory-specific functionality. It's main purpose is to ensure that the request iterates through the requested points as intended
 		'''
 
-		print("Testing Ocean Weather Service: Ocean Weather History (Service Call Test)")
+		print("Testing Ocean Weather Service: Integration Test: Ocean Weather History (Service Call Test)")
 
 		with oceanWeatherService.grpc.insecure_channel(self.port) as channel:
 			stub = oceanWeatherService.ocean_weather_service_api_v1_pb2_grpc.OceanWeatherServiceStub(channel)

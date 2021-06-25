@@ -18,14 +18,21 @@ import proto.v1.generated.ocean_weather_service_api_v1_pb2_grpc as ocean_weather
 # ToDo: Add wave_length to response message for OceanWeatherHistory
 
 def loadConfigFile(filepath):
+	''' This function reads in a YAML configuration file. It takes the relative filepath as an input. It returns a dictionary (?) containing configuration variables.
+	'''
+    
 	with open(os.path.join(sys.path[0], filepath), "r") as f:
 		config = yaml.safe_load(f)
 		serverConfig = config["server"]
+
+	logging.debug("Succesfully loaded configuration file")
 	return serverConfig
 
-def queryWaveAPI(latitude, longitude, unixTime, apiKey):
-    	
-	# Check if the provided unixTime is a float (the request can't be built if it isn't as the end parameter is a concatenation of this input)
+def queryStormglassAPI(latitude, longitude, unixTime, apiKey):
+	''' This function makes a single point query to Stormglass's API. It takes the requested latitude, longitude, timestamp (in unixTime), and an API Key as inputs. It returns a JSON object containing the requested weather data.
+	'''
+
+	# Check if the provided unixTime is a float (the request can't be built if it isn't, as the end parameter is a concatenation of this input)
 	if (type(unixTime) != float):
 		raise ValueError("Requested time is not of the correct type (should be float).")
 
@@ -38,7 +45,7 @@ def queryWaveAPI(latitude, longitude, unixTime, apiKey):
 				'params': 'windSpeed',
 				'params': ','.join(['windSpeed', 'windDirection', 'swellDirection', 'swellHeight', 'swellPeriod']),
 				'start': unixTime,
-				'end': unixTime + 3600,
+				'end': unixTime + 3600, # Set end time to be one hour after the query time
 			},
 			headers={
 				'Authorization': apiKey
@@ -78,16 +85,17 @@ class OceanWeatherServiceServicer(ocean_weather_service_api_v1_pb2_grpc.OceanWea
 	"""
 
 	def OceanWeatherPrediction(self, request, context):
-		"""The 'Ocean Weather Prediction' call provides foresight for tactical decision-making by providing future ocean weather conditions along a requested route
+		"""The 'OceanWeatherPrediction' service call provides foresight for tactical decision-making (As is described by https://www.researchgate.net/publication/332173693_Designing_Ship_Digital_Services) by providing future ocean weather conditions along a requested route. It queries Stormglass's (https://stormglass.io/) API to fetch future weather conditions at specified latitudes and longitudes.
 		"""
 
 		logging.info("Received Ocean Weather Prediction service call.")
+
 		context.set_code(grpc.StatusCode.UNIMPLEMENTED)
 		context.set_details('Method not implemented!')
 		raise NotImplementedError('Method not implemented!')
 
 	def OceanWeatherHistory(self, request, context):
-		"""The 'Ocean Weather History' call provides hindsight for stategic decision-making by providing historical ocean weather conditions that the ship would have encountered along a requested route
+		"""The 'OceanWeatherHistory' call provides hindsight for stategic decision-making (As is described by https://www.researchgate.net/publication/332173693_Designing_Ship_Digital_Services) by providing historical ocean weather conditions that the ship would have encountered along a requested route. It allows the client to choose between querying the Stormglass API, Era5 dataset, or visual observations from the S.A. Agulhas to fetch historical weather conditions at specified latitudes and longitudes.
 		"""
 		
 		logging.info("Received Ocean Weather History service call.")
@@ -99,7 +107,7 @@ class OceanWeatherServiceServicer(ocean_weather_service_api_v1_pb2_grpc.OceanWea
 		for testLat, testLong, startTimeUnix in zip(request.latitude, request.longitude, request.timestamp):
 			try:
 				# Query Stormglass API
-				jsonOceanData = queryWaveAPI(testLat, testLong, startTimeUnix, config["authentication"]["stormglass"]["apiKey"])
+				jsonOceanData = queryStormglassAPI(testLat, testLong, startTimeUnix, config["authentication"]["stormglass"]["apiKey"])
 
 				# Populate response message  
 				responseMessage.wind_direction.append(jsonOceanData["windDirection"]["icon"])
@@ -146,7 +154,7 @@ class OceanWeatherServiceServicer(ocean_weather_service_api_v1_pb2_grpc.OceanWea
 
 def serve():
 	''' This function creates a server with specified interceptors, registers the service calls offered by that server, and exposes
-	the server over a specified port. The connection to this port is secured with server-side TLS encryption. 
+	the server over a specified port.
 	'''
 
 	# Create a server to serve calls in its own thread

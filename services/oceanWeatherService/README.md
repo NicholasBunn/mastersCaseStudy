@@ -2,8 +2,8 @@
 
 ## **Description**
 This service offers information about marine weather conditions. It offers two service calls, each serving a different temporal aspect (foresight and hindsight):
-- The 'OceanWeatherPrediction' service call queries Stormglass's (https://stormglass.io/) API to fetch future weather conditions at specified latitudes and longitudes.
-- The 'OceanWeatherHistory' service call allows the client to choose between querying the Stormglass API, Era5 dataset, or visual observations from the S.A. Agulhas to fetch historical weather conditions at specified latitudes and longitudes.
+- The 'OceanWeatherPrediction' service call provides foresight for tactical decision-making (As is described by https://www.researchgate.net/publication/332173693_Designing_Ship_Digital_Services) by providing future ocean weather conditions along a requested route.
+- The 'OceanWeatherHistory' call provides hindsight for stategic decision-making (As is described by https://www.researchgate.net/publication/332173693_Designing_Ship_Digital_Services) by providing historical ocean weather conditions that the ship would have encountered along a requested route.
 
 For information on the API design (calls and messages), check out the proto file at https://github.com/NicholasBunn/mastersCaseStudy/blob/main/services/oceanWeatherService/proto/v1/ocean_weather_service_api_v1.proto
 
