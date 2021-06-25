@@ -1,0 +1,34 @@
+<mxfile>
+    <diagram id="yDGRsnfycBWK4jEYv_eT" name="PowerEstimate">
+        <mxGraphModel dx="439" dy="771" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="cobvU_n2tzdZ3lcsF2gJ" name="CostEstimate">
+        <mxGraphModel dx="439" dy="771" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="rv---AS9pPViwi4vh5Rl-0"/>
+                <mxCell id="rv---AS9pPViwi4vh5Rl-1" parent="rv---AS9pPViwi4vh5Rl-0"/>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="vqYS1Jtx5NchfltVaHca" name="PowerTracking">
+        <mxGraphModel dx="439" dy="771" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="WqytN4m0WCogJbnp6YXD-0"/>
+                <mxCell id="WqytN4m0WCogJbnp6YXD-1" parent="WqytN4m0WCogJbnp6YXD-0"/>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="OvDiqAS-jB9Ulq_aKrSP" name="PowerEstimateEvaluation">
+        <mxGraphModel dx="439" dy="771" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="cuYB3KJQB5Y1yPFTBQlJ-0"/>
+                <mxCell id="cuYB3KJQB5Y1yPFTBQlJ-1" parent="cuYB3KJQB5Y1yPFTBQlJ-0"/>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
