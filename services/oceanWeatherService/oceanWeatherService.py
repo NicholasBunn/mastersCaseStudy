@@ -90,16 +90,6 @@ class OceanWeatherServiceServicer(ocean_weather_service_api_v1_pb2_grpc.OceanWea
 
 		logging.info("Received Ocean Weather Prediction service call.")
 
-		context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-		context.set_details('Method not implemented!')
-		raise NotImplementedError('Method not implemented!')
-
-	def OceanWeatherHistory(self, request, context):
-		"""The 'OceanWeatherHistory' call provides hindsight for stategic decision-making (As is described by https://www.researchgate.net/publication/332173693_Designing_Ship_Digital_Services) by providing historical ocean weather conditions that the ship would have encountered along a requested route. It allows the client to choose between querying the Stormglass API, Era5 dataset, or visual observations from the S.A. Agulhas to fetch historical weather conditions at specified latitudes and longitudes.
-		"""
-		
-		logging.info("Received Ocean Weather History service call.")
-		
 		# Create response message
 		responseMessage = ocean_weather_service_api_v1_pb2.OceanWeatherInformationResponse()
 
@@ -149,8 +139,79 @@ class OceanWeatherServiceServicer(ocean_weather_service_api_v1_pb2_grpc.OceanWea
 				context.set_code(grpc.StatusCode.INTERNAL)
 				# context.set_details("bla bla")
 				raise e
-
 		return responseMessage
+
+	def OceanWeatherHistory(self, request, context):
+		"""The 'OceanWeatherHistory' call provides hindsight for stategic decision-making (As is described by https://www.researchgate.net/publication/332173693_Designing_Ship_Digital_Services) by providing historical ocean weather conditions that the ship would have encountered along a requested route. It allows the client to choose between querying the Stormglass API, Era5 dataset, or visual observations from the S.A. Agulhas to fetch historical weather conditions at specified latitudes and longitudes.
+		"""
+		
+		logging.info("Received Ocean Weather History service call.")
+		
+		# Create response message
+		responseMessage = ocean_weather_service_api_v1_pb2.OceanWeatherInformationResponse()
+
+
+		if(request.archive_service == 1): # Stormglass
+			# Iterate through all the requested points, fetching the weather data for each. This approach uses one query per point of interest (not particularly efficient)
+			for testLat, testLong, startTimeUnix in zip(request.latitude, request.longitude, request.timestamp):
+				try:
+					# Query Stormglass API
+					jsonOceanData = queryStormglassAPI(testLat, testLong, startTimeUnix, config["authentication"]["stormglass"]["apiKey"])
+
+					# Populate response message  
+					responseMessage.wind_direction.append(jsonOceanData["windDirection"]["icon"])
+					responseMessage.wind_speed.append(jsonOceanData["windSpeed"]["icon"])
+					responseMessage.swell_direction.append(jsonOceanData["swellDirection"]["icon"])
+					responseMessage.swell_height.append(jsonOceanData["swellHeight"]["icon"])
+					responseMessage.swell_frequency.append(1/jsonOceanData["swellPeriod"]["icon"])
+					responseMessage.swell_period.append(jsonOceanData["swellPeriod"]["icon"])
+
+					# Set the beaufort number based on the wind speed
+					if(jsonOceanData["windSpeed"]["icon"] < 0.5):
+						responseMessage.beaufort_number.append(0)
+					elif(jsonOceanData["windSpeed"]["icon"] < 1.5):
+						responseMessage.beaufort_number.append(1)
+					elif(jsonOceanData["windSpeed"]["icon"] < 3.3):
+						responseMessage.beaufort_number.append(2)
+					elif(jsonOceanData["windSpeed"]["icon"] < 5.5):
+						responseMessage.beaufort_number.append(3)
+					elif(jsonOceanData["windSpeed"]["icon"] < 7.9):
+						responseMessage.beaufort_number.append(4)
+					elif(jsonOceanData["windSpeed"]["icon"] < 10.7):
+						responseMessage.beaufort_number.append(5)
+					elif(jsonOceanData["windSpeed"]["icon"] < 13.8):
+						responseMessage.beaufort_number.append(6)
+					elif(jsonOceanData["windSpeed"]["icon"] < 17.1):
+						responseMessage.beaufort_number.append(7)
+					elif(jsonOceanData["windSpeed"]["icon"] < 20.7):
+						responseMessage.beaufort_number.append(8)
+					elif(jsonOceanData["windSpeed"]["icon"] < 24.4):
+						responseMessage.beaufort_number.append(9)
+					elif(jsonOceanData["windSpeed"]["icon"] < 28.4):
+						responseMessage.beaufort_number.append(10)
+					elif(jsonOceanData["windSpeed"]["icon"] < 32.6):
+						responseMessage.beaufort_number.append(11)
+					else:
+						responseMessage.beaufort_number.append(12)
+				except Exception as e:
+					logging.debug(f"Failed to query Stormglass API: \n{e}")
+					context.set_code(grpc.StatusCode.INTERNAL)
+					# context.set_details("bla bla")
+					raise e
+			return responseMessage
+		elif(request.archive_service == 2): # ERA5
+			context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+			context.set_details('Method not implemented!')
+			raise NotImplementedError('ERA5 option not yet implemented!')
+		elif(request.archive_service == 3): # Observations
+			context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+			context.set_details('Method not implemented!')
+			raise NotImplementedError('Observation option not yet implemented!')
+		else: #Default
+    		# Choose a defualt option (Stormglass is probably best here)
+			context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+			context.set_details('Method not implemented!')
+			raise NotImplementedError(f'Default option not yet implemented! {request.archive_service}')
 
 def serve():
 	''' This function creates a server with specified interceptors, registers the service calls offered by that server, and exposes

@@ -91,18 +91,42 @@ class OceanWeatherServiceIntegrationTest(unittest.TestCase):
 
 		self.server.stop(None)
 
+	def test_OceanWeatherPrediction(self):
+		''' This function tests the OceanWeatherPrediction-specific functionality. It's main purpose is to ensure that the request iterates through the requested points as intended.
+		'''
+
+		print("Testing Ocean Weather Service: Integration Test: Ocean Weather Prediction (Service Call Test)")
+
+		with oceanWeatherService.grpc.insecure_channel(self.port) as channel:
+			stub = oceanWeatherService.ocean_weather_service_api_v1_pb2_grpc.OceanWeatherServiceStub(channel)
+			response = stub.OceanWeatherPrediction(oceanWeatherService.ocean_weather_service_api_v1_pb2.OceanWeatherPredictionRequest(
+				latitude={self.testLat},
+				longitude={self.testLong},
+				timestamp = {self.startTimeUnix},
+				))
+
+		self.assertEqual(response.wind_direction, [222.41000366210938])
+		self.assertEqual(response.wind_speed, [7.679999828338623])
+		self.assertEqual(response.beaufort_number, [4])
+		self.assertEqual(response.swell_direction, [168.41000366210938])
+		self.assertEqual(response.swell_height, [0.6499999761581421])
+		self.assertEqual(response.swell_frequency, [0.16977928578853607])
+		self.assertEqual(response.swell_period, [5.889999866485596])
+		# self.assertEqual(response.wave_length, [])
+
 	def test_OceanWeatherHistory(self):
-		''' This function tests the OceanWeatherHistory-specific functionality. It's main purpose is to ensure that the request iterates through the requested points as intended
+		''' This function tests the OceanWeatherHistory-specific functionality. It's main purpose is to ensure that the correct archival service is selected.
 		'''
 
 		print("Testing Ocean Weather Service: Integration Test: Ocean Weather History (Service Call Test)")
 
 		with oceanWeatherService.grpc.insecure_channel(self.port) as channel:
 			stub = oceanWeatherService.ocean_weather_service_api_v1_pb2_grpc.OceanWeatherServiceStub(channel)
-			response = stub.OceanWeatherHistory(oceanWeatherService.ocean_weather_service_api_v1_pb2.OceanWeatherInformationRequest(
+			response = stub.OceanWeatherHistory(oceanWeatherService.ocean_weather_service_api_v1_pb2.OceanWeatherHistoryRequest(
 				latitude={self.testLat},
 				longitude={self.testLong},
 				timestamp = {self.startTimeUnix},
+				archive_service  = oceanWeatherService.ocean_weather_service_api_v1_pb2.ArchiveService.STORMGLASS,
 				))
 
 		self.assertEqual(response.wind_direction, [222.41000366210938])

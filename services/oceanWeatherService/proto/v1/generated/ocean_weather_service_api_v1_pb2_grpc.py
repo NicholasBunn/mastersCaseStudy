@@ -17,12 +17,12 @@ class OceanWeatherServiceStub(object):
         """
         self.OceanWeatherPrediction = channel.unary_unary(
                 '/oceanWeatherServiceAPI.v1.OceanWeatherService/OceanWeatherPrediction',
-                request_serializer=ocean__weather__service__api__v1__pb2.OceanWeatherInformationRequest.SerializeToString,
+                request_serializer=ocean__weather__service__api__v1__pb2.OceanWeatherPredictionRequest.SerializeToString,
                 response_deserializer=ocean__weather__service__api__v1__pb2.OceanWeatherInformationResponse.FromString,
                 )
         self.OceanWeatherHistory = channel.unary_unary(
                 '/oceanWeatherServiceAPI.v1.OceanWeatherService/OceanWeatherHistory',
-                request_serializer=ocean__weather__service__api__v1__pb2.OceanWeatherInformationRequest.SerializeToString,
+                request_serializer=ocean__weather__service__api__v1__pb2.OceanWeatherHistoryRequest.SerializeToString,
                 response_deserializer=ocean__weather__service__api__v1__pb2.OceanWeatherInformationResponse.FromString,
                 )
 
@@ -50,12 +50,12 @@ def add_OceanWeatherServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'OceanWeatherPrediction': grpc.unary_unary_rpc_method_handler(
                     servicer.OceanWeatherPrediction,
-                    request_deserializer=ocean__weather__service__api__v1__pb2.OceanWeatherInformationRequest.FromString,
+                    request_deserializer=ocean__weather__service__api__v1__pb2.OceanWeatherPredictionRequest.FromString,
                     response_serializer=ocean__weather__service__api__v1__pb2.OceanWeatherInformationResponse.SerializeToString,
             ),
             'OceanWeatherHistory': grpc.unary_unary_rpc_method_handler(
                     servicer.OceanWeatherHistory,
-                    request_deserializer=ocean__weather__service__api__v1__pb2.OceanWeatherInformationRequest.FromString,
+                    request_deserializer=ocean__weather__service__api__v1__pb2.OceanWeatherHistoryRequest.FromString,
                     response_serializer=ocean__weather__service__api__v1__pb2.OceanWeatherInformationResponse.SerializeToString,
             ),
     }
@@ -81,7 +81,7 @@ class OceanWeatherService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/oceanWeatherServiceAPI.v1.OceanWeatherService/OceanWeatherPrediction',
-            ocean__weather__service__api__v1__pb2.OceanWeatherInformationRequest.SerializeToString,
+            ocean__weather__service__api__v1__pb2.OceanWeatherPredictionRequest.SerializeToString,
             ocean__weather__service__api__v1__pb2.OceanWeatherInformationResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
@@ -98,7 +98,7 @@ class OceanWeatherService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/oceanWeatherServiceAPI.v1.OceanWeatherService/OceanWeatherHistory',
-            ocean__weather__service__api__v1__pb2.OceanWeatherInformationRequest.SerializeToString,
+            ocean__weather__service__api__v1__pb2.OceanWeatherHistoryRequest.SerializeToString,
             ocean__weather__service__api__v1__pb2.OceanWeatherInformationResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

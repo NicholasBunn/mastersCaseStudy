@@ -1,0 +1,12 @@
+server:
+  port: 
+    myself: "50051"
+  authentication:
+    jwt:
+      secretKey: "exampleSecretKey" 
+      tokenDuration: 15 
+    accessLevel:
+      name:
+        exampleServiceCall: "/ExampleService/ExampleServiceCall"
+      role:
+        exampleServiceCall: ["userType1", "userType2"]

@@ -4,10 +4,17 @@ package oceanWeatherServiceAPI.v1;
 
 // option go_package = "service/oceanWeatherService/proto/v1";
 
-message OceanWeatherInformationRequest {
+message OceanWeatherPredictionRequest {
     repeated float latitude = 1;
     repeated float longitude = 2;
     repeated float timestamp = 3;
+}
+
+message OceanWeatherHistoryRequest {
+    repeated float latitude = 1;
+    repeated float longitude = 2;
+    repeated float timestamp = 3;
+    ArchiveService archive_service = 4;
 }
 
 message OceanWeatherInformationResponse {
@@ -24,7 +31,14 @@ message OceanWeatherInformationResponse {
 // 'Ocean Weather Service' offers two service calls that provide information about ocean weather conditions for use in route planning.
 service OceanWeatherService {
     // The 'Ocean Weather Prediction' call provides foresight for tactical decision-making by providing future ocean weather conditions along a requested route
-    rpc OceanWeatherPrediction(OceanWeatherInformationRequest) returns (OceanWeatherInformationResponse);
+    rpc OceanWeatherPrediction(OceanWeatherPredictionRequest) returns (OceanWeatherInformationResponse);
     // The 'OceanWeather History' call provides hindsight for stategic decision-making by providing historical ocean weather conditions that the ship would have encountered along a requested route
-    rpc OceanWeatherHistory(OceanWeatherInformationRequest) returns (OceanWeatherInformationResponse);
+    rpc OceanWeatherHistory(OceanWeatherHistoryRequest) returns (OceanWeatherInformationResponse);
+}
+
+enum ArchiveService {
+    UNKNOWN = 0;
+    STORMGLASS = 1;
+    ERA5 = 2;
+    OBSERVATIONS = 3;
 }
