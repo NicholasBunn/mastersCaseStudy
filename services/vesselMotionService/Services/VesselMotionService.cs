@@ -10,9 +10,7 @@ namespace vesselMotionService
     
     public class VesselMotionService : vesselMotionService.vesselMotionServiceBase
     {
-        /* 'Vessel Motion Service; offers three service calls that provide information 
-        about the vessel's motion in response to her sailing conditions (mainly regarding 
-        the high frequency component of the vessel's acceleration/vibration)
+        /*'VesselMotionService' offers three service calls that provide information about the vessel's motion in response to her sailing conditions (mainly regarding the high frequency component of the vessel's acceleration/vibration).
         */
         
         private readonly ILogger<VesselMotionService> _logger;
@@ -23,8 +21,7 @@ namespace vesselMotionService
 
         public override Task<MotionEstimateResponse> MotionEstimate(MotionEstimateRequest request, ServerCallContext context)
         {
-            /* The 'Motion Estimate' call provides foresight for tactical decision-making by providing high-frequency 
-            acceleration estimates for a requested sailing conditions at a requested location on the ship 
+            /* The 'MotionEstimate' call provides foresight for tactical decision-making (As is described by https://www.researchgate.net/publication/332173693_Designing_Ship_Digital_Services) by providing high-frequency acceleration estimates for a requested sailing conditions at a requested location on the ship. It selects the appropriate model (openwater vs. ice) and iterates through the provided inputs (points) to produce acceleration estimates for each.
             */
 
             // _logger.LogInformation("Received Motion Estimate Service Call");
@@ -88,8 +85,7 @@ namespace vesselMotionService
 
         public override Task<MotionTrackingResponse> MotionTracking(MotionTrackingRequest request, ServerCallContext context)
         {
-            /* The 'Motion Tracking' call provides insight for tactical decision-making by providing real-time, 
-            high-frequency acceleration readings for a requested location on the ship
+            /* The 'MotionTracking' call provides insight for tactical decision-making (As is described by https://www.researchgate.net/publication/332173693_Designing_Ship_Digital_Services) by providing real-time, high-frequency acceleration readings for a requested location on the ship.
             */
 
             return base.MotionTracking(request, context);
@@ -97,7 +93,7 @@ namespace vesselMotionService
 
         public override Task<MotionEvaluationResponse> MotionEstimateEvaluation(MotionEstimateRequest request, ServerCallContext context)
         {
-            /* The 'Motion Estimation Evaluation' call provides hindsight for strategic decision-making by evaluating the accuracy of the models predictions
+            /* The 'MotionEstimationEvaluation' call provides hindsight for strategic decision-making (As is described by https://www.researchgate.net/publication/332173693_Designing_Ship_Digital_Services) by evaluating the accuracy of the models predictions.
             */
 
             return base.MotionEstimateEvaluation(request, context);
@@ -105,7 +101,8 @@ namespace vesselMotionService
 
         internal float CalculateOpenWaterResponse(float portPropMotorPower, float latitude, float relativeWindSpeed, float relativeWindDirection, float heading, float waveHeight)
         {
-            /* This function calculates the vibration response of the vessel for open water sailing conditions. In this implementation, only the y-axis acceleration in the bridge is required, purely as a means to demonstrate the design's ability to aggregate and coordinate information effectively. The study carried out by Soal (2014) offers models/coefficients that account for acceleration in multiple axis at multiple locations on the vessel; these, however, were not implemented to save time. This function would need to be refactored to include these (by taking location and axis as inputs and by selecting the coefficients based on these).
+            /* This function calculates the vibration response of the vessel for open water sailing conditions. It takes the port motor power, the vesel's latitude, the relativeWindSpeed, the relativeWindDirection, the heading, and the wave height as inputs. It returns an acceleration estimate for the bridge in the y-axis. 
+            In this implementation, only the y-axis acceleration in the bridge is required, purely as a means to demonstrate the design's ability to aggregate and coordinate information effectively. The study carried out by Keith Soal (https://scholar.sun.ac.za/handle/10019.1/96058) offers models/coefficients that account for acceleration in multiple axes at multiple locations on the vessel; these, however, were not implemented to save time. This function would need to be refactored to include these (by taking location and axis as inputs and by selecting the coefficients based on these).
             */
 
             if((portPropMotorPower < 0F) || (relativeWindSpeed < 0) || (relativeWindDirection < 0) || (heading < 0) || (waveHeight < 0))
@@ -127,7 +124,8 @@ namespace vesselMotionService
 
         internal float CalculateIceResponse(float s10Bow, float s15SternShoulder, float portPropMotorPower, float longitude, float relativeWindSpeed, float relativeWindDirection, float gpsSOG, float floeSize)
         {
-            /* This function calculates the vibration response of the vessel for ice sailing conditions. This model requires estimates for accelerometer values on the vessel, and until an estimation model for these sensors is developed this call cannnot be used. In this implementation, only the y-axis acceleration in the bridge is required, purely as a means to demonstrate the design's ability to aggregate and coordinate information effectively. The study carried out by Soal (2014) offers models/coefficients that account for acceleration in multiple axis at multiple locations on the vessel; these, however, were not implemented to save time. This function would need to be refactored to include these (by taking location and axis as inputs and by selecting the coefficients based on these)
+            /* This function calculates the vibration response of the vessel for ice sailing conditions. It takes a sensor estimate for the S10Bow, and S15SternShoulder (as the S.A. Agulhas is instrumented), the port motor power, the vessels longitude, the relative wind speed, the relative wind direction, the GPS speed over ground, and the floe size as inputs. It returns an acceleration estimate for the bridge in the y-axis.
+            This model requires estimates for accelerometer values on the vessel, and until an estimation model for these sensors is developed this call cannnot be used. In this implementation, only the y-axis acceleration in the bridge is required, purely as a means to demonstrate the design's ability to aggregate and coordinate information effectively. The study carried out by Soal (2014) offers models/coefficients that account for acceleration in multiple axis at multiple locations on the vessel; these, however, were not implemented to save time. This function would need to be refactored to include these (by taking location and axis as inputs and by selecting the coefficients based on these)
             */
 
             // Define coefficients for a z-axis estimate on the bridge in open water

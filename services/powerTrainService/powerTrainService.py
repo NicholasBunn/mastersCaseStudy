@@ -149,7 +149,7 @@ def evaluateModel(myModel, modelInputs, actualPortMotorPower, actualStbdMotorPow
 	return scores
 
 class PowerTrainServiceServicer(power_train_service_api_v1_pb2_grpc.PowerTrainServiceServicer):
-	"""'Power Train Service' offers four service calls that provide information about the power train of the vessel (namely power requirements and/or their assosciated costs).
+	"""'PowerTrainService' offers four service calls that provide information about the power train of the vessel (namely power requirements and/or their assosciated costs).
 	"""
 
 	def PowerEstimate(self, request, context):

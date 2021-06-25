@@ -5,13 +5,16 @@ using System.Threading.Tasks;
 
 public class VesselMotionServiceUnitTest
 {
+    /* This class is used to execute all unit tests on the Vessel Motion Service. Put any tests used to verify functions in this class.
+    */
+
     [Fact]
     public void Test_CalculateOpenWaterResponse()
     {
         /* This tests that the 'CalculateOpenWater' function is functioning as expected.
         */
 
-        System.Console.WriteLine("Testing Vessel Motion Service: Calculate Open Water Response (Function Test)");
+        System.Console.WriteLine("Testing Vessel Motion Service: Unit Test: Calculate Open Water Response (Function Test)");
 
         // Create an instance of the VesselMotionService class
         VesselMotionService testInstance = new VesselMotionService(null);
@@ -30,11 +33,10 @@ public class VesselMotionServiceUnitTest
     [InlineData(-2431.24975585937F, -35.53165F, -13.5F, -337F, -212F, -1.5F)]
     public void Test_CalculatOpenWaterResponse_NegativeInput(float portPropMotorPower, float latitude, float relativeWindSpeed, float relativeWindDirection, float heading, float waveHeight)
     {
-        /* This tests that the 'CalculateOpenWater' function correctlty throws an error when a negative value is passed in for 
-        any input other than latitude
+        /* This tests that error handling of the 'CalculateOpenWater' function, ensuring that it correctlty throws an error when a negative value is passed in for any input other than latitude.
         */
 
-        System.Console.WriteLine("Testing Vessel Motion Service: Calculate Open Water Response - negative input (Function Test)");
+        System.Console.WriteLine("Testing Vessel Motion Service: Unit Test: Calculate Open Water Response - negative input (Function Test)");
 
         // Create an instance of the VesselMotionService class
         VesselMotionService testInstance = new VesselMotionService(null);
@@ -54,6 +56,8 @@ public class VesselMotionServiceUnitTest
 
 public class VesselMotionServiceIntegrationTest
 {
+    /* This class is used to execute all integration tests on the Vessel Motion Service. Put any tests used to verify the gRPC/server implementation in this class.
+    */
 
     [Theory]
     [InlineData(2431.24975585937F, -35.53165F, 13.5F, 337F, 212F, 1.5F, vesselMotionService.ModelTypeEnum.Openwater)]
@@ -64,7 +68,7 @@ public class VesselMotionServiceIntegrationTest
         /* This function tests the MotionEstimate-specific functionality. It ensures that the service call selects the correct model and makes the correct function calls to serve the request.
         */
 
-        System.Console.WriteLine("Testing Vessel Motion Service: Motion Estimate (Service Call Test)");
+        System.Console.WriteLine("Testing Vessel Motion Service: Integration Test: Motion Estimate (Service Call Test)");
 
         // Create an instance of the VesselMotionService class
         VesselMotionService testInstance = new VesselMotionService(null);
