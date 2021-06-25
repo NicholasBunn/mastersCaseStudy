@@ -1,7 +1,7 @@
 # **Power Train Service**
 
 ## **Description**
-This service offers information about the power train of the S.A. Agulhas II. The original research producing the models used here was carried out by Gerhard Durandt (https://scholar.sun.ac.za/handle/10019.1/109321). It offers four service calls, each serving a different temporal aspects (foresight, insight, and hindsight) and value-spaces (tactical and strategic):
+This service offers information about the power train of the S.A. Agulhas II. The original research producing the models used here was carried out by Gerhard Durandt (https://scholar.sun.ac.za/handle/10019.1/109321). It offers four service calls, each serving different temporal aspects (foresight, insight, and hindsight) and value-spaces (tactical and strategic):
 - The 'PowerEstimate' call provides foresight for tactical decision-making (As is described by https://www.researchgate.net/publication/332173693_Designing_Ship_Digital_Services) by providing power estimates for a requested route and sailing conditions.
 - The 'CostEstimate' call provides foresight for tactical decision-making (As is described by https://www.researchgate.net/publication/332173693_Designing_Ship_Digital_Services) by providing cost estimates for a requested route and sailing conditions.
 - The 'Power Tracking' call provides insight for tactical and operational decision-making (As is described by https://www.researchgate.net/publication/332173693_Designing_Ship_Digital_Services) by providing real-time power use by the vessel.

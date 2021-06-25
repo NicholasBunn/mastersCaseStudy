@@ -1,7 +1,7 @@
 # **Ocean Weather Service**
 
 ## **Description**
-This service offers information about marine weather conditions. It offers two service calls, each serving a different temporal aspects (foresight and hindsight) and value-spaces (tactical and strategic):
+This service offers information about marine weather conditions. It offers two service calls, each serving different temporal aspects (foresight and hindsight) and value-spaces (tactical and strategic):
 - The 'OceanWeatherPrediction' service call provides foresight for tactical decision-making (As is described by https://www.researchgate.net/publication/332173693_Designing_Ship_Digital_Services) by providing future ocean weather conditions along a requested route.
 - The 'OceanWeatherHistory' call provides hindsight for stategic decision-making (As is described by https://www.researchgate.net/publication/332173693_Designing_Ship_Digital_Services) by providing historical ocean weather conditions that the ship would have encountered along a requested route.
 
