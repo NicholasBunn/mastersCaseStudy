@@ -65,6 +65,7 @@ class OceanWeatherServiceUnitTest(unittest.TestCase):
 class OceanWeatherServiceIntegrationTest(unittest.TestCase):
 	''' This class is used to execute all integration tests on the Ocean Weather Service. Put any tests used to verify the gRPC/server implementation in this class.
 	'''
+	
 	config = oceanWeatherService.loadConfigFile("configuration.yaml")
 	serverClass = oceanWeatherService.OceanWeatherServiceServicer
 	hostName = os.getenv(key = "FETCHDATAHOST", default = "localhost")

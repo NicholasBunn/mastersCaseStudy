@@ -14,14 +14,8 @@ import pandas as pd
 # Local application imports
 import powerTrainService
 
-def loadConfigFile(filepath):
-	with open(os.path.join(sys.path[0], filepath), "r") as f:
-		config = yaml.safe_load(f)
-	serverConfig = config["server"]
-	return serverConfig
-
 def importData(excelFileName):
-	''' This function receives a filename ("filename.xlsx") as an input, reads it into a Pandas dataframe, and returns the generated dataFrame
+	''' This function receives a filename ("filename.xlsx") as an input, reads it into a Pandas dataframe, and returns the generated dataFrame.
 	'''
 
 	# Import ship and weather data for estimation
@@ -30,18 +24,14 @@ def importData(excelFileName):
 	return dataSet # NOTE: "dataSet" is a dataFrame
 
 class PowerTrainServiceUnitTest(unittest.TestCase):
-
-	def setUp(self):
-		pass
-
-	def tearDown(self):
-		pass
+	''' This class is used to execute all unit tests on the Power Train Service. Put any tests used to verify functions in this class.
+	'''
 
 	def test_structureData(self):
-		''' This tests the structuring of data. It ensures that the data is fitted and shaped correctly
+		''' This tests the structuring of data. It ensures that the data is fitted and shaped correctly.
 		'''
 
-		print("Testing Power Train Service: Structure Data (Function Test)")
+		print("Testing Power Train Service: Unit Test: Structure Data (Function Test)")
 
     	# Import test data
 		testDataSet = importData("services/powerTrainService/test data/CMU_2019_2020_openWater.xlsx")
@@ -64,7 +54,7 @@ class PowerTrainServiceUnitTest(unittest.TestCase):
 		''' This tests the loading of models. It ensures that the models stored in the "required files" folder exist by their expected names, that the load function is operating effectively, and that the models are of the correct class (Keras sequential model class). NOTE: This function test that the models exist by the correct name, and not that the models are exactly the ones expected!
 		'''
 
-		print("Testing Power Train Service: Load Model (Function Test)")
+		print("Testing Power Train Service: Unit Test: Load Model (Function Test)")
 
 		openWaterEstimationModel = powerTrainService.loadModel("OPENWATER") # Save this as a class parameter to be used in the 'runModel' test
 		iceEstimationModel = powerTrainService.loadModel("ICE")
@@ -78,7 +68,7 @@ class PowerTrainServiceUnitTest(unittest.TestCase):
 		''' This tests the running of the models. It ensures that the runModel function hasn't been updated in a way that breaks the original functionality.
 		'''
 
-		print("Testing Power Train Service: Run Model (Function Test)")
+		print("Testing Power Train Service: Unit Test: Run Model (Function Test)")
 
 		model = keras.models.load_model("services/powerTrainService/required files/OpenWaterModel_R67.h5")
     
@@ -99,7 +89,10 @@ class PowerTrainServiceUnitTest(unittest.TestCase):
 		self.assertEqual(float(testResults[1,0]), 173.1065216064453)
 
 class PowerTrainIntegrationTest(unittest.TestCase):
-	config = loadConfigFile("configuration.yaml")
+	''' This class is used to execute all integration tests on the Ocean Weather Service. Put any tests used to verify the gRPC/server implementation in this class.
+	'''
+
+	config = powerTrainService.loadConfigFile("configuration.yaml")
 	serverClass = powerTrainService.PowerTrainServiceServicer
 	hostName = os.getenv(key = "POWERTRAINHOST", default="localhost")
 	port = f'{hostName}:{config["port"]["myself"]}'
@@ -123,7 +116,7 @@ class PowerTrainIntegrationTest(unittest.TestCase):
 		''' This function tests the PowerEstimate-specific functionality. It ensures that the service call takes the correct inputs, processes them as is required for the model, and makes the correct estimates based on the provided inputs.
 		'''
 
-		print("Testing Power Train Service: Power Estimate (Service Call Test)")
+		print("Testing Power Train Service: Integration Test: Power Estimate (Service Call Test)")
 
 		with powerTrainService.grpc.insecure_channel(self.port) as channel:
 			stub = powerTrainService.power_train_service_api_v1_pb2_grpc.PowerTrainServiceStub(channel)
@@ -153,7 +146,7 @@ class PowerTrainIntegrationTest(unittest.TestCase):
 		''' This function tests the CostEstimate-specific functionality. It ensures that the service call correctly calculates the cost for a hypothetical route
 		'''
 
-		print("Testing Power Train Service: Cost Estimate (Service Call Test)")
+		print("Testing Power Train Service: Integration Test: Cost Estimate (Service Call Test)")
 
 		with powerTrainService.grpc.insecure_channel(self.port) as channel:
 			stub = powerTrainService.power_train_service_api_v1_pb2_grpc.PowerTrainServiceStub(channel)

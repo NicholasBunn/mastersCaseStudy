@@ -18,15 +18,20 @@ import proto.v1.generated.power_train_service_api_v1_pb2 as power_train_service_
 import proto.v1.generated.power_train_service_api_v1_pb2_grpc as power_train_service_api_v1_pb2_grpc
 
 def loadConfigFile(filepath):
+	''' This function reads in a YAML configuration file. It takes the relative filepath as an input. It returns a dictionary (?) containing configuration variables.
+	'''
+    
 	with open(os.path.join(sys.path[0], filepath), "r") as f:
 		config = yaml.safe_load(f)
 		serverConfig = config["server"]
+
+	logging.debug("Succesfully loaded configuration file")
 	return serverConfig
 
 def structureData(dataSet):
 	''' This function takes a (structured) dataFrame as an input, normalises and orders
 	the data into the correct shape, as is required by the machine learning library, 
-	before returning a numpy array containing the data
+	before returning a numpy array containing the data.
 	'''
 
 	dataSet.shape # Shape the test data before accessing its parameters
@@ -95,7 +100,7 @@ def structureData(dataSet):
 	return modelInputs
 
 def loadModel(modelType):
-	''' This function takes the filename of a model as an input, loads the model, and returns the model object. NOTE: The model that is called is passed the absolute path as opposed to only the model name
+	''' This function takes the filename of a model as an input, loads the model, and returns the Keras sequential model object. NOTE: The model that is called is passed the absolute path as opposed to only the model name.
 	'''
 
 	def modelSelector(argument):
@@ -123,7 +128,7 @@ def loadModel(modelType):
 		raise error
 
 def runModel(myModel, modelInputs):
-	''' This function takes a model object and the model's inputs as arguments. It uses these to generate a power prediction from the model, returning the power estimate.
+	''' This function takes a Keras sequential model object and the model's inputs as arguments. It uses these to generate a power prediction from the model, returning the power estimate.
 	'''
 
 	# Receive a power estimate by producing an estimate using the modelInputs set of input parameters
@@ -132,7 +137,7 @@ def runModel(myModel, modelInputs):
 	return estimatedPower
 
 def evaluateModel(myModel, modelInputs, actualPortMotorPower, actualStbdMotorPower):
-	''' This function takes a model object, the model's inputs, and the actual power for evaluation as inputs. It evaluates the model's prediction against	the actual power, returning the real power.
+	''' This function takes a Keras sequential model object, the model's inputs, and the actual power for evaluation as inputs. It evaluates the model's prediction against	the actual power, returning the real power.
 	'''
 
 	realPower = (actualPortMotorPower + actualStbdMotorPower)/2 # realPower holds the actual (average) power, as recorded by the MCU, used here to compare to the model's estimates
@@ -144,11 +149,11 @@ def evaluateModel(myModel, modelInputs, actualPortMotorPower, actualStbdMotorPow
 	return scores
 
 class PowerTrainServiceServicer(power_train_service_api_v1_pb2_grpc.PowerTrainServiceServicer):
-	"""'Power Train Service; offers four service calls that provide information about the power train of the vessel (namely power requirements and their assosciated costs)
+	"""'Power Train Service' offers four service calls that provide information about the power train of the vessel (namely power requirements and/or their assosciated costs).
 	"""
 
 	def PowerEstimate(self, request, context):
-		"""The 'Power Estimate' call provides foresight for tactical decision-making by providing power estimates for a requested route and sailing conditions
+		"""The 'PowerEstimate' call provides foresight for tactical decision-making (As is described by https://www.researchgate.net/publication/332173693_Designing_Ship_Digital_Services) by providing power estimates for a requested route and sailing conditions. It structures the input data for a data-driven model, laods the model in, and produces a power estimate using it.
 		"""
 
 		logging.info("Received Power Estimate service call.")
@@ -205,7 +210,7 @@ class PowerTrainServiceServicer(power_train_service_api_v1_pb2_grpc.PowerTrainSe
 		return responseMessage
 
 	def CostEstimate(self, request, context):
-		"""The 'Cost Estimate' call provides foresight for tactical decision-making by providing cost estimates for a requested route and sailing conditions
+		"""The 'CostEstimate' call provides foresight for tactical decision-making (As is described by https://www.researchgate.net/publication/332173693_Designing_Ship_Digital_Services) by providing cost estimates for a requested route and sailing conditions. It invokes the PowerEstimate service call to produce a power estimate, and then calculates the cost assosciated with the provided route's power requirement profile.
 		"""
 
 		logging.info("Received Power Estimate service call.")
@@ -251,14 +256,14 @@ class PowerTrainServiceServicer(power_train_service_api_v1_pb2_grpc.PowerTrainSe
 		return responseMessage
 
 	def PowerTracking(self, request, context):
-		"""The 'Power Tracking' call provides insight for tactical and operational decision-making by providing real-time power use by the vessel
+		"""The 'Power Tracking' call provides insight for tactical and operational decision-making (As is described by https://www.researchgate.net/publication/332173693_Designing_Ship_Digital_Services) by providing real-time power use by the vessel.
 		"""
 		context.set_code(grpc.StatusCode.UNIMPLEMENTED)
 		context.set_details('Method not implemented!')
 		raise NotImplementedError('Method not implemented!')
 
 	def PowerEstimateEvaluation(self, request, context):
-		"""The 'Power Estimate Evaluation' call provdes hindsight for strategic decision-making by evaluating the accuracy of the models predictions
+		"""The 'Power Estimate Evaluation' call provdes hindsight for strategic decision-making (As is described by https://www.researchgate.net/publication/332173693_Designing_Ship_Digital_Services) by evaluating the accuracy of the models predictions.
 		"""
 		context.set_code(grpc.StatusCode.UNIMPLEMENTED)
 		context.set_details('Method not implemented!')
@@ -266,7 +271,7 @@ class PowerTrainServiceServicer(power_train_service_api_v1_pb2_grpc.PowerTrainSe
 
 def serve():
 	''' This function creates a server with specified interceptors, registers the service calls offered by that server, and exposes
-	the server over a specified port. The connection to this port is secured with server-side TLS encryption. 
+	the server over a specified port.
 	'''
 
 	# Create a server to serve calls in its own thread
