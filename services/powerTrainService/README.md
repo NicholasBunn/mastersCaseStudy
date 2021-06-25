@@ -7,8 +7,7 @@ This service offers information about the power train of the S.A. Agulhas II. Th
 - The 'Power Tracking' call provides insight for tactical and operational decision-making (As is described by https://www.researchgate.net/publication/332173693_Designing_Ship_Digital_Services) by providing real-time power use by the vessel.
 - The 'Power Estimate Evaluation' call provdes hindsight for strategic decision-making (As is described by https://www.researchgate.net/publication/332173693_Designing_Ship_Digital_Services) by evaluating the accuracy of the models predictions.
 
-For information on the API design (calls and messages), check out the proto file at https://github.com/NicholasBunn/mastersCaseStudy/blob/main/services/oceanWeatherService/proto/v1/ocean_weather_service_api_v1.proto
-
+For information on the API design (calls and messages), check out the proto file at https://github.com/NicholasBunn/mastersCaseStudy/blob/main/services/powerTrainService/proto/v1/power_train_service_api_v1.proto
 ## **Prerequisites**
 
 ## **Installation**
