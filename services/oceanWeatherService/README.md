@@ -25,12 +25,6 @@ I'm still investigating what licenses this project falls under. I suppose it's r
 This software can be referenced by citing my masters thesis (to be published). Please keep an eye on my Research Gate profile (https://www.researchgate.net/profile/Nicholas-Bunn-2) for it's release.
 
 ## **Contact**
-Drop me a message on any of the following:
+Drop me a message on either of the following:
 - Email: nicholasbunn04@gmail.com
 - LinkedIn: https://www.linkedin.com/in/nicholasbunn/
-
-What a function do
-What the function's parameters or arguments are
-What a function returns
-
-bla bla
