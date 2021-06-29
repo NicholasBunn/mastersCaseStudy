@@ -32,29 +32,31 @@ namespace vesselMotionService {
             "dGlvbhgGIAEoDjIqLnZlc3NlbE1vdGlvblNlcnZpY2UudjEuTG9jYXRpb25P",
             "blNoaXBFbnVtEh8KF3dpbmRfZGlyZWN0aW9uX3JlbGF0aXZlGAcgAygCEjkK",
             "Cm1vZGVsX3R5cGUYCCABKA4yJS52ZXNzZWxNb3Rpb25TZXJ2aWNlLnYxLk1v",
-            "ZGVsVHlwZUVudW0iFwoVTW90aW9uVHJhY2tpbmdSZXF1ZXN0IjcKFk1vdGlv",
-            "bkVzdGltYXRlUmVzcG9uc2USHQoVYWNjZWxlcmF0aW9uX2VzdGltYXRlGAEg",
-            "AygCIjUKFk1vdGlvblRyYWNraW5nUmVzcG9uc2USGwoTYWNjZWxlcmF0aW9u",
-            "X2FjdHVhbBgBIAMoAiJWChhNb3Rpb25FdmFsdWF0aW9uUmVzcG9uc2USHQoV",
-            "YWNjZWxlcmF0aW9uX2VzdGltYXRlGAEgAygCEhsKE2FjY2VsZXJhdGlvbl9h",
-            "Y3R1YWwYAiADKAIqOQoSTG9jYXRpb25PblNoaXBFbnVtEhQKEFVOS05PV05f",
-            "TE9DQVRJT04QABINCglTT01FV0hFUkUQASo6Cg1Nb2RlbFR5cGVFbnVtEhEK",
-            "DVVOS05PV05fTU9ERUwQABINCglPUEVOV0FURVIQARIHCgNJQ0UQAjL0AgoT",
-            "dmVzc2VsTW90aW9uU2VydmljZRJvCg5Nb3Rpb25Fc3RpbWF0ZRItLnZlc3Nl",
-            "bE1vdGlvblNlcnZpY2UudjEuTW90aW9uRXN0aW1hdGVSZXF1ZXN0Gi4udmVz",
-            "c2VsTW90aW9uU2VydmljZS52MS5Nb3Rpb25Fc3RpbWF0ZVJlc3BvbnNlEm8K",
-            "Dk1vdGlvblRyYWNraW5nEi0udmVzc2VsTW90aW9uU2VydmljZS52MS5Nb3Rp",
-            "b25UcmFja2luZ1JlcXVlc3QaLi52ZXNzZWxNb3Rpb25TZXJ2aWNlLnYxLk1v",
-            "dGlvblRyYWNraW5nUmVzcG9uc2USewoYTW90aW9uRXN0aW1hdGVFdmFsdWF0",
-            "aW9uEi0udmVzc2VsTW90aW9uU2VydmljZS52MS5Nb3Rpb25Fc3RpbWF0ZVJl",
-            "cXVlc3QaMC52ZXNzZWxNb3Rpb25TZXJ2aWNlLnYxLk1vdGlvbkV2YWx1YXRp",
-            "b25SZXNwb25zZUIWqgITdmVzc2VsTW90aW9uU2VydmljZWIGcHJvdG8z"));
+            "ZGVsVHlwZUVudW0iFwoVTW90aW9uVHJhY2tpbmdSZXF1ZXN0InsKFk1vdGlv",
+            "bkVzdGltYXRlUmVzcG9uc2USHwoXYWNjZWxlcmF0aW9uX2VzdGltYXRlX3gY",
+            "ASADKAISHwoXYWNjZWxlcmF0aW9uX2VzdGltYXRlX3kYAiADKAISHwoXYWNj",
+            "ZWxlcmF0aW9uX2VzdGltYXRlX3oYAyADKAIiNQoWTW90aW9uVHJhY2tpbmdS",
+            "ZXNwb25zZRIbChNhY2NlbGVyYXRpb25fYWN0dWFsGAEgAygCIlYKGE1vdGlv",
+            "bkV2YWx1YXRpb25SZXNwb25zZRIdChVhY2NlbGVyYXRpb25fZXN0aW1hdGUY",
+            "ASADKAISGwoTYWNjZWxlcmF0aW9uX2FjdHVhbBgCIAMoAio5ChJMb2NhdGlv",
+            "bk9uU2hpcEVudW0SFAoQVU5LTk9XTl9MT0NBVElPThAAEg0KCVNPTUVXSEVS",
+            "RRABKjoKDU1vZGVsVHlwZUVudW0SEQoNVU5LTk9XTl9NT0RFTBAAEg0KCU9Q",
+            "RU5XQVRFUhABEgcKA0lDRRACMvQCChN2ZXNzZWxNb3Rpb25TZXJ2aWNlEm8K",
+            "Dk1vdGlvbkVzdGltYXRlEi0udmVzc2VsTW90aW9uU2VydmljZS52MS5Nb3Rp",
+            "b25Fc3RpbWF0ZVJlcXVlc3QaLi52ZXNzZWxNb3Rpb25TZXJ2aWNlLnYxLk1v",
+            "dGlvbkVzdGltYXRlUmVzcG9uc2USbwoOTW90aW9uVHJhY2tpbmcSLS52ZXNz",
+            "ZWxNb3Rpb25TZXJ2aWNlLnYxLk1vdGlvblRyYWNraW5nUmVxdWVzdBouLnZl",
+            "c3NlbE1vdGlvblNlcnZpY2UudjEuTW90aW9uVHJhY2tpbmdSZXNwb25zZRJ7",
+            "ChhNb3Rpb25Fc3RpbWF0ZUV2YWx1YXRpb24SLS52ZXNzZWxNb3Rpb25TZXJ2",
+            "aWNlLnYxLk1vdGlvbkVzdGltYXRlUmVxdWVzdBowLnZlc3NlbE1vdGlvblNl",
+            "cnZpY2UudjEuTW90aW9uRXZhbHVhdGlvblJlc3BvbnNlQhaqAhN2ZXNzZWxN",
+            "b3Rpb25TZXJ2aWNlYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::vesselMotionService.LocationOnShipEnum), typeof(global::vesselMotionService.ModelTypeEnum), }, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::vesselMotionService.MotionEstimateRequest), global::vesselMotionService.MotionEstimateRequest.Parser, new[]{ "PortPropMotorPower", "WindSpeedRelative", "Latitude", "Heading", "WaveHeight", "QueryLocation", "WindDirectionRelative", "ModelType" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::vesselMotionService.MotionTrackingRequest), global::vesselMotionService.MotionTrackingRequest.Parser, null, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::vesselMotionService.MotionEstimateResponse), global::vesselMotionService.MotionEstimateResponse.Parser, new[]{ "AccelerationEstimate" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::vesselMotionService.MotionEstimateResponse), global::vesselMotionService.MotionEstimateResponse.Parser, new[]{ "AccelerationEstimateX", "AccelerationEstimateY", "AccelerationEstimateZ" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::vesselMotionService.MotionTrackingResponse), global::vesselMotionService.MotionTrackingResponse.Parser, new[]{ "AccelerationActual" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::vesselMotionService.MotionEvaluationResponse), global::vesselMotionService.MotionEvaluationResponse.Parser, new[]{ "AccelerationEstimate", "AccelerationActual" }, null, null, null, null)
           }));
@@ -612,7 +614,9 @@ namespace vesselMotionService {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public MotionEstimateResponse(MotionEstimateResponse other) : this() {
-      accelerationEstimate_ = other.accelerationEstimate_.Clone();
+      accelerationEstimateX_ = other.accelerationEstimateX_.Clone();
+      accelerationEstimateY_ = other.accelerationEstimateY_.Clone();
+      accelerationEstimateZ_ = other.accelerationEstimateZ_.Clone();
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -621,14 +625,34 @@ namespace vesselMotionService {
       return new MotionEstimateResponse(this);
     }
 
-    /// <summary>Field number for the "acceleration_estimate" field.</summary>
-    public const int AccelerationEstimateFieldNumber = 1;
-    private static readonly pb::FieldCodec<float> _repeated_accelerationEstimate_codec
+    /// <summary>Field number for the "acceleration_estimate_x" field.</summary>
+    public const int AccelerationEstimateXFieldNumber = 1;
+    private static readonly pb::FieldCodec<float> _repeated_accelerationEstimateX_codec
         = pb::FieldCodec.ForFloat(10);
-    private readonly pbc::RepeatedField<float> accelerationEstimate_ = new pbc::RepeatedField<float>();
+    private readonly pbc::RepeatedField<float> accelerationEstimateX_ = new pbc::RepeatedField<float>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<float> AccelerationEstimate {
-      get { return accelerationEstimate_; }
+    public pbc::RepeatedField<float> AccelerationEstimateX {
+      get { return accelerationEstimateX_; }
+    }
+
+    /// <summary>Field number for the "acceleration_estimate_y" field.</summary>
+    public const int AccelerationEstimateYFieldNumber = 2;
+    private static readonly pb::FieldCodec<float> _repeated_accelerationEstimateY_codec
+        = pb::FieldCodec.ForFloat(18);
+    private readonly pbc::RepeatedField<float> accelerationEstimateY_ = new pbc::RepeatedField<float>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<float> AccelerationEstimateY {
+      get { return accelerationEstimateY_; }
+    }
+
+    /// <summary>Field number for the "acceleration_estimate_z" field.</summary>
+    public const int AccelerationEstimateZFieldNumber = 3;
+    private static readonly pb::FieldCodec<float> _repeated_accelerationEstimateZ_codec
+        = pb::FieldCodec.ForFloat(26);
+    private readonly pbc::RepeatedField<float> accelerationEstimateZ_ = new pbc::RepeatedField<float>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<float> AccelerationEstimateZ {
+      get { return accelerationEstimateZ_; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -644,14 +668,18 @@ namespace vesselMotionService {
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if(!accelerationEstimate_.Equals(other.accelerationEstimate_)) return false;
+      if(!accelerationEstimateX_.Equals(other.accelerationEstimateX_)) return false;
+      if(!accelerationEstimateY_.Equals(other.accelerationEstimateY_)) return false;
+      if(!accelerationEstimateZ_.Equals(other.accelerationEstimateZ_)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      hash ^= accelerationEstimate_.GetHashCode();
+      hash ^= accelerationEstimateX_.GetHashCode();
+      hash ^= accelerationEstimateY_.GetHashCode();
+      hash ^= accelerationEstimateZ_.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -668,7 +696,9 @@ namespace vesselMotionService {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      accelerationEstimate_.WriteTo(output, _repeated_accelerationEstimate_codec);
+      accelerationEstimateX_.WriteTo(output, _repeated_accelerationEstimateX_codec);
+      accelerationEstimateY_.WriteTo(output, _repeated_accelerationEstimateY_codec);
+      accelerationEstimateZ_.WriteTo(output, _repeated_accelerationEstimateZ_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -678,7 +708,9 @@ namespace vesselMotionService {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      accelerationEstimate_.WriteTo(ref output, _repeated_accelerationEstimate_codec);
+      accelerationEstimateX_.WriteTo(ref output, _repeated_accelerationEstimateX_codec);
+      accelerationEstimateY_.WriteTo(ref output, _repeated_accelerationEstimateY_codec);
+      accelerationEstimateZ_.WriteTo(ref output, _repeated_accelerationEstimateZ_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -688,7 +720,9 @@ namespace vesselMotionService {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      size += accelerationEstimate_.CalculateSize(_repeated_accelerationEstimate_codec);
+      size += accelerationEstimateX_.CalculateSize(_repeated_accelerationEstimateX_codec);
+      size += accelerationEstimateY_.CalculateSize(_repeated_accelerationEstimateY_codec);
+      size += accelerationEstimateZ_.CalculateSize(_repeated_accelerationEstimateZ_codec);
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -700,7 +734,9 @@ namespace vesselMotionService {
       if (other == null) {
         return;
       }
-      accelerationEstimate_.Add(other.accelerationEstimate_);
+      accelerationEstimateX_.Add(other.accelerationEstimateX_);
+      accelerationEstimateY_.Add(other.accelerationEstimateY_);
+      accelerationEstimateZ_.Add(other.accelerationEstimateZ_);
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -717,7 +753,17 @@ namespace vesselMotionService {
             break;
           case 10:
           case 13: {
-            accelerationEstimate_.AddEntriesFrom(input, _repeated_accelerationEstimate_codec);
+            accelerationEstimateX_.AddEntriesFrom(input, _repeated_accelerationEstimateX_codec);
+            break;
+          }
+          case 18:
+          case 21: {
+            accelerationEstimateY_.AddEntriesFrom(input, _repeated_accelerationEstimateY_codec);
+            break;
+          }
+          case 26:
+          case 29: {
+            accelerationEstimateZ_.AddEntriesFrom(input, _repeated_accelerationEstimateZ_codec);
             break;
           }
         }
@@ -736,7 +782,17 @@ namespace vesselMotionService {
             break;
           case 10:
           case 13: {
-            accelerationEstimate_.AddEntriesFrom(ref input, _repeated_accelerationEstimate_codec);
+            accelerationEstimateX_.AddEntriesFrom(ref input, _repeated_accelerationEstimateX_codec);
+            break;
+          }
+          case 18:
+          case 21: {
+            accelerationEstimateY_.AddEntriesFrom(ref input, _repeated_accelerationEstimateY_codec);
+            break;
+          }
+          case 26:
+          case 29: {
+            accelerationEstimateZ_.AddEntriesFrom(ref input, _repeated_accelerationEstimateZ_codec);
             break;
           }
         }

@@ -20,7 +20,11 @@ public class VesselMotionServiceUnitTest
         VesselMotionService testInstance = new VesselMotionService(null);
 
         // Call the CalcuateOpenWaterResponse function and check the result
-        Assert.Equal(7.0642624F, testInstance.CalculateOpenWaterResponse(2431.24975585937F, -35.53165F, 13.5F, 337F, 212F, 1.5F));
+        (float xResponse, float yResponse, float zResponse) = testInstance.CalculateOpenWaterResponse(2431.24975585937F, -35.53165F, 13.5F, 337F, 212F, 1.5F);
+
+        Assert.Equal(11.090744F, xResponse);
+        Assert.Equal(7.6717124F, yResponse);
+        Assert.Equal(7.0642624F, zResponse);
     }
 
     [Theory]
@@ -84,7 +88,8 @@ public class VesselMotionServiceIntegrationTest
         testRequestMessage.ModelType = modelType;
 
         var response = await testInstance.MotionEstimate(testRequestMessage, null);
-
-        Assert.Equal(7.064262390136719F, response.AccelerationEstimate[0]);
+        Assert.Equal(11.090744F, response.AccelerationEstimateX[0]);
+        Assert.Equal(7.6717124F, response.AccelerationEstimateY[0]);
+        Assert.Equal(7.064262390136719F, response.AccelerationEstimateZ[0]);
     }
 }

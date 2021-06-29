@@ -19,9 +19,19 @@ namespace vesselMotionService
             _logger = logger;
         }
 
+        struct openWaterCoefficients {
+            public float intercept;
+            public float alpha;
+            public float beta;
+            public float gamma;
+            public float delta;
+            public float zeta;
+            public float eta;
+        };
+
         public override Task<MotionEstimateResponse> MotionEstimate(MotionEstimateRequest request, ServerCallContext context)
         {
-            /* The 'MotionEstimate' call provides foresight for tactical decision-making (As is described by https://www.researchgate.net/publication/332173693_Designing_Ship_Digital_Services) by providing high-frequency acceleration estimates for a requested sailing conditions at a requested location on the ship. It selects the appropriate model (openwater vs. ice) and iterates through the provided inputs (points) to produce acceleration estimates for each.
+            /* The 'MotionEstimate' call provides foresight for tactical decision-making (As is described by https://www.researchgate.net/publication/332173693_Designing_Ship_Digital_Services) by providing high-frequency acceleration estimates for a requested sailing conditions at a requested location on the ship (Currently, only the bridge has been implemented). It selects the appropriate model (openwater vs. ice) and iterates through the provided inputs (points) to produce acceleration estimates for each.
             */
 
             // _logger.LogInformation("Received Motion Estimate Service Call");
@@ -39,7 +49,11 @@ namespace vesselMotionService
                         for(int i = 0; i < request.PortPropMotorPower.Count; i++)
                         {   
                             // For the current set of input variables, add the estimate to the response
-                            response.AccelerationEstimate.Add(CalculateOpenWaterResponse(request.PortPropMotorPower[i], request.Latitude[i], request.WindSpeedRelative[i], request.WindDirectionRelative[i], request.Heading[i], request.WaveHeight[i]));
+                            (float xEstimate, float yEstimate, float zEstimate) = CalculateOpenWaterResponse(request.PortPropMotorPower[i], request.Latitude[i], request.WindSpeedRelative[i], request.WindDirectionRelative[i], request.Heading[i], request.WaveHeight[i]);
+                            response.AccelerationEstimateX.Add(xEstimate);
+                            response.AccelerationEstimateY.Add(yEstimate);
+                            response.AccelerationEstimateZ.Add(zEstimate);
+
                         }
 
                         // _logger.LogInformation("Succesfully calculated response for open water model");
@@ -53,7 +67,11 @@ namespace vesselMotionService
                         // Iterate through the provided inputs and produce estimates for each set
                         for(int i = 0; i < request.PortPropMotorPower.Count; i++)
                         {
-                            response.AccelerationEstimate.Add(CalculateOpenWaterResponse(request.PortPropMotorPower[i], request.Latitude[i], request.WindSpeedRelative[i], request.WindDirectionRelative[i], request.Heading[i], request.WaveHeight[i]));
+                            // For the current set of input variables, add the estimate to the response
+                            (float xEstimate, float yEstimate, float zEstimate) = CalculateOpenWaterResponse(request.PortPropMotorPower[i], request.Latitude[i], request.WindSpeedRelative[i], request.WindDirectionRelative[i], request.Heading[i], request.WaveHeight[i]);
+                            response.AccelerationEstimateX.Add(xEstimate);
+                            response.AccelerationEstimateY.Add(yEstimate);
+                            response.AccelerationEstimateZ.Add(zEstimate);
                         }
 
                         // _logger.LogInformation("Succesfully calculated response for unknown model (defaulted to open water)");
@@ -63,7 +81,11 @@ namespace vesselMotionService
                         // Iterate through the provided inputs and produce estimates for each set                         
                         for(int i = 0; i < request.PortPropMotorPower.Count; i++)
                         {
-                            response.AccelerationEstimate.Add(CalculateOpenWaterResponse(request.PortPropMotorPower[i], request.Latitude[i], request.WindSpeedRelative[i], request.WindDirectionRelative[i], request.Heading[i], request.WaveHeight[i]));
+                            // For the current set of input variables, add the estimate to the response
+                            (float xEstimate, float yEstimate, float zEstimate) = CalculateOpenWaterResponse(request.PortPropMotorPower[i], request.Latitude[i], request.WindSpeedRelative[i], request.WindDirectionRelative[i], request.Heading[i], request.WaveHeight[i]);
+                            response.AccelerationEstimateX.Add(xEstimate);
+                            response.AccelerationEstimateY.Add(yEstimate);
+                            response.AccelerationEstimateZ.Add(zEstimate);
                         }
 
                         // _logger.LogInformation("Succesfully calculated response for no provided model (defaulted to open water)");
@@ -99,27 +121,54 @@ namespace vesselMotionService
             return base.MotionEstimateEvaluation(request, context);
         }
 
-        internal float CalculateOpenWaterResponse(float portPropMotorPower, float latitude, float relativeWindSpeed, float relativeWindDirection, float heading, float waveHeight)
+        internal (float, float, float) CalculateOpenWaterResponse(float portPropMotorPower, float latitude, float relativeWindSpeed, float relativeWindDirection, float heading, float waveHeight)
         {
             /* This function calculates the vibration response of the vessel for open water sailing conditions. It takes the port motor power, the vesel's latitude, the relativeWindSpeed, the relativeWindDirection, the heading, and the wave height as inputs. It returns an acceleration estimate for the bridge in the y-axis. 
-            In this implementation, only the y-axis acceleration in the bridge is required, purely as a means to demonstrate the design's ability to aggregate and coordinate information effectively. The study carried out by Keith Soal (https://scholar.sun.ac.za/handle/10019.1/96058) offers models/coefficients that account for acceleration in multiple axes at multiple locations on the vessel; these, however, were not implemented to save time. This function would need to be refactored to include these (by taking location and axis as inputs and by selecting the coefficients based on these).
+            In this implementation, only the y-axis acceleration in the bridge is required (this is human-weighted), purely as a means to demonstrate the design's ability to aggregate and coordinate information effectively. The study carried out by Keith Soal (https://scholar.sun.ac.za/handle/10019.1/96058) offers models/coefficients that account for acceleration in multiple axes at multiple locations on the vessel; these, however, were not implemented to save time. This function would need to be refactored to include these (by taking location and axis as inputs and by selecting the coefficients based on these).
             */
 
             if((portPropMotorPower < 0F) || (relativeWindSpeed < 0) || (relativeWindDirection < 0) || (heading < 0) || (waveHeight < 0))
             {
                 throw new ArgumentException("The only input that can have a negative value is latitude");
             }
-
-            // Define coefficients for a z-axis estimate on the bridge in open water
-            float intercept = 1.7605F;
-            float alpha = 0.0010F;
-            float beta = -0.0004F;
-            float gamma = 0.2050F;
-            float delta = -0.0008F;
-            float zeta = 0.0017F;
-            float eta = 0F;
             
-            return (intercept + (alpha*portPropMotorPower) + (beta*latitude) + (gamma*relativeWindSpeed) + (delta*relativeWindDirection) + (zeta*heading) + (eta*waveHeight));
+            // Define coefficients for a x-axis estimate on the bridge in open water. These provide the human-weighted vibrations
+            openWaterCoefficients xCoefficients;
+            xCoefficients.intercept = 2.7298F;
+            xCoefficients.alpha = 0.0013F;
+            xCoefficients.beta = -0.0006F;
+            xCoefficients.gamma = 0.3430F;
+            xCoefficients.delta = -0.0007F;
+            xCoefficients.zeta = 0.0037F;
+            xCoefficients.eta = 0F;
+
+            // Define coefficients for a y-axis estimate on the bridge in open water. These provide the human-weighted vibrations
+            openWaterCoefficients yCoefficients;
+            yCoefficients.intercept = 2.5711F;
+            yCoefficients.alpha = 0.0016F;
+            yCoefficients.beta = -0.0004F;
+            yCoefficients.gamma = 0F;
+            yCoefficients.delta = -0.0010F;
+            yCoefficients.zeta = 0.0011F;
+            yCoefficients.eta = 0.8668F;
+            
+            // Define coefficients for a z-axis estimate on the bridge in open water. These provide the human-weighted vibrations
+            openWaterCoefficients zCoefficients;
+            zCoefficients.intercept = 1.7605F;
+            zCoefficients.alpha = 0.0010F;
+            zCoefficients.beta = -0.0004F;
+            zCoefficients.gamma = 0.2050F;
+            zCoefficients.delta = -0.0008F;
+            zCoefficients.zeta = 0.0017F;
+            zCoefficients.eta = 0F;
+
+            float xResponse = xCoefficients.intercept + (xCoefficients.alpha*portPropMotorPower) + (xCoefficients.beta*latitude) + (xCoefficients.gamma*relativeWindSpeed) + (xCoefficients.delta*relativeWindDirection) + (xCoefficients.zeta*heading) + (xCoefficients.eta*waveHeight);
+
+            float yResponse = yCoefficients.intercept + (yCoefficients.alpha*portPropMotorPower) + (yCoefficients.beta*latitude) + (yCoefficients.gamma*relativeWindSpeed) + (yCoefficients.delta*relativeWindDirection) + (yCoefficients.zeta*heading) + (yCoefficients.eta*waveHeight);
+
+            float zResponse = zCoefficients.intercept + (zCoefficients.alpha*portPropMotorPower) + (zCoefficients.beta*latitude) + (zCoefficients.gamma*relativeWindSpeed) + (zCoefficients.delta*relativeWindDirection) + (zCoefficients.zeta*heading) + (zCoefficients.eta*waveHeight);
+
+            return(xResponse, yResponse, zResponse);
         }
 
         internal float CalculateIceResponse(float s10Bow, float s15SternShoulder, float portPropMotorPower, float longitude, float relativeWindSpeed, float relativeWindDirection, float gpsSOG, float floeSize)

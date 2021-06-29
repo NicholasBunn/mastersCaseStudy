@@ -256,5 +256,5 @@ if __name__ == '__main__':
 
 	logging.basicConfig(filename="services/oceanWeatherService/program logs/" + serviceName + ".log", format="%(asctime)s:%(name)s:%(levelname)s:%(module)s:%(funcName)s:%(message)s", level=logging.DEBUG)
 
-	# ________SERVE REQUEST________
+	# ________SERVE REQUESTS________
 	serve() # Finish initialisation by serving the request

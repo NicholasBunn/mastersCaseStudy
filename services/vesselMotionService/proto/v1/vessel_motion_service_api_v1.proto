@@ -20,7 +20,9 @@ message MotionTrackingRequest {
 }
 
 message MotionEstimateResponse {
-    repeated float acceleration_estimate = 1;
+    repeated float acceleration_estimate_x = 1;
+    repeated float acceleration_estimate_y = 2;
+    repeated float acceleration_estimate_z = 3;
 }
 
 message MotionTrackingResponse {
