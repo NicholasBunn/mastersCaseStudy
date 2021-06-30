@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package comfortServiceAPI.v1;
+
+message ComfortRequest {
+    repeated double unix_time = 1;
+    repeated float humanWeightedVibrationX = 2;
+    repeated float humanWeightedVibrationY = 3;
+    repeated float humanWeightedVibrationZ = 4;
+}
+
+message ComfortResponse {
+    repeated double unix_time = 1;
+    string rating = 2;
+    optional string percentageMaxRating = 3;
+}
+
+message VDVRequest {
+    repeated double unix_time = 1;
+    repeated float weightedAcceleration = 2;
+}
+
+message VDVResponse {
+    repeated double unix_time = 1;
+    repeated float weightedAcceleration = 2;
+}
+
+// 'Comfort Service' offers three service calls that provide information about human comfort onboard, in response to vessel vibrations.
+service ComfortService {
+    // The 'Comfort Rating' call provides foresight for ?? decision-making by providing a comfort rating for a proposed route, based on estimated vibrations on board.
+    rpc ComfortRating(ComfortRequest) returns (ComfortResponse);
+    // The 'VDV Estimate' call provides ?? for ?? decision-making by providing the estimated vibration dose value for a requested route.
+    rpc VDVEstimate(VDVRequest) returns (VDVResponse);
+    // The 'VDV Tracking' call provides ?? for ?? decision-making by providing a real-time vibration dose value based on accelerometer feeds on board the vessel.
+    rpc VDVTracking(VDVRequest) returns (VDVResponse);
+}
