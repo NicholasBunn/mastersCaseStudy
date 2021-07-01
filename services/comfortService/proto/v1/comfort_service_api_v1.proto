@@ -45,4 +45,4 @@ enum HabitibilityRating {
 enum LocationOnShipEnum {
     UNKNOWN_LOCATION = 0;
     SOMEWHERE = 1;
-}
+} 
