@@ -22,12 +22,12 @@ constexpr ComfortRequest::ComfortRequest(
   ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
   : unix_time_()
   , _unix_time_cached_byte_size_()
-  , humanweightedvibrationx_()
-  , _humanweightedvibrationx_cached_byte_size_()
-  , humanweightedvibrationy_()
-  , _humanweightedvibrationy_cached_byte_size_()
-  , humanweightedvibrationz_()
-  , _humanweightedvibrationz_cached_byte_size_(){}
+  , human_weighted_vibration_x_()
+  , _human_weighted_vibration_x_cached_byte_size_()
+  , human_weighted_vibration_y_()
+  , _human_weighted_vibration_y_cached_byte_size_()
+  , human_weighted_vibration_z_()
+  , _human_weighted_vibration_z_cached_byte_size_(){}
 struct ComfortRequestDefaultTypeInternal {
   constexpr ComfortRequestDefaultTypeInternal()
     : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
@@ -41,8 +41,9 @@ constexpr ComfortResponse::ComfortResponse(
   ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
   : unix_time_()
   , _unix_time_cached_byte_size_()
-  , rating_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
-  , percentagemaxrating_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string){}
+  , percentage_max_rating_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
+  , rating_(0)
+{}
 struct ComfortResponseDefaultTypeInternal {
   constexpr ComfortResponseDefaultTypeInternal()
     : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
@@ -56,8 +57,8 @@ constexpr VDVRequest::VDVRequest(
   ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
   : unix_time_()
   , _unix_time_cached_byte_size_()
-  , weightedacceleration_()
-  , _weightedacceleration_cached_byte_size_(){}
+  , weighted_acceleration_()
+  , _weighted_acceleration_cached_byte_size_(){}
 struct VDVRequestDefaultTypeInternal {
   constexpr VDVRequestDefaultTypeInternal()
     : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
@@ -71,8 +72,8 @@ constexpr VDVResponse::VDVResponse(
   ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
   : unix_time_()
   , _unix_time_cached_byte_size_()
-  , weightedacceleration_()
-  , _weightedacceleration_cached_byte_size_(){}
+  , weighted_acceleration_()
+  , _weighted_acceleration_cached_byte_size_(){}
 struct VDVResponseDefaultTypeInternal {
   constexpr VDVResponseDefaultTypeInternal()
     : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
@@ -85,7 +86,7 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT VDVResponseDefaultTypeInternal 
 }  // namespace v1
 }  // namespace comfortServiceAPI
 static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_comfort_5fservice_5fapi_5fv1_2eproto[4];
-static constexpr ::PROTOBUF_NAMESPACE_ID::EnumDescriptor const** file_level_enum_descriptors_comfort_5fservice_5fapi_5fv1_2eproto = nullptr;
+static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_comfort_5fservice_5fapi_5fv1_2eproto[2];
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_comfort_5fservice_5fapi_5fv1_2eproto = nullptr;
 
 const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_comfort_5fservice_5fapi_5fv1_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
@@ -95,9 +96,9 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_comfort_5fservice_5fapi_5fv1_2
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::comfortServiceAPI::v1::ComfortRequest, unix_time_),
-  PROTOBUF_FIELD_OFFSET(::comfortServiceAPI::v1::ComfortRequest, humanweightedvibrationx_),
-  PROTOBUF_FIELD_OFFSET(::comfortServiceAPI::v1::ComfortRequest, humanweightedvibrationy_),
-  PROTOBUF_FIELD_OFFSET(::comfortServiceAPI::v1::ComfortRequest, humanweightedvibrationz_),
+  PROTOBUF_FIELD_OFFSET(::comfortServiceAPI::v1::ComfortRequest, human_weighted_vibration_x_),
+  PROTOBUF_FIELD_OFFSET(::comfortServiceAPI::v1::ComfortRequest, human_weighted_vibration_y_),
+  PROTOBUF_FIELD_OFFSET(::comfortServiceAPI::v1::ComfortRequest, human_weighted_vibration_z_),
   PROTOBUF_FIELD_OFFSET(::comfortServiceAPI::v1::ComfortResponse, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::comfortServiceAPI::v1::ComfortResponse, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -105,7 +106,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_comfort_5fservice_5fapi_5fv1_2
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::comfortServiceAPI::v1::ComfortResponse, unix_time_),
   PROTOBUF_FIELD_OFFSET(::comfortServiceAPI::v1::ComfortResponse, rating_),
-  PROTOBUF_FIELD_OFFSET(::comfortServiceAPI::v1::ComfortResponse, percentagemaxrating_),
+  PROTOBUF_FIELD_OFFSET(::comfortServiceAPI::v1::ComfortResponse, percentage_max_rating_),
   ~0u,
   ~0u,
   0,
@@ -115,14 +116,14 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_comfort_5fservice_5fapi_5fv1_2
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::comfortServiceAPI::v1::VDVRequest, unix_time_),
-  PROTOBUF_FIELD_OFFSET(::comfortServiceAPI::v1::VDVRequest, weightedacceleration_),
+  PROTOBUF_FIELD_OFFSET(::comfortServiceAPI::v1::VDVRequest, weighted_acceleration_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::comfortServiceAPI::v1::VDVResponse, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::comfortServiceAPI::v1::VDVResponse, unix_time_),
-  PROTOBUF_FIELD_OFFSET(::comfortServiceAPI::v1::VDVResponse, weightedacceleration_),
+  PROTOBUF_FIELD_OFFSET(::comfortServiceAPI::v1::VDVResponse, weighted_acceleration_),
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::comfortServiceAPI::v1::ComfortRequest)},
@@ -140,27 +141,34 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 
 const char descriptor_table_protodef_comfort_5fservice_5fapi_5fv1_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\034comfort_service_api_v1.proto\022\024comfortS"
-  "erviceAPI.v1\"\206\001\n\016ComfortRequest\022\021\n\tunix_"
-  "time\030\001 \003(\001\022\037\n\027humanWeightedVibrationX\030\002 "
-  "\003(\002\022\037\n\027humanWeightedVibrationY\030\003 \003(\002\022\037\n\027"
-  "humanWeightedVibrationZ\030\004 \003(\002\"n\n\017Comfort"
-  "Response\022\021\n\tunix_time\030\001 \003(\001\022\016\n\006rating\030\002 "
-  "\001(\t\022 \n\023percentageMaxRating\030\003 \001(\tH\000\210\001\001B\026\n"
-  "\024_percentageMaxRating\"=\n\nVDVRequest\022\021\n\tu"
-  "nix_time\030\001 \003(\001\022\034\n\024weightedAcceleration\030\002"
-  " \003(\002\">\n\013VDVResponse\022\021\n\tunix_time\030\001 \003(\001\022\034"
-  "\n\024weightedAcceleration\030\002 \003(\0022\226\002\n\016Comfort"
-  "Service\022\\\n\rComfortRating\022$.comfortServic"
-  "eAPI.v1.ComfortRequest\032%.comfortServiceA"
-  "PI.v1.ComfortResponse\022R\n\013VDVEstimate\022 .c"
-  "omfortServiceAPI.v1.VDVRequest\032!.comfort"
-  "ServiceAPI.v1.VDVResponse\022R\n\013VDVTracking"
-  "\022 .comfortServiceAPI.v1.VDVRequest\032!.com"
-  "fortServiceAPI.v1.VDVResponseb\006proto3"
+  "erviceAPI.v1\"\217\001\n\016ComfortRequest\022\021\n\tunix_"
+  "time\030\001 \003(\001\022\"\n\032human_weighted_vibration_x"
+  "\030\002 \003(\002\022\"\n\032human_weighted_vibration_y\030\003 \003"
+  "(\002\022\"\n\032human_weighted_vibration_z\030\004 \003(\002\"\234"
+  "\001\n\017ComfortResponse\022\021\n\tunix_time\030\001 \003(\001\0228\n"
+  "\006rating\030\002 \001(\0162(.comfortServiceAPI.v1.Hab"
+  "itibilityRating\022\"\n\025percentage_max_rating"
+  "\030\003 \001(\tH\000\210\001\001B\030\n\026_percentage_max_rating\">\n"
+  "\nVDVRequest\022\021\n\tunix_time\030\001 \003(\001\022\035\n\025weight"
+  "ed_acceleration\030\002 \003(\002\"\?\n\013VDVResponse\022\021\n\t"
+  "unix_time\030\001 \003(\001\022\035\n\025weighted_acceleration"
+  "\030\002 \003(\002*\207\001\n\022HabitibilityRating\022\022\n\016UNKNOWN"
+  "_RATING\020\000\022\035\n\031ADVERSE_COMMENTS_UNLIKELY\020\001"
+  "\022\037\n\033NORMAL_OPERATING_CONDITIONS\020\002\022\035\n\031ADV"
+  "ERSE_COMMENTS_PROBABLE\020\003*9\n\022LocationOnSh"
+  "ipEnum\022\024\n\020UNKNOWN_LOCATION\020\000\022\r\n\tSOMEWHER"
+  "E\020\0012\226\002\n\016ComfortService\022\\\n\rComfortRating\022"
+  "$.comfortServiceAPI.v1.ComfortRequest\032%."
+  "comfortServiceAPI.v1.ComfortResponse\022R\n\013"
+  "VDVEstimate\022 .comfortServiceAPI.v1.VDVRe"
+  "quest\032!.comfortServiceAPI.v1.VDVResponse"
+  "\022R\n\013VDVTracking\022 .comfortServiceAPI.v1.V"
+  "DVRequest\032!.comfortServiceAPI.v1.VDVResp"
+  "onseb\006proto3"
   ;
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_comfort_5fservice_5fapi_5fv1_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_comfort_5fservice_5fapi_5fv1_2eproto = {
-  false, false, 717, descriptor_table_protodef_comfort_5fservice_5fapi_5fv1_2eproto, "comfort_service_api_v1.proto", 
+  false, false, 972, descriptor_table_protodef_comfort_5fservice_5fapi_5fv1_2eproto, "comfort_service_api_v1.proto", 
   &descriptor_table_comfort_5fservice_5fapi_5fv1_2eproto_once, nullptr, 0, 4,
   schemas, file_default_instances, TableStruct_comfort_5fservice_5fapi_5fv1_2eproto::offsets,
   file_level_metadata_comfort_5fservice_5fapi_5fv1_2eproto, file_level_enum_descriptors_comfort_5fservice_5fapi_5fv1_2eproto, file_level_service_descriptors_comfort_5fservice_5fapi_5fv1_2eproto,
@@ -175,6 +183,36 @@ descriptor_table_comfort_5fservice_5fapi_5fv1_2eproto_metadata_getter(int index)
 PROTOBUF_ATTRIBUTE_INIT_PRIORITY static ::PROTOBUF_NAMESPACE_ID::internal::AddDescriptorsRunner dynamic_init_dummy_comfort_5fservice_5fapi_5fv1_2eproto(&descriptor_table_comfort_5fservice_5fapi_5fv1_2eproto);
 namespace comfortServiceAPI {
 namespace v1 {
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* HabitibilityRating_descriptor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_comfort_5fservice_5fapi_5fv1_2eproto);
+  return file_level_enum_descriptors_comfort_5fservice_5fapi_5fv1_2eproto[0];
+}
+bool HabitibilityRating_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* LocationOnShipEnum_descriptor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_comfort_5fservice_5fapi_5fv1_2eproto);
+  return file_level_enum_descriptors_comfort_5fservice_5fapi_5fv1_2eproto[1];
+}
+bool LocationOnShipEnum_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+      return true;
+    default:
+      return false;
+  }
+}
+
 
 // ===================================================================
 
@@ -185,9 +223,9 @@ class ComfortRequest::_Internal {
 ComfortRequest::ComfortRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena),
   unix_time_(arena),
-  humanweightedvibrationx_(arena),
-  humanweightedvibrationy_(arena),
-  humanweightedvibrationz_(arena) {
+  human_weighted_vibration_x_(arena),
+  human_weighted_vibration_y_(arena),
+  human_weighted_vibration_z_(arena) {
   SharedCtor();
   RegisterArenaDtor(arena);
   // @@protoc_insertion_point(arena_constructor:comfortServiceAPI.v1.ComfortRequest)
@@ -195,9 +233,9 @@ ComfortRequest::ComfortRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena)
 ComfortRequest::ComfortRequest(const ComfortRequest& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
       unix_time_(from.unix_time_),
-      humanweightedvibrationx_(from.humanweightedvibrationx_),
-      humanweightedvibrationy_(from.humanweightedvibrationy_),
-      humanweightedvibrationz_(from.humanweightedvibrationz_) {
+      human_weighted_vibration_x_(from.human_weighted_vibration_x_),
+      human_weighted_vibration_y_(from.human_weighted_vibration_y_),
+      human_weighted_vibration_z_(from.human_weighted_vibration_z_) {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   // @@protoc_insertion_point(copy_constructor:comfortServiceAPI.v1.ComfortRequest)
 }
@@ -232,9 +270,9 @@ void ComfortRequest::Clear() {
   (void) cached_has_bits;
 
   unix_time_.Clear();
-  humanweightedvibrationx_.Clear();
-  humanweightedvibrationy_.Clear();
-  humanweightedvibrationz_.Clear();
+  human_weighted_vibration_x_.Clear();
+  human_weighted_vibration_y_.Clear();
+  human_weighted_vibration_z_.Clear();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -255,33 +293,33 @@ const char* ComfortRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE
           ptr += sizeof(double);
         } else goto handle_unusual;
         continue;
-      // repeated float humanWeightedVibrationX = 2;
+      // repeated float human_weighted_vibration_x = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedFloatParser(_internal_mutable_humanweightedvibrationx(), ptr, ctx);
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedFloatParser(_internal_mutable_human_weighted_vibration_x(), ptr, ctx);
           CHK_(ptr);
         } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 21) {
-          _internal_add_humanweightedvibrationx(::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr));
+          _internal_add_human_weighted_vibration_x(::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr));
           ptr += sizeof(float);
         } else goto handle_unusual;
         continue;
-      // repeated float humanWeightedVibrationY = 3;
+      // repeated float human_weighted_vibration_y = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedFloatParser(_internal_mutable_humanweightedvibrationy(), ptr, ctx);
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedFloatParser(_internal_mutable_human_weighted_vibration_y(), ptr, ctx);
           CHK_(ptr);
         } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 29) {
-          _internal_add_humanweightedvibrationy(::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr));
+          _internal_add_human_weighted_vibration_y(::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr));
           ptr += sizeof(float);
         } else goto handle_unusual;
         continue;
-      // repeated float humanWeightedVibrationZ = 4;
+      // repeated float human_weighted_vibration_z = 4;
       case 4:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedFloatParser(_internal_mutable_humanweightedvibrationz(), ptr, ctx);
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedFloatParser(_internal_mutable_human_weighted_vibration_z(), ptr, ctx);
           CHK_(ptr);
         } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 37) {
-          _internal_add_humanweightedvibrationz(::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr));
+          _internal_add_human_weighted_vibration_z(::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr));
           ptr += sizeof(float);
         } else goto handle_unusual;
         continue;
@@ -318,19 +356,19 @@ failure:
     target = stream->WriteFixedPacked(1, _internal_unix_time(), target);
   }
 
-  // repeated float humanWeightedVibrationX = 2;
-  if (this->_internal_humanweightedvibrationx_size() > 0) {
-    target = stream->WriteFixedPacked(2, _internal_humanweightedvibrationx(), target);
+  // repeated float human_weighted_vibration_x = 2;
+  if (this->_internal_human_weighted_vibration_x_size() > 0) {
+    target = stream->WriteFixedPacked(2, _internal_human_weighted_vibration_x(), target);
   }
 
-  // repeated float humanWeightedVibrationY = 3;
-  if (this->_internal_humanweightedvibrationy_size() > 0) {
-    target = stream->WriteFixedPacked(3, _internal_humanweightedvibrationy(), target);
+  // repeated float human_weighted_vibration_y = 3;
+  if (this->_internal_human_weighted_vibration_y_size() > 0) {
+    target = stream->WriteFixedPacked(3, _internal_human_weighted_vibration_y(), target);
   }
 
-  // repeated float humanWeightedVibrationZ = 4;
-  if (this->_internal_humanweightedvibrationz_size() > 0) {
-    target = stream->WriteFixedPacked(4, _internal_humanweightedvibrationz(), target);
+  // repeated float human_weighted_vibration_z = 4;
+  if (this->_internal_human_weighted_vibration_z_size() > 0) {
+    target = stream->WriteFixedPacked(4, _internal_human_weighted_vibration_z(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -364,9 +402,9 @@ size_t ComfortRequest::ByteSizeLong() const {
     total_size += data_size;
   }
 
-  // repeated float humanWeightedVibrationX = 2;
+  // repeated float human_weighted_vibration_x = 2;
   {
-    unsigned int count = static_cast<unsigned int>(this->_internal_humanweightedvibrationx_size());
+    unsigned int count = static_cast<unsigned int>(this->_internal_human_weighted_vibration_x_size());
     size_t data_size = 4UL * count;
     if (data_size > 0) {
       total_size += 1 +
@@ -374,14 +412,14 @@ size_t ComfortRequest::ByteSizeLong() const {
             static_cast<::PROTOBUF_NAMESPACE_ID::int32>(data_size));
     }
     int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(data_size);
-    _humanweightedvibrationx_cached_byte_size_.store(cached_size,
+    _human_weighted_vibration_x_cached_byte_size_.store(cached_size,
                                     std::memory_order_relaxed);
     total_size += data_size;
   }
 
-  // repeated float humanWeightedVibrationY = 3;
+  // repeated float human_weighted_vibration_y = 3;
   {
-    unsigned int count = static_cast<unsigned int>(this->_internal_humanweightedvibrationy_size());
+    unsigned int count = static_cast<unsigned int>(this->_internal_human_weighted_vibration_y_size());
     size_t data_size = 4UL * count;
     if (data_size > 0) {
       total_size += 1 +
@@ -389,14 +427,14 @@ size_t ComfortRequest::ByteSizeLong() const {
             static_cast<::PROTOBUF_NAMESPACE_ID::int32>(data_size));
     }
     int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(data_size);
-    _humanweightedvibrationy_cached_byte_size_.store(cached_size,
+    _human_weighted_vibration_y_cached_byte_size_.store(cached_size,
                                     std::memory_order_relaxed);
     total_size += data_size;
   }
 
-  // repeated float humanWeightedVibrationZ = 4;
+  // repeated float human_weighted_vibration_z = 4;
   {
-    unsigned int count = static_cast<unsigned int>(this->_internal_humanweightedvibrationz_size());
+    unsigned int count = static_cast<unsigned int>(this->_internal_human_weighted_vibration_z_size());
     size_t data_size = 4UL * count;
     if (data_size > 0) {
       total_size += 1 +
@@ -404,7 +442,7 @@ size_t ComfortRequest::ByteSizeLong() const {
             static_cast<::PROTOBUF_NAMESPACE_ID::int32>(data_size));
     }
     int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(data_size);
-    _humanweightedvibrationz_cached_byte_size_.store(cached_size,
+    _human_weighted_vibration_z_cached_byte_size_.store(cached_size,
                                     std::memory_order_relaxed);
     total_size += data_size;
   }
@@ -441,9 +479,9 @@ void ComfortRequest::MergeFrom(const ComfortRequest& from) {
   (void) cached_has_bits;
 
   unix_time_.MergeFrom(from.unix_time_);
-  humanweightedvibrationx_.MergeFrom(from.humanweightedvibrationx_);
-  humanweightedvibrationy_.MergeFrom(from.humanweightedvibrationy_);
-  humanweightedvibrationz_.MergeFrom(from.humanweightedvibrationz_);
+  human_weighted_vibration_x_.MergeFrom(from.human_weighted_vibration_x_);
+  human_weighted_vibration_y_.MergeFrom(from.human_weighted_vibration_y_);
+  human_weighted_vibration_z_.MergeFrom(from.human_weighted_vibration_z_);
 }
 
 void ComfortRequest::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
@@ -468,9 +506,9 @@ void ComfortRequest::InternalSwap(ComfortRequest* other) {
   using std::swap;
   _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
   unix_time_.InternalSwap(&other->unix_time_);
-  humanweightedvibrationx_.InternalSwap(&other->humanweightedvibrationx_);
-  humanweightedvibrationy_.InternalSwap(&other->humanweightedvibrationy_);
-  humanweightedvibrationz_.InternalSwap(&other->humanweightedvibrationz_);
+  human_weighted_vibration_x_.InternalSwap(&other->human_weighted_vibration_x_);
+  human_weighted_vibration_y_.InternalSwap(&other->human_weighted_vibration_y_);
+  human_weighted_vibration_z_.InternalSwap(&other->human_weighted_vibration_z_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata ComfortRequest::GetMetadata() const {
@@ -483,7 +521,7 @@ void ComfortRequest::InternalSwap(ComfortRequest* other) {
 class ComfortResponse::_Internal {
  public:
   using HasBits = decltype(std::declval<ComfortResponse>()._has_bits_);
-  static void set_has_percentagemaxrating(HasBits* has_bits) {
+  static void set_has_percentage_max_rating(HasBits* has_bits) {
     (*has_bits)[0] |= 1u;
   }
 };
@@ -500,22 +538,18 @@ ComfortResponse::ComfortResponse(const ComfortResponse& from)
       _has_bits_(from._has_bits_),
       unix_time_(from.unix_time_) {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  rating_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  if (!from._internal_rating().empty()) {
-    rating_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_rating(), 
+  percentage_max_rating_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from._internal_has_percentage_max_rating()) {
+    percentage_max_rating_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_percentage_max_rating(), 
       GetArena());
   }
-  percentagemaxrating_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  if (from._internal_has_percentagemaxrating()) {
-    percentagemaxrating_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_percentagemaxrating(), 
-      GetArena());
-  }
+  rating_ = from.rating_;
   // @@protoc_insertion_point(copy_constructor:comfortServiceAPI.v1.ComfortResponse)
 }
 
 void ComfortResponse::SharedCtor() {
-rating_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-percentagemaxrating_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+percentage_max_rating_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+rating_ = 0;
 }
 
 ComfortResponse::~ComfortResponse() {
@@ -526,8 +560,7 @@ ComfortResponse::~ComfortResponse() {
 
 void ComfortResponse::SharedDtor() {
   GOOGLE_DCHECK(GetArena() == nullptr);
-  rating_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  percentagemaxrating_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  percentage_max_rating_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
 void ComfortResponse::ArenaDtor(void* object) {
@@ -547,11 +580,11 @@ void ComfortResponse::Clear() {
   (void) cached_has_bits;
 
   unix_time_.Clear();
-  rating_.ClearToEmpty();
   cached_has_bits = _has_bits_[0];
   if (cached_has_bits & 0x00000001u) {
-    percentagemaxrating_.ClearNonDefaultToEmpty();
+    percentage_max_rating_.ClearNonDefaultToEmpty();
   }
+  rating_ = 0;
   _has_bits_.Clear();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
@@ -574,21 +607,20 @@ const char* ComfortResponse::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPAC
           ptr += sizeof(double);
         } else goto handle_unusual;
         continue;
-      // string rating = 2;
+      // .comfortServiceAPI.v1.HabitibilityRating rating = 2;
       case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
-          auto str = _internal_mutable_rating();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "comfortServiceAPI.v1.ComfortResponse.rating"));
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
+          ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
+          _internal_set_rating(static_cast<::comfortServiceAPI::v1::HabitibilityRating>(val));
         } else goto handle_unusual;
         continue;
-      // string percentageMaxRating = 3;
+      // string percentage_max_rating = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
-          auto str = _internal_mutable_percentagemaxrating();
+          auto str = _internal_mutable_percentage_max_rating();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "comfortServiceAPI.v1.ComfortResponse.percentageMaxRating"));
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "comfortServiceAPI.v1.ComfortResponse.percentage_max_rating"));
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -626,24 +658,21 @@ failure:
     target = stream->WriteFixedPacked(1, _internal_unix_time(), target);
   }
 
-  // string rating = 2;
-  if (this->rating().size() > 0) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_rating().data(), static_cast<int>(this->_internal_rating().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "comfortServiceAPI.v1.ComfortResponse.rating");
-    target = stream->WriteStringMaybeAliased(
-        2, this->_internal_rating(), target);
+  // .comfortServiceAPI.v1.HabitibilityRating rating = 2;
+  if (this->rating() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
+      2, this->_internal_rating(), target);
   }
 
-  // string percentageMaxRating = 3;
-  if (_internal_has_percentagemaxrating()) {
+  // string percentage_max_rating = 3;
+  if (_internal_has_percentage_max_rating()) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_percentagemaxrating().data(), static_cast<int>(this->_internal_percentagemaxrating().length()),
+      this->_internal_percentage_max_rating().data(), static_cast<int>(this->_internal_percentage_max_rating().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "comfortServiceAPI.v1.ComfortResponse.percentageMaxRating");
+      "comfortServiceAPI.v1.ComfortResponse.percentage_max_rating");
     target = stream->WriteStringMaybeAliased(
-        3, this->_internal_percentagemaxrating(), target);
+        3, this->_internal_percentage_max_rating(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -677,19 +706,18 @@ size_t ComfortResponse::ByteSizeLong() const {
     total_size += data_size;
   }
 
-  // string rating = 2;
-  if (this->rating().size() > 0) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_rating());
-  }
-
-  // string percentageMaxRating = 3;
+  // string percentage_max_rating = 3;
   cached_has_bits = _has_bits_[0];
   if (cached_has_bits & 0x00000001u) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_percentagemaxrating());
+        this->_internal_percentage_max_rating());
+  }
+
+  // .comfortServiceAPI.v1.HabitibilityRating rating = 2;
+  if (this->rating() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_rating());
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -724,11 +752,11 @@ void ComfortResponse::MergeFrom(const ComfortResponse& from) {
   (void) cached_has_bits;
 
   unix_time_.MergeFrom(from.unix_time_);
-  if (from.rating().size() > 0) {
-    _internal_set_rating(from._internal_rating());
+  if (from._internal_has_percentage_max_rating()) {
+    _internal_set_percentage_max_rating(from._internal_percentage_max_rating());
   }
-  if (from._internal_has_percentagemaxrating()) {
-    _internal_set_percentagemaxrating(from._internal_percentagemaxrating());
+  if (from.rating() != 0) {
+    _internal_set_rating(from._internal_rating());
   }
 }
 
@@ -755,8 +783,8 @@ void ComfortResponse::InternalSwap(ComfortResponse* other) {
   _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
   swap(_has_bits_[0], other->_has_bits_[0]);
   unix_time_.InternalSwap(&other->unix_time_);
-  rating_.Swap(&other->rating_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
-  percentagemaxrating_.Swap(&other->percentagemaxrating_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  percentage_max_rating_.Swap(&other->percentage_max_rating_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  swap(rating_, other->rating_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata ComfortResponse::GetMetadata() const {
@@ -773,7 +801,7 @@ class VDVRequest::_Internal {
 VDVRequest::VDVRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena),
   unix_time_(arena),
-  weightedacceleration_(arena) {
+  weighted_acceleration_(arena) {
   SharedCtor();
   RegisterArenaDtor(arena);
   // @@protoc_insertion_point(arena_constructor:comfortServiceAPI.v1.VDVRequest)
@@ -781,7 +809,7 @@ VDVRequest::VDVRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena)
 VDVRequest::VDVRequest(const VDVRequest& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
       unix_time_(from.unix_time_),
-      weightedacceleration_(from.weightedacceleration_) {
+      weighted_acceleration_(from.weighted_acceleration_) {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   // @@protoc_insertion_point(copy_constructor:comfortServiceAPI.v1.VDVRequest)
 }
@@ -816,7 +844,7 @@ void VDVRequest::Clear() {
   (void) cached_has_bits;
 
   unix_time_.Clear();
-  weightedacceleration_.Clear();
+  weighted_acceleration_.Clear();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -837,13 +865,13 @@ const char* VDVRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID:
           ptr += sizeof(double);
         } else goto handle_unusual;
         continue;
-      // repeated float weightedAcceleration = 2;
+      // repeated float weighted_acceleration = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedFloatParser(_internal_mutable_weightedacceleration(), ptr, ctx);
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedFloatParser(_internal_mutable_weighted_acceleration(), ptr, ctx);
           CHK_(ptr);
         } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 21) {
-          _internal_add_weightedacceleration(::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr));
+          _internal_add_weighted_acceleration(::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr));
           ptr += sizeof(float);
         } else goto handle_unusual;
         continue;
@@ -880,9 +908,9 @@ failure:
     target = stream->WriteFixedPacked(1, _internal_unix_time(), target);
   }
 
-  // repeated float weightedAcceleration = 2;
-  if (this->_internal_weightedacceleration_size() > 0) {
-    target = stream->WriteFixedPacked(2, _internal_weightedacceleration(), target);
+  // repeated float weighted_acceleration = 2;
+  if (this->_internal_weighted_acceleration_size() > 0) {
+    target = stream->WriteFixedPacked(2, _internal_weighted_acceleration(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -916,9 +944,9 @@ size_t VDVRequest::ByteSizeLong() const {
     total_size += data_size;
   }
 
-  // repeated float weightedAcceleration = 2;
+  // repeated float weighted_acceleration = 2;
   {
-    unsigned int count = static_cast<unsigned int>(this->_internal_weightedacceleration_size());
+    unsigned int count = static_cast<unsigned int>(this->_internal_weighted_acceleration_size());
     size_t data_size = 4UL * count;
     if (data_size > 0) {
       total_size += 1 +
@@ -926,7 +954,7 @@ size_t VDVRequest::ByteSizeLong() const {
             static_cast<::PROTOBUF_NAMESPACE_ID::int32>(data_size));
     }
     int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(data_size);
-    _weightedacceleration_cached_byte_size_.store(cached_size,
+    _weighted_acceleration_cached_byte_size_.store(cached_size,
                                     std::memory_order_relaxed);
     total_size += data_size;
   }
@@ -963,7 +991,7 @@ void VDVRequest::MergeFrom(const VDVRequest& from) {
   (void) cached_has_bits;
 
   unix_time_.MergeFrom(from.unix_time_);
-  weightedacceleration_.MergeFrom(from.weightedacceleration_);
+  weighted_acceleration_.MergeFrom(from.weighted_acceleration_);
 }
 
 void VDVRequest::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
@@ -988,7 +1016,7 @@ void VDVRequest::InternalSwap(VDVRequest* other) {
   using std::swap;
   _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
   unix_time_.InternalSwap(&other->unix_time_);
-  weightedacceleration_.InternalSwap(&other->weightedacceleration_);
+  weighted_acceleration_.InternalSwap(&other->weighted_acceleration_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata VDVRequest::GetMetadata() const {
@@ -1005,7 +1033,7 @@ class VDVResponse::_Internal {
 VDVResponse::VDVResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena),
   unix_time_(arena),
-  weightedacceleration_(arena) {
+  weighted_acceleration_(arena) {
   SharedCtor();
   RegisterArenaDtor(arena);
   // @@protoc_insertion_point(arena_constructor:comfortServiceAPI.v1.VDVResponse)
@@ -1013,7 +1041,7 @@ VDVResponse::VDVResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena)
 VDVResponse::VDVResponse(const VDVResponse& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
       unix_time_(from.unix_time_),
-      weightedacceleration_(from.weightedacceleration_) {
+      weighted_acceleration_(from.weighted_acceleration_) {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   // @@protoc_insertion_point(copy_constructor:comfortServiceAPI.v1.VDVResponse)
 }
@@ -1048,7 +1076,7 @@ void VDVResponse::Clear() {
   (void) cached_has_bits;
 
   unix_time_.Clear();
-  weightedacceleration_.Clear();
+  weighted_acceleration_.Clear();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -1069,13 +1097,13 @@ const char* VDVResponse::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID
           ptr += sizeof(double);
         } else goto handle_unusual;
         continue;
-      // repeated float weightedAcceleration = 2;
+      // repeated float weighted_acceleration = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedFloatParser(_internal_mutable_weightedacceleration(), ptr, ctx);
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedFloatParser(_internal_mutable_weighted_acceleration(), ptr, ctx);
           CHK_(ptr);
         } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 21) {
-          _internal_add_weightedacceleration(::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr));
+          _internal_add_weighted_acceleration(::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr));
           ptr += sizeof(float);
         } else goto handle_unusual;
         continue;
@@ -1112,9 +1140,9 @@ failure:
     target = stream->WriteFixedPacked(1, _internal_unix_time(), target);
   }
 
-  // repeated float weightedAcceleration = 2;
-  if (this->_internal_weightedacceleration_size() > 0) {
-    target = stream->WriteFixedPacked(2, _internal_weightedacceleration(), target);
+  // repeated float weighted_acceleration = 2;
+  if (this->_internal_weighted_acceleration_size() > 0) {
+    target = stream->WriteFixedPacked(2, _internal_weighted_acceleration(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -1148,9 +1176,9 @@ size_t VDVResponse::ByteSizeLong() const {
     total_size += data_size;
   }
 
-  // repeated float weightedAcceleration = 2;
+  // repeated float weighted_acceleration = 2;
   {
-    unsigned int count = static_cast<unsigned int>(this->_internal_weightedacceleration_size());
+    unsigned int count = static_cast<unsigned int>(this->_internal_weighted_acceleration_size());
     size_t data_size = 4UL * count;
     if (data_size > 0) {
       total_size += 1 +
@@ -1158,7 +1186,7 @@ size_t VDVResponse::ByteSizeLong() const {
             static_cast<::PROTOBUF_NAMESPACE_ID::int32>(data_size));
     }
     int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(data_size);
-    _weightedacceleration_cached_byte_size_.store(cached_size,
+    _weighted_acceleration_cached_byte_size_.store(cached_size,
                                     std::memory_order_relaxed);
     total_size += data_size;
   }
@@ -1195,7 +1223,7 @@ void VDVResponse::MergeFrom(const VDVResponse& from) {
   (void) cached_has_bits;
 
   unix_time_.MergeFrom(from.unix_time_);
-  weightedacceleration_.MergeFrom(from.weightedacceleration_);
+  weighted_acceleration_.MergeFrom(from.weighted_acceleration_);
 }
 
 void VDVResponse::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
@@ -1220,7 +1248,7 @@ void VDVResponse::InternalSwap(VDVResponse* other) {
   using std::swap;
   _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
   unix_time_.InternalSwap(&other->unix_time_);
-  weightedacceleration_.InternalSwap(&other->weightedacceleration_);
+  weighted_acceleration_.InternalSwap(&other->weighted_acceleration_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata VDVResponse::GetMetadata() const {
