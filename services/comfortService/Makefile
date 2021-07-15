@@ -13,12 +13,3 @@ build: comfortService
 
 comfortService: proto/v1/generated/comfort_service_api_v1.pb.o proto/v1/generated/comfort_service_api_v1.grpc.pb.o comfortService.o
 	$(CXX) $^ $(LDFLAGS) -o $@
-
-# %.grpc.pb.cc: %.proto
-# 	protoc --grpc_out=. --plugin=protoc-gen-grpc=$(GRPC_CPP_PLUGIN_PATH) $<
-
-# %.pb.cc: %.proto
-# 	protoc --cpp_out=. $<
-
-# clean:
-# 	rm -f *.o *.pb.cc *.pb.h client server

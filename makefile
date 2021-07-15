@@ -15,6 +15,11 @@ protoGenCSharp:
 	# NEED TO ADD A COMMAND HERE TO CREATE CLIENT STUBS FOR AGGREGATORS
 	
 protoGenCPP:
+	# Process vibration service
+	protoc -I=services/processVibrationService/proto/v1 --grpc_out=generate_mock_code=true:services/processVibrationService/proto/v1/generated --plugin=protoc-gen-grpc=/usr/local/bin/grpc_cpp_plugin services/processVibrationService/proto/v1/process_vibration_service_api_v1.proto
+	protoc -I=services/processVibrationService/proto/v1 --cpp_out=services/processVibrationService/proto/v1/generated services/processVibrationService/proto/v1/process_vibration_service_api_v1.proto
+
+	# Comfort service
 	protoc -I=services/comfortService/proto/v1 --grpc_out=services/comfortService/proto/v1/generated --plugin=protoc-gen-grpc=/usr/local/bin/grpc_cpp_plugin services/comfortService/proto/v1/comfort_service_api_v1.proto
 	protoc -I=services/comfortService/proto/v1 --cpp_out=services/comfortService/proto/v1/generated services/comfortService/proto/v1/comfort_service_api_v1.proto
 
@@ -63,6 +68,8 @@ testPy:
 testCSharp:
 	make testVesselMotionService
 
+# testCPP:
+
 testAll:
 	make testPy
 	make testCSharp
@@ -79,6 +86,9 @@ runVesselMotionService:
 
 runComfortService:
 	cd services/comfortService; make build; ./comfortService
+
+runProcessVibrationService:
+	cd services/processVibrationService; make build; ./processVibrationService
 
 runPrometheus:
 

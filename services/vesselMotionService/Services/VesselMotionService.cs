@@ -49,11 +49,10 @@ namespace vesselMotionService
                         for(int i = 0; i < request.PortPropMotorPower.Count; i++)
                         {   
                             // For the current set of input variables, add the estimate to the response
-                            (float xEstimate, float yEstimate, float zEstimate) = CalculateOpenWaterResponse(request.PortPropMotorPower[i], request.Latitude[i], request.WindSpeedRelative[i], request.WindDirectionRelative[i], request.Heading[i], request.WaveHeight[i]);
+                            (double xEstimate, double yEstimate, double zEstimate) = CalculateOpenWaterResponse(request.PortPropMotorPower[i], request.Latitude[i], request.WindSpeedRelative[i], request.WindDirectionRelative[i], request.Heading[i], request.WaveHeight[i]);
                             response.AccelerationEstimateX.Add(xEstimate);
                             response.AccelerationEstimateY.Add(yEstimate);
                             response.AccelerationEstimateZ.Add(zEstimate);
-
                         }
 
                         // _logger.LogInformation("Succesfully calculated response for open water model");
@@ -68,7 +67,7 @@ namespace vesselMotionService
                         for(int i = 0; i < request.PortPropMotorPower.Count; i++)
                         {
                             // For the current set of input variables, add the estimate to the response
-                            (float xEstimate, float yEstimate, float zEstimate) = CalculateOpenWaterResponse(request.PortPropMotorPower[i], request.Latitude[i], request.WindSpeedRelative[i], request.WindDirectionRelative[i], request.Heading[i], request.WaveHeight[i]);
+                            (double xEstimate, double yEstimate, double zEstimate) = CalculateOpenWaterResponse(request.PortPropMotorPower[i], request.Latitude[i], request.WindSpeedRelative[i], request.WindDirectionRelative[i], request.Heading[i], request.WaveHeight[i]);
                             response.AccelerationEstimateX.Add(xEstimate);
                             response.AccelerationEstimateY.Add(yEstimate);
                             response.AccelerationEstimateZ.Add(zEstimate);
@@ -82,7 +81,7 @@ namespace vesselMotionService
                         for(int i = 0; i < request.PortPropMotorPower.Count; i++)
                         {
                             // For the current set of input variables, add the estimate to the response
-                            (float xEstimate, float yEstimate, float zEstimate) = CalculateOpenWaterResponse(request.PortPropMotorPower[i], request.Latitude[i], request.WindSpeedRelative[i], request.WindDirectionRelative[i], request.Heading[i], request.WaveHeight[i]);
+                            (double xEstimate, double yEstimate, double zEstimate) = CalculateOpenWaterResponse(request.PortPropMotorPower[i], request.Latitude[i], request.WindSpeedRelative[i], request.WindDirectionRelative[i], request.Heading[i], request.WaveHeight[i]);
                             response.AccelerationEstimateX.Add(xEstimate);
                             response.AccelerationEstimateY.Add(yEstimate);
                             response.AccelerationEstimateZ.Add(zEstimate);
@@ -121,9 +120,9 @@ namespace vesselMotionService
             return base.MotionEstimateEvaluation(request, context);
         }
 
-        internal (float, float, float) CalculateOpenWaterResponse(float portPropMotorPower, float latitude, float relativeWindSpeed, float relativeWindDirection, float heading, float waveHeight)
+        internal (double, double, double) CalculateOpenWaterResponse(float portPropMotorPower, float latitude, float relativeWindSpeed, float relativeWindDirection, float heading, float waveHeight)
         {
-            /* This function calculates the vibration response of the vessel for open water sailing conditions. It takes the port motor power, the vesel's latitude, the relativeWindSpeed, the relativeWindDirection, the heading, and the wave height as inputs. It returns an acceleration estimate for the bridge in the y-axis. 
+            /* This function calculates the vibration response (in m/s^2) of the vessel for open water sailing conditions. It takes the port motor power, the vesel's latitude, the relativeWindSpeed, the relativeWindDirection, the heading, and the wave height as inputs. It returns an acceleration estimate for the bridge in the y-axis. 
             In this implementation, only the y-axis acceleration in the bridge is required (this is human-weighted), purely as a means to demonstrate the design's ability to aggregate and coordinate information effectively. The study carried out by Keith Soal (https://scholar.sun.ac.za/handle/10019.1/96058) offers models/coefficients that account for acceleration in multiple axes at multiple locations on the vessel; these, however, were not implemented to save time. This function would need to be refactored to include these (by taking location and axis as inputs and by selecting the coefficients based on these).
             */
 
@@ -168,7 +167,7 @@ namespace vesselMotionService
 
             float zResponse = zCoefficients.intercept + (zCoefficients.alpha*portPropMotorPower) + (zCoefficients.beta*latitude) + (zCoefficients.gamma*relativeWindSpeed) + (zCoefficients.delta*relativeWindDirection) + (zCoefficients.zeta*heading) + (zCoefficients.eta*waveHeight);
 
-            return(xResponse, yResponse, zResponse);
+            return(xResponse/1000, yResponse/1000, zResponse/1000);
         }
 
         internal float CalculateIceResponse(float s10Bow, float s15SternShoulder, float portPropMotorPower, float longitude, float relativeWindSpeed, float relativeWindDirection, float gpsSOG, float floeSize)

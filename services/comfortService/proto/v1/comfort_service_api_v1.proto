@@ -4,9 +4,9 @@ package comfortServiceAPI.v1;
 
 message ComfortRequest {
     repeated double unix_time = 1;
-    repeated float human_weighted_vibration_x = 2;
-    repeated float human_weighted_vibration_y = 3;
-    repeated float human_weighted_vibration_z = 4;
+    repeated double human_weighted_vibration_x = 2;
+    repeated double human_weighted_vibration_y = 3;
+    repeated double human_weighted_vibration_z = 4;
 }
 
 message ComfortResponse {
@@ -15,34 +15,18 @@ message ComfortResponse {
     // optional string percentage_max_rating = 3;
 }
 
-message VDVRequest {
-    repeated double unix_time = 1;
-    repeated float weighted_acceleration = 2;
-}
-
-message VDVResponse {
-    repeated double unix_time = 1;
-    repeated float weighted_acceleration = 2;
-}
-
 // 'Comfort Service' offers three service calls that provide information about human comfort onboard, in response to vessel vibrations.
 service ComfortService {
     // The 'Comfort Rating' call provides foresight for ?? decision-making by providing a comfort rating for a proposed route, based on estimated vibrations on board.
     rpc ComfortRating(ComfortRequest) returns (ComfortResponse);
-    // The 'VDV Estimate' call provides ?? for ?? decision-making by providing the estimated vibration dose value for a requested route.
-    rpc VDVEstimate(VDVRequest) returns (VDVResponse);
-    // The 'VDV Tracking' call provides ?? for ?? decision-making by providing a real-time vibration dose value based on accelerometer feeds on board the vessel.
-    rpc VDVTracking(VDVRequest) returns (VDVResponse);
 }
 
 enum HabitibilityRating {
     UNKNOWN_RATING = 0;
-    ADVERSE_COMMENTS_UNLIKELY = 1;
-    NORMAL_OPERATING_CONDITIONS = 2;
-    ADVERSE_COMMENTS_PROBABLE = 3;
+    NOT_UNCOMFORTABLE = 1;
+    SLIGHTLY_UNCOMFORTABLE = 2;
+    FAIRLY_UNCOMFORTABLE = 3;
+    UNCOMFORTABLE = 4;
+    VERY_UNCOMFORTABLE = 5;
+    EXTREMELY_UNCOMFORTABLE = 6;
 }
-
-enum LocationOnShipEnum {
-    UNKNOWN_LOCATION = 0;
-    SOMEWHERE = 1;
-} 

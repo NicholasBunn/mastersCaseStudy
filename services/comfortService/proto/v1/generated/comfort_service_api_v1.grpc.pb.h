@@ -46,22 +46,6 @@ class ComfortService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::comfortServiceAPI::v1::ComfortResponse>> PrepareAsyncComfortRating(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::ComfortRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::comfortServiceAPI::v1::ComfortResponse>>(PrepareAsyncComfortRatingRaw(context, request, cq));
     }
-    // The 'VDV Estimate' call provides ?? for ?? decision-making by providing the estimated vibration dose value for a requested route.
-    virtual ::grpc::Status VDVEstimate(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::VDVRequest& request, ::comfortServiceAPI::v1::VDVResponse* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::comfortServiceAPI::v1::VDVResponse>> AsyncVDVEstimate(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::VDVRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::comfortServiceAPI::v1::VDVResponse>>(AsyncVDVEstimateRaw(context, request, cq));
-    }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::comfortServiceAPI::v1::VDVResponse>> PrepareAsyncVDVEstimate(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::VDVRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::comfortServiceAPI::v1::VDVResponse>>(PrepareAsyncVDVEstimateRaw(context, request, cq));
-    }
-    // The 'VDV Tracking' call provides ?? for ?? decision-making by providing a real-time vibration dose value based on accelerometer feeds on board the vessel.
-    virtual ::grpc::Status VDVTracking(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::VDVRequest& request, ::comfortServiceAPI::v1::VDVResponse* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::comfortServiceAPI::v1::VDVResponse>> AsyncVDVTracking(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::VDVRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::comfortServiceAPI::v1::VDVResponse>>(AsyncVDVTrackingRaw(context, request, cq));
-    }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::comfortServiceAPI::v1::VDVResponse>> PrepareAsyncVDVTracking(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::VDVRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::comfortServiceAPI::v1::VDVResponse>>(PrepareAsyncVDVTrackingRaw(context, request, cq));
-    }
     class experimental_async_interface {
      public:
       virtual ~experimental_async_interface() {}
@@ -71,20 +55,6 @@ class ComfortService final {
       virtual void ComfortRating(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::ComfortRequest* request, ::comfortServiceAPI::v1::ComfortResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       #else
       virtual void ComfortRating(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::ComfortRequest* request, ::comfortServiceAPI::v1::ComfortResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
-      #endif
-      // The 'VDV Estimate' call provides ?? for ?? decision-making by providing the estimated vibration dose value for a requested route.
-      virtual void VDVEstimate(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::VDVRequest* request, ::comfortServiceAPI::v1::VDVResponse* response, std::function<void(::grpc::Status)>) = 0;
-      #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
-      virtual void VDVEstimate(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::VDVRequest* request, ::comfortServiceAPI::v1::VDVResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      #else
-      virtual void VDVEstimate(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::VDVRequest* request, ::comfortServiceAPI::v1::VDVResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
-      #endif
-      // The 'VDV Tracking' call provides ?? for ?? decision-making by providing a real-time vibration dose value based on accelerometer feeds on board the vessel.
-      virtual void VDVTracking(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::VDVRequest* request, ::comfortServiceAPI::v1::VDVResponse* response, std::function<void(::grpc::Status)>) = 0;
-      #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
-      virtual void VDVTracking(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::VDVRequest* request, ::comfortServiceAPI::v1::VDVResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      #else
-      virtual void VDVTracking(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::VDVRequest* request, ::comfortServiceAPI::v1::VDVResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
       #endif
     };
     #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
@@ -97,10 +67,6 @@ class ComfortService final {
   private:
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::comfortServiceAPI::v1::ComfortResponse>* AsyncComfortRatingRaw(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::ComfortRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::comfortServiceAPI::v1::ComfortResponse>* PrepareAsyncComfortRatingRaw(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::ComfortRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::comfortServiceAPI::v1::VDVResponse>* AsyncVDVEstimateRaw(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::VDVRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::comfortServiceAPI::v1::VDVResponse>* PrepareAsyncVDVEstimateRaw(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::VDVRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::comfortServiceAPI::v1::VDVResponse>* AsyncVDVTrackingRaw(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::VDVRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::comfortServiceAPI::v1::VDVResponse>* PrepareAsyncVDVTrackingRaw(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::VDVRequest& request, ::grpc::CompletionQueue* cq) = 0;
   };
   class Stub final : public StubInterface {
    public:
@@ -112,20 +78,6 @@ class ComfortService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::comfortServiceAPI::v1::ComfortResponse>> PrepareAsyncComfortRating(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::ComfortRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::comfortServiceAPI::v1::ComfortResponse>>(PrepareAsyncComfortRatingRaw(context, request, cq));
     }
-    ::grpc::Status VDVEstimate(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::VDVRequest& request, ::comfortServiceAPI::v1::VDVResponse* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::comfortServiceAPI::v1::VDVResponse>> AsyncVDVEstimate(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::VDVRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::comfortServiceAPI::v1::VDVResponse>>(AsyncVDVEstimateRaw(context, request, cq));
-    }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::comfortServiceAPI::v1::VDVResponse>> PrepareAsyncVDVEstimate(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::VDVRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::comfortServiceAPI::v1::VDVResponse>>(PrepareAsyncVDVEstimateRaw(context, request, cq));
-    }
-    ::grpc::Status VDVTracking(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::VDVRequest& request, ::comfortServiceAPI::v1::VDVResponse* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::comfortServiceAPI::v1::VDVResponse>> AsyncVDVTracking(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::VDVRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::comfortServiceAPI::v1::VDVResponse>>(AsyncVDVTrackingRaw(context, request, cq));
-    }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::comfortServiceAPI::v1::VDVResponse>> PrepareAsyncVDVTracking(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::VDVRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::comfortServiceAPI::v1::VDVResponse>>(PrepareAsyncVDVTrackingRaw(context, request, cq));
-    }
     class experimental_async final :
       public StubInterface::experimental_async_interface {
      public:
@@ -134,18 +86,6 @@ class ComfortService final {
       void ComfortRating(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::ComfortRequest* request, ::comfortServiceAPI::v1::ComfortResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
       #else
       void ComfortRating(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::ComfortRequest* request, ::comfortServiceAPI::v1::ComfortResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
-      #endif
-      void VDVEstimate(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::VDVRequest* request, ::comfortServiceAPI::v1::VDVResponse* response, std::function<void(::grpc::Status)>) override;
-      #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
-      void VDVEstimate(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::VDVRequest* request, ::comfortServiceAPI::v1::VDVResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
-      #else
-      void VDVEstimate(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::VDVRequest* request, ::comfortServiceAPI::v1::VDVResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
-      #endif
-      void VDVTracking(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::VDVRequest* request, ::comfortServiceAPI::v1::VDVResponse* response, std::function<void(::grpc::Status)>) override;
-      #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
-      void VDVTracking(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::VDVRequest* request, ::comfortServiceAPI::v1::VDVResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
-      #else
-      void VDVTracking(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::VDVRequest* request, ::comfortServiceAPI::v1::VDVResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
       #endif
      private:
       friend class Stub;
@@ -160,13 +100,7 @@ class ComfortService final {
     class experimental_async async_stub_{this};
     ::grpc::ClientAsyncResponseReader< ::comfortServiceAPI::v1::ComfortResponse>* AsyncComfortRatingRaw(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::ComfortRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::comfortServiceAPI::v1::ComfortResponse>* PrepareAsyncComfortRatingRaw(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::ComfortRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::comfortServiceAPI::v1::VDVResponse>* AsyncVDVEstimateRaw(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::VDVRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::comfortServiceAPI::v1::VDVResponse>* PrepareAsyncVDVEstimateRaw(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::VDVRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::comfortServiceAPI::v1::VDVResponse>* AsyncVDVTrackingRaw(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::VDVRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::comfortServiceAPI::v1::VDVResponse>* PrepareAsyncVDVTrackingRaw(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::VDVRequest& request, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_ComfortRating_;
-    const ::grpc::internal::RpcMethod rpcmethod_VDVEstimate_;
-    const ::grpc::internal::RpcMethod rpcmethod_VDVTracking_;
   };
   static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
 
@@ -176,10 +110,6 @@ class ComfortService final {
     virtual ~Service();
     // The 'Comfort Rating' call provides foresight for ?? decision-making by providing a comfort rating for a proposed route, based on estimated vibrations on board.
     virtual ::grpc::Status ComfortRating(::grpc::ServerContext* context, const ::comfortServiceAPI::v1::ComfortRequest* request, ::comfortServiceAPI::v1::ComfortResponse* response);
-    // The 'VDV Estimate' call provides ?? for ?? decision-making by providing the estimated vibration dose value for a requested route.
-    virtual ::grpc::Status VDVEstimate(::grpc::ServerContext* context, const ::comfortServiceAPI::v1::VDVRequest* request, ::comfortServiceAPI::v1::VDVResponse* response);
-    // The 'VDV Tracking' call provides ?? for ?? decision-making by providing a real-time vibration dose value based on accelerometer feeds on board the vessel.
-    virtual ::grpc::Status VDVTracking(::grpc::ServerContext* context, const ::comfortServiceAPI::v1::VDVRequest* request, ::comfortServiceAPI::v1::VDVResponse* response);
   };
   template <class BaseClass>
   class WithAsyncMethod_ComfortRating : public BaseClass {
@@ -201,47 +131,7 @@ class ComfortService final {
       ::grpc::Service::RequestAsyncUnary(0, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  template <class BaseClass>
-  class WithAsyncMethod_VDVEstimate : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithAsyncMethod_VDVEstimate() {
-      ::grpc::Service::MarkMethodAsync(1);
-    }
-    ~WithAsyncMethod_VDVEstimate() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable synchronous version of this method
-    ::grpc::Status VDVEstimate(::grpc::ServerContext* /*context*/, const ::comfortServiceAPI::v1::VDVRequest* /*request*/, ::comfortServiceAPI::v1::VDVResponse* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-    void RequestVDVEstimate(::grpc::ServerContext* context, ::comfortServiceAPI::v1::VDVRequest* request, ::grpc::ServerAsyncResponseWriter< ::comfortServiceAPI::v1::VDVResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
-    }
-  };
-  template <class BaseClass>
-  class WithAsyncMethod_VDVTracking : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithAsyncMethod_VDVTracking() {
-      ::grpc::Service::MarkMethodAsync(2);
-    }
-    ~WithAsyncMethod_VDVTracking() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable synchronous version of this method
-    ::grpc::Status VDVTracking(::grpc::ServerContext* /*context*/, const ::comfortServiceAPI::v1::VDVRequest* /*request*/, ::comfortServiceAPI::v1::VDVResponse* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-    void RequestVDVTracking(::grpc::ServerContext* context, ::comfortServiceAPI::v1::VDVRequest* request, ::grpc::ServerAsyncResponseWriter< ::comfortServiceAPI::v1::VDVResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
-    }
-  };
-  typedef WithAsyncMethod_ComfortRating<WithAsyncMethod_VDVEstimate<WithAsyncMethod_VDVTracking<Service > > > AsyncService;
+  typedef WithAsyncMethod_ComfortRating<Service > AsyncService;
   template <class BaseClass>
   class ExperimentalWithCallbackMethod_ComfortRating : public BaseClass {
    private:
@@ -289,105 +179,11 @@ class ComfortService final {
     #endif
       { return nullptr; }
   };
-  template <class BaseClass>
-  class ExperimentalWithCallbackMethod_VDVEstimate : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    ExperimentalWithCallbackMethod_VDVEstimate() {
-    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
-      ::grpc::Service::
-    #else
-      ::grpc::Service::experimental().
-    #endif
-        MarkMethodCallback(1,
-          new ::grpc::internal::CallbackUnaryHandler< ::comfortServiceAPI::v1::VDVRequest, ::comfortServiceAPI::v1::VDVResponse>(
-            [this](
-    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
-                   ::grpc::CallbackServerContext*
-    #else
-                   ::grpc::experimental::CallbackServerContext*
-    #endif
-                     context, const ::comfortServiceAPI::v1::VDVRequest* request, ::comfortServiceAPI::v1::VDVResponse* response) { return this->VDVEstimate(context, request, response); }));}
-    void SetMessageAllocatorFor_VDVEstimate(
-        ::grpc::experimental::MessageAllocator< ::comfortServiceAPI::v1::VDVRequest, ::comfortServiceAPI::v1::VDVResponse>* allocator) {
-    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(1);
-    #else
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::experimental().GetHandler(1);
-    #endif
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::comfortServiceAPI::v1::VDVRequest, ::comfortServiceAPI::v1::VDVResponse>*>(handler)
-              ->SetMessageAllocator(allocator);
-    }
-    ~ExperimentalWithCallbackMethod_VDVEstimate() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable synchronous version of this method
-    ::grpc::Status VDVEstimate(::grpc::ServerContext* /*context*/, const ::comfortServiceAPI::v1::VDVRequest* /*request*/, ::comfortServiceAPI::v1::VDVResponse* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
-    virtual ::grpc::ServerUnaryReactor* VDVEstimate(
-      ::grpc::CallbackServerContext* /*context*/, const ::comfortServiceAPI::v1::VDVRequest* /*request*/, ::comfortServiceAPI::v1::VDVResponse* /*response*/)
-    #else
-    virtual ::grpc::experimental::ServerUnaryReactor* VDVEstimate(
-      ::grpc::experimental::CallbackServerContext* /*context*/, const ::comfortServiceAPI::v1::VDVRequest* /*request*/, ::comfortServiceAPI::v1::VDVResponse* /*response*/)
-    #endif
-      { return nullptr; }
-  };
-  template <class BaseClass>
-  class ExperimentalWithCallbackMethod_VDVTracking : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    ExperimentalWithCallbackMethod_VDVTracking() {
-    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
-      ::grpc::Service::
-    #else
-      ::grpc::Service::experimental().
-    #endif
-        MarkMethodCallback(2,
-          new ::grpc::internal::CallbackUnaryHandler< ::comfortServiceAPI::v1::VDVRequest, ::comfortServiceAPI::v1::VDVResponse>(
-            [this](
-    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
-                   ::grpc::CallbackServerContext*
-    #else
-                   ::grpc::experimental::CallbackServerContext*
-    #endif
-                     context, const ::comfortServiceAPI::v1::VDVRequest* request, ::comfortServiceAPI::v1::VDVResponse* response) { return this->VDVTracking(context, request, response); }));}
-    void SetMessageAllocatorFor_VDVTracking(
-        ::grpc::experimental::MessageAllocator< ::comfortServiceAPI::v1::VDVRequest, ::comfortServiceAPI::v1::VDVResponse>* allocator) {
-    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(2);
-    #else
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::experimental().GetHandler(2);
-    #endif
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::comfortServiceAPI::v1::VDVRequest, ::comfortServiceAPI::v1::VDVResponse>*>(handler)
-              ->SetMessageAllocator(allocator);
-    }
-    ~ExperimentalWithCallbackMethod_VDVTracking() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable synchronous version of this method
-    ::grpc::Status VDVTracking(::grpc::ServerContext* /*context*/, const ::comfortServiceAPI::v1::VDVRequest* /*request*/, ::comfortServiceAPI::v1::VDVResponse* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
-    virtual ::grpc::ServerUnaryReactor* VDVTracking(
-      ::grpc::CallbackServerContext* /*context*/, const ::comfortServiceAPI::v1::VDVRequest* /*request*/, ::comfortServiceAPI::v1::VDVResponse* /*response*/)
-    #else
-    virtual ::grpc::experimental::ServerUnaryReactor* VDVTracking(
-      ::grpc::experimental::CallbackServerContext* /*context*/, const ::comfortServiceAPI::v1::VDVRequest* /*request*/, ::comfortServiceAPI::v1::VDVResponse* /*response*/)
-    #endif
-      { return nullptr; }
-  };
   #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
-  typedef ExperimentalWithCallbackMethod_ComfortRating<ExperimentalWithCallbackMethod_VDVEstimate<ExperimentalWithCallbackMethod_VDVTracking<Service > > > CallbackService;
+  typedef ExperimentalWithCallbackMethod_ComfortRating<Service > CallbackService;
   #endif
 
-  typedef ExperimentalWithCallbackMethod_ComfortRating<ExperimentalWithCallbackMethod_VDVEstimate<ExperimentalWithCallbackMethod_VDVTracking<Service > > > ExperimentalCallbackService;
+  typedef ExperimentalWithCallbackMethod_ComfortRating<Service > ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_ComfortRating : public BaseClass {
    private:
@@ -401,40 +197,6 @@ class ComfortService final {
     }
     // disable synchronous version of this method
     ::grpc::Status ComfortRating(::grpc::ServerContext* /*context*/, const ::comfortServiceAPI::v1::ComfortRequest* /*request*/, ::comfortServiceAPI::v1::ComfortResponse* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-  };
-  template <class BaseClass>
-  class WithGenericMethod_VDVEstimate : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithGenericMethod_VDVEstimate() {
-      ::grpc::Service::MarkMethodGeneric(1);
-    }
-    ~WithGenericMethod_VDVEstimate() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable synchronous version of this method
-    ::grpc::Status VDVEstimate(::grpc::ServerContext* /*context*/, const ::comfortServiceAPI::v1::VDVRequest* /*request*/, ::comfortServiceAPI::v1::VDVResponse* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-  };
-  template <class BaseClass>
-  class WithGenericMethod_VDVTracking : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithGenericMethod_VDVTracking() {
-      ::grpc::Service::MarkMethodGeneric(2);
-    }
-    ~WithGenericMethod_VDVTracking() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable synchronous version of this method
-    ::grpc::Status VDVTracking(::grpc::ServerContext* /*context*/, const ::comfortServiceAPI::v1::VDVRequest* /*request*/, ::comfortServiceAPI::v1::VDVResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -457,46 +219,6 @@ class ComfortService final {
     }
     void RequestComfortRating(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(0, context, request, response, new_call_cq, notification_cq, tag);
-    }
-  };
-  template <class BaseClass>
-  class WithRawMethod_VDVEstimate : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithRawMethod_VDVEstimate() {
-      ::grpc::Service::MarkMethodRaw(1);
-    }
-    ~WithRawMethod_VDVEstimate() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable synchronous version of this method
-    ::grpc::Status VDVEstimate(::grpc::ServerContext* /*context*/, const ::comfortServiceAPI::v1::VDVRequest* /*request*/, ::comfortServiceAPI::v1::VDVResponse* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-    void RequestVDVEstimate(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
-    }
-  };
-  template <class BaseClass>
-  class WithRawMethod_VDVTracking : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithRawMethod_VDVTracking() {
-      ::grpc::Service::MarkMethodRaw(2);
-    }
-    ~WithRawMethod_VDVTracking() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable synchronous version of this method
-    ::grpc::Status VDVTracking(::grpc::ServerContext* /*context*/, const ::comfortServiceAPI::v1::VDVRequest* /*request*/, ::comfortServiceAPI::v1::VDVResponse* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-    void RequestVDVTracking(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -538,82 +260,6 @@ class ComfortService final {
       { return nullptr; }
   };
   template <class BaseClass>
-  class ExperimentalWithRawCallbackMethod_VDVEstimate : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    ExperimentalWithRawCallbackMethod_VDVEstimate() {
-    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
-      ::grpc::Service::
-    #else
-      ::grpc::Service::experimental().
-    #endif
-        MarkMethodRawCallback(1,
-          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
-            [this](
-    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
-                   ::grpc::CallbackServerContext*
-    #else
-                   ::grpc::experimental::CallbackServerContext*
-    #endif
-                     context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->VDVEstimate(context, request, response); }));
-    }
-    ~ExperimentalWithRawCallbackMethod_VDVEstimate() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable synchronous version of this method
-    ::grpc::Status VDVEstimate(::grpc::ServerContext* /*context*/, const ::comfortServiceAPI::v1::VDVRequest* /*request*/, ::comfortServiceAPI::v1::VDVResponse* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
-    virtual ::grpc::ServerUnaryReactor* VDVEstimate(
-      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)
-    #else
-    virtual ::grpc::experimental::ServerUnaryReactor* VDVEstimate(
-      ::grpc::experimental::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)
-    #endif
-      { return nullptr; }
-  };
-  template <class BaseClass>
-  class ExperimentalWithRawCallbackMethod_VDVTracking : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    ExperimentalWithRawCallbackMethod_VDVTracking() {
-    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
-      ::grpc::Service::
-    #else
-      ::grpc::Service::experimental().
-    #endif
-        MarkMethodRawCallback(2,
-          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
-            [this](
-    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
-                   ::grpc::CallbackServerContext*
-    #else
-                   ::grpc::experimental::CallbackServerContext*
-    #endif
-                     context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->VDVTracking(context, request, response); }));
-    }
-    ~ExperimentalWithRawCallbackMethod_VDVTracking() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable synchronous version of this method
-    ::grpc::Status VDVTracking(::grpc::ServerContext* /*context*/, const ::comfortServiceAPI::v1::VDVRequest* /*request*/, ::comfortServiceAPI::v1::VDVResponse* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
-    virtual ::grpc::ServerUnaryReactor* VDVTracking(
-      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)
-    #else
-    virtual ::grpc::experimental::ServerUnaryReactor* VDVTracking(
-      ::grpc::experimental::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)
-    #endif
-      { return nullptr; }
-  };
-  template <class BaseClass>
   class WithStreamedUnaryMethod_ComfortRating : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
@@ -640,63 +286,9 @@ class ComfortService final {
     // replace default version of method with streamed unary
     virtual ::grpc::Status StreamedComfortRating(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::comfortServiceAPI::v1::ComfortRequest,::comfortServiceAPI::v1::ComfortResponse>* server_unary_streamer) = 0;
   };
-  template <class BaseClass>
-  class WithStreamedUnaryMethod_VDVEstimate : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithStreamedUnaryMethod_VDVEstimate() {
-      ::grpc::Service::MarkMethodStreamed(1,
-        new ::grpc::internal::StreamedUnaryHandler<
-          ::comfortServiceAPI::v1::VDVRequest, ::comfortServiceAPI::v1::VDVResponse>(
-            [this](::grpc::ServerContext* context,
-                   ::grpc::ServerUnaryStreamer<
-                     ::comfortServiceAPI::v1::VDVRequest, ::comfortServiceAPI::v1::VDVResponse>* streamer) {
-                       return this->StreamedVDVEstimate(context,
-                         streamer);
-                  }));
-    }
-    ~WithStreamedUnaryMethod_VDVEstimate() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable regular version of this method
-    ::grpc::Status VDVEstimate(::grpc::ServerContext* /*context*/, const ::comfortServiceAPI::v1::VDVRequest* /*request*/, ::comfortServiceAPI::v1::VDVResponse* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-    // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedVDVEstimate(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::comfortServiceAPI::v1::VDVRequest,::comfortServiceAPI::v1::VDVResponse>* server_unary_streamer) = 0;
-  };
-  template <class BaseClass>
-  class WithStreamedUnaryMethod_VDVTracking : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithStreamedUnaryMethod_VDVTracking() {
-      ::grpc::Service::MarkMethodStreamed(2,
-        new ::grpc::internal::StreamedUnaryHandler<
-          ::comfortServiceAPI::v1::VDVRequest, ::comfortServiceAPI::v1::VDVResponse>(
-            [this](::grpc::ServerContext* context,
-                   ::grpc::ServerUnaryStreamer<
-                     ::comfortServiceAPI::v1::VDVRequest, ::comfortServiceAPI::v1::VDVResponse>* streamer) {
-                       return this->StreamedVDVTracking(context,
-                         streamer);
-                  }));
-    }
-    ~WithStreamedUnaryMethod_VDVTracking() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable regular version of this method
-    ::grpc::Status VDVTracking(::grpc::ServerContext* /*context*/, const ::comfortServiceAPI::v1::VDVRequest* /*request*/, ::comfortServiceAPI::v1::VDVResponse* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-    // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedVDVTracking(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::comfortServiceAPI::v1::VDVRequest,::comfortServiceAPI::v1::VDVResponse>* server_unary_streamer) = 0;
-  };
-  typedef WithStreamedUnaryMethod_ComfortRating<WithStreamedUnaryMethod_VDVEstimate<WithStreamedUnaryMethod_VDVTracking<Service > > > StreamedUnaryService;
+  typedef WithStreamedUnaryMethod_ComfortRating<Service > StreamedUnaryService;
   typedef Service SplitStreamedService;
-  typedef WithStreamedUnaryMethod_ComfortRating<WithStreamedUnaryMethod_VDVEstimate<WithStreamedUnaryMethod_VDVTracking<Service > > > StreamedService;
+  typedef WithStreamedUnaryMethod_ComfortRating<Service > StreamedService;
 };
 
 }  // namespace v1

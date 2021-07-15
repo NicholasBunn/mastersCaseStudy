@@ -34,11 +34,11 @@ namespace vesselMotionService {
             "Cm1vZGVsX3R5cGUYCCABKA4yJS52ZXNzZWxNb3Rpb25TZXJ2aWNlLnYxLk1v",
             "ZGVsVHlwZUVudW0iFwoVTW90aW9uVHJhY2tpbmdSZXF1ZXN0InsKFk1vdGlv",
             "bkVzdGltYXRlUmVzcG9uc2USHwoXYWNjZWxlcmF0aW9uX2VzdGltYXRlX3gY",
-            "ASADKAISHwoXYWNjZWxlcmF0aW9uX2VzdGltYXRlX3kYAiADKAISHwoXYWNj",
-            "ZWxlcmF0aW9uX2VzdGltYXRlX3oYAyADKAIiNQoWTW90aW9uVHJhY2tpbmdS",
-            "ZXNwb25zZRIbChNhY2NlbGVyYXRpb25fYWN0dWFsGAEgAygCIlYKGE1vdGlv",
+            "ASADKAESHwoXYWNjZWxlcmF0aW9uX2VzdGltYXRlX3kYAiADKAESHwoXYWNj",
+            "ZWxlcmF0aW9uX2VzdGltYXRlX3oYAyADKAEiNQoWTW90aW9uVHJhY2tpbmdS",
+            "ZXNwb25zZRIbChNhY2NlbGVyYXRpb25fYWN0dWFsGAEgAygBIlYKGE1vdGlv",
             "bkV2YWx1YXRpb25SZXNwb25zZRIdChVhY2NlbGVyYXRpb25fZXN0aW1hdGUY",
-            "ASADKAISGwoTYWNjZWxlcmF0aW9uX2FjdHVhbBgCIAMoAio5ChJMb2NhdGlv",
+            "ASADKAESGwoTYWNjZWxlcmF0aW9uX2FjdHVhbBgCIAMoASo5ChJMb2NhdGlv",
             "bk9uU2hpcEVudW0SFAoQVU5LTk9XTl9MT0NBVElPThAAEg0KCVNPTUVXSEVS",
             "RRABKjoKDU1vZGVsVHlwZUVudW0SEQoNVU5LTk9XTl9NT0RFTBAAEg0KCU9Q",
             "RU5XQVRFUhABEgcKA0lDRRACMvQCChN2ZXNzZWxNb3Rpb25TZXJ2aWNlEm8K",
@@ -627,31 +627,34 @@ namespace vesselMotionService {
 
     /// <summary>Field number for the "acceleration_estimate_x" field.</summary>
     public const int AccelerationEstimateXFieldNumber = 1;
-    private static readonly pb::FieldCodec<float> _repeated_accelerationEstimateX_codec
-        = pb::FieldCodec.ForFloat(10);
-    private readonly pbc::RepeatedField<float> accelerationEstimateX_ = new pbc::RepeatedField<float>();
+    private static readonly pb::FieldCodec<double> _repeated_accelerationEstimateX_codec
+        = pb::FieldCodec.ForDouble(10);
+    private readonly pbc::RepeatedField<double> accelerationEstimateX_ = new pbc::RepeatedField<double>();
+    /// <summary>
+    /// All accelerations returned in this message are provided in m/s^2
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<float> AccelerationEstimateX {
+    public pbc::RepeatedField<double> AccelerationEstimateX {
       get { return accelerationEstimateX_; }
     }
 
     /// <summary>Field number for the "acceleration_estimate_y" field.</summary>
     public const int AccelerationEstimateYFieldNumber = 2;
-    private static readonly pb::FieldCodec<float> _repeated_accelerationEstimateY_codec
-        = pb::FieldCodec.ForFloat(18);
-    private readonly pbc::RepeatedField<float> accelerationEstimateY_ = new pbc::RepeatedField<float>();
+    private static readonly pb::FieldCodec<double> _repeated_accelerationEstimateY_codec
+        = pb::FieldCodec.ForDouble(18);
+    private readonly pbc::RepeatedField<double> accelerationEstimateY_ = new pbc::RepeatedField<double>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<float> AccelerationEstimateY {
+    public pbc::RepeatedField<double> AccelerationEstimateY {
       get { return accelerationEstimateY_; }
     }
 
     /// <summary>Field number for the "acceleration_estimate_z" field.</summary>
     public const int AccelerationEstimateZFieldNumber = 3;
-    private static readonly pb::FieldCodec<float> _repeated_accelerationEstimateZ_codec
-        = pb::FieldCodec.ForFloat(26);
-    private readonly pbc::RepeatedField<float> accelerationEstimateZ_ = new pbc::RepeatedField<float>();
+    private static readonly pb::FieldCodec<double> _repeated_accelerationEstimateZ_codec
+        = pb::FieldCodec.ForDouble(26);
+    private readonly pbc::RepeatedField<double> accelerationEstimateZ_ = new pbc::RepeatedField<double>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<float> AccelerationEstimateZ {
+    public pbc::RepeatedField<double> AccelerationEstimateZ {
       get { return accelerationEstimateZ_; }
     }
 
@@ -752,17 +755,17 @@ namespace vesselMotionService {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 10:
-          case 13: {
+          case 9: {
             accelerationEstimateX_.AddEntriesFrom(input, _repeated_accelerationEstimateX_codec);
             break;
           }
           case 18:
-          case 21: {
+          case 17: {
             accelerationEstimateY_.AddEntriesFrom(input, _repeated_accelerationEstimateY_codec);
             break;
           }
           case 26:
-          case 29: {
+          case 25: {
             accelerationEstimateZ_.AddEntriesFrom(input, _repeated_accelerationEstimateZ_codec);
             break;
           }
@@ -781,17 +784,17 @@ namespace vesselMotionService {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 10:
-          case 13: {
+          case 9: {
             accelerationEstimateX_.AddEntriesFrom(ref input, _repeated_accelerationEstimateX_codec);
             break;
           }
           case 18:
-          case 21: {
+          case 17: {
             accelerationEstimateY_.AddEntriesFrom(ref input, _repeated_accelerationEstimateY_codec);
             break;
           }
           case 26:
-          case 29: {
+          case 25: {
             accelerationEstimateZ_.AddEntriesFrom(ref input, _repeated_accelerationEstimateZ_codec);
             break;
           }
@@ -842,11 +845,11 @@ namespace vesselMotionService {
 
     /// <summary>Field number for the "acceleration_actual" field.</summary>
     public const int AccelerationActualFieldNumber = 1;
-    private static readonly pb::FieldCodec<float> _repeated_accelerationActual_codec
-        = pb::FieldCodec.ForFloat(10);
-    private readonly pbc::RepeatedField<float> accelerationActual_ = new pbc::RepeatedField<float>();
+    private static readonly pb::FieldCodec<double> _repeated_accelerationActual_codec
+        = pb::FieldCodec.ForDouble(10);
+    private readonly pbc::RepeatedField<double> accelerationActual_ = new pbc::RepeatedField<double>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<float> AccelerationActual {
+    public pbc::RepeatedField<double> AccelerationActual {
       get { return accelerationActual_; }
     }
 
@@ -935,7 +938,7 @@ namespace vesselMotionService {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 10:
-          case 13: {
+          case 9: {
             accelerationActual_.AddEntriesFrom(input, _repeated_accelerationActual_codec);
             break;
           }
@@ -954,7 +957,7 @@ namespace vesselMotionService {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 10:
-          case 13: {
+          case 9: {
             accelerationActual_.AddEntriesFrom(ref input, _repeated_accelerationActual_codec);
             break;
           }
@@ -1006,21 +1009,21 @@ namespace vesselMotionService {
 
     /// <summary>Field number for the "acceleration_estimate" field.</summary>
     public const int AccelerationEstimateFieldNumber = 1;
-    private static readonly pb::FieldCodec<float> _repeated_accelerationEstimate_codec
-        = pb::FieldCodec.ForFloat(10);
-    private readonly pbc::RepeatedField<float> accelerationEstimate_ = new pbc::RepeatedField<float>();
+    private static readonly pb::FieldCodec<double> _repeated_accelerationEstimate_codec
+        = pb::FieldCodec.ForDouble(10);
+    private readonly pbc::RepeatedField<double> accelerationEstimate_ = new pbc::RepeatedField<double>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<float> AccelerationEstimate {
+    public pbc::RepeatedField<double> AccelerationEstimate {
       get { return accelerationEstimate_; }
     }
 
     /// <summary>Field number for the "acceleration_actual" field.</summary>
     public const int AccelerationActualFieldNumber = 2;
-    private static readonly pb::FieldCodec<float> _repeated_accelerationActual_codec
-        = pb::FieldCodec.ForFloat(18);
-    private readonly pbc::RepeatedField<float> accelerationActual_ = new pbc::RepeatedField<float>();
+    private static readonly pb::FieldCodec<double> _repeated_accelerationActual_codec
+        = pb::FieldCodec.ForDouble(18);
+    private readonly pbc::RepeatedField<double> accelerationActual_ = new pbc::RepeatedField<double>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<float> AccelerationActual {
+    public pbc::RepeatedField<double> AccelerationActual {
       get { return accelerationActual_; }
     }
 
@@ -1115,12 +1118,12 @@ namespace vesselMotionService {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 10:
-          case 13: {
+          case 9: {
             accelerationEstimate_.AddEntriesFrom(input, _repeated_accelerationEstimate_codec);
             break;
           }
           case 18:
-          case 21: {
+          case 17: {
             accelerationActual_.AddEntriesFrom(input, _repeated_accelerationActual_codec);
             break;
           }
@@ -1139,12 +1142,12 @@ namespace vesselMotionService {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 10:
-          case 13: {
+          case 9: {
             accelerationEstimate_.AddEntriesFrom(ref input, _repeated_accelerationEstimate_codec);
             break;
           }
           case 18:
-          case 21: {
+          case 17: {
             accelerationActual_.AddEntriesFrom(ref input, _repeated_accelerationActual_codec);
             break;
           }

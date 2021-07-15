@@ -72,76 +72,92 @@ class ComfortServiceImplementation final : public ComfortService::Service {
         }
 
     }
+    
+    void AssessComfort (double equivalentAcceleration, ComfortResponse* response)
+    {
+        if(equivalentAcceleration < 0.315)
+        {
+            response->set_rating(comfortServiceAPI::v1::NOT_UNCOMFORTABLE);
+        } else if (equivalentAcceleration < 0.6)
+        {
+            response->set_rating(comfortServiceAPI::v1::SLIGHTLY_UNCOMFORTABLE);
+        } else if (equivalentAcceleration < 0.9)
+        {
+            response->set_rating(comfortServiceAPI::v1::FAIRLY_UNCOMFORTABLE);
+        } else if (equivalentAcceleration < 1.4)
+        {
+            response->set_rating(comfortServiceAPI::v1::UNCOMFORTABLE);
+        } else if (equivalentAcceleration < 2)
+        {
+            response->set_rating(comfortServiceAPI::v1::VERY_UNCOMFORTABLE);
+        } else
+        {
+            response->set_rating(comfortServiceAPI::v1::EXTREMELY_UNCOMFORTABLE);
+        }
+    }
+
+    double calculateEquivalentVibration(double timeStamps[], double weightedVibration[])
+    {
+        /* This function takes a time series of weighted vibration data as well as their assosciated timestamps. Using these, it calculates the equivalent vibration magnitude according to SANS 2631-1 (Appendix C, equ C.1).
+        */
+
+        float timeGap = 0; // This variable holds the time difference between vibration samples
+        double numerator = 0; // This variables holds the accumulated numerator use in the calculation of the equivalent vibration magnitude
+        double denominator = 0; // This variables holds the accumulated denominator use in the calculation of the equivalent vibration magnitude
+        
+         // Iterate through the request samples
+        for(int i = 1; i < sizeof(weightedVibration); i++)
+        {
+            // Find the time difference between estimates. Assume the acceleration signal is constant over this time period
+            timeGap = timeStamps[i] - timeStamps[i-1];
+
+            // Increment numerator of the equivalent vibration equation
+            numerator += ( std::pow(weightedVibration[i],2)*timeGap );
+
+            // Increment denominator of the equivalent vibration equation
+            denominator += timeGap;
+        }
+
+        // Calculate and return equivalent vibration
+        return sqrt(numerator/denominator);
+    }
 
     Status ComfortRating(
         ServerContext* context, 
         const ComfortRequest* request, 
         ComfortResponse* response
     ) override {
-        /* The 'Comfort Rating' call provides foresight for ?? decision-making by providing a comfort rating for a proposed route, based on estimated vibrations on board.
+        /* The 'Comfort Rating' call provides foresight for ?? decision-making by providing a comfort rating for a proposed route, based on estimated vibrations on board. 
         */
 
-        int humanWeightedVibrationX;
-        int humanWeightedVibrationY;
-        int humanWeightedVibrationZ;
+        double timeStampArray[request->unix_time_size()];
+        double vibrationXArray[request->human_weighted_vibration_x_size()];
 
-        float iterationMax = 0;
-        float max = 0;   
-
-        // Iterate through the request fields
+        // Unpack and add all timestamps to the response message
         for(int i = 0; i < request->unix_time_size(); i++)
         {
-            // First, add the timestamp used to the response message
-            response->set_unix_time(i, request->unix_time(i));
-
-            // Extract the human-weighted vibrations from the request
-            humanWeightedVibrationX = request->human_weighted_vibration_x(i);
-            humanWeightedVibrationY = request->human_weighted_vibration_y(i);
-            humanWeightedVibrationZ = request->human_weighted_vibration_z(i);
-
-            // Find the maximum vibration among the current x, y, and z
-            iterationMax = std::max({humanWeightedVibrationX, humanWeightedVibrationY, humanWeightedVibrationZ});
-
-            // Check if this local maximum is greater than the current maximum and, if it is, re-evaluate the habitability
-            if(iterationMax > max)
-            {
-                EvaluateHabitability (iterationMax, evaluationCase::Passenger, response);
-            }
+            timeStampArray[i] = request->unix_time(i); // Unpack the request message into a local array
+            response->set_unix_time(i, timeStampArray[i]); // Set response message time
         }
+
+        // Unpack all human weighted vibrations
+        for(int i = 0; i < request->human_weighted_vibration_x(); i++_)
+        {
+            vibrationXArray[i] = request->human_weighted_vibration_x(i);
+        }
+
+        // ________Calculate equivalent vibration________
+
+        double equivalentVibration = calculateEquivalentVibration(timeStampArray, vibrationXArray);
+
+        // 2. Calculate VDV
+        double vdvAccelerationZ = 1.4 * equivalentVibration * std::pow((timeStampArray[sizeof(timeStampArray) - 1] - timeStampArray[0]), 0.25);
+
+        // 3. Assess comfort
+        AssessComfort(equivalentVibration, response);
 
         return Status::OK;
     }
-
-    Status VDVEstimate(
-        ServerContext* context, 
-        const VDVRequest* request, 
-        VDVResponse* response
-    ) override {
-        /* The 'VDV Estimate' call provides ?? for ?? decision-making by providing the estimated vibration dose value for a requested route.
-        */
-
-        // 1. Calculate time between samples
-        
-        // 2. Calculate estamated VDV
-
-        // 3. Increment equivalent vibration (use denominator and numerator)
-
-        std::cout << "BLABLA" << std::endl;
-        return Status::CANCELLED;
-    }
-
-    // Status VDVTracking(>
-    //     ServerContext* context, 
-    //     const VDVRequest* request, 
-    //     VDVResponse* response
-    // ) override {
-    //     /* The 'VDV Tracking' call provides ?? for ?? decision-making by providing a real-time vibration dose value based on accelerometer feeds on board the vessel.
-    //     */
-       
-    //     std::cout << "BLABLA" << std::endl;
-    //     return Status::CANCELLED;
-    // }
-
 };
 
 void Serve() {

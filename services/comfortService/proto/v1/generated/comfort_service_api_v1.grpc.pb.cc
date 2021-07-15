@@ -24,8 +24,6 @@ namespace v1 {
 
 static const char* ComfortService_method_names[] = {
   "/comfortServiceAPI.v1.ComfortService/ComfortRating",
-  "/comfortServiceAPI.v1.ComfortService/VDVEstimate",
-  "/comfortServiceAPI.v1.ComfortService/VDVTracking",
 };
 
 std::unique_ptr< ComfortService::Stub> ComfortService::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -36,8 +34,6 @@ std::unique_ptr< ComfortService::Stub> ComfortService::NewStub(const std::shared
 
 ComfortService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options)
   : channel_(channel), rpcmethod_ComfortRating_(ComfortService_method_names[0], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_VDVEstimate_(ComfortService_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_VDVTracking_(ComfortService_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status ComfortService::Stub::ComfortRating(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::ComfortRequest& request, ::comfortServiceAPI::v1::ComfortResponse* response) {
@@ -63,52 +59,6 @@ void ComfortService::Stub::experimental_async::ComfortRating(::grpc::ClientConte
   return result;
 }
 
-::grpc::Status ComfortService::Stub::VDVEstimate(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::VDVRequest& request, ::comfortServiceAPI::v1::VDVResponse* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::comfortServiceAPI::v1::VDVRequest, ::comfortServiceAPI::v1::VDVResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_VDVEstimate_, context, request, response);
-}
-
-void ComfortService::Stub::experimental_async::VDVEstimate(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::VDVRequest* request, ::comfortServiceAPI::v1::VDVResponse* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::comfortServiceAPI::v1::VDVRequest, ::comfortServiceAPI::v1::VDVResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_VDVEstimate_, context, request, response, std::move(f));
-}
-
-void ComfortService::Stub::experimental_async::VDVEstimate(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::VDVRequest* request, ::comfortServiceAPI::v1::VDVResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_VDVEstimate_, context, request, response, reactor);
-}
-
-::grpc::ClientAsyncResponseReader< ::comfortServiceAPI::v1::VDVResponse>* ComfortService::Stub::PrepareAsyncVDVEstimateRaw(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::VDVRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::comfortServiceAPI::v1::VDVResponse, ::comfortServiceAPI::v1::VDVRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_VDVEstimate_, context, request);
-}
-
-::grpc::ClientAsyncResponseReader< ::comfortServiceAPI::v1::VDVResponse>* ComfortService::Stub::AsyncVDVEstimateRaw(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::VDVRequest& request, ::grpc::CompletionQueue* cq) {
-  auto* result =
-    this->PrepareAsyncVDVEstimateRaw(context, request, cq);
-  result->StartCall();
-  return result;
-}
-
-::grpc::Status ComfortService::Stub::VDVTracking(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::VDVRequest& request, ::comfortServiceAPI::v1::VDVResponse* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::comfortServiceAPI::v1::VDVRequest, ::comfortServiceAPI::v1::VDVResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_VDVTracking_, context, request, response);
-}
-
-void ComfortService::Stub::experimental_async::VDVTracking(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::VDVRequest* request, ::comfortServiceAPI::v1::VDVResponse* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::comfortServiceAPI::v1::VDVRequest, ::comfortServiceAPI::v1::VDVResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_VDVTracking_, context, request, response, std::move(f));
-}
-
-void ComfortService::Stub::experimental_async::VDVTracking(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::VDVRequest* request, ::comfortServiceAPI::v1::VDVResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_VDVTracking_, context, request, response, reactor);
-}
-
-::grpc::ClientAsyncResponseReader< ::comfortServiceAPI::v1::VDVResponse>* ComfortService::Stub::PrepareAsyncVDVTrackingRaw(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::VDVRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::comfortServiceAPI::v1::VDVResponse, ::comfortServiceAPI::v1::VDVRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_VDVTracking_, context, request);
-}
-
-::grpc::ClientAsyncResponseReader< ::comfortServiceAPI::v1::VDVResponse>* ComfortService::Stub::AsyncVDVTrackingRaw(::grpc::ClientContext* context, const ::comfortServiceAPI::v1::VDVRequest& request, ::grpc::CompletionQueue* cq) {
-  auto* result =
-    this->PrepareAsyncVDVTrackingRaw(context, request, cq);
-  result->StartCall();
-  return result;
-}
-
 ComfortService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       ComfortService_method_names[0],
@@ -120,46 +70,12 @@ ComfortService::Service::Service() {
              ::comfortServiceAPI::v1::ComfortResponse* resp) {
                return service->ComfortRating(ctx, req, resp);
              }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      ComfortService_method_names[1],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< ComfortService::Service, ::comfortServiceAPI::v1::VDVRequest, ::comfortServiceAPI::v1::VDVResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](ComfortService::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::comfortServiceAPI::v1::VDVRequest* req,
-             ::comfortServiceAPI::v1::VDVResponse* resp) {
-               return service->VDVEstimate(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      ComfortService_method_names[2],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< ComfortService::Service, ::comfortServiceAPI::v1::VDVRequest, ::comfortServiceAPI::v1::VDVResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](ComfortService::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::comfortServiceAPI::v1::VDVRequest* req,
-             ::comfortServiceAPI::v1::VDVResponse* resp) {
-               return service->VDVTracking(ctx, req, resp);
-             }, this)));
 }
 
 ComfortService::Service::~Service() {
 }
 
 ::grpc::Status ComfortService::Service::ComfortRating(::grpc::ServerContext* context, const ::comfortServiceAPI::v1::ComfortRequest* request, ::comfortServiceAPI::v1::ComfortResponse* response) {
-  (void) context;
-  (void) request;
-  (void) response;
-  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-}
-
-::grpc::Status ComfortService::Service::VDVEstimate(::grpc::ServerContext* context, const ::comfortServiceAPI::v1::VDVRequest* request, ::comfortServiceAPI::v1::VDVResponse* response) {
-  (void) context;
-  (void) request;
-  (void) response;
-  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-}
-
-::grpc::Status ComfortService::Service::VDVTracking(::grpc::ServerContext* context, const ::comfortServiceAPI::v1::VDVRequest* request, ::comfortServiceAPI::v1::VDVResponse* response) {
   (void) context;
   (void) request;
   (void) response;
