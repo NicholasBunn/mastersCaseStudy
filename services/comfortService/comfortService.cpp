@@ -105,7 +105,7 @@ class ComfortServiceImplementation final : public ComfortService::Service {
         double numerator = 0; // This variables holds the accumulated numerator use in the calculation of the equivalent vibration magnitude
         double denominator = 0; // This variables holds the accumulated denominator use in the calculation of the equivalent vibration magnitude
         
-         // Iterate through the request samples
+        // Iterate through the request samples
         for(int i = 1; i < sizeof(weightedVibration); i++)
         {
             // Find the time difference between estimates. Assume the acceleration signal is constant over this time period

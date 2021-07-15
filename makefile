@@ -13,6 +13,9 @@ protoGenPy:
 	# Process vibration service
 	python3 -m grpc_tools.protoc -I=services/processVibrationService/proto/v1 --python_out=services/processVibrationService/proto/v1/generated --grpc_python_out=services/processVibrationService/proto/v1/generated services/processVibrationService/proto/v1/process_vibration_service_api_v1.proto # add 'from .' to line 5 of the _grpc.py file
 
+	# Comfort service
+	python3 -m grpc_tools.protoc -I=services/comfortService/proto/v1 --python_out=services/comfortService/proto/v1/generated --grpc_python_out=services/comfortService/proto/v1/generated services/comfortService/proto/v1/comfort_service_api_v1.proto # add 'from .' to line 5 of the _grpc.py file
+
 protoGenCSharp:
 	# protoc -I=services/vesselMotionService/proto/v1 services/vesselMotionService/proto/v1/vessel_motion_service_api_v1.proto --csharp_out=services/vesselMotionService/proto/v1/generated # --grpc_out=services/vesselMotionService/proto/v1/generated --plugin=protoc-gen-grpc=tools\grpc_csharp_plugin.exe
 	# NEED TO ADD A COMMAND HERE TO CREATE CLIENT STUBS FOR AGGREGATORS
@@ -58,6 +61,9 @@ testPowerTrainService:
 testProcessVibrationService:
 	/usr/bin/python3 /home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/processVibrationService/test_processVibrationService.py
 
+testComfortService:
+	/usr/bin/python3 /home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/comfortService/test_comfortService.py
+
 testVesselMotionService:
 	cd services/vesselMotionService; dotnet test; cd ..
 
@@ -68,6 +74,7 @@ testPy:
 	make testOceanWeatherService
 	make testPowerTrainService
 	make testProcessVibrationService
+	make testComfortService
 
 testCSharp:
 	make testVesselMotionService
@@ -92,7 +99,8 @@ runProcessVibrationService:
 	/usr/bin/python3 /home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/processVibrationService/processVibrationService.py
 
 runComfortService:
-	cd services/comfortService; make build; ./comfortService
+	/usr/bin/python3 /home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/comfortService/comfortService.py
+
 
 runPrometheus:
 
@@ -101,6 +109,12 @@ runPushGateway:
 runPy:
 	make runOceanWeatherService
 	make runPowerTrainService
+	make runProcessVibrationService
+	make runComfortService
+
+run CSharp:
+	make runVesselMotionService
 
 runAll:
 	make runPy
+	make runCSharp

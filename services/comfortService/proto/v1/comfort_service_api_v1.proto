@@ -15,9 +15,9 @@ message ComfortResponse {
     // optional string percentage_max_rating = 3;
 }
 
-// 'Comfort Service' offers three service calls that provide information about human comfort onboard, in response to vessel vibrations.
+// 'Comfort Service' offers one service call that provides information about human comfort onboard, in response to vessel vibrations.
 service ComfortService {
-    // The 'Comfort Rating' call provides foresight for ?? decision-making by providing a comfort rating for a proposed route, based on estimated vibrations on board.
+    // The 'Comfort Rating' call provides foresight for tactical decision-making by providing a comfort rating for a proposed route, based on estimated vibrations on board.
     rpc ComfortRating(ComfortRequest) returns (ComfortResponse);
 }
 
