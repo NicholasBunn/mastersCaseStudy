@@ -45,7 +45,7 @@ message PowerTrackingResponse {
     repeated float power_actual = 1;
 }
 
-// 'Power Train Service; offers four service calls that provide information about the power train of the vessel (namely power requirements and their assosciated costs)
+// 'Power Train Service' offers four service calls that provide information about the power train of the vessel (namely power requirements and their assosciated costs)
 service PowerTrainService {
     // The 'Power Estimate' call provides foresight for tactical decision-making by providing power estimates for a requested route and sailing conditions
     rpc PowerEstimate(PowerTrainEstimateRequest) returns (PowerEstimateResponse);

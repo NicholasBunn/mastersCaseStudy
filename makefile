@@ -10,14 +10,14 @@ protoGenPy:
 	# Power train service
 	python3 -m grpc_tools.protoc -I=services/powerTrainService/proto/v1 --python_out=services/powerTrainService/proto/v1/generated  --grpc_python_out=services/powerTrainService/proto/v1/generated services/powerTrainService/proto/v1/power_train_service_api_v1.proto # add 'from .' to line 5 of the _grpc.py file
 
+	# Process vibration service
+	python3 -m grpc_tools.protoc -I=services/processVibrationService/proto/v1 --python_out=services/processVibrationService/proto/v1/generated --grpc_python_out=services/processVibrationService/proto/v1/generated services/processVibrationService/proto/v1/process_vibration_service_api_v1.proto # add 'from .' to line 5 of the _grpc.py file
+
 protoGenCSharp:
 	# protoc -I=services/vesselMotionService/proto/v1 services/vesselMotionService/proto/v1/vessel_motion_service_api_v1.proto --csharp_out=services/vesselMotionService/proto/v1/generated # --grpc_out=services/vesselMotionService/proto/v1/generated --plugin=protoc-gen-grpc=tools\grpc_csharp_plugin.exe
 	# NEED TO ADD A COMMAND HERE TO CREATE CLIENT STUBS FOR AGGREGATORS
 	
 protoGenCPP:
-	# Process vibration service
-	protoc -I=services/processVibrationService/proto/v1 --grpc_out=generate_mock_code=true:services/processVibrationService/proto/v1/generated --plugin=protoc-gen-grpc=/usr/local/bin/grpc_cpp_plugin services/processVibrationService/proto/v1/process_vibration_service_api_v1.proto
-	protoc -I=services/processVibrationService/proto/v1 --cpp_out=services/processVibrationService/proto/v1/generated services/processVibrationService/proto/v1/process_vibration_service_api_v1.proto
 
 	# Comfort service
 	protoc -I=services/comfortService/proto/v1 --grpc_out=services/comfortService/proto/v1/generated --plugin=protoc-gen-grpc=/usr/local/bin/grpc_cpp_plugin services/comfortService/proto/v1/comfort_service_api_v1.proto
@@ -55,6 +55,9 @@ testOceanWeatherService:
 testPowerTrainService:
 	/usr/bin/python3 /home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/powerTrainService/test_powerTrainService.py
 
+testProcessVibrationService:
+	/usr/bin/python3 /home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/processVibrationService/test_processVibrationService.py
+
 testVesselMotionService:
 	cd services/vesselMotionService; dotnet test; cd ..
 
@@ -64,6 +67,7 @@ testGo:
 testPy:
 	make testOceanWeatherService
 	make testPowerTrainService
+	make testProcessVibrationService
 
 testCSharp:
 	make testVesselMotionService
@@ -84,11 +88,11 @@ runPowerTrainService:
 runVesselMotionService:
 	cd services/vesselMotionService; dotnet run; cd ..
 
+runProcessVibrationService:
+	/usr/bin/python3 /home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/processVibrationService/processVibrationService.py
+
 runComfortService:
 	cd services/comfortService; make build; ./comfortService
-
-runProcessVibrationService:
-	cd services/processVibrationService; make build; ./processVibrationService
 
 runPrometheus:
 

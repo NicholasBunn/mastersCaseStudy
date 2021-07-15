@@ -14,12 +14,10 @@ message ProcessResponse {
     repeated float rms_vibration_x = 2;
     repeated float rms_vibration_y = 3;
     repeated float rms_vibration_z = 4;
-    repeated float VDV_vibration_x = 5;
-    repeated float VDV_vibration_y = 6;
-    repeated float VDV_vibration_z = 7;
 }
 
+// 'Process Vibration Service' offers two service calls that process time-series vibration signals according to accepted practices.
 service ProcessVibrationService {
-    rpc ProcessEstimates(ProcessRequest) returns (ProcessResponse);
-    rpc ProcessTracking(ProcessRequest) returns (ProcessResponse);
+    // The 'Calculate RMS' call calculates the root mean square (RMS) vibration for time-series vibration signals.
+    rpc CalculateRMS(ProcessRequest) returns (ProcessResponse);
 }
