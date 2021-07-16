@@ -1,0 +1,56 @@
+<mxfile>
+    <diagram id="wZOlC6WvDBhxzqSBbwHN" name="ComfortRating">
+        <mxGraphModel dx="437" dy="771" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fillColor=#b1ddf0;strokeColor=#10739e;fontColor=#000000;" edge="1" parent="1" source="4" target="7">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="&lt;font&gt;Receive request&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b1ddf0;strokeColor=#10739e;fontColor=#000000;" vertex="1" parent="1">
+                    <mxGeometry x="270" y="70" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="7">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="330" y="290" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10739E;" edge="1" parent="1" source="7">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="330" y="290" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="7" value="&lt;font&gt;Create response message&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b1ddf0;strokeColor=#10739e;fontColor=#000000;" vertex="1" parent="1">
+                    <mxGeometry x="270" y="180" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="37" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#10739E;" edge="1" parent="1" source="18" target="19">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="18" value="&lt;font&gt;Assess comfort based on the equivalent vibration&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b1ddf0;strokeColor=#10739e;fontColor=#000000;" vertex="1" parent="1">
+                    <mxGeometry x="270" y="620" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="19" value="&lt;font&gt;Return response&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b1ddf0;strokeColor=#10739e;fontColor=#000000;" vertex="1" parent="1">
+                    <mxGeometry x="270" y="730" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#10739E;" edge="1" parent="1" source="31" target="32">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="31" value="&lt;font&gt;Populate the time field of the response message&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b1ddf0;strokeColor=#10739e;fontColor=#000000;" vertex="1" parent="1">
+                    <mxGeometry x="270" y="290" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="35" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10739E;" edge="1" parent="1" source="32" target="34">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="32" value="&lt;font&gt;Populate the time field of the response message&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b1ddf0;strokeColor=#10739e;fontColor=#000000;" vertex="1" parent="1">
+                    <mxGeometry x="270" y="400" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="36" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10739E;" edge="1" parent="1" source="34" target="18">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="34" value="&lt;font&gt;Calculate equivalent vibration for the input z time series&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b1ddf0;strokeColor=#10739e;fontColor=#000000;" vertex="1" parent="1">
+                    <mxGeometry x="270" y="510" width="120" height="60" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

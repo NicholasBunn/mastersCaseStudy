@@ -1,22 +1,152 @@
 <mxfile>
     <diagram id="yDGRsnfycBWK4jEYv_eT" name="PowerEstimate">
-        <mxGraphModel dx="439" dy="771" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="753" dy="771" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
+                <mxCell id="XCSxHi4Rn0UL8-PmLGMl-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fillColor=#b1ddf0;strokeColor=#10739e;fontColor=#000000;" edge="1" parent="1" source="XCSxHi4Rn0UL8-PmLGMl-2" target="XCSxHi4Rn0UL8-PmLGMl-4">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="XCSxHi4Rn0UL8-PmLGMl-2" value="&lt;font&gt;Receive request&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b1ddf0;strokeColor=#10739e;fontColor=#000000;" vertex="1" parent="1">
+                    <mxGeometry x="270" y="70" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="XCSxHi4Rn0UL8-PmLGMl-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="XCSxHi4Rn0UL8-PmLGMl-4" target="XCSxHi4Rn0UL8-PmLGMl-20">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="XCSxHi4Rn0UL8-PmLGMl-29" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10739E;" edge="1" parent="1" source="XCSxHi4Rn0UL8-PmLGMl-4" target="XCSxHi4Rn0UL8-PmLGMl-20">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="XCSxHi4Rn0UL8-PmLGMl-4" value="&lt;font&gt;Create response message&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b1ddf0;strokeColor=#10739e;fontColor=#000000;" vertex="1" parent="1">
+                    <mxGeometry x="270" y="180" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="XCSxHi4Rn0UL8-PmLGMl-13" value="&lt;font&gt;Return response&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b1ddf0;strokeColor=#10739e;fontColor=#000000;" vertex="1" parent="1">
+                    <mxGeometry x="270" y="620" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="XCSxHi4Rn0UL8-PmLGMl-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#10739E;" edge="1" parent="1" source="XCSxHi4Rn0UL8-PmLGMl-20" target="XCSxHi4Rn0UL8-PmLGMl-22">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="XCSxHi4Rn0UL8-PmLGMl-20" value="Structure data" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b1ddf0;strokeColor=#10739e;fontColor=#000000;" vertex="1" parent="1">
+                    <mxGeometry x="270" y="290" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="XCSxHi4Rn0UL8-PmLGMl-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#10739E;" edge="1" parent="1" source="XCSxHi4Rn0UL8-PmLGMl-22" target="XCSxHi4Rn0UL8-PmLGMl-24">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="XCSxHi4Rn0UL8-PmLGMl-22" value="Load prediction model" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b1ddf0;strokeColor=#10739e;fontColor=#000000;" vertex="1" parent="1">
+                    <mxGeometry x="270" y="400" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="XCSxHi4Rn0UL8-PmLGMl-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#10739E;" edge="1" parent="1" source="XCSxHi4Rn0UL8-PmLGMl-24" target="XCSxHi4Rn0UL8-PmLGMl-13">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="XCSxHi4Rn0UL8-PmLGMl-24" value="Make estimates" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b1ddf0;strokeColor=#10739e;fontColor=#000000;" vertex="1" parent="1">
+                    <mxGeometry x="270" y="510" width="120" height="60" as="geometry"/>
+                </mxCell>
             </root>
         </mxGraphModel>
     </diagram>
     <diagram id="cobvU_n2tzdZ3lcsF2gJ" name="CostEstimate">
-        <mxGraphModel dx="439" dy="771" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="513" dy="771" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="rv---AS9pPViwi4vh5Rl-0"/>
                 <mxCell id="rv---AS9pPViwi4vh5Rl-1" parent="rv---AS9pPViwi4vh5Rl-0"/>
+                <mxCell id="yfU92YgiwFMWGioqTRCy-12" value="" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;fillColor=none;" vertex="1" parent="rv---AS9pPViwi4vh5Rl-1">
+                    <mxGeometry x="260" y="280" width="140" height="300" as="geometry"/>
+                </mxCell>
+                <mxCell id="yfU92YgiwFMWGioqTRCy-0" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fillColor=#b1ddf0;strokeColor=#10739e;fontColor=#000000;" edge="1" parent="rv---AS9pPViwi4vh5Rl-1" source="yfU92YgiwFMWGioqTRCy-1" target="yfU92YgiwFMWGioqTRCy-4">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="yfU92YgiwFMWGioqTRCy-1" value="&lt;font&gt;Receive request&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b1ddf0;strokeColor=#10739e;fontColor=#000000;" vertex="1" parent="rv---AS9pPViwi4vh5Rl-1">
+                    <mxGeometry x="270" y="70" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="yfU92YgiwFMWGioqTRCy-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="rv---AS9pPViwi4vh5Rl-1" source="yfU92YgiwFMWGioqTRCy-4" target="yfU92YgiwFMWGioqTRCy-7">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="yfU92YgiwFMWGioqTRCy-3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10739E;" edge="1" parent="rv---AS9pPViwi4vh5Rl-1" source="yfU92YgiwFMWGioqTRCy-4" target="yfU92YgiwFMWGioqTRCy-7">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="yfU92YgiwFMWGioqTRCy-4" value="&lt;font&gt;Create response message&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b1ddf0;strokeColor=#10739e;fontColor=#000000;" vertex="1" parent="rv---AS9pPViwi4vh5Rl-1">
+                    <mxGeometry x="270" y="180" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="yfU92YgiwFMWGioqTRCy-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#10739E;" edge="1" parent="rv---AS9pPViwi4vh5Rl-1" source="yfU92YgiwFMWGioqTRCy-7" target="yfU92YgiwFMWGioqTRCy-9">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="yfU92YgiwFMWGioqTRCy-7" value="Structure data" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b1ddf0;strokeColor=#10739e;fontColor=#000000;" vertex="1" parent="rv---AS9pPViwi4vh5Rl-1">
+                    <mxGeometry x="270" y="290" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="yfU92YgiwFMWGioqTRCy-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#10739E;" edge="1" parent="rv---AS9pPViwi4vh5Rl-1" source="yfU92YgiwFMWGioqTRCy-9" target="yfU92YgiwFMWGioqTRCy-11">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="yfU92YgiwFMWGioqTRCy-9" value="Load prediction model" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b1ddf0;strokeColor=#10739e;fontColor=#000000;" vertex="1" parent="rv---AS9pPViwi4vh5Rl-1">
+                    <mxGeometry x="270" y="400" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="yfU92YgiwFMWGioqTRCy-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#10739E;" edge="1" parent="rv---AS9pPViwi4vh5Rl-1" source="yfU92YgiwFMWGioqTRCy-11" target="yfU92YgiwFMWGioqTRCy-15">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="yfU92YgiwFMWGioqTRCy-11" value="Produce estimates" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b1ddf0;strokeColor=#10739e;fontColor=#000000;" vertex="1" parent="rv---AS9pPViwi4vh5Rl-1">
+                    <mxGeometry x="270" y="510" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="yfU92YgiwFMWGioqTRCy-13" value="Invoke&lt;br&gt;power&lt;br&gt;estimate&lt;br&gt;call" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;dashed=1;" vertex="1" parent="rv---AS9pPViwi4vh5Rl-1">
+                    <mxGeometry x="210" y="280" width="50" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="yfU92YgiwFMWGioqTRCy-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#10739E;" edge="1" parent="rv---AS9pPViwi4vh5Rl-1" source="yfU92YgiwFMWGioqTRCy-15" target="yfU92YgiwFMWGioqTRCy-17">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="yfU92YgiwFMWGioqTRCy-15" value="&lt;font color=&quot;#000000&quot;&gt;Iterate through powerset&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b1ddf0;strokeColor=#10739e;" vertex="1" parent="rv---AS9pPViwi4vh5Rl-1">
+                    <mxGeometry x="270" y="620" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="yfU92YgiwFMWGioqTRCy-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10739E;" edge="1" parent="rv---AS9pPViwi4vh5Rl-1" source="yfU92YgiwFMWGioqTRCy-17" target="yfU92YgiwFMWGioqTRCy-23">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="yfU92YgiwFMWGioqTRCy-17" value="&lt;font&gt;Calculate timespan of current power estimate&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b1ddf0;strokeColor=#10739e;fontColor=#000000;" vertex="1" parent="rv---AS9pPViwi4vh5Rl-1">
+                    <mxGeometry x="270" y="730" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="yfU92YgiwFMWGioqTRCy-18" value="&lt;font&gt;Return response&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b1ddf0;strokeColor=#10739e;fontColor=#000000;" vertex="1" parent="rv---AS9pPViwi4vh5Rl-1">
+                    <mxGeometry x="270" y="1410" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="yfU92YgiwFMWGioqTRCy-20" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10739E;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="rv---AS9pPViwi4vh5Rl-1" source="yfU92YgiwFMWGioqTRCy-21" target="yfU92YgiwFMWGioqTRCy-15">
+                    <mxGeometry x="-0.913" relative="1" as="geometry">
+                        <mxPoint x="490" y="790" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="200" y="1209"/>
+                            <mxPoint x="200" y="650"/>
+                        </Array>
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="yfU92YgiwFMWGioqTRCy-31" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#10739E;" edge="1" parent="rv---AS9pPViwi4vh5Rl-1" source="yfU92YgiwFMWGioqTRCy-21" target="yfU92YgiwFMWGioqTRCy-30">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="yfU92YgiwFMWGioqTRCy-21" value="&lt;font&gt;Reached end of&lt;br&gt;request message&lt;/font&gt;" style="rhombus;whiteSpace=wrap;html=1;fillColor=#b1ddf0;strokeColor=#10739e;fontColor=#000000;" vertex="1" parent="rv---AS9pPViwi4vh5Rl-1">
+                    <mxGeometry x="250" y="1169" width="160" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="yfU92YgiwFMWGioqTRCy-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#10739E;" edge="1" parent="rv---AS9pPViwi4vh5Rl-1" source="yfU92YgiwFMWGioqTRCy-23" target="yfU92YgiwFMWGioqTRCy-25">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="yfU92YgiwFMWGioqTRCy-23" value="&lt;font&gt;Calculate additional cost of timespan&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b1ddf0;strokeColor=#10739e;fontColor=#000000;" vertex="1" parent="rv---AS9pPViwi4vh5Rl-1">
+                    <mxGeometry x="270" y="840" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="yfU92YgiwFMWGioqTRCy-28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#10739E;" edge="1" parent="rv---AS9pPViwi4vh5Rl-1" source="yfU92YgiwFMWGioqTRCy-25" target="yfU92YgiwFMWGioqTRCy-27">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="yfU92YgiwFMWGioqTRCy-25" value="&lt;font&gt;Increment total cost variable&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b1ddf0;strokeColor=#10739e;fontColor=#000000;" vertex="1" parent="rv---AS9pPViwi4vh5Rl-1">
+                    <mxGeometry x="270" y="950" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="yfU92YgiwFMWGioqTRCy-29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#10739E;" edge="1" parent="rv---AS9pPViwi4vh5Rl-1" source="yfU92YgiwFMWGioqTRCy-27" target="yfU92YgiwFMWGioqTRCy-21">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="yfU92YgiwFMWGioqTRCy-27" value="&lt;font&gt;Append unix time, variable cost, and power estimate to response&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b1ddf0;strokeColor=#10739e;fontColor=#000000;" vertex="1" parent="rv---AS9pPViwi4vh5Rl-1">
+                    <mxGeometry x="270" y="1060" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="yfU92YgiwFMWGioqTRCy-32" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#10739E;" edge="1" parent="rv---AS9pPViwi4vh5Rl-1" source="yfU92YgiwFMWGioqTRCy-30" target="yfU92YgiwFMWGioqTRCy-18">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="yfU92YgiwFMWGioqTRCy-30" value="&lt;font&gt;Set total cost field of response&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b1ddf0;strokeColor=#10739e;fontColor=#000000;" vertex="1" parent="rv---AS9pPViwi4vh5Rl-1">
+                    <mxGeometry x="270" y="1300" width="120" height="60" as="geometry"/>
+                </mxCell>
             </root>
         </mxGraphModel>
     </diagram>
     <diagram id="vqYS1Jtx5NchfltVaHca" name="PowerTracking">
-        <mxGraphModel dx="439" dy="771" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="754" dy="771" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="WqytN4m0WCogJbnp6YXD-0"/>
                 <mxCell id="WqytN4m0WCogJbnp6YXD-1" parent="WqytN4m0WCogJbnp6YXD-0"/>
@@ -24,7 +154,7 @@
         </mxGraphModel>
     </diagram>
     <diagram id="OvDiqAS-jB9Ulq_aKrSP" name="PowerEstimateEvaluation">
-        <mxGraphModel dx="439" dy="771" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="754" dy="771" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="cuYB3KJQB5Y1yPFTBQlJ-0"/>
                 <mxCell id="cuYB3KJQB5Y1yPFTBQlJ-1" parent="cuYB3KJQB5Y1yPFTBQlJ-0"/>
