@@ -18,12 +18,12 @@ class ProcessVibrationServiceStub(object):
         self.CalculateRMSSeries = channel.unary_unary(
                 '/processVibrationServiceAPI.v1.ProcessVibrationService/CalculateRMSSeries',
                 request_serializer=process__vibration__service__api__v1__pb2.ProcessRequest.SerializeToString,
-                response_deserializer=process__vibration__service__api__v1__pb2.ProcessResponse.FromString,
+                response_deserializer=process__vibration__service__api__v1__pb2.ProcessResponseSeries.FromString,
                 )
         self.CalculateRMSBatch = channel.unary_unary(
                 '/processVibrationServiceAPI.v1.ProcessVibrationService/CalculateRMSBatch',
                 request_serializer=process__vibration__service__api__v1__pb2.ProcessRequest.SerializeToString,
-                response_deserializer=process__vibration__service__api__v1__pb2.ProcessResponse.FromString,
+                response_deserializer=process__vibration__service__api__v1__pb2.ProcessResponseBatch.FromString,
                 )
 
 
@@ -51,12 +51,12 @@ def add_ProcessVibrationServiceServicer_to_server(servicer, server):
             'CalculateRMSSeries': grpc.unary_unary_rpc_method_handler(
                     servicer.CalculateRMSSeries,
                     request_deserializer=process__vibration__service__api__v1__pb2.ProcessRequest.FromString,
-                    response_serializer=process__vibration__service__api__v1__pb2.ProcessResponse.SerializeToString,
+                    response_serializer=process__vibration__service__api__v1__pb2.ProcessResponseSeries.SerializeToString,
             ),
             'CalculateRMSBatch': grpc.unary_unary_rpc_method_handler(
                     servicer.CalculateRMSBatch,
                     request_deserializer=process__vibration__service__api__v1__pb2.ProcessRequest.FromString,
-                    response_serializer=process__vibration__service__api__v1__pb2.ProcessResponse.SerializeToString,
+                    response_serializer=process__vibration__service__api__v1__pb2.ProcessResponseBatch.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -82,7 +82,7 @@ class ProcessVibrationService(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/processVibrationServiceAPI.v1.ProcessVibrationService/CalculateRMSSeries',
             process__vibration__service__api__v1__pb2.ProcessRequest.SerializeToString,
-            process__vibration__service__api__v1__pb2.ProcessResponse.FromString,
+            process__vibration__service__api__v1__pb2.ProcessResponseSeries.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -99,6 +99,6 @@ class ProcessVibrationService(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/processVibrationServiceAPI.v1.ProcessVibrationService/CalculateRMSBatch',
             process__vibration__service__api__v1__pb2.ProcessRequest.SerializeToString,
-            process__vibration__service__api__v1__pb2.ProcessResponse.FromString,
+            process__vibration__service__api__v1__pb2.ProcessResponseBatch.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

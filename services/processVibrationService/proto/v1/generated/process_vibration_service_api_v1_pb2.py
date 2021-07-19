@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n&process_vibration_service_api_v1.proto\x12\x1dprocessVibrationServiceAPI.v1\"b\n\x0eProcessRequest\x12\x11\n\tunix_time\x18\x01 \x03(\x01\x12\x13\n\x0bvibration_x\x18\x02 \x03(\x02\x12\x13\n\x0bvibration_y\x18\x03 \x03(\x02\x12\x13\n\x0bvibration_z\x18\x04 \x03(\x02\"o\n\x0fProcessResponse\x12\x11\n\tunix_time\x18\x01 \x03(\x01\x12\x17\n\x0frms_vibration_x\x18\x02 \x03(\x02\x12\x17\n\x0frms_vibration_y\x18\x03 \x03(\x02\x12\x17\n\x0frms_vibration_z\x18\x04 \x03(\x02\x32\x82\x02\n\x17ProcessVibrationService\x12s\n\x12\x43\x61lculateRMSSeries\x12-.processVibrationServiceAPI.v1.ProcessRequest\x1a..processVibrationServiceAPI.v1.ProcessResponse\x12r\n\x11\x43\x61lculateRMSBatch\x12-.processVibrationServiceAPI.v1.ProcessRequest\x1a..processVibrationServiceAPI.v1.ProcessResponseb\x06proto3'
+  serialized_pb=b'\n&process_vibration_service_api_v1.proto\x12\x1dprocessVibrationServiceAPI.v1\"b\n\x0eProcessRequest\x12\x11\n\tunix_time\x18\x01 \x03(\x01\x12\x13\n\x0bvibration_x\x18\x02 \x03(\x02\x12\x13\n\x0bvibration_y\x18\x03 \x03(\x02\x12\x13\n\x0bvibration_z\x18\x04 \x03(\x02\"u\n\x15ProcessResponseSeries\x12\x11\n\tunix_time\x18\x01 \x03(\x01\x12\x17\n\x0frms_vibration_x\x18\x02 \x03(\x02\x12\x17\n\x0frms_vibration_y\x18\x03 \x03(\x02\x12\x17\n\x0frms_vibration_z\x18\x04 \x03(\x02\"\x91\x01\n\x14ProcessResponseBatch\x12\x17\n\x0funix_time_start\x18\x01 \x01(\x01\x12\x15\n\runix_time_end\x18\x02 \x01(\x01\x12\x17\n\x0frms_vibration_x\x18\x03 \x01(\x02\x12\x17\n\x0frms_vibration_y\x18\x04 \x01(\x02\x12\x17\n\x0frms_vibration_z\x18\x05 \x01(\x02\x32\x8d\x02\n\x17ProcessVibrationService\x12y\n\x12\x43\x61lculateRMSSeries\x12-.processVibrationServiceAPI.v1.ProcessRequest\x1a\x34.processVibrationServiceAPI.v1.ProcessResponseSeries\x12w\n\x11\x43\x61lculateRMSBatch\x12-.processVibrationServiceAPI.v1.ProcessRequest\x1a\x33.processVibrationServiceAPI.v1.ProcessResponseBatchb\x06proto3'
 )
 
 
@@ -78,37 +78,37 @@ _PROCESSREQUEST = _descriptor.Descriptor(
 )
 
 
-_PROCESSRESPONSE = _descriptor.Descriptor(
-  name='ProcessResponse',
-  full_name='processVibrationServiceAPI.v1.ProcessResponse',
+_PROCESSRESPONSESERIES = _descriptor.Descriptor(
+  name='ProcessResponseSeries',
+  full_name='processVibrationServiceAPI.v1.ProcessResponseSeries',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='unix_time', full_name='processVibrationServiceAPI.v1.ProcessResponse.unix_time', index=0,
+      name='unix_time', full_name='processVibrationServiceAPI.v1.ProcessResponseSeries.unix_time', index=0,
       number=1, type=1, cpp_type=5, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='rms_vibration_x', full_name='processVibrationServiceAPI.v1.ProcessResponse.rms_vibration_x', index=1,
+      name='rms_vibration_x', full_name='processVibrationServiceAPI.v1.ProcessResponseSeries.rms_vibration_x', index=1,
       number=2, type=2, cpp_type=6, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='rms_vibration_y', full_name='processVibrationServiceAPI.v1.ProcessResponse.rms_vibration_y', index=2,
+      name='rms_vibration_y', full_name='processVibrationServiceAPI.v1.ProcessResponseSeries.rms_vibration_y', index=2,
       number=3, type=2, cpp_type=6, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='rms_vibration_z', full_name='processVibrationServiceAPI.v1.ProcessResponse.rms_vibration_z', index=3,
+      name='rms_vibration_z', full_name='processVibrationServiceAPI.v1.ProcessResponseSeries.rms_vibration_z', index=3,
       number=4, type=2, cpp_type=6, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -127,11 +127,72 @@ _PROCESSRESPONSE = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=173,
-  serialized_end=284,
+  serialized_end=290,
+)
+
+
+_PROCESSRESPONSEBATCH = _descriptor.Descriptor(
+  name='ProcessResponseBatch',
+  full_name='processVibrationServiceAPI.v1.ProcessResponseBatch',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='unix_time_start', full_name='processVibrationServiceAPI.v1.ProcessResponseBatch.unix_time_start', index=0,
+      number=1, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='unix_time_end', full_name='processVibrationServiceAPI.v1.ProcessResponseBatch.unix_time_end', index=1,
+      number=2, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='rms_vibration_x', full_name='processVibrationServiceAPI.v1.ProcessResponseBatch.rms_vibration_x', index=2,
+      number=3, type=2, cpp_type=6, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='rms_vibration_y', full_name='processVibrationServiceAPI.v1.ProcessResponseBatch.rms_vibration_y', index=3,
+      number=4, type=2, cpp_type=6, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='rms_vibration_z', full_name='processVibrationServiceAPI.v1.ProcessResponseBatch.rms_vibration_z', index=4,
+      number=5, type=2, cpp_type=6, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=293,
+  serialized_end=438,
 )
 
 DESCRIPTOR.message_types_by_name['ProcessRequest'] = _PROCESSREQUEST
-DESCRIPTOR.message_types_by_name['ProcessResponse'] = _PROCESSRESPONSE
+DESCRIPTOR.message_types_by_name['ProcessResponseSeries'] = _PROCESSRESPONSESERIES
+DESCRIPTOR.message_types_by_name['ProcessResponseBatch'] = _PROCESSRESPONSEBATCH
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 ProcessRequest = _reflection.GeneratedProtocolMessageType('ProcessRequest', (_message.Message,), {
@@ -141,12 +202,19 @@ ProcessRequest = _reflection.GeneratedProtocolMessageType('ProcessRequest', (_me
   })
 _sym_db.RegisterMessage(ProcessRequest)
 
-ProcessResponse = _reflection.GeneratedProtocolMessageType('ProcessResponse', (_message.Message,), {
-  'DESCRIPTOR' : _PROCESSRESPONSE,
+ProcessResponseSeries = _reflection.GeneratedProtocolMessageType('ProcessResponseSeries', (_message.Message,), {
+  'DESCRIPTOR' : _PROCESSRESPONSESERIES,
   '__module__' : 'process_vibration_service_api_v1_pb2'
-  # @@protoc_insertion_point(class_scope:processVibrationServiceAPI.v1.ProcessResponse)
+  # @@protoc_insertion_point(class_scope:processVibrationServiceAPI.v1.ProcessResponseSeries)
   })
-_sym_db.RegisterMessage(ProcessResponse)
+_sym_db.RegisterMessage(ProcessResponseSeries)
+
+ProcessResponseBatch = _reflection.GeneratedProtocolMessageType('ProcessResponseBatch', (_message.Message,), {
+  'DESCRIPTOR' : _PROCESSRESPONSEBATCH,
+  '__module__' : 'process_vibration_service_api_v1_pb2'
+  # @@protoc_insertion_point(class_scope:processVibrationServiceAPI.v1.ProcessResponseBatch)
+  })
+_sym_db.RegisterMessage(ProcessResponseBatch)
 
 
 
@@ -157,8 +225,8 @@ _PROCESSVIBRATIONSERVICE = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=287,
-  serialized_end=545,
+  serialized_start=441,
+  serialized_end=710,
   methods=[
   _descriptor.MethodDescriptor(
     name='CalculateRMSSeries',
@@ -166,7 +234,7 @@ _PROCESSVIBRATIONSERVICE = _descriptor.ServiceDescriptor(
     index=0,
     containing_service=None,
     input_type=_PROCESSREQUEST,
-    output_type=_PROCESSRESPONSE,
+    output_type=_PROCESSRESPONSESERIES,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
   ),
@@ -176,7 +244,7 @@ _PROCESSVIBRATIONSERVICE = _descriptor.ServiceDescriptor(
     index=1,
     containing_service=None,
     input_type=_PROCESSREQUEST,
-    output_type=_PROCESSRESPONSE,
+    output_type=_PROCESSRESPONSEBATCH,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
   ),

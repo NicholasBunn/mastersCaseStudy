@@ -31,10 +31,10 @@ class ProcessVibrationServiceServicer(object):
 		"""The 'Calculate RMS Series' call calculates the root mean square (RMS) vibration for individual time-series vibration signals.
 		"""
 
-		logging.info("Received Calculate RMS service call.")
+		logging.info("Received Calculate RMS Series service call.")
 
 		# Create the response message
-		responseMessage = process_vibration_service_api_v1_pb2.ProcessResponse()
+		responseMessage = process_vibration_service_api_v1_pb2.ProcessResponseSeries()
 
 		# Iterate through request fields, calculating RMS values and appending to the response
 		for count, time in enumerate(request.unix_time, 0):
@@ -52,7 +52,32 @@ class ProcessVibrationServiceServicer(object):
 		'''The 'Calculate RMS Batch' call calculates the root mean square (RMS) vibration for an "ensemble" value of a vibration signal time-series.
 		'''
 
-		pass
+		logging.info("Received Calculate RMS Batch service call.")
+
+		# Create the response message
+		responseMessage = process_vibration_service_api_v1_pb2.ProcessResponseBatch()
+
+		# Set initial ensemble values for the upcoming loop
+		rmsEnsembleValueX = 0
+		rmsEnsembleValueY = 0
+		rmsEnsembleValueZ = 0
+
+		# Iterate through request fields, summing the RMS vibrations into an ensemble value as it goes through
+		for count, _ in enumerate(request.unix_time), 0:
+			rmsEnsembleValueX += request.vibration_x[count]**2
+			rmsEnsembleValueY += request.vibration_y[count]**2
+			rmsEnsembleValueZ += request.vibration_z[count]**2
+		
+		# Set start time of ensemble value
+		responseMessage.unix_time_start = request.unix_time[0]
+		# Set end time of ensemble value
+		responseMessage.unix_time_end = request.unix_time[-1]
+		# Set ensemble RMS values
+		responseMessage.rms_vibration_x = math.sqrt((1/len(request.unix_time)*rmsEnsembleValueX))
+		responseMessage.rms_vibration_y = math.sqrt((1/len(request.unix_time)*rmsEnsembleValueY))
+		responseMessage.rms_vibration_z = math.sqrt((1/len(request.unix_time)*rmsEnsembleValueZ))
+
+		return responseMessage
 
 def serve():
 	''' This function creates a server with specified interceptors, registers the service calls offered by that server, and exposes
