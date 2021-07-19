@@ -20,14 +20,13 @@ protoGenCSharp:
 	# protoc -I=services/vesselMotionService/proto/v1 services/vesselMotionService/proto/v1/vessel_motion_service_api_v1.proto --csharp_out=services/vesselMotionService/proto/v1/generated # --grpc_out=services/vesselMotionService/proto/v1/generated --plugin=protoc-gen-grpc=tools\grpc_csharp_plugin.exe
 	# NEED TO ADD A COMMAND HERE TO CREATE CLIENT STUBS FOR AGGREGATORS
 	
-protoGenCPP:
-
-	# Comfort service
-	protoc -I=services/comfortService/proto/v1 --grpc_out=services/comfortService/proto/v1/generated --plugin=protoc-gen-grpc=/usr/local/bin/grpc_cpp_plugin services/comfortService/proto/v1/comfort_service_api_v1.proto
-	protoc -I=services/comfortService/proto/v1 --cpp_out=services/comfortService/proto/v1/generated services/comfortService/proto/v1/comfort_service_api_v1.proto
+# protoGenCPP:
+# 	# Comfort service
+# 	protoc -I=services/comfortService/proto/v1 --grpc_out=services/comfortService/proto/v1/generated --plugin=protoc-gen-grpc=/usr/local/bin/grpc_cpp_plugin services/comfortService/proto/v1/comfort_service_api_v1.proto
+# 	protoc -I=services/comfortService/proto/v1 --cpp_out=services/comfortService/proto/v1/generated services/comfortService/proto/v1/comfort_service_api_v1.proto
 
 protoGenAll:
-	make protoGenGo; make protoGenPy; protoGenCSharp; protoGenCPP
+	make protoGenGo; make protoGenPy; protoGenCSharp
 
 protoCleanGo:
 	find . -type f -name '*.pb.go' -delete
@@ -36,10 +35,10 @@ protoCleanPy:
 	find . -type f -name '*_grpc.py' -delete
 	find . -type f -name '*_pb2.py' -delete
 
-protoCleanCPP:
-	find . -type f -name '*.pb.cc' -delete
-	find . -type f -name '*.pb.h' -delete
-	find . -type f -name '*.pb.o' -delete
+# protoCleanCPP:
+# 	find . -type f -name '*.pb.cc' -delete
+# 	find . -type f -name '*.pb.h' -delete
+# 	find . -type f -name '*.pb.o' -delete
 
 protoCleanAll:
 	make protoCleanGo; make protoCleanPy; make protoCleanCPP
@@ -100,7 +99,6 @@ runProcessVibrationService:
 
 runComfortService:
 	/usr/bin/python3 /home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/comfortService/comfortService.py
-
 
 runPrometheus:
 
