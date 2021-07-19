@@ -58,11 +58,26 @@ class PowerTrainIntegrationTest(unittest.TestCase):
 		self.assertEqual(response.rms_vibration_y, [0.0007402219926007092, 0.0023732201661914587, 0.0016512781148776412])
 		self.assertEqual(response.rms_vibration_z, [0.025224164128303528, 0.03229521960020065, 0.0024418658576905727])
 
-	def test_CalculateRMSBAtch(self):
+	def test_CalculateRMSBatch(self):
 		''' This function tests the CalculateRMSBatch-specific functionality. It ensures that the service call takes the correct inputs, processes them as is required for the model, and makes the correct estimates based on the provided inputs.
 		'''
 
 		print("Testing Process Vibration Service: Integration Test: Calculate RMS Batch (Service Call Test)")
+
+		with processVibrationService.grpc.insecure_channel(self.port) as channel:
+			stub = processVibrationService.process_vibration_service_api_v1_pb2_grpc.ProcessVibrationServiceStub(channel)
+			response = stub.CalculateRMSBatch(processVibrationService.process_vibration_service_api_v1_pb2.ProcessRequest(
+				unix_time = [1626325118, 1608812145, 1626332318],
+				vibration_x = [0.011090744, 0.03320345, 0.01342132],
+				vibration_y = [0.001046832, 0.00335624, 0.00233526],
+				vibration_z = [0.035672354, 0.04567234, 0.00345332],
+			))
+
+		self.assertEqual(response.unix_time_start, 1626325118)
+		self.assertEqual(response.unix_time_end, 1626332318)
+		self.assertEqual(response.rms_vibration_x, 0.021645672619342804)
+		self.assertEqual(response.rms_vibration_y, 0.0024367766454815865)
+		self.assertEqual(response.rms_vibration_z, 0.03351818025112152)
 
 if __name__ == '__main__':
 	unittest.main()

@@ -63,7 +63,7 @@ class ProcessVibrationServiceServicer(object):
 		rmsEnsembleValueZ = 0
 
 		# Iterate through request fields, summing the RMS vibrations into an ensemble value as it goes through
-		for count, _ in enumerate(request.unix_time), 0:
+		for count, _ in enumerate(request.unix_time, 0):
 			rmsEnsembleValueX += request.vibration_x[count]**2
 			rmsEnsembleValueY += request.vibration_y[count]**2
 			rmsEnsembleValueZ += request.vibration_z[count]**2
