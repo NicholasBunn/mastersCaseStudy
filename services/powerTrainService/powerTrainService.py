@@ -16,6 +16,9 @@ from sklearn.preprocessing import MinMaxScaler
 # Local application imports
 import proto.v1.generated.power_train_service_api_v1_pb2 as power_train_service_api_v1_pb2
 import proto.v1.generated.power_train_service_api_v1_pb2_grpc as power_train_service_api_v1_pb2_grpc
+sys.path.append( os.path.dirname( os.path.dirname( os.path.dirname( os.path.abspath(__file__) ) ) ) )
+import interceptors.python.metricInterceptor as metricInterceptor
+import interceptors.python.authenticationInterceptor as authenticationInterceptor
 
 def loadConfigFile(filepath):
 	''' This function reads in a YAML configuration file. It takes the relative filepath as an input. It returns a dictionary (?) containing configuration variables.
@@ -274,10 +277,20 @@ def serve():
 	the server over a specified port.
 	'''
 
+	# Create interceptor chain
+	activeInterceptors = [
+		metricInterceptor.MetricInterceptor(), 
+		authenticationInterceptor.AuthenticationInterceptor(
+			config["authentication"]["jwt"]["secretKey"], 
+			config["authentication"]["jwt"]["tokenDuration"], 
+			{config["authentication"]["accessLevel"]["name"]["powerEstimate"]: config["authentication"]["accessLevel"]["role"]["powerEstimate"]}
+		)
+	] # List containing the interceptors to be chained
+	
 	# Create a server to serve calls in its own thread
 	server = grpc.server(
 		futures.ThreadPoolExecutor(max_workers=10),
-		# interceptors = activeInterceptors
+		interceptors = activeInterceptors
 	)
 	logging.debug("Successfully created server.")
 
@@ -310,7 +323,7 @@ if __name__ == '__main__':
 	# ________LOGGER SETUP________
 	serviceName = __file__.rsplit("/")[-2].rsplit(".")[0]
 
-	logging.basicConfig(filename="services/powerTrainService/program logs/" + serviceName + ".log", format="%(asctime)s:%(name)s:%(levelname)s:%(module)s:%(funcName)s:%(message)s", level=logging.DEBUG)
+	logging.basicConfig(filename="services/powerTrainService/program logs/" + serviceName + ".log", format="%(asctime)s:%(name)s:%(levelname)s:%(module)s:%(funcName)s:%(message)s", level=logging.DEBUG, force=True)
 
 	# ________SERVE REQUEST________
 	serve() # Finish initialisation by serving the request

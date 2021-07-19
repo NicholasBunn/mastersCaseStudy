@@ -44,7 +44,7 @@ class ComfortServiceUnitTest(unittest.TestCase):
 		self.assertEqual(comfortService.assessComfort(1.4, response).rating, comfortService.comfort_service_api_v1_pb2.VERY_UNCOMFORTABLE)
 		self.assertEqual(comfortService.assessComfort(2, response).rating, comfortService.comfort_service_api_v1_pb2.EXTREMELY_UNCOMFORTABLE)
 
-class OceanWeatherServiceIntegrationTest(unittest.TestCase):
+class ComfortServiceIntegrationTest(unittest.TestCase):
 	''' This class is used to execute all integration tests on the Comfort Service. Put any tests used to verify the gRPC/server implementation in this class.
 	'''
 	

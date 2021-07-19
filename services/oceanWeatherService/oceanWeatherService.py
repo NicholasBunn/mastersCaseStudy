@@ -227,7 +227,7 @@ def serve():
 		authenticationInterceptor.AuthenticationInterceptor(
 			config["authentication"]["jwt"]["secretKey"], 
 			config["authentication"]["jwt"]["tokenDuration"], 
-			{config["authentication"]["accessLevel"]["name"]["oceanWeatherEstimate"]: config["authentication"]["accessLevel"]["name"]["oceanWeatherEstimate"], config["authentication"]["accessLevel"]["name"]["oceanWeatherHistory"]: config["authentication"]["accessLevel"]["name"]["oceanWeatherHistory"]}
+			{config["authentication"]["accessLevel"]["name"]["oceanWeatherEstimate"]: config["authentication"]["accessLevel"]["role"]["oceanWeatherEstimate"], config["authentication"]["accessLevel"]["name"]["oceanWeatherHistory"]: config["authentication"]["accessLevel"]["role"]["oceanWeatherHistory"]}
 		)
 	] # List containing the interceptors to be chained
 	
