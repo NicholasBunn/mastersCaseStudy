@@ -2,11 +2,11 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-from. import process_vibration_service_api_v1_pb2 as process__vibration__service__api__v1__pb2
+from . import process_vibration_service_api_v1_pb2 as process__vibration__service__api__v1__pb2
 
 
 class ProcessVibrationServiceStub(object):
-    """'Process Vibration Service' offers two service calls that process time-series vibration signals according to accepted practices
+    """'Process Vibration Service' offers two service calls that process time-series vibration signals according to accepted practices.
     """
 
     def __init__(self, channel):
@@ -15,19 +15,31 @@ class ProcessVibrationServiceStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.CalculateRMS = channel.unary_unary(
-                '/processVibrationServiceAPI.v1.ProcessVibrationService/CalculateRMS',
+        self.CalculateRMSSeries = channel.unary_unary(
+                '/processVibrationServiceAPI.v1.ProcessVibrationService/CalculateRMSSeries',
+                request_serializer=process__vibration__service__api__v1__pb2.ProcessRequest.SerializeToString,
+                response_deserializer=process__vibration__service__api__v1__pb2.ProcessResponse.FromString,
+                )
+        self.CalculateRMSBatch = channel.unary_unary(
+                '/processVibrationServiceAPI.v1.ProcessVibrationService/CalculateRMSBatch',
                 request_serializer=process__vibration__service__api__v1__pb2.ProcessRequest.SerializeToString,
                 response_deserializer=process__vibration__service__api__v1__pb2.ProcessResponse.FromString,
                 )
 
 
 class ProcessVibrationServiceServicer(object):
-    """'Process Vibration Service' offers two service calls that process time-series vibration signals according to accepted practices
+    """'Process Vibration Service' offers two service calls that process time-series vibration signals according to accepted practices.
     """
 
-    def CalculateRMS(self, request, context):
-        """The 'Calculate RMS' call calculates the root mean square (RMS) vibration for time-series vibration signals
+    def CalculateRMSSeries(self, request, context):
+        """The 'Calculate RMS Series' call calculates the root mean square (RMS) vibration for individual time-series vibration signals.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def CalculateRMSBatch(self, request, context):
+        """The 'Calculate RMS Batch' call calculates the root mean square (RMS) vibration for an "ensemble" value of a vibration signal time-series.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -36,8 +48,13 @@ class ProcessVibrationServiceServicer(object):
 
 def add_ProcessVibrationServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'CalculateRMS': grpc.unary_unary_rpc_method_handler(
-                    servicer.CalculateRMS,
+            'CalculateRMSSeries': grpc.unary_unary_rpc_method_handler(
+                    servicer.CalculateRMSSeries,
+                    request_deserializer=process__vibration__service__api__v1__pb2.ProcessRequest.FromString,
+                    response_serializer=process__vibration__service__api__v1__pb2.ProcessResponse.SerializeToString,
+            ),
+            'CalculateRMSBatch': grpc.unary_unary_rpc_method_handler(
+                    servicer.CalculateRMSBatch,
                     request_deserializer=process__vibration__service__api__v1__pb2.ProcessRequest.FromString,
                     response_serializer=process__vibration__service__api__v1__pb2.ProcessResponse.SerializeToString,
             ),
@@ -49,11 +66,11 @@ def add_ProcessVibrationServiceServicer_to_server(servicer, server):
 
  # This class is part of an EXPERIMENTAL API.
 class ProcessVibrationService(object):
-    """'Process Vibration Service' offers two service calls that process time-series vibration signals according to accepted practices
+    """'Process Vibration Service' offers two service calls that process time-series vibration signals according to accepted practices.
     """
 
     @staticmethod
-    def CalculateRMS(request,
+    def CalculateRMSSeries(request,
             target,
             options=(),
             channel_credentials=None,
@@ -63,7 +80,24 @@ class ProcessVibrationService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/processVibrationServiceAPI.v1.ProcessVibrationService/CalculateRMS',
+        return grpc.experimental.unary_unary(request, target, '/processVibrationServiceAPI.v1.ProcessVibrationService/CalculateRMSSeries',
+            process__vibration__service__api__v1__pb2.ProcessRequest.SerializeToString,
+            process__vibration__service__api__v1__pb2.ProcessResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def CalculateRMSBatch(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/processVibrationServiceAPI.v1.ProcessVibrationService/CalculateRMSBatch',
             process__vibration__service__api__v1__pb2.ProcessRequest.SerializeToString,
             process__vibration__service__api__v1__pb2.ProcessResponse.FromString,
             options, channel_credentials,

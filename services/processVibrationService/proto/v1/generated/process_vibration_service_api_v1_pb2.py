@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n&process_vibration_service_api_v1.proto\x12\x1dprocessVibrationServiceAPI.v1\"b\n\x0eProcessRequest\x12\x11\n\tunix_time\x18\x01 \x03(\x01\x12\x13\n\x0bvibration_x\x18\x02 \x03(\x02\x12\x13\n\x0bvibration_y\x18\x03 \x03(\x02\x12\x13\n\x0bvibration_z\x18\x04 \x03(\x02\"o\n\x0fProcessResponse\x12\x11\n\tunix_time\x18\x01 \x03(\x01\x12\x17\n\x0frms_vibration_x\x18\x02 \x03(\x02\x12\x17\n\x0frms_vibration_y\x18\x03 \x03(\x02\x12\x17\n\x0frms_vibration_z\x18\x04 \x03(\x02\x32\x88\x01\n\x17ProcessVibrationService\x12m\n\x0c\x43\x61lculateRMS\x12-.processVibrationServiceAPI.v1.ProcessRequest\x1a..processVibrationServiceAPI.v1.ProcessResponseb\x06proto3'
+  serialized_pb=b'\n&process_vibration_service_api_v1.proto\x12\x1dprocessVibrationServiceAPI.v1\"b\n\x0eProcessRequest\x12\x11\n\tunix_time\x18\x01 \x03(\x01\x12\x13\n\x0bvibration_x\x18\x02 \x03(\x02\x12\x13\n\x0bvibration_y\x18\x03 \x03(\x02\x12\x13\n\x0bvibration_z\x18\x04 \x03(\x02\"o\n\x0fProcessResponse\x12\x11\n\tunix_time\x18\x01 \x03(\x01\x12\x17\n\x0frms_vibration_x\x18\x02 \x03(\x02\x12\x17\n\x0frms_vibration_y\x18\x03 \x03(\x02\x12\x17\n\x0frms_vibration_z\x18\x04 \x03(\x02\x32\x82\x02\n\x17ProcessVibrationService\x12s\n\x12\x43\x61lculateRMSSeries\x12-.processVibrationServiceAPI.v1.ProcessRequest\x1a..processVibrationServiceAPI.v1.ProcessResponse\x12r\n\x11\x43\x61lculateRMSBatch\x12-.processVibrationServiceAPI.v1.ProcessRequest\x1a..processVibrationServiceAPI.v1.ProcessResponseb\x06proto3'
 )
 
 
@@ -158,12 +158,22 @@ _PROCESSVIBRATIONSERVICE = _descriptor.ServiceDescriptor(
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
   serialized_start=287,
-  serialized_end=423,
+  serialized_end=545,
   methods=[
   _descriptor.MethodDescriptor(
-    name='CalculateRMS',
-    full_name='processVibrationServiceAPI.v1.ProcessVibrationService.CalculateRMS',
+    name='CalculateRMSSeries',
+    full_name='processVibrationServiceAPI.v1.ProcessVibrationService.CalculateRMSSeries',
     index=0,
+    containing_service=None,
+    input_type=_PROCESSREQUEST,
+    output_type=_PROCESSRESPONSE,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='CalculateRMSBatch',
+    full_name='processVibrationServiceAPI.v1.ProcessVibrationService.CalculateRMSBatch',
+    index=1,
     containing_service=None,
     input_type=_PROCESSREQUEST,
     output_type=_PROCESSRESPONSE,

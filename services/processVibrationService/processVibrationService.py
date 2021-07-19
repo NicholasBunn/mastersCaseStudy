@@ -27,8 +27,9 @@ def loadConfigFile(filepath):
 class ProcessVibrationServiceServicer(object):
 	"""'Process Vibration Service' offers two service calls that process time-series vibration signals according to accepted practices."""
 
-	def CalculateRMS(self, request, context):
-		"""The 'Calculate RMS' call calculates the root mean square (RMS) vibration for time-series vibration signals."""
+	def CalculateRMSSeries(self, request, context):
+		"""The 'Calculate RMS Series' call calculates the root mean square (RMS) vibration for individual time-series vibration signals.
+		"""
 
 		logging.info("Received Calculate RMS service call.")
 
@@ -47,6 +48,12 @@ class ProcessVibrationServiceServicer(object):
 
 		return responseMessage
 	
+	def CalculateRMSBatch(self,request, context):
+		'''The 'Calculate RMS Batch' call calculates the root mean square (RMS) vibration for an "ensemble" value of a vibration signal time-series.
+		'''
+
+		pass
+
 def serve():
 	''' This function creates a server with specified interceptors, registers the service calls offered by that server, and exposes
 	the server over a specified port.
