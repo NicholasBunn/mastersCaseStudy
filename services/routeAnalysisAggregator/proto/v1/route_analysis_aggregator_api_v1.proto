@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package routeAnalysisAggregatorAPI.v1;
+
+option go_package = "routeAnalysisAggregator/proto/v1/generated/routeAnalysisAggregator;routeAnalysisAggregator";
+
+message AnalysisRequest {
+    repeated double unix_time = 1;
+    repeated float latitude = 2;
+    repeated float longitude = 3;
+    repeated uint64 heading = 4;
+    repeated int64 prop_pitch = 5;
+    repeated uint64 motor_speed = 6;
+    repeated uint32 SOG = 7; 
+}
+
+message AnalysisResponse {
+    repeated double unix_time = 1;
+    float average_power = 2;
+    float total_cost = 3;
+    repeated float power_usage = 4;
+    repeated float rms_vibration_x = 5;
+    repeated float rms_vibration_y = 6;
+    repeated float rms_vibration_z = 7;
+    HabitibilityRating comfort_level = 8;
+}
+
+// 'Analysis Service' offers BLABLA service call that aggregates information to provide summaries of requested routes.
+service AnalysisService {
+    // The 'Analyse Route' call provides foresight for tactical decision-making by providing a summary of the provided route.
+    rpc AnalyseRoute(AnalysisRequest) returns (AnalysisResponse);
+}
+
+enum HabitibilityRating {
+    UNKNOWN_RATING = 0;
+    NOT_UNCOMFORTABLE = 1;
+    SLIGHTLY_UNCOMFORTABLE = 2;
+    FAIRLY_UNCOMFORTABLE = 3;
+    UNCOMFORTABLE = 4;
+    VERY_UNCOMFORTABLE = 5;
+    EXTREMELY_UNCOMFORTABLE = 6;
+}

@@ -1,7 +1,20 @@
 # Make commands relating to proto files
 protoGenGo:
+	# Route analysis aggregator
+	protoc -I services --go_out=services --go-grpc_out=services services/routeAnalysisAggregator/proto/v1/route_analysis_aggregator_api_v1.proto
+
 	# Ocean weather service
-	# protoc --go_out=. --go-grpc_out=. apis/ocean_weather_service_api/v1/ocean_weather_service_api_v1.proto
+	protoc -I services --go_out=services --go-grpc_out=services services/oceanWeatherService/proto/v1/ocean_weather_service_api_v1.proto
+
+	# Power train service
+	protoc -I services --go_out=services --go-grpc_out=services services/powerTrainService/proto/v1/power_train_service_api_v1.proto
+
+	# Process vibration service
+	protoc -I services --go_out=services --go-grpc_out=services services/processVibrationService/proto/v1/process_vibration_service_api_v1.proto
+
+	# Comfort service
+	protoc -I services --go_out=services --go-grpc_out=services services/comfortService/proto/v1/comfort_service_api_v1.proto
+
 
 protoGenPy:
 	# Ocean weather service
@@ -99,6 +112,9 @@ runProcessVibrationService:
 
 runComfortService:
 	/usr/bin/python3 /home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/comfortService/comfortService.py
+
+runRouteAnalysisAggregator:
+	go run /home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/routeAnalysisAggregator/routeAnalysisAggregator.go
 
 runPrometheus:
 

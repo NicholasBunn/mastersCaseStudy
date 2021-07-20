@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package comfortServiceAPI.v1;
 
+option go_package = "routeAnalysisAggregator/proto/v1/generated/comfortService;routeAnalysisAggregator";
+
 message ComfortRequest {
     repeated double unix_time = 1;
     repeated double human_weighted_vibration_x = 2;

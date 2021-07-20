@@ -4,6 +4,9 @@ option csharp_namespace = "vesselMotionService";
 
 package vesselMotionService.v1;
 
+option go_package = "routeAnalysisAggregator/proto/v1/generated/vesselMotionService;vesselMotionService";
+
+
 message MotionEstimateRequest {
     repeated float port_prop_motor_power = 1;
     repeated float wind_speed_relative = 2;

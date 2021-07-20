@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package oceanWeatherServiceAPI.v1;
 
-// option go_package = "service/oceanWeatherService/proto/v1";
+option go_package = "routeAnalysisAggregator/proto/v1/generated/oceanWeatherService;oceanWeatherService";
 
 message OceanWeatherPredictionRequest {
     repeated float latitude = 1;

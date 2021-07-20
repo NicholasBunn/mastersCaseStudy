@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package powerTrainService.v1;
 
-// option go_package = "service/powerTrainService/proto/v1";
+option go_package = "routeAnalysisAggregator/proto/v1/generated/powerTrainService;powerTrainService";
 
 message PowerTrainEstimateRequest {
     repeated double unix_time = 1;

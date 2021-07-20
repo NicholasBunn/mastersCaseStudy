@@ -49,8 +49,10 @@ namespace vesselMotionService {
             "c3NlbE1vdGlvblNlcnZpY2UudjEuTW90aW9uVHJhY2tpbmdSZXNwb25zZRJ7",
             "ChhNb3Rpb25Fc3RpbWF0ZUV2YWx1YXRpb24SLS52ZXNzZWxNb3Rpb25TZXJ2",
             "aWNlLnYxLk1vdGlvbkVzdGltYXRlUmVxdWVzdBowLnZlc3NlbE1vdGlvblNl",
-            "cnZpY2UudjEuTW90aW9uRXZhbHVhdGlvblJlc3BvbnNlQhaqAhN2ZXNzZWxN",
-            "b3Rpb25TZXJ2aWNlYgZwcm90bzM="));
+            "cnZpY2UudjEuTW90aW9uRXZhbHVhdGlvblJlc3BvbnNlQmpaUnJvdXRlQW5h",
+            "bHlzaXNBZ2dyZWdhdG9yL3Byb3RvL3YxL2dlbmVyYXRlZC92ZXNzZWxNb3Rp",
+            "b25TZXJ2aWNlO3Zlc3NlbE1vdGlvblNlcnZpY2WqAhN2ZXNzZWxNb3Rpb25T",
+            "ZXJ2aWNlYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::vesselMotionService.LocationOnShipEnum), typeof(global::vesselMotionService.ModelTypeEnum), }, null, new pbr::GeneratedClrTypeInfo[] {
