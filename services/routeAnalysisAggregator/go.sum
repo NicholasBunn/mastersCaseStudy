@@ -3,8 +3,8 @@ cloud.google.com/go v0.34.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMT
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/oceanWeatherService v0.0.0-20210721084728-4937374dc0f4 h1:V/vz/BwtB6icX6E+9ceC/S1eNMHxlhjjYynvH3hQfAs=
 github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/oceanWeatherService v0.0.0-20210721084728-4937374dc0f4/go.mod h1:E1TKoPF9/TfvlDQPf94zwvG8Kj19uDl/3wxQOOwErxE=
-github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/powerTrainService v0.0.0-20210721084728-4937374dc0f4 h1:2GtcIp0MSfj8HCflRx2bo/oOuxy5qWTwSKa5vkMCsak=
-github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/powerTrainService v0.0.0-20210721084728-4937374dc0f4/go.mod h1:k57Rby4vMZlVlI1MpdjgYZw8NfKg3RCOEkeT1wO1LZU=
+github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/powerTrainService v0.0.0-20210721094440-3e843ee14182 h1:521m5CY9eeIU0U0WbxLNSEzz6irG5ClcsaW8q1lC8SY=
+github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/powerTrainService v0.0.0-20210721094440-3e843ee14182/go.mod h1:k57Rby4vMZlVlI1MpdjgYZw8NfKg3RCOEkeT1wO1LZU=
 github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/routeAnalysisAggregator v0.0.0-20210721093602-8cf34122b0d5 h1:wJDDdLatLtD2fBU2s851DuNV0KgzATSze/epGGDbgt4=
 github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/routeAnalysisAggregator v0.0.0-20210721093602-8cf34122b0d5/go.mod h1:VfF7f/JSeVA/+B3Re9oo/3yqK2ZKD6f0/ZN+GheuVYU=
 github.com/antihax/optional v1.0.0/go.mod h1:uupD/76wgC+ih3iEmQUL+0Ugr19nfwCT1kdvxnR2qWY=
