@@ -33,6 +33,11 @@ func TestCalculateRelativeWaveDirection(t *testing.T) {
 			}
 		}
 	})
+	
+	t.Run("TBLA", func(t *testing.T) {
+		testCase := Tests[1]
+		fmt.Println(calculateRelativeWaveDirection(testCase.windDirection, testCase.heading))
+	})
 }
 
 func compareSlices(sliceOne []float64, sliceTwo []float64) (bool) {
