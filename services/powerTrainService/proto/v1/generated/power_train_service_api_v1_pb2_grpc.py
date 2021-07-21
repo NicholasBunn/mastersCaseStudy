@@ -6,7 +6,7 @@ from . import power_train_service_api_v1_pb2 as power__train__service__api__v1__
 
 
 class PowerTrainServiceStub(object):
-    """'Power Train Service; offers four service calls that provide information about the power train of the vessel (namely power requirements and their assosciated costs)
+    """'Power Train Service' offers four service calls that provide information about the power train of the vessel (namely power requirements and their assosciated costs)
     """
 
     def __init__(self, channel):
@@ -38,7 +38,7 @@ class PowerTrainServiceStub(object):
 
 
 class PowerTrainServiceServicer(object):
-    """'Power Train Service; offers four service calls that provide information about the power train of the vessel (namely power requirements and their assosciated costs)
+    """'Power Train Service' offers four service calls that provide information about the power train of the vessel (namely power requirements and their assosciated costs)
     """
 
     def PowerEstimate(self, request, context):
@@ -100,7 +100,7 @@ def add_PowerTrainServiceServicer_to_server(servicer, server):
 
  # This class is part of an EXPERIMENTAL API.
 class PowerTrainService(object):
-    """'Power Train Service; offers four service calls that provide information about the power train of the vessel (namely power requirements and their assosciated costs)
+    """'Power Train Service' offers four service calls that provide information about the power train of the vessel (namely power requirements and their assosciated costs)
     """
 
     @staticmethod

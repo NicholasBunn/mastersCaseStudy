@@ -13,7 +13,7 @@ message PowerTrainEstimateRequest {
     repeated float sog = 6;
     repeated float wind_direction_relative = 7;
     repeated float wind_speed = 8;
-    repeated float beaufort_number = 9;
+    repeated uint32 beaufort_number = 9;
     repeated float wave_direction = 10;
     repeated float wave_length = 11;
     ModelTypeEnum model_type = 12;
