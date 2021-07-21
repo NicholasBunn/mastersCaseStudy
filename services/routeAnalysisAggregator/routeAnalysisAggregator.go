@@ -176,6 +176,8 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 
 	InfoLogger.Println("Received Analyse Route service call.")
 
+	// ________Query Ocean Weather Service________
+
 	// Create an insecure connection to the ocean weather service server
 	connOWS, err := createInsecureServerConnection(
 		addrOWS, // Set the address of the server
@@ -211,6 +213,8 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 		connOWS.Close()
 	}
 
+	// ________Query Power Train Service________
+	
 	// Create an insecure connection to the power train service server
 	connPTS, err := createInsecureServerConnection(
 		addrPTS,
@@ -232,13 +236,18 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 		PropellerPitchPort: request.PropPitch,
 		PropellerPitchStbd: request.PropPitch,
 		Sog: request.SOG,
-		// WindDirectionRelative: (responseMessageOWS.WindDirection - request.Heading),
 		WindSpeed: responseMessageOWS.WindSpeed,
 		BeaufortNumber: responseMessageOWS.BeaufortNumber,
 		WaveDirection: responseMessageOWS.SwellDirection,
 		WaveLength: responseMessageOWS.WaveLength,
 		ModelType: powerTrainServicePB.ModelTypeEnum_OPENWATER,
 	}
+
+	// Calculate the relative wind direction
+	for count, windDirection := range responseMessageOWS.WindDirection {
+        requestMessagePTS.WindDirectionRelative[count] = windDirection - request.Heading[count]
+    }
+
 	DebugLogger.Println("Succesfully created a Power Train Estimate Request.")
 
 	InfoLogger.Println("Making Power Estimate Call.")
