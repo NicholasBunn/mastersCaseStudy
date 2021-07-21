@@ -197,7 +197,7 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 	owsContext, cancel := context.WithTimeout(context.Background(), callTimeoutDuration)
 	defer cancel()
 
-	// Incoke the Ocean Weather Service
+	// Invoke the Ocean Weather Service
 	responseMessageOWS, err := clientOWS.OceanWeatherPrediction(owsContext, &requestMessageOWS)
 	if err != nil {
 		ErrorLogger.Println("Failed to make Ocean Weather Prediction service call: ")
