@@ -232,7 +232,7 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 		PropellerPitchPort: request.PropPitch,
 		PropellerPitchStbd: request.PropPitch,
 		Sog: request.SOG,
-		WindDirectionRelative: (responseMessageOWS.WindDirection - request.Heading),
+		// WindDirectionRelative: (responseMessageOWS.WindDirection - request.Heading),
 		WindSpeed: responseMessageOWS.WindSpeed,
 		BeaufortNumber: responseMessageOWS.BeaufortNumber,
 		WaveDirection: responseMessageOWS.SwellDirection,
@@ -246,7 +246,7 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 	defer cancel()
 
 	// Invoke the Power Train Service
-	responseMessagePTS, err := clientPTS.PowerEstimate(ptsContext, &requestMEssagePTS)
+	responseMessagePTS, err := clientPTS.PowerEstimate(ptsContext, &requestMessagePTS)
 	if err != nil {
 		ErrorLogger.Println("Failed to make Power Estimate service call: ")
 		return nil, err
