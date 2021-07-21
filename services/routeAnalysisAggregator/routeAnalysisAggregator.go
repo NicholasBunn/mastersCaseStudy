@@ -1,17 +1,56 @@
 package main
 
 import (
+	// Native packages
+	"context"
+	"fmt"
+	"log"
+	"net"
+	"os"
+	"strings"
+	"time"
+
+	// gRPC packages
+	"github.com/go-yaml/yaml"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
+
+	// Proto packages
+
 	oceanWeatherServicePB "github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/oceanWeatherService"
 	serverPB "github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/routeAnalysisAggregator"
+)
+
+var (
+	// Addresses (To be passed in a config file)
+	addrMyself string
+	addrOWS     string
+
+	timeoutDuration     int           // The time, in seconds, that the client should wait when dialing (connecting to) the server before throwing an error
+	callTimeoutDuration time.Duration // The time, in seconds, that the client should wait when making a call to the server before throwing an error
+
+	// JWT stuff, load this in from config
+	secretkey     string
+	tokenduration time.Duration
+
+	accessibleRoles map[string][]string // This is a map of service calls with their required permission levels
+
+	authMethods map[string]bool // This is a map of which service calls require authentication
+
+	// Logging stuff
+	DebugLogger   *log.Logger
+	InfoLogger    *log.Logger
+	WarningLogger *log.Logger
+	ErrorLogger   *log.Logger
 )
 
 func init() {
 	/* The init function is used to load in configuration variables, and set up the logger and metric interceptors whenever the service is started
 	 */
 
-	// ________CONFIGURATION________
 	// Load YAML configurations into config struct
-	config, _ := DecodeConfig("src/powerEstimationSP/configuration.yaml")
+	config, _ := DecodeConfig("configuration.yaml")
 
 	addrMyself = os.Getenv("ROUTEANALYSISHOST") + ":" + config.Server.Port.Myself
 	addrOWS = os.Getenv("OWSHOST") + ":" + config.Client.Port.OceanWeatherService
@@ -22,7 +61,6 @@ func init() {
 
 	// Load JWT parameters from config
 	secretkey = config.Server.Authentication.Jwt.SecretKey
-	fmt.Println(secretkey)
 	tokenduration = time.Duration(config.Server.Authentication.Jwt.TokenDuration) * (time.Minute)
 
 	accessibleRoles = map[string][]string{
@@ -100,11 +138,11 @@ type Config struct {
 				OceanWeatherService      string `yaml:"oceanWeatherService"`
 	// 			PrepareService    string `yaml:"prepare"`
 	// 			EstimationService string `yaml:"estimation"`
-	// 		} `yaml:"port"`
+			} `yaml:"port"`
 			Timeout struct {
 				Connection int `yaml:"connection"`
 				Call       int `yaml:"call"`
-	// 		} `yaml:"timeout"`
+			} `yaml:"timeout"`
 	// 		AuthenticatedMethods struct {
 	// 			Name struct {
 	// 				FetchDataService   string `yaml:"fetchDataService"`
@@ -117,7 +155,7 @@ type Config struct {
 	// 				EstimateService    bool `yaml:"estimateService"`
 	// 			} `yaml:"requiresAuthentication"`
 	// 		} `yaml:"authenticatedMethods"`
-	// 	} `yaml:"client"`
+		} `yaml:"client"`
 }
 
 type server struct {
@@ -142,11 +180,63 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 	if err != nil {
 		return nil, err
 	}
-	
+
+	InfoLogger.Println("Creating Ocean Weather Service Client.")
+	clientOWS := oceanWeatherServicePB.NewOceanWeatherServiceClient(connOWS)
+	DebugLogger.Println("Succesfully creted client connection to Ocean Weather Service.")
+
+	// Create an ocean weather prediction request message
+	requestMessageOWS := oceanWeatherServicePB.OceanWeatherPredictionRequest{
+		Latitude: request.Latitude,
+		Longitude: request.Longitude,
+		Timestamp: request.UnixTime,
+	}
+	DebugLogger.Println("Succesfully created an Ocean Weather Service Request.")
+
+	InfoLogger.Println("Making Ocean Weather Prediction call.")
+	owsContext, cancel := context.WithTimeout(context.Background(), callTimeoutDuration)
+	defer cancel()
+
+	// Incoke the Ocean Weather Service
+	responseMessageOWS, err := clientOWS.OceanWeatherPrediction(owsContext, &requestMessageOWS)
+	if err != nil {
+		ErrorLogger.Println("Failed to make Ocean Weather Prediction service call: ")
+		return nil, err
+	} else {
+		DebugLogger.Println("Successfully made service call to Ocean Weather Service.")
+		connOWS.Close()
+	}
+
 	return nil, status.Errorf(codes.Unimplemented, "method AnalyseRoute not implemented")
 }
 
 // ________SUPPORTING FUNCTIONS________
+
+func DecodeConfig(configPath string) (*Config, error) {
+	
+	// Create a new config structure
+	config := &Config{}
+
+	// Open the config file
+	file, err := os.Open(configPath)
+	if err != nil {
+		fmt.Println("Could not open config file")
+		return nil, err
+	}
+	defer file.Close()
+
+	// Initialise a new YAML decoder
+	decoder := yaml.NewDecoder(file)
+
+	// Start YAML decoding from file
+	if err := decoder.Decode(&config); err != nil {
+		fmt.Println("Could not decode config file: \n", err)
+		return nil, err
+	}
+
+	return config, nil
+}
+
 func createInsecureServerConnection(port string, timeout int) (*grpc.ClientConn, error) {
 	/* This (unexported) function takes a port address and timeout as inputs. It creates a connection to the server	at the port adress
 	and returns an insecure gRPC connection with the specified interceptor */

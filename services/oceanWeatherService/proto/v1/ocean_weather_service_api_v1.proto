@@ -13,7 +13,7 @@ message OceanWeatherPredictionRequest {
 message OceanWeatherHistoryRequest {
     repeated float latitude = 1;
     repeated float longitude = 2;
-    repeated float timestamp = 3;
+    repeated double timestamp = 3;
     ArchiveService archive_service = 4;
 }
 

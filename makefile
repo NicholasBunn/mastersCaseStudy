@@ -114,11 +114,14 @@ runComfortService:
 	/usr/bin/python3 /home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/comfortService/comfortService.py
 
 runRouteAnalysisAggregator:
-	go run /home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/routeAnalysisAggregator/routeAnalysisAggregator.go
+	cd /home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/routeAnalysisAggregator;	go run routeAnalysisAggregator.go
 
 runPrometheus:
 
 runPushGateway:
+
+runGo:
+	make runRouteAnalysisAggregator
 
 runPy:
 	make runOceanWeatherService
@@ -126,9 +129,10 @@ runPy:
 	make runProcessVibrationService
 	make runComfortService
 
-run CSharp:
+runCSharp:
 	make runVesselMotionService
 
 runAll:
+	make runGo
 	make runPy
 	make runCSharp
