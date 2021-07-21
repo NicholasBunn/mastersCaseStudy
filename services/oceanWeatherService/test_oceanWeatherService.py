@@ -102,7 +102,7 @@ class OceanWeatherServiceIntegrationTest(unittest.TestCase):
 			response = stub.OceanWeatherPrediction(oceanWeatherService.ocean_weather_service_api_v1_pb2.OceanWeatherPredictionRequest(
 				latitude={self.testLat},
 				longitude={self.testLong},
-				timestamp = {self.startTimeUnix},
+				unix_time = {self.startTimeUnix},
 				))
 
 		self.assertEqual(response.wind_direction, [222.41000366210938])
@@ -125,7 +125,7 @@ class OceanWeatherServiceIntegrationTest(unittest.TestCase):
 			response = stub.OceanWeatherHistory(oceanWeatherService.ocean_weather_service_api_v1_pb2.OceanWeatherHistoryRequest(
 				latitude={self.testLat},
 				longitude={self.testLong},
-				timestamp = {self.startTimeUnix},
+				unix_time = {self.startTimeUnix},
 				archive_service  = oceanWeatherService.ocean_weather_service_api_v1_pb2.ArchiveService.STORMGLASS,
 				))
 

@@ -187,9 +187,9 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 
 	// Create an ocean weather prediction request message
 	requestMessageOWS := oceanWeatherServicePB.OceanWeatherPredictionRequest{
+		UnixTime: request.UnixTime,
 		Latitude: request.Latitude,
 		Longitude: request.Longitude,
-		Timestamp: request.UnixTime,
 	}
 	DebugLogger.Println("Succesfully created an Ocean Weather Service Request.")
 
@@ -206,6 +206,8 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 		DebugLogger.Println("Successfully made service call to Ocean Weather Service.")
 		connOWS.Close()
 	}
+
+	fmt.Println(responseMessageOWS)
 
 	return nil, status.Errorf(codes.Unimplemented, "method AnalyseRoute not implemented")
 }

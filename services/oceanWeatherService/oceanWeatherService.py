@@ -97,7 +97,7 @@ class OceanWeatherServiceServicer(ocean_weather_service_api_v1_pb2_grpc.OceanWea
 		responseMessage = ocean_weather_service_api_v1_pb2.OceanWeatherInformationResponse()
 
 		# Iterate through all the requested points, fetching the weather data for each. This approach uses one query per point of interest (not particularly efficient)
-		for testLat, testLong, startTimeUnix in zip(request.latitude, request.longitude, request.timestamp):
+		for testLat, testLong, startTimeUnix in zip(request.latitude, request.longitude, request.unix_time):
 			try:
 				# Query Stormglass API
 				jsonOceanData = queryStormglassAPI(testLat, testLong, startTimeUnix, config["authentication"]["stormglass"]["apiKey"])
@@ -156,7 +156,7 @@ class OceanWeatherServiceServicer(ocean_weather_service_api_v1_pb2_grpc.OceanWea
 
 		if(request.archive_service == 1): # Stormglass
 			# Iterate through all the requested points, fetching the weather data for each. This approach uses one query per point of interest (not particularly efficient)
-			for testLat, testLong, startTimeUnix in zip(request.latitude, request.longitude, request.timestamp):
+			for testLat, testLong, startTimeUnix in zip(request.latitude, request.longitude, request.unix_time):
 				try:
 					# Query Stormglass API
 					jsonOceanData = queryStormglassAPI(testLat, testLong, startTimeUnix, config["authentication"]["stormglass"]["apiKey"])
