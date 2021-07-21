@@ -5,8 +5,8 @@ github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/
 github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/oceanWeatherService v0.0.0-20210721074124-1793aa47f55f/go.mod h1:E1TKoPF9/TfvlDQPf94zwvG8Kj19uDl/3wxQOOwErxE=
 github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/powerTrainService v0.0.0-20210721084728-4937374dc0f4 h1:2GtcIp0MSfj8HCflRx2bo/oOuxy5qWTwSKa5vkMCsak=
 github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/powerTrainService v0.0.0-20210721084728-4937374dc0f4/go.mod h1:k57Rby4vMZlVlI1MpdjgYZw8NfKg3RCOEkeT1wO1LZU=
-github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/routeAnalysisAggregator v0.0.0-20210720123859-49aa98b7df67 h1:7haBl204EgSO50D00595q2XkSOlzub5TNfWU+zSNXFg=
-github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/routeAnalysisAggregator v0.0.0-20210720123859-49aa98b7df67/go.mod h1:VfF7f/JSeVA/+B3Re9oo/3yqK2ZKD6f0/ZN+GheuVYU=
+github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/routeAnalysisAggregator v0.0.0-20210721084728-4937374dc0f4 h1:FEDzWUj/se9de0KSCvXp13fSHPWqQNKAPa9ZLIllXVY=
+github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/routeAnalysisAggregator v0.0.0-20210721084728-4937374dc0f4/go.mod h1:VfF7f/JSeVA/+B3Re9oo/3yqK2ZKD6f0/ZN+GheuVYU=
 github.com/antihax/optional v1.0.0/go.mod h1:uupD/76wgC+ih3iEmQUL+0Ugr19nfwCT1kdvxnR2qWY=
 github.com/census-instrumentation/opencensus-proto v0.2.1/go.mod h1:f6KPmirojxKA12rnyqOA5BBL4O983OfeGPqjHWSTneU=
 github.com/client9/misspell v0.3.4/go.mod h1:qj6jICC3Q7zFZvVWo7KLAzC3yx5G7kyvSDkc90ppPyw=
