@@ -7,25 +7,26 @@ option go_package = "routeAnalysisAggregator/proto/v1/generated/oceanWeatherServ
 message OceanWeatherPredictionRequest {
     repeated float latitude = 1;
     repeated float longitude = 2;
-    repeated float timestamp = 3;
+    repeated double unix_time = 3;
 }
 
 message OceanWeatherHistoryRequest {
     repeated float latitude = 1;
     repeated float longitude = 2;
-    repeated double timestamp = 3;
+    repeated double unix_time = 3;
     ArchiveService archive_service = 4;
 }
 
 message OceanWeatherInformationResponse {
-    repeated float wind_direction = 1;
-    repeated float wind_speed = 2;
-    repeated uint32 beaufort_number = 3;
-    repeated float swell_direction = 4;
-    repeated float wave_length = 5;
-    repeated float swell_height = 6;
-    repeated float swell_frequency = 7;
-    repeated float swell_period = 8;
+    repeated double unix_time = 1;
+    repeated float wind_direction = 2;
+    repeated float wind_speed = 3;
+    repeated uint32 beaufort_number = 4;
+    repeated float swell_direction = 5;
+    repeated float wave_length = 6;
+    repeated float swell_height = 7;
+    repeated float swell_frequency = 8;
+    repeated float swell_period = 9;
 }
 
 // 'Ocean Weather Service' offers two service calls that provide information about ocean weather conditions for use in route planning.

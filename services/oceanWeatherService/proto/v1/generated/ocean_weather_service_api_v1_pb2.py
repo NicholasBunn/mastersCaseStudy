@@ -18,9 +18,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='ocean_weather_service_api_v1.proto',
   package='oceanWeatherServiceAPI.v1',
   syntax='proto3',
-  serialized_options=None,
+  serialized_options=b'ZRrouteAnalysisAggregator/proto/v1/generated/oceanWeatherService;oceanWeatherService',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\"ocean_weather_service_api_v1.proto\x12\x19oceanWeatherServiceAPI.v1\"W\n\x1dOceanWeatherPredictionRequest\x12\x10\n\x08latitude\x18\x01 \x03(\x02\x12\x11\n\tlongitude\x18\x02 \x03(\x02\x12\x11\n\ttimestamp\x18\x03 \x03(\x02\"\x98\x01\n\x1aOceanWeatherHistoryRequest\x12\x10\n\x08latitude\x18\x01 \x03(\x02\x12\x11\n\tlongitude\x18\x02 \x03(\x02\x12\x11\n\ttimestamp\x18\x03 \x03(\x02\x12\x42\n\x0f\x61rchive_service\x18\x04 \x01(\x0e\x32).oceanWeatherServiceAPI.v1.ArchiveService\"\xd9\x01\n\x1fOceanWeatherInformationResponse\x12\x16\n\x0ewind_direction\x18\x01 \x03(\x02\x12\x12\n\nwind_speed\x18\x02 \x03(\x02\x12\x17\n\x0f\x62\x65\x61ufort_number\x18\x03 \x03(\r\x12\x17\n\x0fswell_direction\x18\x04 \x03(\x02\x12\x13\n\x0bwave_length\x18\x05 \x03(\x02\x12\x14\n\x0cswell_height\x18\x06 \x03(\x02\x12\x17\n\x0fswell_frequency\x18\x07 \x03(\x02\x12\x14\n\x0cswell_period\x18\x08 \x03(\x02*I\n\x0e\x41rchiveService\x12\x0b\n\x07UNKNOWN\x10\x00\x12\x0e\n\nSTORMGLASS\x10\x01\x12\x08\n\x04\x45RA5\x10\x02\x12\x10\n\x0cOBSERVATIONS\x10\x03\x32\xb1\x02\n\x13OceanWeatherService\x12\x8e\x01\n\x16OceanWeatherPrediction\x12\x38.oceanWeatherServiceAPI.v1.OceanWeatherPredictionRequest\x1a:.oceanWeatherServiceAPI.v1.OceanWeatherInformationResponse\x12\x88\x01\n\x13OceanWeatherHistory\x12\x35.oceanWeatherServiceAPI.v1.OceanWeatherHistoryRequest\x1a:.oceanWeatherServiceAPI.v1.OceanWeatherInformationResponseb\x06proto3'
+  serialized_pb=b'\n\"ocean_weather_service_api_v1.proto\x12\x19oceanWeatherServiceAPI.v1\"W\n\x1dOceanWeatherPredictionRequest\x12\x10\n\x08latitude\x18\x01 \x03(\x02\x12\x11\n\tlongitude\x18\x02 \x03(\x02\x12\x11\n\tunix_time\x18\x03 \x03(\x01\"\x98\x01\n\x1aOceanWeatherHistoryRequest\x12\x10\n\x08latitude\x18\x01 \x03(\x02\x12\x11\n\tlongitude\x18\x02 \x03(\x02\x12\x11\n\tunix_time\x18\x03 \x03(\x01\x12\x42\n\x0f\x61rchive_service\x18\x04 \x01(\x0e\x32).oceanWeatherServiceAPI.v1.ArchiveService\"\xec\x01\n\x1fOceanWeatherInformationResponse\x12\x11\n\tunix_time\x18\x01 \x03(\x01\x12\x16\n\x0ewind_direction\x18\x02 \x03(\x02\x12\x12\n\nwind_speed\x18\x03 \x03(\x02\x12\x17\n\x0f\x62\x65\x61ufort_number\x18\x04 \x03(\r\x12\x17\n\x0fswell_direction\x18\x05 \x03(\x02\x12\x13\n\x0bwave_length\x18\x06 \x03(\x02\x12\x14\n\x0cswell_height\x18\x07 \x03(\x02\x12\x17\n\x0fswell_frequency\x18\x08 \x03(\x02\x12\x14\n\x0cswell_period\x18\t \x03(\x02*I\n\x0e\x41rchiveService\x12\x0b\n\x07UNKNOWN\x10\x00\x12\x0e\n\nSTORMGLASS\x10\x01\x12\x08\n\x04\x45RA5\x10\x02\x12\x10\n\x0cOBSERVATIONS\x10\x03\x32\xb1\x02\n\x13OceanWeatherService\x12\x8e\x01\n\x16OceanWeatherPrediction\x12\x38.oceanWeatherServiceAPI.v1.OceanWeatherPredictionRequest\x1a:.oceanWeatherServiceAPI.v1.OceanWeatherInformationResponse\x12\x88\x01\n\x13OceanWeatherHistory\x12\x35.oceanWeatherServiceAPI.v1.OceanWeatherHistoryRequest\x1a:.oceanWeatherServiceAPI.v1.OceanWeatherInformationResponseBTZRrouteAnalysisAggregator/proto/v1/generated/oceanWeatherService;oceanWeatherServiceb\x06proto3'
 )
 
 _ARCHIVESERVICE = _descriptor.EnumDescriptor(
@@ -53,8 +53,8 @@ _ARCHIVESERVICE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=529,
-  serialized_end=602,
+  serialized_start=548,
+  serialized_end=621,
 )
 _sym_db.RegisterEnumDescriptor(_ARCHIVESERVICE)
 
@@ -89,8 +89,8 @@ _OCEANWEATHERPREDICTIONREQUEST = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='timestamp', full_name='oceanWeatherServiceAPI.v1.OceanWeatherPredictionRequest.timestamp', index=2,
-      number=3, type=2, cpp_type=6, label=3,
+      name='unix_time', full_name='oceanWeatherServiceAPI.v1.OceanWeatherPredictionRequest.unix_time', index=2,
+      number=3, type=1, cpp_type=5, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -135,8 +135,8 @@ _OCEANWEATHERHISTORYREQUEST = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='timestamp', full_name='oceanWeatherServiceAPI.v1.OceanWeatherHistoryRequest.timestamp', index=2,
-      number=3, type=2, cpp_type=6, label=3,
+      name='unix_time', full_name='oceanWeatherServiceAPI.v1.OceanWeatherHistoryRequest.unix_time', index=2,
+      number=3, type=1, cpp_type=5, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -174,57 +174,64 @@ _OCEANWEATHERINFORMATIONRESPONSE = _descriptor.Descriptor(
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='wind_direction', full_name='oceanWeatherServiceAPI.v1.OceanWeatherInformationResponse.wind_direction', index=0,
-      number=1, type=2, cpp_type=6, label=3,
+      name='unix_time', full_name='oceanWeatherServiceAPI.v1.OceanWeatherInformationResponse.unix_time', index=0,
+      number=1, type=1, cpp_type=5, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='wind_speed', full_name='oceanWeatherServiceAPI.v1.OceanWeatherInformationResponse.wind_speed', index=1,
+      name='wind_direction', full_name='oceanWeatherServiceAPI.v1.OceanWeatherInformationResponse.wind_direction', index=1,
       number=2, type=2, cpp_type=6, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='beaufort_number', full_name='oceanWeatherServiceAPI.v1.OceanWeatherInformationResponse.beaufort_number', index=2,
-      number=3, type=13, cpp_type=3, label=3,
+      name='wind_speed', full_name='oceanWeatherServiceAPI.v1.OceanWeatherInformationResponse.wind_speed', index=2,
+      number=3, type=2, cpp_type=6, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='swell_direction', full_name='oceanWeatherServiceAPI.v1.OceanWeatherInformationResponse.swell_direction', index=3,
-      number=4, type=2, cpp_type=6, label=3,
+      name='beaufort_number', full_name='oceanWeatherServiceAPI.v1.OceanWeatherInformationResponse.beaufort_number', index=3,
+      number=4, type=13, cpp_type=3, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='wave_length', full_name='oceanWeatherServiceAPI.v1.OceanWeatherInformationResponse.wave_length', index=4,
+      name='swell_direction', full_name='oceanWeatherServiceAPI.v1.OceanWeatherInformationResponse.swell_direction', index=4,
       number=5, type=2, cpp_type=6, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='swell_height', full_name='oceanWeatherServiceAPI.v1.OceanWeatherInformationResponse.swell_height', index=5,
+      name='wave_length', full_name='oceanWeatherServiceAPI.v1.OceanWeatherInformationResponse.wave_length', index=5,
       number=6, type=2, cpp_type=6, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='swell_frequency', full_name='oceanWeatherServiceAPI.v1.OceanWeatherInformationResponse.swell_frequency', index=6,
+      name='swell_height', full_name='oceanWeatherServiceAPI.v1.OceanWeatherInformationResponse.swell_height', index=6,
       number=7, type=2, cpp_type=6, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='swell_period', full_name='oceanWeatherServiceAPI.v1.OceanWeatherInformationResponse.swell_period', index=7,
+      name='swell_frequency', full_name='oceanWeatherServiceAPI.v1.OceanWeatherInformationResponse.swell_frequency', index=7,
       number=8, type=2, cpp_type=6, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='swell_period', full_name='oceanWeatherServiceAPI.v1.OceanWeatherInformationResponse.swell_period', index=8,
+      number=9, type=2, cpp_type=6, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -242,7 +249,7 @@ _OCEANWEATHERINFORMATIONRESPONSE = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=310,
-  serialized_end=527,
+  serialized_end=546,
 )
 
 _OCEANWEATHERHISTORYREQUEST.fields_by_name['archive_service'].enum_type = _ARCHIVESERVICE
@@ -274,6 +281,7 @@ OceanWeatherInformationResponse = _reflection.GeneratedProtocolMessageType('Ocea
 _sym_db.RegisterMessage(OceanWeatherInformationResponse)
 
 
+DESCRIPTOR._options = None
 
 _OCEANWEATHERSERVICE = _descriptor.ServiceDescriptor(
   name='OceanWeatherService',
@@ -282,8 +290,8 @@ _OCEANWEATHERSERVICE = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=605,
-  serialized_end=910,
+  serialized_start=624,
+  serialized_end=929,
   methods=[
   _descriptor.MethodDescriptor(
     name='OceanWeatherPrediction',
