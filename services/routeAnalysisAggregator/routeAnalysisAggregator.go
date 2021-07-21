@@ -271,6 +271,16 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 
 // ________SUPPORTING FUNCTIONS________
 
+func calculateRelativeWaveDirection(windDirection []float64, heading []float64) ([]float64, error) {
+
+	var relativeWindDirection []float64
+	for count, windDirectionInstance := range windDirection {
+		relativeWindDirection = append(relativeWindDirection, windDirectionInstance - heading[count])
+	}
+
+	return relativeWindDirection, nil
+}
+
 func DecodeConfig(configPath string) (*Config, error) {
 	
 	// Create a new config structure
