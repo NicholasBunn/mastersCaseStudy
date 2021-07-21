@@ -8,10 +8,10 @@ message AnalysisRequest {
     repeated double unix_time = 1;
     repeated float latitude = 2;
     repeated float longitude = 3;
-    repeated uint64 heading = 4;
-    repeated int64 prop_pitch = 5;
-    repeated uint64 motor_speed = 6;
-    repeated uint32 SOG = 7; 
+    repeated float heading = 4;
+    repeated float prop_pitch = 5;
+    repeated float motor_speed = 6;
+    repeated float SOG = 7; 
 }
 
 message AnalysisResponse {

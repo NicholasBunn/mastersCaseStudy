@@ -19,13 +19,15 @@ import (
 	// Proto packages
 
 	oceanWeatherServicePB "github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/oceanWeatherService"
+	powerTrainServicePB "github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/powerTrainService"
 	serverPB "github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/routeAnalysisAggregator"
 )
 
 var (
 	// Addresses (To be passed in a config file)
 	addrMyself string
-	addrOWS     string
+	addrOWS	string
+	addrPTS string
 
 	timeoutDuration     int           // The time, in seconds, that the client should wait when dialing (connecting to) the server before throwing an error
 	callTimeoutDuration time.Duration // The time, in seconds, that the client should wait when making a call to the server before throwing an error
@@ -54,6 +56,7 @@ func init() {
 
 	addrMyself = os.Getenv("ROUTEANALYSISHOST") + ":" + config.Server.Port.Myself
 	addrOWS = os.Getenv("OWSHOST") + ":" + config.Client.Port.OceanWeatherService
+	addrPTS = os.Getenv("PTSHOST") + ":" + config.Client.Port.PowerTrainService
 
 	// Load timeouts from config
 	timeoutDuration = config.Client.Timeout.Connection
@@ -136,6 +139,7 @@ type Config struct {
 		Client struct {
 			Port struct {
 				OceanWeatherService      string `yaml:"oceanWeatherService"`
+				PowerTrainService string `yaml:"powerTrainService"`
 	// 			PrepareService    string `yaml:"prepare"`
 	// 			EstimationService string `yaml:"estimation"`
 			} `yaml:"port"`
@@ -181,9 +185,9 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 		return nil, err
 	}
 
-	InfoLogger.Println("Creating Ocean Weather Service Client.")
+	InfoLogger.Println("Creating Ocean Weather Service client.")
 	clientOWS := oceanWeatherServicePB.NewOceanWeatherServiceClient(connOWS)
-	DebugLogger.Println("Succesfully creted client connection to Ocean Weather Service.")
+	DebugLogger.Println("Succesfully created client connection to Ocean Weather Service.")
 
 	// Create an ocean weather prediction request message
 	requestMessageOWS := oceanWeatherServicePB.OceanWeatherPredictionRequest{
@@ -207,7 +211,51 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 		connOWS.Close()
 	}
 
-	fmt.Println(responseMessageOWS)
+	// Create an insecure connection to the power train service server
+	connPTS, err := createInsecureServerConnection(
+		addrPTS,
+		timeoutDuration,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	InfoLogger.Println("Creating Power Train Service client.")
+	clientPTS := powerTrainServicePB.NewPowerTrainServiceClient(connPTS)
+	DebugLogger.Println("Succesfully created client connection to Power Train Service.")
+
+	// Create a power train estimate request message
+	requestMessagePTS := powerTrainServicePB.PowerTrainEstimateRequest{
+		UnixTime: request.UnixTime,
+		PortPropMotorSpeed: request.MotorSpeed,
+		StbdPropMotorSpeed: request.MotorSpeed,
+		PropellerPitchPort: request.PropPitch,
+		PropellerPitchStbd: request.PropPitch,
+		Sog: request.SOG,
+		WindDirectionRelative: (responseMessageOWS.WindDirection - request.Heading),
+		WindSpeed: responseMessageOWS.WindSpeed,
+		BeaufortNumber: responseMessageOWS.BeaufortNumber,
+		WaveDirection: responseMessageOWS.SwellDirection,
+		WaveLength: responseMessageOWS.WaveLength,
+		ModelType: powerTrainServicePB.ModelTypeEnum_OPENWATER,
+	}
+	DebugLogger.Println("Succesfully created a Power Train Estimate Request.")
+
+	InfoLogger.Println("Making Power Estimate Call.")
+	ptsContext, cancel := context.WithTimeout(context.Background(), callTimeoutDuration)
+	defer cancel()
+
+	// Invoke the Power Train Service
+	responseMessagePTS, err := clientPTS.PowerEstimate(ptsContext, &requestMEssagePTS)
+	if err != nil {
+		ErrorLogger.Println("Failed to make Power Estimate service call: ")
+		return nil, err
+	} else {
+		DebugLogger.Println("Successfully made service call to Power Train Service.")
+		connOWS.Close()
+	}
+
+	fmt.Println(responseMessagePTS)
 
 	return nil, status.Errorf(codes.Unimplemented, "method AnalyseRoute not implemented")
 }
