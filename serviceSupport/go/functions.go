@@ -17,30 +17,30 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func DecodeConfig(configStruct struct, configPath string) (*Config, error) {
+// func DecodeConfig(configStruct struct, configPath string) (*Config, error) {
 	
-	// Create a new config structure
-	config := configStruct
+// 	// Create a new config structure
+// 	config := configStruct
 
-	// Open the config file
-	file, err := os.Open(configPath)
-	if err != nil {
-		fmt.Println("Could not open config file")
-		return nil, err
-	}
-	defer file.Close()
+// 	// Open the config file
+// 	file, err := os.Open(configPath)
+// 	if err != nil {
+// 		fmt.Println("Could not open config file")
+// 		return nil, err
+// 	}
+// 	defer file.Close()
 
-	// Initialise a new YAML decoder
-	decoder := yaml.NewDecoder(file)
+// 	// Initialise a new YAML decoder
+// 	decoder := yaml.NewDecoder(file)
 
-	// Start YAML decoding from file
-	if err := decoder.Decode(&config); err != nil {
-		fmt.Println("Could not decode config file: \n", err)
-		return nil, err
-	}
+// 	// Start YAML decoding from file
+// 	if err := decoder.Decode(&config); err != nil {
+// 		fmt.Println("Could not decode config file: \n", err)
+// 		return nil, err
+// 	}
 
-	return config, nil
-}
+// 	return config, nil
+// }
 
 func createInsecureServerConnection(port string, timeout int) (*grpc.ClientConn, error) {
 	/* This (unexported) function takes a port address and timeout as inputs. It creates a connection to the server	at the port adress
