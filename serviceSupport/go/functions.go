@@ -17,10 +17,10 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func DecodeConfig(&configStruct struct, configPath string) (*Config, error) {
+func DecodeConfig(configStruct struct, configPath string) (*Config, error) {
 	
 	// Create a new config structure
-	config := configStruct{}
+	config := configStruct
 
 	// Open the config file
 	file, err := os.Open(configPath)
