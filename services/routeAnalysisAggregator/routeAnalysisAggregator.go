@@ -10,14 +10,13 @@ import (
 	"strings"
 	"time"
 
-	// gRPC packages
+	// Third-party packages
 	"github.com/go-yaml/yaml"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
 	// Proto packages
-
 	oceanWeatherServicePB "github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/oceanWeatherService"
 	powerTrainServicePB "github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/powerTrainService"
 	serverPB "github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/routeAnalysisAggregator"
@@ -243,10 +242,11 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 		ModelType: powerTrainServicePB.ModelTypeEnum_OPENWATER,
 	}
 
-	// Calculate the relative wind direction
-	for count, windDirection := range responseMessageOWS.WindDirection {
-        requestMessagePTS.WindDirectionRelative[count] = windDirection - request.Heading[count]
-    }
+	requestMessagePTS.WindDirectionRelative, err = calculateRelativeWindDirection(responseMessageOWS.WindDirection, request.Heading)
+	if err != nil {
+		ErrorLogger.Println("Failed to calculate relative wind direction: ")
+		return nil, err
+	}
 
 	DebugLogger.Println("Succesfully created a Power Train Estimate Request.")
 
@@ -271,13 +271,18 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 
 // ________SUPPORTING FUNCTIONS________
 
-func calculateRelativeWaveDirection(windDirection []float64, heading []float64) ([]float64, error) {
+func calculateRelativeWindDirection(windDirection []float32, heading []float32) ([]float32, error) {
+	/* This function takes the wind direction and vessel heading as inputs. Using these, it 
+	calculates and returns the wind direction relative to the vessels direction.
+	*/
 
-	var relativeWindDirection []float64
-	var tempRelativeWindDirection float64
+	var relativeWindDirection []float32
+	var tempRelativeWindDirection float32
 
 	for count, windDirectionInstance := range windDirection {
 		tempRelativeWindDirection = windDirectionInstance - heading[count]
+
+		// Check whether the relative wind direction is negative and add 360 degrees until it is positive so that all directions returned are on the same coordinate system.
 		for tempRelativeWindDirection < 0 {
 			tempRelativeWindDirection += 360
 		}

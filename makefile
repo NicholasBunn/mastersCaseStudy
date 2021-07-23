@@ -79,8 +79,11 @@ testComfortService:
 testVesselMotionService:
 	cd services/vesselMotionService; dotnet test; cd ..
 
+testRouteAnalysisAggregator:
+	cd services/routeAnalysisAggregator; go test; cd ..
+
 testGo:
-	go test ./...
+	make testRouteAnalysisAggregator
 
 testPy:
 	make testOceanWeatherService
@@ -96,6 +99,7 @@ testCSharp:
 testAll:
 	make testPy
 	make testCSharp
+	make testGo
 
 # Make commands relating to running the program
 runOceanWeatherService:
