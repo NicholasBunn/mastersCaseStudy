@@ -1,6 +1,6 @@
 package functions
 
-import {
+import (
 	// Native packages
 	"context"
 	"fmt"
@@ -15,7 +15,7 @@ import {
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
-}
+)
 
 func DecodeConfig(&configStruct struct, configPath string) (*Config, error) {
 	
