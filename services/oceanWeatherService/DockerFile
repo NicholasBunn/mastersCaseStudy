@@ -9,11 +9,14 @@ RUN mkdir /project/services/oceanWeatherService/
 # Create an program logs folder in the ocean weather service directory
 RUN mkdir /project/services/oceanWeatherService/program\ logs
 
-# Copy the 'proto' and 'interceptors' folders into the service directory
-COPY services/oceanWeatherService/proto/v1 project/services/oceanWeatherService/proto/v1
-COPY services/oceanWeatherService/proto/v1/generated project/services/oceanWeatherService/proto/v1/generated
-COPY interceptors/python project/interceptors/python
-COPY certification /project/certification
+# Copy the 'proto' folder into the services directory
+COPY services/oceanWeatherService/proto/v1/ project/services/oceanWeatherService/proto/v1
+COPY services/oceanWeatherService/proto/v1/generated/ project/services/oceanWeatherService/proto/v1/generated
+# Copy the 'interceptor' folder into the project directory
+COPY interceptors/python/ project/interceptors/python/
+# Copy the 'certification' folder into the project directory
+COPY certification/ /project/certification/
+# Copy the service contents into the oceanWeatherService directory
 COPY services/oceanWeatherService/configuration.yaml project/services/oceanWeatherService
 COPY services/oceanWeatherService/requirements.txt project/services/oceanWeatherService
 COPY services/oceanWeatherService/test_oceanWeatherService.py project/services/oceanWeatherService
@@ -31,7 +34,7 @@ RUN python3 -m pip install -r services/oceanWeatherService/requirements.txt
 # Run tests on the service before starting it up
 RUN python3 services/oceanWeatherService/test_oceanWeatherService.py
 
-# Tells Docker that we're going to run the microservice on port 50051
+# Tells Docker that we're going to run the microservice on port 50050
 EXPOSE 50050
 # Tells Docker how to run the microservice
 ENTRYPOINT [ "python3", "services/oceanWeatherService/oceanWeatherService.py" ]
