@@ -2,11 +2,11 @@
 import sys
 import os
 import logging
-import requests
 from concurrent import futures
 
 # Third party imports
 import grpc
+import requests
 from requests.sessions import TooManyRedirects
 import yaml
 from urllib.error import HTTPError
@@ -45,9 +45,8 @@ def queryStormglassAPI(latitude, longitude, unixTime, apiKey):
 			params={
 				'lat': latitude, 
 				'lng': longitude, 
-				'params': 'windSpeed',
 				'params': ','.join(['windSpeed', 'windDirection', 'swellDirection', 'swellHeight', 'swellPeriod']),
-				'start': unixTime,
+				'start': unixTime + 0,
 				'end': unixTime + 3600, # Set end time to be one hour after the query time
 			},
 			headers={

@@ -1,12 +1,6 @@
 # Standard library imports
 import os
-import sys
-import time
 import unittest
-from datetime import datetime
-
-# Third party imports
-import yaml
 
 # Local application imports
 import oceanWeatherService
@@ -23,7 +17,7 @@ class OceanWeatherServiceUnitTest(unittest.TestCase):
 
 	testLat = 58.7984
 	testLong = 17.8081
-	startTimeUnix = time.mktime(datetime.strptime("22:00:03 21 December 2020", "%H:%M:%S %d %B %Y").timetuple())
+	startTimeUnix = 1608580803.0
 
 	def test_queryStormglassAPI(self):
 		''' This tests for a succesful API call. This test should pass as long as the historical ocean weather data and the API's response (JSON structure) remain unchanged
@@ -37,6 +31,7 @@ class OceanWeatherServiceUnitTest(unittest.TestCase):
 		if(jsonOceanData == "HTTP Error 402: You've reached the daily limit of your trial API, Stormglass wants you to pay to increase the daily request limit."):
 			self.fail("Can't run queryStormglassAPI test as daily query limit has been reached. :(")
 
+		# self.assertEqual(jsonOceanData["time"], )
 		self.assertEqual(jsonOceanData["windDirection"]["icon"], 222.41)
 		self.assertEqual(jsonOceanData["windSpeed"]["icon"], 7.68)
 		self.assertEqual(jsonOceanData["swellDirection"]["icon"], 168.41)
@@ -73,7 +68,7 @@ class OceanWeatherServiceIntegrationTest(unittest.TestCase):
 	
 	testLat = 58.7984
 	testLong = 17.8081
-	startTimeUnix = time.mktime(datetime.strptime("22:00:03 21 December 2020", "%H:%M:%S %d %B %Y").timetuple())
+	startTimeUnix = 1608580803.0
 
 	def setUp(self):
 		''' setUp is used to create a server instance to test each service call

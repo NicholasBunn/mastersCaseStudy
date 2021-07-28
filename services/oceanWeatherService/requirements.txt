@@ -1,5 +1,6 @@
 pyjwt
 pyyaml
+requests
 grpcio
 grpcio-tools
 grpc_interceptor
