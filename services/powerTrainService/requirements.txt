@@ -2,9 +2,11 @@ pyjwt
 pyyaml
 grpcio
 numpy
-pandas
-keras
-sklearn.preprocessing
+pandas==1.2.3
+openpyxl
+keras==2.4.3
+tensorflow==2.4.1
+sklearn
 grpcio-tools
 grpc_interceptor
 prometheus_client
