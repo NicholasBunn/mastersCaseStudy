@@ -19,6 +19,8 @@ import (
 	// Proto packages
 	oceanWeatherServicePB "github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/oceanWeatherService"
 	powerTrainServicePB "github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/powerTrainService"
+	vesselMotionServicePB "github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/vesselMotionService"
+	comfortServicePB "github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/comfortService"
 	serverPB "github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/routeAnalysisAggregator"
 )
 
@@ -27,6 +29,7 @@ var (
 	addrMyself string
 	addrOWS	string
 	addrPTS string
+	addrVMS string
 
 	timeoutDuration     int           // The time, in seconds, that the client should wait when dialing (connecting to) the server before throwing an error
 	callTimeoutDuration time.Duration // The time, in seconds, that the client should wait when making a call to the server before throwing an error
@@ -56,6 +59,8 @@ func init() {
 	addrMyself = os.Getenv("ROUTEANALYSISHOST") + ":" + config.Server.Port.Myself
 	addrOWS = os.Getenv("OWSHOST") + ":" + config.Client.Port.OceanWeatherService
 	addrPTS = os.Getenv("PTSHOST") + ":" + config.Client.Port.PowerTrainService
+	addrVMS = os.Getenv("VMSHOST") + ":" + config.Client.Port.VesselMotionService
+	addrCS = os.Getenv("CSHOST") + ":" + config.Client.Port.ComfortService
 
 	// Load timeouts from config
 	timeoutDuration = config.Client.Timeout.Connection
@@ -89,6 +94,23 @@ func main() {
 	/* The main function sets up a server to listen on the specified port,
 	encrypts the server connection with TLS, and registers the services on
 	offer */
+
+	arbContext, cancel := context.WithTimeout(context.Background(), callTimeoutDuration)
+	defer cancel()
+
+	analysisRequest := serverPB.AnalysisRequest{
+		UnixTime: 1608580803,
+		Latitude: 58.7984,
+		Longitude: 17.8081,
+		Heading: 15,
+		PropPitch: 0.26854406323815316,
+		MotorSpeed: 0.597549569477592,
+		SOG: 0.030389908256880732,
+	}
+
+	response, err := AnalyseRoute(arbContext, &analysisRequest)
+
+	fmt.Println(response, err)
 
 	InfoLogger.Println("Started route analysis aggregator.")
 
@@ -261,10 +283,89 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 		return nil, err
 	} else {
 		DebugLogger.Println("Successfully made service call to Power Train Service.")
-		connOWS.Close()
+		connPTS.Close()
 	}
 
-	fmt.Println(responseMessagePTS)
+	// ________Query Vessel Motion Service________
+	
+	// Create an insecure connection to the power train service server
+	connPTS, err := createInsecureServerConnection(
+		addrVMS,
+		timeoutDuration,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	InfoLogger.Println("Creating Vessel Motion Service client.")
+	clientVMS := vesselMotionServicePB.NewVesselMotionServiceClient(connVMS)
+	DebugLogger.Println("Succesfully created client connection to Vessel Motion Service.")
+
+	// Create a motion estimate request message
+	requestMessageVMS := vesselMotionServicePB.MotionEstimateRequest{
+		portPropMotorPower: responseMessagePTS.PowerEstimate,
+		eindSpeedRelative: (responseMessageOWS.WindSpeed - request.SOG),
+		latitude: request.Latitude,
+		heading, request.Heading,
+		waveHeight: responseMessageOWS.SwellHeight,
+		WindDirectionRelative: requestMessagePTS.relativeWindDirection,
+		ModelType: vesselMotionServicePB.ModelTypeEnum_OPENWATER,
+	}
+
+	DebugLogger.Println("Succesfully created a Motion Estimate Request.")
+
+	InfoLogger.Println("Making Motion Estimate Call.")
+	vmsContext,cancel := context.WithTimeout(context.Background(), callTimeoutDuration)
+	defer cancel()
+
+	// Invoke the Vessel Motion Service
+	responseMessageVMS, err := clientVMS.MotionEstimate(vmsContext, &responseMessageVMS)
+	if err != nil {
+		ErrorLogger.Println("Failed to make Motion Estimate service call: ")
+		return nil, err
+	} else {
+		DebugLogger.Println("Successfully made service call to Vessel Motion Service.")
+		connVMS.Close()
+	}
+
+	// ________Query Comfort Service________
+	
+	// Create an insecure connection to the power train service server
+	connCS, err := createInsecureServerConnection(
+		addrCS,
+		timeoutDuration,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	InfoLogger.Println("Creating Comfort Service client.")
+	clientCS := comfortServicePB.NewComfortServiceClient(connCS)
+	DebugLogger.Println("Succesfully created client connection to Comfort Service.")
+
+	// Create a comfort request message
+	requestMessageCS := comfortServicePB.ComfortRequest{
+		unixTime: request.UnixTime,
+		humanWeightedVibrationX: responseMessageVMS.AccelerationEstimateX,
+		humanWeightedVibrationY: responseMessageVMS.AccelerationEstimateY,
+		humanWeightedVibrationZ: responseMessageVMS.AccelerationEstimateZ,
+	}
+
+	DebugLogger.Println("Succesfully created a Comfort Request.")
+
+	InfoLogger.Println("Making Comfort Rating Call.")
+	csContext,cancel := context.WithTimeout(context.Background(), callTimeoutDuration)
+	defer cancel()
+
+	// Invoke the Vessel Motion Service
+	responseMessageCS, err := clientCS.ComfortRating(csContext, &requestMessageCS)
+	if err != nil {
+		ErrorLogger.Println("Failed to make Comfort Rating service call: ")
+		return nil, err
+	} else {
+		DebugLogger.Println("Successfully made service call to Comfort Service.")
+		connVMS.Close()
+	}
 
 	return nil, status.Errorf(codes.Unimplemented, "method AnalyseRoute not implemented")
 }

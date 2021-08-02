@@ -1,4 +1,4 @@
-module github.com/NicholasBunn/MastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/comfortService
+module github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/comfortService
 
 go 1.16
 
