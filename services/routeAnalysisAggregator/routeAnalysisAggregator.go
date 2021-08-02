@@ -9,6 +9,7 @@ import (
 	"os"
 	"strings"
 	"time"
+	"math"
 
 	// Third-party packages
 	"github.com/go-yaml/yaml"
@@ -20,7 +21,7 @@ import (
 	oceanWeatherServicePB "github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/oceanWeatherService"
 	powerTrainServicePB "github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/powerTrainService"
 	vesselMotionServicePB "github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/vesselMotionService"
-	// comfortServicePB "github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/comfortService"
+	comfortServicePB "github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/comfortService"
 	serverPB "github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/routeAnalysisAggregator"
 )
 
@@ -30,6 +31,7 @@ var (
 	addrOWS	string
 	addrPTS string
 	addrVMS string
+	addrCS string
 
 	timeoutDuration     int           // The time, in seconds, that the client should wait when dialing (connecting to) the server before throwing an error
 	callTimeoutDuration time.Duration // The time, in seconds, that the client should wait when making a call to the server before throwing an error
@@ -95,23 +97,6 @@ func main() {
 	encrypts the server connection with TLS, and registers the services on
 	offer */
 
-	arbContext, cancel := context.WithTimeout(context.Background(), callTimeoutDuration)
-	defer cancel()
-
-	analysisRequest := serverPB.AnalysisRequest{
-		UnixTime: 1608580803,
-		Latitude: 58.7984,
-		Longitude: 17.8081,
-		Heading: 15,
-		PropPitch: 0.26854406323815316,
-		MotorSpeed: 0.597549569477592,
-		SOG: 0.030389908256880732,
-	}
-
-	response, err := AnalyseRoute(arbContext, &analysisRequest)
-
-	fmt.Println(response, err)
-
 	InfoLogger.Println("Started route analysis aggregator.")
 
 	// Create a listener on the specified tcp port
@@ -157,17 +142,20 @@ type Config struct {
 		} `yaml:"authentication"`
 	} `yaml:"server"`
 
-		Client struct {
-			Port struct {
-				OceanWeatherService      string `yaml:"oceanWeatherService"`
-				PowerTrainService string `yaml:"powerTrainService"`
+	Client struct {
+		Port struct {
+			OceanWeatherService      string `yaml:"oceanWeatherService"`
+			PowerTrainService string `yaml:"powerTrainService"`
+			VesselMotionService string `yaml:"vesselMotionService`
+			ProcessVibrationService string `yaml:processVibrationService`
+			ComfortService string `yaml:comfortService`
 	// 			PrepareService    string `yaml:"prepare"`
 	// 			EstimationService string `yaml:"estimation"`
-			} `yaml:"port"`
-			Timeout struct {
-				Connection int `yaml:"connection"`
-				Call       int `yaml:"call"`
-			} `yaml:"timeout"`
+		} `yaml:"port"`
+		Timeout struct {
+			Connection int `yaml:"connection"`
+			Call       int `yaml:"call"`
+		} `yaml:"timeout"`
 	// 		AuthenticatedMethods struct {
 	// 			Name struct {
 	// 				FetchDataService   string `yaml:"fetchDataService"`
@@ -180,7 +168,7 @@ type Config struct {
 	// 				EstimateService    bool `yaml:"estimateService"`
 	// 			} `yaml:"requiresAuthentication"`
 	// 		} `yaml:"authenticatedMethods"`
-		} `yaml:"client"`
+	} `yaml:"client"`
 }
 
 type server struct {
@@ -289,7 +277,7 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 	// ________Query Vessel Motion Service________
 	
 	// Create an insecure connection to the power train service server
-	connPTS, err := createInsecureServerConnection(
+	connVMS, err := createInsecureServerConnection(
 		addrVMS,
 		timeoutDuration,
 	)
@@ -303,13 +291,18 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 
 	// Create a motion estimate request message
 	requestMessageVMS := vesselMotionServicePB.MotionEstimateRequest{
-		portPropMotorPower: responseMessagePTS.PowerEstimate,
-		eindSpeedRelative: (responseMessageOWS.WindSpeed - request.SOG),
-		latitude: request.Latitude,
-		heading, request.Heading,
-		waveHeight: responseMessageOWS.SwellHeight,
-		WindDirectionRelative: requestMessagePTS.relativeWindDirection,
+		PortPropMotorPower: responseMessagePTS.PowerEstimate,
+		Latitude: request.Latitude,
+		Heading: request.Heading,
+		WaveHeight: responseMessageOWS.SwellHeight,
+		WindDirectionRelative: requestMessagePTS.WindDirectionRelative,
 		ModelType: vesselMotionServicePB.ModelTypeEnum_OPENWATER,
+	}
+
+	requestMessageVMS.WindSpeedRelative, err = calculateRelativeWindSpeed(responseMessageOWS.WindSpeed, requestMessagePTS.WindDirectionRelative, request.SOG)
+	if err != nil {
+		ErrorLogger.Println("Failed to calculate relative wind direction: ")
+		return nil, err
 	}
 
 	DebugLogger.Println("Succesfully created a Motion Estimate Request.")
@@ -319,7 +312,7 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 	defer cancel()
 
 	// Invoke the Vessel Motion Service
-	responseMessageVMS, err := clientVMS.MotionEstimate(vmsContext, &responseMessageVMS)
+	responseMessageVMS, err := clientVMS.MotionEstimate(vmsContext, &requestMessageVMS)
 	if err != nil {
 		ErrorLogger.Println("Failed to make Motion Estimate service call: ")
 		return nil, err
@@ -328,44 +321,46 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 		connVMS.Close()
 	}
 
-// 	// ________Query Comfort Service________
+	// ________Query Comfort Service________
 	
-// 	// Create an insecure connection to the power train service server
-// 	connCS, err := createInsecureServerConnection(
-// 		addrCS,
-// 		timeoutDuration,
-// 	)
-// 	if err != nil {
-// 		return nil, err
-// 	}
+	// Create an insecure connection to the power train service server
+	connCS, err := createInsecureServerConnection(
+		addrCS,
+		timeoutDuration,
+	)
+	if err != nil {
+		return nil, err
+	}
 
-// 	InfoLogger.Println("Creating Comfort Service client.")
-// 	clientCS := comfortServicePB.NewComfortServiceClient(connCS)
-// 	DebugLogger.Println("Succesfully created client connection to Comfort Service.")
+	InfoLogger.Println("Creating Comfort Service client.")
+	clientCS := comfortServicePB.NewComfortServiceClient(connCS)
+	DebugLogger.Println("Succesfully created client connection to Comfort Service.")
 
-// 	// Create a comfort request message
-// 	requestMessageCS := comfortServicePB.ComfortRequest{
-// 		unixTime: request.UnixTime,
-// 		humanWeightedVibrationX: responseMessageVMS.AccelerationEstimateX,
-// 		humanWeightedVibrationY: responseMessageVMS.AccelerationEstimateY,
-// 		humanWeightedVibrationZ: responseMessageVMS.AccelerationEstimateZ,
-// 	}
+	// Create a comfort request message
+	requestMessageCS := comfortServicePB.ComfortRequest{
+		UnixTime: request.UnixTime,
+		HumanWeightedVibrationX: responseMessageVMS.AccelerationEstimateX,
+		HumanWeightedVibrationY: responseMessageVMS.AccelerationEstimateY,
+		HumanWeightedVibrationZ: responseMessageVMS.AccelerationEstimateZ,
+	}
 
-// 	DebugLogger.Println("Succesfully created a Comfort Request.")
+	DebugLogger.Println("Succesfully created a Comfort Request.")
 
-// 	InfoLogger.Println("Making Comfort Rating Call.")
-// 	csContext,cancel := context.WithTimeout(context.Background(), callTimeoutDuration)
-// 	defer cancel()
+	InfoLogger.Println("Making Comfort Rating Call.")
+	csContext,cancel := context.WithTimeout(context.Background(), callTimeoutDuration)
+	defer cancel()
 
-// 	// Invoke the Vessel Motion Service
-// 	responseMessageCS, err := clientCS.ComfortRating(csContext, &requestMessageCS)
-// 	if err != nil {
-// 		ErrorLogger.Println("Failed to make Comfort Rating service call: ")
-// 		return nil, err
-// 	} else {
-// 		DebugLogger.Println("Successfully made service call to Comfort Service.")
-// 		connVMS.Close()
-// 	}
+	// Invoke the Vessel Motion Service
+	responseMessageCS, err := clientCS.ComfortRating(csContext, &requestMessageCS)
+	if err != nil {
+		ErrorLogger.Println("Failed to make Comfort Rating service call: ")
+		return nil, err
+	} else {
+		DebugLogger.Println("Successfully made service call to Comfort Service.")
+		connVMS.Close()
+	}
+
+	print(responseMessageCS)
 
 	return nil, status.Errorf(codes.Unimplemented, "method AnalyseRoute not implemented")
 }
@@ -380,17 +375,42 @@ func calculateRelativeWindDirection(windDirection []float32, heading []float32) 
 	var relativeWindDirection []float32
 	var tempRelativeWindDirection float32
 
-	for count, windDirectionInstance := range windDirection {
-		tempRelativeWindDirection = windDirectionInstance - heading[count]
+	for index, windDirectionInstance := range windDirection {
+		tempRelativeWindDirection = windDirectionInstance - heading[index]
 
 		// Check whether the relative wind direction is negative and add 360 degrees until it is positive so that all directions returned are on the same coordinate system.
-		for tempRelativeWindDirection < 0 {
+		for (tempRelativeWindDirection < 0) {
 			tempRelativeWindDirection += 360
 		}
 		relativeWindDirection = append(relativeWindDirection, tempRelativeWindDirection)
 	}
 
 	return relativeWindDirection, nil
+}
+
+func calculateRelativeWindSpeed(windSpeed []float32, relativeWindDirection []float32, sog []float32) ([]float32, error) {
+	/* This function takes the wind speed, wind direction, vessel speed, and vessel direction as inputs. Uisng these, it calculates and returns the wind speed relative to the vessel's speed.
+	*/
+
+	var relativeWindSpeed []float32
+
+	for index, windSpeedInstance := range windSpeed {
+
+		// Decompose the wind speed to get the component of wind acting head on to the ship and add that to the ship's SOG, done on a case-by-case basis depending on where the wind is incident on the ship. PS: There's a lot of type conversion going on here so it looks a bit messy, but it's just basic trigonometry
+		if (relativeWindDirection[index] < 90) {
+			relativeWindSpeed = append(relativeWindSpeed, float32(float64(sog[index]) + float64(windSpeedInstance)*math.Cos(float64(relativeWindDirection[index])*math.Pi/180)))
+		} else if (relativeWindDirection[index] < 180) {
+			relativeWindSpeed = append(relativeWindSpeed, float32(float64(sog[index]) - float64(windSpeedInstance)*math.Cos((180 - float64(relativeWindDirection[index]))*math.Pi/180)))
+		} else if (relativeWindDirection[index] < 270) {
+			relativeWindSpeed = append(relativeWindSpeed, float32(float64(sog[index]) - float64(windSpeedInstance)*math.Cos((float64(relativeWindDirection[index])-180)*math.Pi/180)))
+		} else if (relativeWindDirection[index] <= 360) {
+			relativeWindSpeed = append(relativeWindSpeed, float32(float64(sog[index]) + float64(windSpeedInstance)*math.Cos((360 - float64(relativeWindDirection[index]))*math.Pi/180)))
+		} else {
+			return nil, fmt.Errorf("Provided relative wind direction is out of range (greater than 360 degrees)")
+		}
+	}
+
+	return relativeWindSpeed, nil
 }
 
 func DecodeConfig(configPath string) (*Config, error) {
