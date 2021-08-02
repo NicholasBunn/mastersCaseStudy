@@ -20,7 +20,7 @@ import (
 	oceanWeatherServicePB "github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/oceanWeatherService"
 	powerTrainServicePB "github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/powerTrainService"
 	vesselMotionServicePB "github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/vesselMotionService"
-	comfortServicePB "github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/comfortService"
+	// comfortServicePB "github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/comfortService"
 	serverPB "github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/routeAnalysisAggregator"
 )
 
@@ -328,44 +328,44 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 		connVMS.Close()
 	}
 
-	// ________Query Comfort Service________
+// 	// ________Query Comfort Service________
 	
-	// Create an insecure connection to the power train service server
-	connCS, err := createInsecureServerConnection(
-		addrCS,
-		timeoutDuration,
-	)
-	if err != nil {
-		return nil, err
-	}
+// 	// Create an insecure connection to the power train service server
+// 	connCS, err := createInsecureServerConnection(
+// 		addrCS,
+// 		timeoutDuration,
+// 	)
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-	InfoLogger.Println("Creating Comfort Service client.")
-	clientCS := comfortServicePB.NewComfortServiceClient(connCS)
-	DebugLogger.Println("Succesfully created client connection to Comfort Service.")
+// 	InfoLogger.Println("Creating Comfort Service client.")
+// 	clientCS := comfortServicePB.NewComfortServiceClient(connCS)
+// 	DebugLogger.Println("Succesfully created client connection to Comfort Service.")
 
-	// Create a comfort request message
-	requestMessageCS := comfortServicePB.ComfortRequest{
-		unixTime: request.UnixTime,
-		humanWeightedVibrationX: responseMessageVMS.AccelerationEstimateX,
-		humanWeightedVibrationY: responseMessageVMS.AccelerationEstimateY,
-		humanWeightedVibrationZ: responseMessageVMS.AccelerationEstimateZ,
-	}
+// 	// Create a comfort request message
+// 	requestMessageCS := comfortServicePB.ComfortRequest{
+// 		unixTime: request.UnixTime,
+// 		humanWeightedVibrationX: responseMessageVMS.AccelerationEstimateX,
+// 		humanWeightedVibrationY: responseMessageVMS.AccelerationEstimateY,
+// 		humanWeightedVibrationZ: responseMessageVMS.AccelerationEstimateZ,
+// 	}
 
-	DebugLogger.Println("Succesfully created a Comfort Request.")
+// 	DebugLogger.Println("Succesfully created a Comfort Request.")
 
-	InfoLogger.Println("Making Comfort Rating Call.")
-	csContext,cancel := context.WithTimeout(context.Background(), callTimeoutDuration)
-	defer cancel()
+// 	InfoLogger.Println("Making Comfort Rating Call.")
+// 	csContext,cancel := context.WithTimeout(context.Background(), callTimeoutDuration)
+// 	defer cancel()
 
-	// Invoke the Vessel Motion Service
-	responseMessageCS, err := clientCS.ComfortRating(csContext, &requestMessageCS)
-	if err != nil {
-		ErrorLogger.Println("Failed to make Comfort Rating service call: ")
-		return nil, err
-	} else {
-		DebugLogger.Println("Successfully made service call to Comfort Service.")
-		connVMS.Close()
-	}
+// 	// Invoke the Vessel Motion Service
+// 	responseMessageCS, err := clientCS.ComfortRating(csContext, &requestMessageCS)
+// 	if err != nil {
+// 		ErrorLogger.Println("Failed to make Comfort Rating service call: ")
+// 		return nil, err
+// 	} else {
+// 		DebugLogger.Println("Successfully made service call to Comfort Service.")
+// 		connVMS.Close()
+// 	}
 
 	return nil, status.Errorf(codes.Unimplemented, "method AnalyseRoute not implemented")
 }

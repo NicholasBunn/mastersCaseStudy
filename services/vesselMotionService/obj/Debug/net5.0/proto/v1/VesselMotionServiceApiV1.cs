@@ -27,7 +27,7 @@ namespace vesselMotionService {
             "Citwcm90by92MS92ZXNzZWxfbW90aW9uX3NlcnZpY2VfYXBpX3YxLnByb3Rv",
             "EhZ2ZXNzZWxNb3Rpb25TZXJ2aWNlLnYxIqsCChVNb3Rpb25Fc3RpbWF0ZVJl",
             "cXVlc3QSHQoVcG9ydF9wcm9wX21vdG9yX3Bvd2VyGAEgAygCEhsKE3dpbmRf",
-            "c3BlZWRfcmVsYXRpdmUYAiADKAISEAoIbGF0aXR1ZGUYAyADKAISDwoHSGVh",
+            "c3BlZWRfcmVsYXRpdmUYAiADKAISEAoIbGF0aXR1ZGUYAyADKAISDwoHaGVh",
             "ZGluZxgEIAMoAhITCgt3YXZlX2hlaWdodBgFIAMoAhJCCg5xdWVyeV9sb2Nh",
             "dGlvbhgGIAEoDjIqLnZlc3NlbE1vdGlvblNlcnZpY2UudjEuTG9jYXRpb25P",
             "blNoaXBFbnVtEh8KF3dpbmRfZGlyZWN0aW9uX3JlbGF0aXZlGAcgAygCEjkK",
@@ -156,7 +156,7 @@ namespace vesselMotionService {
       get { return latitude_; }
     }
 
-    /// <summary>Field number for the "Heading" field.</summary>
+    /// <summary>Field number for the "heading" field.</summary>
     public const int HeadingFieldNumber = 4;
     private static readonly pb::FieldCodec<float> _repeated_heading_codec
         = pb::FieldCodec.ForFloat(34);

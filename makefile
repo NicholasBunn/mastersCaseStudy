@@ -15,6 +15,9 @@ protoGenGo:
 	# Comfort service
 	protoc -I services --go_out=services --go-grpc_out=services services/comfortService/proto/v1/comfort_service_api_v1.proto
 
+	# Vessel Motion service
+	protoc -I services --go_out=services --go-grpc_out=services services/vesselMotionService/proto/v1/vessel_motion_service_api_v1.proto
+
 
 protoGenPy:
 	# Ocean weather service
