@@ -81,7 +81,10 @@ class ComfortServiceServicer(object):
 		responseMessage.unix_time.extend(request.unix_time)
 		
 		# Calculate equivalent vibration
-		equivalentVibration = calculateEquivalentVibration(request.unix_time, request.human_weighted_vibration_z)
+		if (len(request.unix_time) > 1):
+			equivalentVibration = calculateEquivalentVibration(request.unix_time, request.human_weighted_vibration_z)
+		else:
+			equivalentVibration = request.human_weighted_vibration_z[0]
 
 		# Assess comfort
 		responseMessage = assessComfort(equivalentVibration, responseMessage)

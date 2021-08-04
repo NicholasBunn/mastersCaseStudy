@@ -14,8 +14,6 @@ import (
 	// Third-party packages
 	"github.com/go-yaml/yaml"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
 
 	// Proto packages
 	oceanWeatherServicePB "github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/oceanWeatherService"
@@ -146,9 +144,9 @@ type Config struct {
 		Port struct {
 			OceanWeatherService      string `yaml:"oceanWeatherService"`
 			PowerTrainService string `yaml:"powerTrainService"`
-			VesselMotionService string `yaml:"vesselMotionService`
-			ProcessVibrationService string `yaml:processVibrationService`
-			ComfortService string `yaml:comfortService`
+			VesselMotionService string `yaml:"vesselMotionService"`
+			ProcessVibrationService string `yaml:"processVibrationService"`
+			ComfortService string `yaml:"comfortService"`
 	// 			PrepareService    string `yaml:"prepare"`
 	// 			EstimationService string `yaml:"estimation"`
 		} `yaml:"port"`
@@ -186,7 +184,7 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 	InfoLogger.Println("Received Analyse Route service call.")
 
 	// ________Query Ocean Weather Service________
-
+	
 	// Create an insecure connection to the ocean weather service server
 	connOWS, err := createInsecureServerConnection(
 		addrOWS, // Set the address of the server
@@ -252,6 +250,8 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 		ModelType: powerTrainServicePB.ModelTypeEnum_OPENWATER,
 	}
 
+	DebugLogger.Println(requestMessagePTS)
+
 	requestMessagePTS.WindDirectionRelative, err = calculateRelativeWindDirection(responseMessageOWS.WindDirection, request.Heading)
 	if err != nil {
 		ErrorLogger.Println("Failed to calculate relative wind direction: ")
@@ -297,6 +297,7 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 		WaveHeight: responseMessageOWS.SwellHeight,
 		WindDirectionRelative: requestMessagePTS.WindDirectionRelative,
 		ModelType: vesselMotionServicePB.ModelTypeEnum_OPENWATER,
+		QueryLocation: vesselMotionServicePB.LocationOnShipEnum_UNKNOWN_LOCATION,
 	}
 
 	requestMessageVMS.WindSpeedRelative, err = calculateRelativeWindSpeed(responseMessageOWS.WindSpeed, requestMessagePTS.WindDirectionRelative, request.SOG)
@@ -321,6 +322,7 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 		connVMS.Close()
 	}
 
+	fmt.Println(responseMessageVMS)
 	// ________Query Comfort Service________
 	
 	// Create an insecure connection to the power train service server
@@ -360,9 +362,19 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 		connVMS.Close()
 	}
 
-	print(responseMessageCS)
+	fmt.Println(responseMessageCS)
+	// Create the response message
+	responseMessage := serverPB.AnalysisResponse{
+		// UnixTime: request.UnixTime,
+		// AveragePower: averagePower,
+		// // TotalCost: ,
+		// AverageRmsX: averageRMSX,
+		// AverageRmsY: averageRMSY,
+		// AverageRmsZ: averageRMSZ,
+		// // ComfortLevel: ,
+	}
 
-	return nil, status.Errorf(codes.Unimplemented, "method AnalyseRoute not implemented")
+	return &responseMessage, nil
 }
 
 // ________SUPPORTING FUNCTIONS________

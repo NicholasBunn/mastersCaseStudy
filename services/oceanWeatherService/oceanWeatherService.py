@@ -108,6 +108,7 @@ class OceanWeatherServiceServicer(ocean_weather_service_api_v1_pb2_grpc.OceanWea
 				responseMessage.swell_height.append(jsonOceanData["swellHeight"]["icon"])
 				responseMessage.swell_frequency.append(1/jsonOceanData["swellPeriod"]["icon"])
 				responseMessage.swell_period.append(jsonOceanData["swellPeriod"]["icon"])
+				responseMessage.wave_length.append(1.56*(jsonOceanData["swellPeriod"]["icon"]**2)) # Calculated for deep water waves
 
 				# Set the beaufort number based on the wind speed
 				if(jsonOceanData["windSpeed"]["icon"] < 0.5):

@@ -100,7 +100,7 @@ namespace vesselMotionService
             {
                 _logger.LogDebug($"Unaccounted for error, please contact a developer and let them know about this \n {err}");
             }
-            
+
             return Task.FromResult(response);
         }
 
@@ -125,9 +125,9 @@ namespace vesselMotionService
             /* This function calculates the vibration response (in m/s^2) of the vessel for open water sailing conditions. It takes the port motor power, the vesel's latitude, the relativeWindSpeed, the relativeWindDirection, the heading, and the wave height as inputs. It returns an acceleration estimate for the bridge only. The study carried out by Keith Soal (https://scholar.sun.ac.za/handle/10019.1/96058) offers models/coefficients that account for acceleration in multiple axes at multiple locations on the vessel; these, however, were not implemented to save time. This function would need to be refactored to include these (by taking location and axis as inputs and by selecting the coefficients based on these).
             */
 
-            if((portPropMotorPower < 0F) || (relativeWindSpeed < 0) || (relativeWindDirection < 0) || (heading < 0) || (waveHeight < 0))
+            if((portPropMotorPower < 0F) || (relativeWindDirection < 0) || (heading < 0) || (waveHeight < 0))
             {
-                throw new ArgumentException("The only input that can have a negative value is latitude");
+                throw new ArgumentException("The only input that can have a negative value is latitude" + portPropMotorPower + ", " + relativeWindSpeed + ", " + relativeWindDirection + ", " + heading + ", " + waveHeight);
             }
             
             // Define coefficients for a x-axis estimate on the bridge in open water. These provide the human-weighted vibrations

@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using System.Net;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 namespace vesselMotionService
 {
@@ -21,6 +23,14 @@ namespace vesselMotionService
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    webBuilder.ConfigureKestrel(options =>
+                    {
+                        options.Listen(IPAddress.Any, 50054, listenOptions =>
+                        {
+                            listenOptions.Protocols = HttpProtocols.Http2;
+                            // listenOptions.UseHttps("PATHTO.pfxFILE", "certifcatepassword);
+                        });
+                    });
                     webBuilder.UseStartup<Startup>();
                 });
     }

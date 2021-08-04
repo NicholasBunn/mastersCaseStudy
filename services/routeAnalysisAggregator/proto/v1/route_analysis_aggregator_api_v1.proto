@@ -18,11 +18,10 @@ message AnalysisResponse {
     repeated double unix_time = 1;
     float average_power = 2;
     float total_cost = 3;
-    repeated float power_usage = 4;
-    repeated float rms_vibration_x = 5;
-    repeated float rms_vibration_y = 6;
-    repeated float rms_vibration_z = 7;
-    HabitibilityRating comfort_level = 8;
+    float average_rms_x = 4;
+    float average_rms_y = 5;
+    float average_rms_z = 6;
+    HabitibilityRating comfort_level = 7;
 }
 
 // 'Analysis Service' offers BLABLA service call that aggregates information to provide summaries of requested routes.

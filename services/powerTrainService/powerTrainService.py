@@ -175,7 +175,7 @@ class PowerTrainServiceServicer(power_train_service_api_v1_pb2_grpc.PowerTrainSe
 					'Beaufort number': request.beaufort_number, 
 					'Wave direction':  request.wave_direction, 
 					'Wave length': request.wave_length}
-		
+				
 		# ________PREPARE THE DATA________
 		try:
 			processedData = structureData(pd.DataFrame(inputData))
