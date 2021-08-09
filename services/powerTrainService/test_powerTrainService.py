@@ -136,6 +136,7 @@ class PowerTrainIntegrationTest(unittest.TestCase):
 		self.assertEqual(response.unix_time[0], 1608811845)
 		self.assertEqual(response.unix_time[1], 1608812145)
 		self.assertEqual(response.unix_time[2], 1609157745)
+		self.assertEqual(response.power_estimate_average, 1464.6253662109375)
 
 	def test_CostEstimate(self):
 		''' This function tests the CostEstimate-specific functionality. It ensures that the service call correctly calculates the cost for a hypothetical route
@@ -170,6 +171,8 @@ class PowerTrainIntegrationTest(unittest.TestCase):
 		self.assertEqual(response.cost_estimate[1], 898.77587890625)
 		self.assertEqual(response.cost_estimate[2], 1957650.125)
 		self.assertEqual(response.total_cost, 2058549.0)
+		self.assertEqual(response.power_estimate_average, 1464.6253662109375)
+
 
 	def test_PowerTracking(self):
 		pass

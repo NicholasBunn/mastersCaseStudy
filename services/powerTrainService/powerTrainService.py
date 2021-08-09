@@ -209,6 +209,7 @@ class PowerTrainServiceServicer(power_train_service_api_v1_pb2_grpc.PowerTrainSe
 		# Populate response message
 		responseMessage.unix_time.extend(request.unix_time)
 		responseMessage.power_estimate.extend(estimatedPower)
+		responseMessage.power_estimate_average = sum(estimatedPower)/len(estimatedPower)
 
 		return responseMessage
 
@@ -255,6 +256,7 @@ class PowerTrainServiceServicer(power_train_service_api_v1_pb2_grpc.PowerTrainSe
 				responseMessage.cost_estimate.append(startingCost)
 
 		responseMessage.total_cost = totalCost
+		responseMessage.power_estimate_average = requiredPowerSet.power_estimate_average
 
 		return responseMessage
 
