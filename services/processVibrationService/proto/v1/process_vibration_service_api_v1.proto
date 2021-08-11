@@ -6,24 +6,24 @@ option go_package = "routeAnalysisAggregator/proto/v1/generated/processVibration
 
 message ProcessRequest {
     repeated double unix_time = 1;
-    repeated float vibration_x = 2;
-    repeated float vibration_y = 3;
-    repeated float vibration_z = 4;
+    repeated double vibration_x = 2;
+    repeated double vibration_y = 3;
+    repeated double vibration_z = 4;
 }
 
 message ProcessResponseSeries {
     repeated double unix_time = 1;
-    repeated float rms_vibration_x = 2;
-    repeated float rms_vibration_y = 3;
-    repeated float rms_vibration_z = 4;
+    repeated double rms_vibration_x = 2;
+    repeated double rms_vibration_y = 3;
+    repeated double rms_vibration_z = 4;
 }
 
 message ProcessResponseBatch {
     double unix_time_start = 1;
     double unix_time_end = 2;
-    float rms_vibration_x = 3;
-    float rms_vibration_y = 4;
-    float rms_vibration_z = 5;
+    double rms_vibration_x = 3;
+    double rms_vibration_y = 4;
+    double rms_vibration_z = 5;
 }
 
 // 'Process Vibration Service' offers two service calls that process time-series vibration signals according to accepted practices.

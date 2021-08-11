@@ -21,6 +21,7 @@ import (
 	vesselMotionServicePB "github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/vesselMotionService"
 	comfortServicePB "github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/comfortService"
 	serverPB "github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/routeAnalysisAggregator"
+	processVibrationServicePB "github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/processVibrationService"
 )
 
 var (
@@ -29,6 +30,7 @@ var (
 	addrOWS	string
 	addrPTS string
 	addrVMS string
+	addrPVS string
 	addrCS string
 
 	timeoutDuration     int           // The time, in seconds, that the client should wait when dialing (connecting to) the server before throwing an error
@@ -61,6 +63,7 @@ func init() {
 	addrPTS = os.Getenv("PTSHOST") + ":" + config.Client.Port.PowerTrainService
 	addrVMS = os.Getenv("VMSHOST") + ":" + config.Client.Port.VesselMotionService
 	addrCS = os.Getenv("CSHOST") + ":" + config.Client.Port.ComfortService
+	addrPVS = os.Getenv("VPSHOST") + ":" + config.Client.Port.ProcessVibrationService
 
 	// Load timeouts from config
 	timeoutDuration = config.Client.Timeout.Connection
@@ -147,8 +150,6 @@ type Config struct {
 			VesselMotionService string `yaml:"vesselMotionService"`
 			ProcessVibrationService string `yaml:"processVibrationService"`
 			ComfortService string `yaml:"comfortService"`
-	// 			PrepareService    string `yaml:"prepare"`
-	// 			EstimationService string `yaml:"estimation"`
 		} `yaml:"port"`
 		Timeout struct {
 			Connection int `yaml:"connection"`
@@ -324,6 +325,45 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 
 	fmt.Println(responseMessageVMS)
 	
+	// ________Query Process Vibration Service________
+
+	// Create an insecure connection to the process vibration service server
+	connPVS, err := createInsecureServerConnection(
+		addrPVS,
+		timeoutDuration,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	InfoLogger.Println("Creating Process Vibration Service Client.")
+	clientPVS := processVibrationServicePB.NewProcessVibrationServiceClient(connPVS)
+	DebugLogger.Println("Succesfully created client connection to Process Vibration Service.")
+
+	// Create a process request message
+	requestMessagePVS := processVibrationServicePB.ProcessRequest{
+		UnixTimeStart: request.UnixTime,
+		VibrationX: responseMessageVMS.AccelerationEstimateX,
+		VibrationY: responseMessageVMS.AccelerationEstimateY,
+		VibrationZ: responseMessageVMS.AccelerationEstimateZ,
+	}
+
+	DebugLogger.Println("Succesfully created a Process Request.")
+
+	InfoLogger.Println("Making Calculate RMS Batch Call.")
+	pvsContext, cancel := context.WithTimeout(context.Background(), callTimeoutDuration)
+	defer cancel()
+
+	// Invoke the Process Vibration Service
+	responseMessagePVS, err := clientPVS.CalculateRMSBatch(pvsContext, &requestMessagePVS)
+	if err != nil {
+		ErrorLogger.Println("Failed to make Process Vibration service call: ")
+		return nil, err
+	} else {
+		DebugLogger.Println("Successfully made service call to Process Vibration Service.")
+		connPVS.Close()
+	}
+
 	// ________Query Comfort Service________
 	
 	// Create an insecure connection to the comfort service server
@@ -350,7 +390,7 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 	DebugLogger.Println("Succesfully created a Comfort Request.")
 
 	InfoLogger.Println("Making Comfort Rating Call.")
-	csContext,cancel := context.WithTimeout(context.Background(), callTimeoutDuration)
+	csContext, cancel := context.WithTimeout(context.Background(), callTimeoutDuration)
 	defer cancel()
 
 	// Invoke the Comfort Service
@@ -364,16 +404,15 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 	}
 
 	fmt.Println(responseMessageCS)
-	fmt.Println(responseMessagePTS)
 
 	// Create the response message
 	responseMessage := serverPB.AnalysisResponse{
 		UnixTime: request.UnixTime,
-		// AveragePower: responseMessagePTS.PowerEstimateAverage,
+		AveragePower: responseMessagePTS.PowerEstimateAverage,
 		TotalCost: responseMessagePTS.TotalCost,
-		// AverageRmsX: averageRMSX,
-		// AverageRmsY: averageRMSY,
-		// AverageRmsZ: averageRMSZ,
+		AverageRmsX: responseMessagePVS.RmsVibrationX,
+		AverageRmsY: responseMessagePVS.RmsVibrationY,
+		AverageRmsZ: responseMessagePVS.RmsVibrationZ,
 		// ComfortLevel: 
 	}
 

@@ -54,9 +54,9 @@ class PowerTrainIntegrationTest(unittest.TestCase):
 		self.assertEqual(response.unix_time, [1626325118, 1608812145, 1626332318])
 
 		# Test the responses
-		self.assertEqual(response.rms_vibration_x, [0.007842340506613255, 0.02347838319838047, 0.009490306489169598])
-		self.assertEqual(response.rms_vibration_y, [0.0007402219926007092, 0.0023732201661914587, 0.0016512781148776412])
-		self.assertEqual(response.rms_vibration_z, [0.025224164128303528, 0.03229521960020065, 0.0024418658576905727])
+		self.assertEqual(response.rms_vibration_x, [0.007842340290804014, 0.023478384653788473, 0.009490306384474633])
+		self.assertEqual(response.rms_vibration_y, [0.0007402220059630759, 0.002373220063289538, 0.001651278181833697])
+		self.assertEqual(response.rms_vibration_z, [0.025224163414287064, 0.032295221326657596, 0.002441865989607128])
 
 	def test_CalculateRMSBatch(self):
 		''' This function tests the CalculateRMSBatch-specific functionality. It ensures that the service call takes the correct inputs, processes them as is required for the model, and makes the correct estimates based on the provided inputs.
@@ -73,11 +73,11 @@ class PowerTrainIntegrationTest(unittest.TestCase):
 				vibration_z = [0.035672354, 0.04567234, 0.00345332],
 			))
 
-		self.assertEqual(response.unix_time_start, 1626325118)
-		self.assertEqual(response.unix_time_end, 1626332318)
-		self.assertEqual(response.rms_vibration_x, 0.021645672619342804)
-		self.assertEqual(response.rms_vibration_y, 0.0024367766454815865)
-		self.assertEqual(response.rms_vibration_z, 0.03351818025112152)
+		self.assertEqual(response.unix_time_start, 1626325118.0)
+		self.assertEqual(response.unix_time_end, 1626332318.0)
+		self.assertEqual(response.rms_vibration_x, 0.021645673354571626)
+		self.assertEqual(response.rms_vibration_y, 0.002436776794690341)
+		self.assertEqual(response.rms_vibration_z, 0.03351817864979796)
 
 if __name__ == '__main__':
 	unittest.main()
