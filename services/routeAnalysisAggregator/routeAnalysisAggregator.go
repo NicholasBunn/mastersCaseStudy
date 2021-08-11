@@ -21,7 +21,6 @@ import (
 	vesselMotionServicePB "github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/vesselMotionService"
 	comfortServicePB "github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/comfortService"
 	serverPB "github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/routeAnalysisAggregator"
-	processVibrationServicePB "github.com/NicholasBunn/mastersCaseStudy/services/routeAnalysisAggregator/proto/v1/generated/processVibrationService"
 )
 
 var (
@@ -324,45 +323,6 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 	}
 
 	fmt.Println(responseMessageVMS)
-	
-	// ________Query Process Vibration Service________
-
-	// Create an insecure connection to the process vibration service server
-	connPVS, err := createInsecureServerConnection(
-		addrPVS,
-		timeoutDuration,
-	)
-	if err != nil {
-		return nil, err
-	}
-
-	InfoLogger.Println("Creating Process Vibration Service Client.")
-	clientPVS := processVibrationServicePB.NewProcessVibrationServiceClient(connPVS)
-	DebugLogger.Println("Succesfully created client connection to Process Vibration Service.")
-
-	// Create a process request message
-	requestMessagePVS := processVibrationServicePB.ProcessRequest{
-		UnixTime: request.UnixTime,
-		VibrationX: responseMessageVMS.AccelerationEstimateX,
-		VibrationY: responseMessageVMS.AccelerationEstimateY,
-		VibrationZ: responseMessageVMS.AccelerationEstimateZ,
-	}
-
-	DebugLogger.Println("Succesfully created a Process Request.")
-
-	InfoLogger.Println("Making Calculate RMS Batch Call.")
-	pvsContext, cancel := context.WithTimeout(context.Background(), callTimeoutDuration)
-	defer cancel()
-
-	// Invoke the Process Vibration Service
-	responseMessagePVS, err := clientPVS.CalculateRMSBatch(pvsContext, &requestMessagePVS)
-	if err != nil {
-		ErrorLogger.Println("Failed to make Process Vibration service call: ")
-		return nil, err
-	} else {
-		DebugLogger.Println("Successfully made service call to Process Vibration Service.")
-		connPVS.Close()
-	}
 
 	// ________Query Comfort Service________
 	
@@ -410,9 +370,6 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 		UnixTime: request.UnixTime,
 		AveragePower: responseMessagePTS.PowerEstimateAverage,
 		TotalCost: responseMessagePTS.TotalCost,
-		AverageRmsX: responseMessagePVS.RmsVibrationX,
-		AverageRmsY: responseMessagePVS.RmsVibrationY,
-		AverageRmsZ: responseMessagePVS.RmsVibrationZ,
 		// ComfortLevel: 
 	}
 
