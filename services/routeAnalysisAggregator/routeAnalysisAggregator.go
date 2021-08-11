@@ -260,14 +260,14 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 
 	DebugLogger.Println("Succesfully created a Power Train Estimate Request.")
 
-	InfoLogger.Println("Making Power Estimate Call.")
+	InfoLogger.Println("Making Cost Estimate Call.")
 	ptsContext, cancel := context.WithTimeout(context.Background(), callTimeoutDuration)
 	defer cancel()
 
 	// Invoke the Power Train Service
-	responseMessagePTS, err := clientPTS.PowerEstimate(ptsContext, &requestMessagePTS)
+	responseMessagePTS, err := clientPTS.CostEstimate(ptsContext, &requestMessagePTS)
 	if err != nil {
-		ErrorLogger.Println("Failed to make Power Estimate service call: ")
+		ErrorLogger.Println("Failed to make Cost Estimate service call: ")
 		return nil, err
 	} else {
 		DebugLogger.Println("Successfully made service call to Power Train Service.")
@@ -323,9 +323,10 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 	}
 
 	fmt.Println(responseMessageVMS)
+	
 	// ________Query Comfort Service________
 	
-	// Create an insecure connection to the power train service server
+	// Create an insecure connection to the comfort service server
 	connCS, err := createInsecureServerConnection(
 		addrCS,
 		timeoutDuration,
@@ -352,7 +353,7 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 	csContext,cancel := context.WithTimeout(context.Background(), callTimeoutDuration)
 	defer cancel()
 
-	// Invoke the Vessel Motion Service
+	// Invoke the Comfort Service
 	responseMessageCS, err := clientCS.ComfortRating(csContext, &requestMessageCS)
 	if err != nil {
 		ErrorLogger.Println("Failed to make Comfort Rating service call: ")
@@ -363,15 +364,17 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 	}
 
 	fmt.Println(responseMessageCS)
+	fmt.Println(responseMessagePTS)
+
 	// Create the response message
 	responseMessage := serverPB.AnalysisResponse{
-		// UnixTime: request.UnixTime,
-		// AveragePower: averagePower,
-		// // TotalCost: ,
+		UnixTime: request.UnixTime,
+		// AveragePower: responseMessagePTS.PowerEstimateAverage,
+		TotalCost: responseMessagePTS.TotalCost,
 		// AverageRmsX: averageRMSX,
 		// AverageRmsY: averageRMSY,
 		// AverageRmsZ: averageRMSZ,
-		// // ComfortLevel: ,
+		// ComfortLevel: 
 	}
 
 	return &responseMessage, nil
