@@ -342,7 +342,7 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 
 	// Create a process request message
 	requestMessagePVS := processVibrationServicePB.ProcessRequest{
-		UnixTimeStart: request.UnixTime,
+		UnixTime: request.UnixTime,
 		VibrationX: responseMessageVMS.AccelerationEstimateX,
 		VibrationY: responseMessageVMS.AccelerationEstimateY,
 		VibrationZ: responseMessageVMS.AccelerationEstimateZ,
