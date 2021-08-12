@@ -23,7 +23,7 @@ func TestNewJWTManager(t *testing.T) {
 	})
 }
 
-func TestGenerateManager(t *testing.T) {
+func TestGenerateToken(t *testing.T) {
 
 	myManager := NewJWTManager("secretKey", (15 * time.Minute))
 
