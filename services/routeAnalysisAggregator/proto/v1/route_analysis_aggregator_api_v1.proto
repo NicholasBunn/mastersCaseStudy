@@ -18,9 +18,9 @@ message AnalysisResponse {
     repeated double unix_time = 1;
     float average_power = 2;
     float total_cost = 3;
-    float average_rms_x = 4;
-    float average_rms_y = 5;
-    float average_rms_z = 6;
+    double average_rms_x = 4;
+    double average_rms_y = 5;
+    double average_rms_z = 6;
     HabitibilityRating comfort_level = 7;
 }
 
