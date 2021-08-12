@@ -96,7 +96,7 @@ func main() {
 	)
 
 	// Attach the authentication service offering to the server
-	serverPB.RegisterAuthenticationServiceServer(authenticationServer, &authServer{})
+	serverPB.RegisterAuthenticationServiceServer(authenticationServer, &server{})
 	DebugLogger.Println("Succesfully registered Authentication Service to the server")
 
 	// Start the server
@@ -121,7 +121,7 @@ type Config struct {
 	} `yaml:"server"`
 }
 
-type authServer struct {
+type server struct {
 	// Use this to implement the authentication service
 
 	serverPB.UnimplementedAuthenticationServiceServer
@@ -129,7 +129,7 @@ type authServer struct {
 
 // ________IMPLEMENT THE OFFERED SERVICES________
 
-func (s *authServer) LoginAuth(ctx context.Context, request *serverPB.LoginAuthRequest) (*serverPB.LoginAuthResponse, error) {
+func (s *server) LoginAuth(ctx context.Context, request *serverPB.LoginAuthRequest) (*serverPB.LoginAuthResponse, error) {
 	/* This service logs the user in by checking the provided details against a user
 	database. If the user exists, a JWT is generated and returned to them. */
 
@@ -216,32 +216,4 @@ func DecodeConfig(configPath string) (*Config, error) {
 	}
 
 	return config, nil
-}
-
-func createInsecureServerConnection(port string, timeout int) (*grpc.ClientConn, error) {
-	/* This (unexported) function takes a port address and timeout as inputs. It creates a connection to the server	at the port adress
-	and returns an insecure gRPC connection with the specified interceptor */
-
-	// Create the context for the request
-	ctx, cancel := context.WithTimeout(
-		context.Background(),
-		(time.Duration(timeoutDuration) * time.Second),
-	)
-	defer cancel()
-
-	conn, err := grpc.DialContext(
-		ctx,                                    // Add the created context to the connection
-		port,                                   // Add the port that the server is listening on
-		grpc.WithBlock(),                       // Make the dial a blocking call so that we can ensure the connection is indeed created
-		grpc.WithInsecure(),                    // Specify that the connection is insecure (no credentials/authorisation required)
-	)
-
-	// Hamndle errors, if any
-	if err != nil {
-		ErrorLogger.Println("Failed to create connection to the server on port: " + port)
-		return nil, err
-	}
-
-	InfoLogger.Println("Succesfully created connection to the server on port: " + port)
-	return conn, nil
 }
