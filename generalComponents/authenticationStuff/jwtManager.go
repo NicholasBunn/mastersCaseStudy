@@ -24,7 +24,7 @@ type UserClaims struct {
 
 func NewJWTManager(sercretKey string, tokenDuration time.Duration) *JWTManager {
 	// This function returns a new JWT manager
-	return &JWTManager{sercretKey, tokenDuration}
+	return &JWTManager{secretKey, tokenDuration}
 }
 
 func (manager *JWTManager) GenerateManager(user *User) (string, error) {
