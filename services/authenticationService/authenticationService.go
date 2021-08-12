@@ -182,15 +182,18 @@ func find(username string) (*authentication.User, error) {
 		if err != nil {
 			return nil, status.Errorf(codes.Internal, "could not create user")
 		}
+		
 		return user, nil
-	}
+	} else if (username == "guest") {
+		user, err := authentication.CreateUser("guest", "myPassword", "guest")
+		if err != nil {
+			return nil, status.Errorf(codes.Internal, "could not create user")
+		}
 
-	user, err := authentication.CreateUser("guest", "myPassword", "guest")
-	if err != nil {
-		return nil, status.Errorf(codes.Internal, "could not create user")
+		return user, nil
+	} else {
+		return nil, status.Errorf(codes.NotFound, "requested user does not exist") 
 	}
-
-	return user, nil
 }
 
 func DecodeConfig(configPath string) (*Config, error) {
