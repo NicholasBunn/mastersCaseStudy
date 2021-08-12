@@ -22,12 +22,12 @@ type UserClaims struct {
 	Role     string `json:"role"`
 }
 
-func NewJWTManager(sercretKey string, tokenDuration time.Duration) *JWTManager {
+func NewJWTManager(secretKey string, tokenDuration time.Duration) *JWTManager {
 	// This function returns a new JWT manager
 	return &JWTManager{secretKey, tokenDuration}
 }
 
-func (manager *JWTManager) GenerateManager(user *User) (string, error) {
+func (manager *JWTManager) GenerateToken(user *User) (string, error) {
 	// This function generates and returns a signed JWT
 	claims := UserClaims{
 		StandardClaims: jwt.StandardClaims{

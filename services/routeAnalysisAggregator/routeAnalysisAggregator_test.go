@@ -22,14 +22,14 @@ func TestCalculateRelativeWindDirection(t *testing.T) {
 		},
 	}
 
-	t.Run("Testing positive cases for Calculate Relative Wind Direction.", func(t *testing.T) {
+	t.Run("Testing Route Analysis Aggregator: Unit Test: Positive Cases for Calculate Relative Wind Direction (Function Test)", func(t *testing.T) {
 		/* This tests the core functionality of the Calculate Relative Wind Direction function, where the result is between 0 and 360 degrees (no conversion required).
 		*/
 
 		testCase := Tests[0]
 
 		output, err := calculateRelativeWindDirection(testCase.windDirection, testCase.heading)
-		if err != nil{
+		if (err != nil){
 			fmt.Println(err)
 		} else {
 			if compareSlices32(output, testCase.expectedOutput) != true {
@@ -40,14 +40,14 @@ func TestCalculateRelativeWindDirection(t *testing.T) {
 		}
 	})
 	
-	t.Run("Testing negative cases for Calculate Relative Wind Direction ", func(t *testing.T) {
+	t.Run("Testing Route Analysis Aggregator: Unit Test: Negative Cases for Calculate Relative Wind Direction (Function Test)", func(t *testing.T) {
 		/* This tests the core functionality of the Calculate Relative Wind Direction function, where the result is less than 0 degrees (and thus, conversion is required).
 		*/
 
 		testCase := Tests[1]
 
 		output, err := calculateRelativeWindDirection(testCase.windDirection, testCase.heading)
-		if err != nil{
+		if (err != nil){
 			fmt.Println(err)
 		} else {
 			if compareSlices32(output, testCase.expectedOutput) != true {
@@ -80,13 +80,13 @@ func TestCalculateRelativeWindSpeed( t *testing.T) {
 		},
 	}
 
-	t.Run("Testing first quadrant cases for Calculate Relative Wind Speed.", func(t *testing.T) {
+	t.Run("Testing Route Analysis Aggregator: Unit Test: First Quadrant Cases for Calculate Relative Wind Speed (Function Test)", func(t *testing.T) {
 		/* This tests the core functionality of the Calculate Relative Wind Speed function, with inputs between 0 and 90 degrees (top right quadrant)
 		*/
 		testCase := Tests[0]
 
 		output, err := calculateRelativeWindSpeed(testCase.windSpeed, testCase.relativeWindDirection, testCase.sog)
-		if err != nil{
+		if (err != nil){
 			fmt.Println(err)
 		} else {
 			if compareSlices32(output, testCase.expectedOutput) != true {
@@ -96,13 +96,13 @@ func TestCalculateRelativeWindSpeed( t *testing.T) {
 		}
 	})
 
-	t.Run("Testing second quadrant cases for Calculate Relative Wind Speed.", func(t *testing.T) {
+	t.Run("Testing Route Analysis Aggregator: Unit Test: Second Quadrant Cases for Calculate Relative Wind Speed (Function Test)", func(t *testing.T) {
 		/* This tests the core functionality of the Calculate Relative Wind Speed function, with inputs between 90 and 180 degrees (bottom right quadrant)
 		*/
 		testCase := Tests[1]
 
 		output, err := calculateRelativeWindSpeed(testCase.windSpeed, testCase.relativeWindDirection, testCase.sog)
-		if err != nil{
+		if (err != nil){
 			fmt.Println(err)
 		} else {
 			if compareSlices32(output, testCase.expectedOutput) != true {
@@ -112,13 +112,13 @@ func TestCalculateRelativeWindSpeed( t *testing.T) {
 		}
 	})
 
-	t.Run("Testing third quadrant cases for Calculate Relative Wind Speed.", func(t *testing.T) {
+	t.Run("Testing Route Analysis Aggregator: Unit Test: Third Quadrant Cases for Calculate Relative Wind Speed (Function Test)", func(t *testing.T) {
 		/* This tests the core functionality of the Calculate Relative Wind Speed function, with inputs between 180 and 270 degrees (bottom left quadrant)
 		*/
 		testCase := Tests[2]
 
 		output, err := calculateRelativeWindSpeed(testCase.windSpeed, testCase.relativeWindDirection, testCase.sog)
-		if err != nil{
+		if (err != nil){
 			fmt.Println(err)
 		} else {
 			if compareSlices32(output, testCase.expectedOutput) != true {
@@ -128,13 +128,13 @@ func TestCalculateRelativeWindSpeed( t *testing.T) {
 		}
 	})
 
-	t.Run("Testing fourth quadrant cases for Calculate Relative Wind Speed.", func(t *testing.T) {
+	t.Run("Testing Route Analysis Aggregator: Unit Test: Fourth Quadrant Cases for Calculate Relative Wind Speed (Function Test)", func(t *testing.T) {
 		/* This tests the core functionality of the Calculate Relative Wind Speed function, with inputs between 270 and 360 degrees (front left quadrant)
 		*/
 		testCase := Tests[3]
 
 		output, err := calculateRelativeWindSpeed(testCase.windSpeed, testCase.relativeWindDirection, testCase.sog)
-		if err != nil{
+		if (err != nil){
 			fmt.Println(err)
 		} else {
 			if compareSlices32(output, testCase.expectedOutput) != true {
@@ -146,13 +146,13 @@ func TestCalculateRelativeWindSpeed( t *testing.T) {
 	})
 
 	// Add in edge case tests (0, 90, 180, 270, 360)
-	t.Run("Testing edge cases for Calculate Relative Wind Speed.", func(t *testing.T) {
+	t.Run("Testing Route Analysis Aggregator: Unit Test: Edge Cases for Calculate Relative Wind Speed (Function Test)", func(t *testing.T) {
 		/* This tests the core functionality of the Calculate Relative Wind Speed function, with inputs of 0, 90, 180, 270, and 360 degrees (edge cases)
 		*/
 		testCase := Tests[4]
 
 		output, err := calculateRelativeWindSpeed(testCase.windSpeed, testCase.relativeWindDirection, testCase.sog)
-		if err != nil{
+		if (err != nil){
 			fmt.Println(err)
 		} else {
 			if compareSlices32(output, testCase.expectedOutput) != true {
@@ -163,13 +163,13 @@ func TestCalculateRelativeWindSpeed( t *testing.T) {
 		}
 	})
 
-	t.Run("Testing incorrect input value handling for Calculate Relative Wind Speed.", func(t *testing.T) {
+	t.Run("Testing Route Analysis Aggregator: Unit Test: Incorrect Input Handling Cases for Calculate Relative Wind Speed (Function Test)", func(t *testing.T) {
 		/* This tests the error-handling functionality of the Calculate Relative Wind Speed function, where inputs exceed 360 degrees
 		*/
 		testCase := Tests[5]
 
 		output, err := calculateRelativeWindSpeed(testCase.windSpeed, testCase.relativeWindDirection, testCase.sog)
-		if err != nil{
+		if (err != nil){
 			fmt.Println("Calculate Relative Wind Speed: Incorrect Input Value Passed")
 		} else {
 			t.Error("Calculate relative wind speed failed with inputs: ", testCase.windSpeed, ", ", testCase.relativeWindDirection, ". Expected failure, received ", output)		
@@ -197,7 +197,7 @@ func TestAnalyseRoute(t *testing.T) {
 	// }
 
 	t.Run("Testing standard stuff.", func(t *testing.T) {
-		/* This tests some of the core stuff, I'll document this onceI've properly written the tests
+		/* This tests some of the core stuff, I'll document this once I've properly written the tests
 		*/
 
 		server := server{}
@@ -215,7 +215,7 @@ func TestAnalyseRoute(t *testing.T) {
 		
 		response, err := server.AnalyseRoute(context.Background(), &request)
 		
-		if err != nil {
+		if (err != nil) {
 			fmt.Println("SAD: ", err)
 		}
 

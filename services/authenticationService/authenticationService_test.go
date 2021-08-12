@@ -28,7 +28,7 @@ func TestLoginAuth(t *testing.T) {
 
 		response, err := server.LoginAuth(context.Background(), &request)
 
-		if err != nil {
+		if (err != nil) {
 			fmt.Println("FAILED: ", err)
 		}
 
