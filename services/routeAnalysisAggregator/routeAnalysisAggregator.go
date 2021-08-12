@@ -363,8 +363,6 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 		DebugLogger.Println("Successfully made service call to Process Vibration Service.")
 	} 
 
-	fmt.Println(responseMessagePVS)
-
 	// ________Query Comfort Service________
 	
 	// Create an insecure connection to the comfort service server
