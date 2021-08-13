@@ -1,8 +1,8 @@
 cloud.google.com/go v0.26.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
 cloud.google.com/go v0.34.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
-github.com/NicholasBunn/mastersCaseStudy/generalComponents/authenticationStuff v0.0.0-20210812072134-54447734afbf h1:XkbrdhInhPTi0274a3pF9DLoX7WQelpqKFK2Azggo60=
-github.com/NicholasBunn/mastersCaseStudy/generalComponents/authenticationStuff v0.0.0-20210812072134-54447734afbf/go.mod h1:QVT/LMOD+35AIeM2BGM4mX4Gc0WZYVMPXQxKhzZo6vw=
+github.com/NicholasBunn/mastersCaseStudy/generalComponents/authenticationStuff v0.0.0-20210812161839-19bc285cd565 h1:zL7FcOFehcPeqAtTgCe+3+1u+QkR8FOHqFYBbKvYKmY=
+github.com/NicholasBunn/mastersCaseStudy/generalComponents/authenticationStuff v0.0.0-20210812161839-19bc285cd565/go.mod h1:QVT/LMOD+35AIeM2BGM4mX4Gc0WZYVMPXQxKhzZo6vw=
 github.com/NicholasBunn/mastersCaseStudy/services/authenticationService/proto/v1/generated v0.0.0-20210812072134-54447734afbf h1:GEEcOHpV4aAt6gZ15jWmeyoADi549bW8W3kgdgLjP+s=
 github.com/NicholasBunn/mastersCaseStudy/services/authenticationService/proto/v1/generated v0.0.0-20210812072134-54447734afbf/go.mod h1:jfsXDSO/dd8Wb6gi/3GG45lx0RbBC9frzaMCAFBoerY=
 github.com/OneOfOne/xxhash v1.2.2/go.mod h1:HSdplMjZKSmBqAxg5vPj2TmRDmfkzw+cTzAElWljhcU=
@@ -23,6 +23,8 @@ github.com/envoyproxy/go-control-plane v0.9.9-0.20201210154907-fd9021fe5dad/go.m
 github.com/envoyproxy/go-control-plane v0.9.9-0.20210512163311-63b5d3c536b0/go.mod h1:hliV/p42l8fGbc6Y9bQ70uLwIvmJyVE5k4iMKlh8wCQ=
 github.com/envoyproxy/protoc-gen-validate v0.1.0/go.mod h1:iSmxcyjqTsJpI2R4NaDN7+kN2VEUnK/pcBlmesArF7c=
 github.com/ghodss/yaml v1.0.0/go.mod h1:4dBDuWmgqj2HViK6kFavaiC9ZROes6MMH2rRYeMEF04=
+github.com/go-sql-driver/mysql v1.6.0 h1:BCTh4TKNUYmOmMUcQ3IipzF5prigylS7XXjEkfCHuOE=
+github.com/go-sql-driver/mysql v1.6.0/go.mod h1:DCzpHaOWr8IXmIStZouvnhqoel9Qv2LBy8hT2VhHyBg=
 github.com/go-yaml/yaml v2.1.0+incompatible h1:RYi2hDdss1u4YE7GwixGzWwVo47T8UQwnTLB6vQiq+o=
 github.com/go-yaml/yaml v2.1.0+incompatible/go.mod h1:w2MrLa16VYP0jy6N7M5kHaCkaLENm+P+Tv+MfurjSw0=
 github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b/go.mod h1:SBH7ygxi8pfUlaOkMMuAQtPIUF8ecWP5IEl/CR7VP2Q=

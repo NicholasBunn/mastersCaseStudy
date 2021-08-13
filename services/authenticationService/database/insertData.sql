@@ -1,0 +1,1 @@
+INSERT INTO users (username, hashed_password, permission) VALUES ("admin", "$2a$10$phCIHGW9OHPjhSxJyXZHPOja06FtU07BzwX7PZ.kw.VbdBmc2MDnG", "admin"), ("operator", "$2a$10$GNgqNafRZ5NtDqysAVOUq.b9P4pwsoxUkuKLaYs92RvOk8FuYt0EG", "operator"), ("engineer", "$2a$10$26g.a29sDOjOS69jqTkzvu1fbfhVWkIcW1w/jqDVGSm3UAz3Ty1UO", "engineer")

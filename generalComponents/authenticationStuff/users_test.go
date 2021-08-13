@@ -27,7 +27,6 @@ func TestCreateUser(t *testing.T) {
 func TestCheckPassword(t *testing.T) {
 
 	myUser, err := CreateUser("testUser", "testPassword", "testRole")
-
 	if (err != nil) {
 		t.Errorf("Error from CreateUser function")
 	}

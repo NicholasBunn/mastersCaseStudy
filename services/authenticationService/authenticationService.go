@@ -15,6 +15,9 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"github.com/go-yaml/yaml"
+	"database/sql"
+    _ "github.com/go-sql-driver/mysql"
+
 	authentication "github.com/NicholasBunn/mastersCaseStudy/generalComponents/authenticationStuff"	
 
 	// Proto packages
@@ -25,9 +28,16 @@ var (
 	// Addresses
 	addrMyself string
 
-	// JWT stuff, load this in from config
+	// JWT stuff
 	secretKey     string
 	tokenDuration time.Duration
+
+	// Database stuff
+	dbDriverName string
+	dbUsername string
+	dbPassword string
+	dbPort string
+	dbName string
 
 	// Logging stuff
 	DebugLogger   *log.Logger
@@ -50,6 +60,13 @@ func init() {
 	// Load JWT parameters from config
 	secretKey = config.Server.Authentication.Jwt.SecretKey
 	tokenDuration = time.Duration(config.Server.Authentication.Jwt.TokenDuration) * (time.Minute)
+
+	// Load database details from config
+	dbDriverName = config.Database.DriverName
+	dbUsername = config.Database.User.Username
+	dbPassword = config.Database.User.Password
+	dbPort = config.Database.Details.Port
+	dbName = config.Database.Details.DBName
 
 	// If the file doesn't exist, create it, otherwise append to the file
 	pathSlice := strings.Split(os.Args[0], "/") // This just extracts the services name (filename)
@@ -119,6 +136,17 @@ type Config struct {
 			} `yaml:"jwt"`
 		} `yaml:"authentication"`
 	} `yaml:"server"`
+	Database struct {
+		DriverName string `yaml:"driverName"`
+		User struct {
+			Username string `yaml:"username"`
+			Password string `yaml:"password"`
+		}	`yaml:"user"`
+		Details struct {
+			Port string `yaml:"port"`
+			DBName string `yaml:"dbName"`
+		}	`yaml:"details"`
+	} `yaml:"database"`
 }
 
 type server struct {
@@ -134,17 +162,16 @@ func (s *server) LoginAuth(ctx context.Context, request *serverPB.LoginAuthReque
 	database. If the user exists, a JWT is generated and returned to them. */
 
 	InfoLogger.Println("Received LoginAuth service call")
+	
 	// Find the user with the provided username, return a NotFound error if they don't exist
-	user, err := find(request.GetUsername())
+	user, err := find(request.Username)
 	if err != nil {
 		return nil, status.Errorf(codes.NotFound, "cannot find user: %v", err)
 	}
 
-	// Check if a user with the provided username and password combination exists, return a NotFound error if they don't
-	if user == nil {
-		return nil, status.Errorf(codes.NotFound, "the username you provided doesn't exist")
-	} else if !user.CheckPassword(request.GetPassword()) {
-		return nil, status.Errorf(codes.NotFound, "the password you provided is incorrect")
+	// Check that the provided password matches the password stored in the DB
+	if !user.CheckPassword(request.Password) {
+		return nil, status.Errorf(codes.Unauthenticated, "the password you provided is incorrect")
 	}
 
 	// Create a jwtManager object for the user
@@ -154,7 +181,7 @@ func (s *server) LoginAuth(ctx context.Context, request *serverPB.LoginAuthReque
 	}
 
 	// Generate and return a JWT for the user
-	token, err := jwtManager.GenerateManager(user)
+	token, err := jwtManager.GenerateToken(user)
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "could not generate access token")
 	}
@@ -176,23 +203,44 @@ func save(user *authentication.User) error {
 }
 
 func find(username string) (*authentication.User, error) {
-	// Still need to implement
-	if username == "admin" {
-		user, err := authentication.CreateUser("admin", "myPassword", "admin")
-		if err != nil {
-			return nil, status.Errorf(codes.Internal, "could not create user")
-		}
+	/* This function takes a username as an input and fetches the user details relating to that user from a mySQL database.
+	*/
+
+	// Create connection to the user database
+	accessDetails := fmt.Sprintf("%s:%s@tcp(0.0.0.0:%s)/%s", dbUsername, dbPassword, dbPort, dbName)
+    db, err := sql.Open(dbDriverName, accessDetails)
+    if (err != nil) {
+        return nil, status.Errorf(codes.Unavailable, "Failed to connect to user database.")
+    }
+
+	defer db.Close()
+
+    // Create select query to fetch hashed password and user permission
+	myQuery := fmt.Sprintf("SELECT * FROM users WHERE username = '%s';", username)
+
+	// Execute query
+    userInfo, err := db.Query(myQuery)
+
+	if err != nil {
+        return nil, status.Errorf(codes.Internal, "Failed to query user database.")
+    } else if (!userInfo.Next()) {
+		// If userInfo.Next() returns False, then no results were returned by the DB (and thus, the requested username doesn't exist)
+		return nil, status.Errorf(codes.NotFound, "requested user does not exist.") 
+	} else {
+		// Create user object
+		var userObject authentication.User
 		
-		return user, nil
-	} else if (username == "guest") {
-		user, err := authentication.CreateUser("guest", "myPassword", "guest")
+		// Scan the result into our user object
+		err = userInfo.Scan(&userObject.Username, &userObject.HashedPassword, &userObject.Role)
 		if err != nil {
-			return nil, status.Errorf(codes.Internal, "could not create user")
+			return nil, status.Errorf(codes.Internal, "Failed to map database response.") 
 		}
 
-		return user, nil
-	} else {
-		return nil, status.Errorf(codes.NotFound, "requested user does not exist") 
+		// Close the database connection
+		db.Close()
+
+		// Return the user object
+		return &userObject, nil
 	}
 }
 

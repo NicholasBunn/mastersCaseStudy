@@ -29,7 +29,7 @@ func TestLoginAuth(t *testing.T) {
 
 		request := serverPB.LoginAuthRequest {
 			Username: "admin",
-			Password: "myPassword",
+			Password: "adminPassword",
 		}
 
 		response, err := server.LoginAuth(context.Background(), &request)
@@ -43,8 +43,31 @@ func TestLoginAuth(t *testing.T) {
 		}
 	})
 
+	t.Run("Testing Authentication Service: Integration Test: Incorrect Password Test for Login Auth (Service Test)", func(t *testing.T) {
+		/* This tests that the core functionality of the login auth service, verifying that it returns an unauthenticated error where the username exists but the password is incorrect.
+		*/
+
+		server := server{}
+
+		request := serverPB.LoginAuthRequest {
+			Username: "admin",
+			Password: "wrongPassword",
+		}
+
+		response, err := server.LoginAuth(context.Background(), &request)
+
+		errorStatus, _ := status.FromError(err)
+		if (response != nil) {
+			t.Errorf("Failed to call 'LoginAuth' function")
+		} else if (errorStatus.Code() != codes.Unauthenticated) {
+			t.Errorf("FAILED")
+		} else {
+			fmt.Println("PASSED")
+		}
+	})
+
 	t.Run("Testing Authentication Service: Integration Test: Non-Existing User Test for Login Auth (Service Test)", func(t *testing.T) {
-		/* This tests that the core functionality of the login auth service, verifying that it returns guest permissions for non-existing user.
+		/* This tests that the core functionality of the login auth service, verifying that it returns a not found error for non-existing users.
 		*/
 
 		server := server{}
