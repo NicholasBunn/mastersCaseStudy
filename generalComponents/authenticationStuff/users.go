@@ -36,5 +36,7 @@ func (user *User) CheckPassword(password string) bool {
 	as the password stored for that user */
 	err := bcrypt.CompareHashAndPassword([]byte(user.HashedPassword), []byte(password))
 
+	fmt.Println(err)
+
 	return err == nil
 }

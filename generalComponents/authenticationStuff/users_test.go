@@ -12,6 +12,7 @@ func TestCreateUser(t *testing.T) {
 		*/
 
 		result, err := CreateUser("testUser", "testPassword", "testRole")
+		fmt.Println(result)
 		
 		if (err != nil) {
 			t.Errorf("Error from CreateUser function")
