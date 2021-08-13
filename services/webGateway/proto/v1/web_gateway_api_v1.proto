@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package webGateway.v1;
+
+option go_package = "webGateway/proto/v1/generated;webGateway";
+
+// Login
+message LoginRequest {
+    string username = 1;
+    string password = 2;
+}
+
+message LoginResponse {
+    string permissions = 1;
+    string access_token = 2;
+}
+
+// Power Train Aggregator
+
+// Vessel Motion Aggregator
+
+// Route Analysis Aggregator
+message RouteAnalysisRequest {
+    repeated double unix_time = 1;
+    repeated float latitude = 2;
+    repeated float longitude = 3;
+    repeated float heading = 4;
+    repeated float prop_pitch = 5;
+    repeated float motor_speed = 6;
+    repeated float SOG = 7; 
+}
+
+message RouteAnalysisResponse {
+    repeated double unix_time = 1;
+    float average_power = 2;
+    float total_cost = 3;
+    double average_rms_x = 4;
+    double average_rms_y = 5;
+    double average_rms_z = 6;
+    HabitibilityRating comfort_level = 7;
+}
+
+// NOTE: ROUTE in the RPC name refers to service routing
+
+service LoginService {
+    rpc Login(LoginRequest) returns (LoginResponse);
+}
+
+service RouteAnalysisAggregator {
+    rpc RouteAnalysis(RouteAnalysisRequest) returns (RouteAnalysisResponse);
+}
+
+enum HabitibilityRating {
+    UNKNOWN_RATING = 0;
+    NOT_UNCOMFORTABLE = 1;
+    SLIGHTLY_UNCOMFORTABLE = 2;
+    FAIRLY_UNCOMFORTABLE = 3;
+    UNCOMFORTABLE = 4;
+    VERY_UNCOMFORTABLE = 5;
+    EXTREMELY_UNCOMFORTABLE = 6;
+}
