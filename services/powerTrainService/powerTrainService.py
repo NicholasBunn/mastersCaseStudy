@@ -14,9 +14,9 @@ from keras import models
 from sklearn.preprocessing import MinMaxScaler
 
 # Local application imports
-import proto.v1.generated.power_train_service_api_v1_pb2 as power_train_service_api_v1_pb2
-import proto.v1.generated.power_train_service_api_v1_pb2_grpc as power_train_service_api_v1_pb2_grpc
 sys.path.append( os.path.dirname( os.path.dirname( os.path.dirname( os.path.abspath(__file__) ) ) ) )
+import protoFiles.python.powerTrainService.v1.power_train_service_api_v1_pb2 as power_train_service_api_v1_pb2
+import protoFiles.python.powerTrainService.v1.power_train_service_api_v1_pb2_grpc as power_train_service_api_v1_pb2_grpc
 import interceptors.python.metricInterceptor as metricInterceptor
 import interceptors.python.authenticationInterceptor as authenticationInterceptor
 
