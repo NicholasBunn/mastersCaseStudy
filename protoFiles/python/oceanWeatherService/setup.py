@@ -3,11 +3,11 @@ from setuptools import setup
 setup(
     # Needed to silence warnings (and to be a worthwhile package)
     name='OceanWeatherServiceProtos',
-    url='https://github.com/NicholasBunn/mastersCaseStudy/protoFiles/oceanWeatherService/v1/python',
+    url='https://github.com/NicholasBunn/mastersCaseStudy/protoFiles/python/oceanWeatherService',
     author='Nichola Bunn',
     author_email='nicholasbunn04@gmail.com',
     # Needed to actually package something
-    packages=['python'],
+    packages=['oceanWeatherService'],
     # Needed for dependencies
     install_requires=['google.protobuf', 'grpc'],
     # *strongly* suggested for sharing
