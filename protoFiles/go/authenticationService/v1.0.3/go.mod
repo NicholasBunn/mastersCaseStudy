@@ -1,4 +1,4 @@
-module github.com/NicholasBunn/mastersCaseStudy/protoFiles/go/authenticationService/v1.0.1
+module github.com/NicholasBunn/mastersCaseStudy/protoFiles/go/authenticationService/v1.0.3
 
 go 1.16
 
