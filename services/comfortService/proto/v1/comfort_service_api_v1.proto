@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package comfortServiceAPI.v1;
 
-option go_package = "routeAnalysisAggregator/proto/v1/generated/comfortService;routeAnalysisAggregator";
+option go_package = "comfortService/v1;comfortService";
 
 message ComfortRequest {
     repeated double unix_time = 1;

@@ -4,7 +4,7 @@ option csharp_namespace = "vesselMotionService";
 
 package vesselMotionService.v1;
 
-option go_package = "routeAnalysisAggregator/proto/v1/generated/vesselMotionService;vesselMotionService";
+option go_package = "vesselMotionService/v1;vesselMotionService";
 
 
 message MotionEstimateRequest {

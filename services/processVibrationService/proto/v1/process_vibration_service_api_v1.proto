@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package processVibrationServiceAPI.v1;
 
-option go_package = "routeAnalysisAggregator/proto/v1/generated/processVibrationService;routeAnalysisAggregator";
+option go_package = "processVibrationService/v1;processVibrationService";
 
 message ProcessRequest {
     repeated double unix_time = 1;

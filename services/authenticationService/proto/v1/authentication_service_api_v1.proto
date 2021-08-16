@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package authenticationService.v1;
 
-option go_package = "authenticationService/proto/v1/generated;authenticationService";
+option go_package = "authenticationService/v1/;authenticationService";
 
 message NewUserRequest {
     string username = 1;

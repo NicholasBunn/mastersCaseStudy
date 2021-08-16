@@ -21,7 +21,7 @@ import (
 	authentication "github.com/NicholasBunn/mastersCaseStudy/generalComponents/authenticationStuff"	
 
 	// Proto packages
-	serverPB "github.com/NicholasBunn/mastersCaseStudy/services/authenticationService/proto/v1/generated"
+	serverPB "github.com/NicholasBunn/mastersCaseStudy/protoFiles/go/authenticationService/v1"
 )
 
 var (

@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package routeAnalysisAggregatorAPI.v1;
 
-option go_package = "routeAnalysisAggregator/proto/v1/generated/routeAnalysisAggregator;routeAnalysisAggregator";
+option go_package = "routeAnalysisAggregator/v1;routeAnalysisAggregator";
 
 message AnalysisRequest {
     repeated double unix_time = 1;

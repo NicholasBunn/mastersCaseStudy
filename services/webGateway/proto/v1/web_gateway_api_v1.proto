@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package webGateway.v1;
 
-option go_package = "webGateway/proto/v1/generated;webGateway";
+option go_package = "webGateway/v1;webGateway";
 
 // Login
 message LoginRequest {
