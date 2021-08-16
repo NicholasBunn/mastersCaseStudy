@@ -7,7 +7,7 @@ setup(
     author='Nichola Bunn',
     author_email='nicholasbunn04@gmail.com',
     # Needed to actually package something
-    packages=['owsprotos'],
+    packages=['python'],
     # Needed for dependencies
     install_requires=['google.protobuf', 'grpc'],
     # *strongly* suggested for sharing
