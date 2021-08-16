@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import ocean_weather_service_api_v1_pb2 as ocean__weather__service__api__v1__pb2
+from . import ocean_weather_service_api_v1_pb2 as ocean__weather__service__api__v1__pb2
 
 
 class OceanWeatherServiceStub(object):

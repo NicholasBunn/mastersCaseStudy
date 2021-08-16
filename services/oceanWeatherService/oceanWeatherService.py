@@ -12,9 +12,9 @@ import yaml
 from urllib.error import HTTPError
 
 # Local application imports
-import proto.v1.generated.ocean_weather_service_api_v1_pb2 as ocean_weather_service_api_v1_pb2
-import proto.v1.generated.ocean_weather_service_api_v1_pb2_grpc as ocean_weather_service_api_v1_pb2_grpc
 sys.path.append( os.path.dirname( os.path.dirname( os.path.dirname( os.path.abspath(__file__) ) ) ) )
+import protoFiles.python.oceanWeatherService.v1.ocean_weather_service_api_v1_pb2 as ocean_weather_service_api_v1_pb2
+import protoFiles.python.oceanWeatherService.v1.ocean_weather_service_api_v1_pb2_grpc as ocean_weather_service_api_v1_pb2_grpc
 import interceptors.python.metricInterceptor as metricInterceptor
 import interceptors.python.authenticationInterceptor as authenticationInterceptor
 
