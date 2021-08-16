@@ -361,6 +361,7 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 		return nil, err
 	} else {
 		DebugLogger.Println("Successfully made service call to Process Vibration Service.")
+		connPVS.Close()
 	} 
 
 	// ________Query Comfort Service________
@@ -399,7 +400,7 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 		return nil, err
 	} else {
 		DebugLogger.Println("Successfully made service call to Comfort Service.")
-		connVMS.Close()
+		connCS.Close()
 	}
 
 	fmt.Println(responseMessageCS)
