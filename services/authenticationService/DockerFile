@@ -1,35 +1,67 @@
-FROM golang:alpine
+FROM golang:alpine AS builder
 
 # Install git.
 # Git is required for fetching the dependencies.
 RUN apk add --no-cache git
 
-WORKDIR $GOPATH/src/github.com/nicholasbunn/mastersSandbox/
+# Create project directory
+RUN mkdir /project/
+# Create services directory
+RUN mkdir /project/services/
+# Create an authentication service folder in the services directory
+RUN mkdir /project/services/authenticationService/
+# Create an program logs folder in the authentication service directory
+RUN mkdir /project/services/authenticationService/program\ logs/
 
-# Create a program logs folder in the service directory
-RUN mkdir ./program\ logs
-RUN mkdir -p $GOPATH/src/github.com/nicholasbunn/mastersSandbox/src/authenticationService
+# Copy the 'proto' folder into the services directory
+COPY services/authenticationService/proto/v1/ /project/services/authenticationService/proto/v1
+COPY services/authenticationService/proto/v1/generated/ /project/services/authenticationService/proto/v1/generated
+# Copy the 'interceptor' folder into the project directory
+COPY interceptors/go /project/interceptors/go
+# Copy the 'certification' folder into the project directory
+COPY certification /project/certification
+# Copy the required files into the authenticationService directory
+COPY services/authenticationService/database /project/services/authenticationService/database
+# Copy the service contents into the authenticationService directory
+COPY services/authenticationService/configuration.yaml /project/services/authenticationService
+COPY services/authenticationService/authenticationService.go /project/services/authenticationService
+COPY services/authenticationService/authenticationService_test.go /project/services/authenticationService
+COPY services/authenticationService/go.mod /project/services/authenticationService
+COPY services/authenticationService/go.sum /project/services/authenticationService
 
-COPY /src/authenticationService/go.mod src/authenticationService
-COPY /src/authenticationService/go.sum src/authenticationService
-
-COPY /src/authenticationService/configuration.yaml src/authenticationService
-
-# Copy over contents into image
-# COPY src/authenticationService/interceptors/ src/authenticationService/interceptors
-COPY src/authenticationService/proto/ src/authenticationService/proto
-# COPY certification/ certification
-COPY src/authenticationService/authenticationService.go src/authenticationService
-
-WORKDIR $GOPATH/src/github.com/nicholasbunn/mastersSandbox/src/authenticationService/
+WORKDIR /project/services/authenticationService/
 
 # Fetch the dependecies
 RUN go mod tidy
 
+ENV CGO_ENABLED=0
+
 # Build the binary. for grpc gateway
 RUN go build -o ./authenticationService .
 
-WORKDIR $GOPATH/src/github.com/nicholasbunn/mastersSandbox/
+FROM mysql
 
-EXPOSE 50201
-ENTRYPOINT ["./src/authenticationService/authenticationService"]
+# Add a database
+ENV MYSQL_DATABASE userDB
+
+# Add content of the SQL scripts to the image. All scripts in docker-entrypoint-initdb.d/ are automatically executed during container startup.
+COPY ./services/authenticationService/database /docker-entrypoint-initdb.d/
+
+# Create project directory
+RUN mkdir /project/
+# Create services directory
+RUN mkdir /project/services/
+# Create an authentication service folder in the services directory
+RUN mkdir /project/services/authenticationService/
+# Create an program logs folder in the authentication service directory
+RUN mkdir /project/services/authenticationService/program\ logs/
+
+# Copy over the executable from the Go build stage
+COPY --from=builder /project/services/authenticationService/authenticationService /project/services/authenticationService/
+COPY --from=builder /project/services/authenticationService/configuration.yaml /project/services/authenticationService/
+COPY --from=builder /project/certification /project/certification/
+
+WORKDIR /project/services/authenticationService
+
+EXPOSE 50101
+ENTRYPOINT ["./authenticationService"]

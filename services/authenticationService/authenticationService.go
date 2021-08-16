@@ -136,6 +136,7 @@ type Config struct {
 			} `yaml:"jwt"`
 		} `yaml:"authentication"`
 	} `yaml:"server"`
+	
 	Database struct {
 		DriverName string `yaml:"driverName"`
 		User struct {
