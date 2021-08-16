@@ -8,7 +8,7 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	serverPB "github.com/NicholasBunn/mastersCaseStudy/services/authenticationService/proto/v1/generated"
+	serverPB "github.com/NicholasBunn/mastersCaseStudy/protoFiles/go/authenticationService/v1"
 )
 
 func TestSave(t *testing.T) {
