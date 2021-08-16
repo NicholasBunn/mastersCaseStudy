@@ -10,9 +10,9 @@ import grpc
 import yaml
 
 # Local application imports
-import proto.v1.generated.process_vibration_service_api_v1_pb2 as process_vibration_service_api_v1_pb2
-import proto.v1.generated.process_vibration_service_api_v1_pb2_grpc as process_vibration_service_api_v1_pb2_grpc
 sys.path.append( os.path.dirname( os.path.dirname( os.path.dirname( os.path.abspath(__file__) ) ) ) )
+import protoFiles.python.processVibrationService.v1.process_vibration_service_api_v1_pb2 as process_vibration_service_api_v1_pb2
+import protoFiles.python.processVibrationService.v1.process_vibration_service_api_v1_pb2_grpc as process_vibration_service_api_v1_pb2_grpc
 import interceptors.python.metricInterceptor as metricInterceptor
 import interceptors.python.authenticationInterceptor as authenticationInterceptor
 
