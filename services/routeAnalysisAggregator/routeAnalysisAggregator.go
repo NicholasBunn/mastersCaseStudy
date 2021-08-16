@@ -16,11 +16,11 @@ import (
 	"google.golang.org/grpc"
 
 	// Proto packages
-	oceanWeatherServicePB "github.com/NicholasBunn/mastersCaseStudy/protoFiles/go/oceanWeatherService/v1"
-	powerTrainServicePB "github.com/NicholasBunn/mastersCaseStudy/protoFiles/go/powerTrainService/v1"
-	vesselMotionServicePB "github.com/NicholasBunn/mastersCaseStudy/protoFiles/go/vesselMotionService/v1"
-	processVibrationServicePB "github.com/NicholasBunn/mastersCaseStudy/protoFiles/go/processVibrationService/v1"
-	comfortServicePB "github.com/NicholasBunn/mastersCaseStudy/protoFiles/go/comfortService/v1"
+	// oceanWeatherServicePB "github.com/NicholasBunn/mastersCaseStudy/protoFiles/go/oceanWeatherService/v1"
+	// powerTrainServicePB "github.com/NicholasBunn/mastersCaseStudy/protoFiles/go/powerTrainService/v1"
+	// vesselMotionServicePB "github.com/NicholasBunn/mastersCaseStudy/protoFiles/go/vesselMotionService/v1"
+	// processVibrationServicePB "github.com/NicholasBunn/mastersCaseStudy/protoFiles/go/processVibrationService/v1"
+	// comfortServicePB "github.com/NicholasBunn/mastersCaseStudy/protoFiles/go/comfortService/v1"
 	serverPB "github.com/NicholasBunn/mastersCaseStudy/protoFiles/go/routeAnalysisAggregator/v1"
 )
 
