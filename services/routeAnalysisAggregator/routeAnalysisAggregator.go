@@ -189,7 +189,7 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 	// Create an insecure connection to the ocean weather service server
 	connOWS, err := createInsecureServerConnection(
 		addrOWS, // Set the address of the server
-		timeoutDuration, // Set the duration that the clinet will wait before timing out
+		timeoutDuration, // Set the duration that the client will wait before timing out
 	)
 	if err != nil {
 		return nil, err
