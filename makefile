@@ -1,36 +1,41 @@
 # Make commands relating to proto files
 protoGenGo:
-	# Route analysis aggregator
-	protoc -I services --go_out=services --go-grpc_out=services services/routeAnalysisAggregator/proto/v1/route_analysis_aggregator_api_v1.proto
-
 	# Ocean weather service
-	protoc -I services --go_out=services --go-grpc_out=services services/oceanWeatherService/proto/v1/ocean_weather_service_api_v1.proto
+	protoc -I services --go_out=protoFiles/go --go-grpc_out=protoFiles/go services/oceanWeatherService/proto/v1/ocean_weather_service_api_v1.proto
 
 	# Power train service
-	protoc -I services --go_out=services --go-grpc_out=services services/powerTrainService/proto/v1/power_train_service_api_v1.proto
+	protoc -I services --go_out=protoFiles/go --go-grpc_out=protoFiles/go services/powerTrainService/proto/v1/power_train_service_api_v1.proto
 
 	# Process vibration service
-	protoc -I services --go_out=services --go-grpc_out=services services/processVibrationService/proto/v1/process_vibration_service_api_v1.proto
+	protoc -I services --go_out=protoFiles/go --go-grpc_out=protoFiles/go services/processVibrationService/proto/v1/process_vibration_service_api_v1.proto
 
 	# Comfort service
-	protoc -I services --go_out=services --go-grpc_out=services services/comfortService/proto/v1/comfort_service_api_v1.proto
+	protoc -I services --go_out=protoFiles/go --go-grpc_out=protoFiles/go services/comfortService/proto/v1/comfort_service_api_v1.proto
 
-	# Vessel Motion service
-	protoc -I services --go_out=services --go-grpc_out=services services/vesselMotionService/proto/v1/vessel_motion_service_api_v1.proto
+	# Vessel motion service
+	protoc -I services --go_out=protoFiles/go --go-grpc_out=protoFiles/go services/vesselMotionService/proto/v1/vessel_motion_service_api_v1.proto
 
+	# Route analysis aggregator
+	protoc -I services --go_out=protoFiles/go --go-grpc_out=protoFiles/go services/routeAnalysisAggregator/proto/v1/route_analysis_aggregator_api_v1.proto
+
+	# Authentication service
+	protoc -I services --go_out=protoFiles/go --go-grpc_out=protoFiles/go services/authenticationService/proto/v1/authentication_service_api_v1.proto
+
+	# Web gateway
+	protoc -I services --go_out=protoFiles/go --go-grpc_out=protoFiles/go services/webGateway/proto/v1/web_gateway_api_v1.proto
 
 protoGenPy:
 	# Ocean weather service
-	python3 -m grpc_tools.protoc -I=services/oceanWeatherService/proto/v1 --python_out=services/oceanWeatherService/proto/v1/generated  --grpc_python_out=services/oceanWeatherService/proto/v1/generated services/oceanWeatherService/proto/v1/ocean_weather_service_api_v1.proto # add 'from .' to line 5 of the _grpc.py file
+	python3 -m grpc_tools.protoc -I=services/oceanWeatherService/proto/v1 --python_out=protoFiles/python/oceanWeatherService/v1  --grpc_python_out=protoFiles/python/oceanWeatherService/v1   services/oceanWeatherService/proto/v1/ocean_weather_service_api_v1.proto # add 'from .' to line 5 of the _grpc.py file
 
 	# Power train service
-	python3 -m grpc_tools.protoc -I=services/powerTrainService/proto/v1 --python_out=services/powerTrainService/proto/v1/generated  --grpc_python_out=services/powerTrainService/proto/v1/generated services/powerTrainService/proto/v1/power_train_service_api_v1.proto # add 'from .' to line 5 of the _grpc.py file
+	python3 -m grpc_tools.protoc -I=services/powerTrainService/proto/v1 --python_out=protoFiles/python/powerTrainService/v1  --grpc_python_out=protoFiles/python/powerTrainService/v1   services/powerTrainService/proto/v1/power_train_service_api_v1.proto # add 'from .' to line 5 of the _grpc.py file
 
 	# Process vibration service
-	python3 -m grpc_tools.protoc -I=services/processVibrationService/proto/v1 --python_out=services/processVibrationService/proto/v1/generated --grpc_python_out=services/processVibrationService/proto/v1/generated services/processVibrationService/proto/v1/process_vibration_service_api_v1.proto # add 'from .' to line 5 of the _grpc.py file
+	python3 -m grpc_tools.protoc -I=services/processVibrationService/proto/v1 --python_out=protoFiles/python/processVibrationService/v1  --grpc_python_out=protoFiles/python/processVibrationService/v1   services/processVibrationService/proto/v1/process_vibration_service_api_v1.proto # add 'from .' to line 5 of the _grpc.py file
 
 	# Comfort service
-	python3 -m grpc_tools.protoc -I=services/comfortService/proto/v1 --python_out=services/comfortService/proto/v1/generated --grpc_python_out=services/comfortService/proto/v1/generated services/comfortService/proto/v1/comfort_service_api_v1.proto # add 'from .' to line 5 of the _grpc.py file
+	python3 -m grpc_tools.protoc -I=services/comfortService/proto/v1 --python_out=protoFiles/python/comfortService/v1  --grpc_python_out=protoFiles/python/comfortService/v1   services/comfortService/proto/v1/comfort_service_api_v1.proto # add 'from .' to line 5 of the _grpc.py file
 
 protoGenCSharp:
 	# protoc -I=services/vesselMotionService/proto/v1 services/vesselMotionService/proto/v1/vessel_motion_service_api_v1.proto --csharp_out=services/vesselMotionService/proto/v1/generated # --grpc_out=services/vesselMotionService/proto/v1/generated --plugin=protoc-gen-grpc=tools\grpc_csharp_plugin.exe
@@ -85,8 +90,19 @@ testVesselMotionService:
 testRouteAnalysisAggregator:
 	cd services/routeAnalysisAggregator; go test; cd ..
 
+testAuthenticationStuff:
+	cd generalComponents/authenticationStuff; go test; cd ..
+	
+testAuthenticationService:
+	cd services/authenticationService; go test; cd ..
+
+testWebGateway:
+	cd services/webGateway; go test; cd ..
+
 testGo:
-	make testRouteAnalysisAggregator
+	make testAuthenticationStuff
+	make testAuthenticationService
+	# make testRouteAnalysisAggregator
 
 testPy:
 	make testOceanWeatherService
@@ -96,8 +112,6 @@ testPy:
 
 testCSharp:
 	make testVesselMotionService
-
-# testCPP:
 
 testAll:
 	make testPy
@@ -122,6 +136,12 @@ runComfortService:
 
 runRouteAnalysisAggregator:
 	cd /home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/routeAnalysisAggregator;	go run routeAnalysisAggregator.go
+
+runAuthenticationService:
+	cd /home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/authenticationService; go run authenticationService.go
+
+run webGateway:
+	cd /home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/webGateway; go run webGateway.go
 
 runPrometheus:
 
