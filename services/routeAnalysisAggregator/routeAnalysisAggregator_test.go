@@ -218,8 +218,7 @@ func TestAnalyseRoute(t *testing.T) {
 		if (err != nil) {
 			fmt.Println("SAD: ", err)
 		}
-
-		fmt.Println(response, err)
+		fmt.Println(response)
 	})
 }
 

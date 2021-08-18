@@ -140,7 +140,7 @@ class OceanWeatherServiceServicer(ocean_weather_service_api_v1_pb2_grpc.OceanWea
 			except Exception as e:
 				logging.debug(f"Failed to query Stormglass API: \n{e}")
 				context.set_code(grpc.StatusCode.INTERNAL)
-				# context.set_details("bla bla")
+				context.set_details("Failure in Ocean Weather Service")
 				raise e
 		return responseMessage
 
@@ -199,7 +199,7 @@ class OceanWeatherServiceServicer(ocean_weather_service_api_v1_pb2_grpc.OceanWea
 				except Exception as e:
 					logging.debug(f"Failed to query Stormglass API: \n{e}")
 					context.set_code(grpc.StatusCode.INTERNAL)
-					# context.set_details("bla bla")
+					context.set_details("Failure in Ocean Weather Service.")
 					raise e
 			return responseMessage
 		elif(request.archive_service == 2): # ERA5

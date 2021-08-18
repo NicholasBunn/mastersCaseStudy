@@ -156,7 +156,7 @@ class PowerTrainServiceServicer(power_train_service_api_v1_pb2_grpc.PowerTrainSe
 	"""
 
 	def PowerEstimate(self, request, context):
-		"""The 'PowerEstimate' call provides foresight for tactical decision-making (As is described by https://www.researchgate.net/publication/332173693_Designing_Ship_Digital_Services) by providing power estimates for a requested route and sailing conditions. It structures the input data for a data-driven model, laods the model in, and produces a power estimate using it.
+		"""The 'PowerEstimate' call provides foresight for tactical decision-making (As is described by https://www.researchgate.net/publication/332173693_Designing_Ship_Digital_Services) by providing power estimates for a requested route and sailing conditions. It structures the input data for a data-driven model, loads the model in, and produces a power estimate using it.
 		"""
 
 		logging.info("Received Power Estimate service call.")
@@ -183,7 +183,7 @@ class PowerTrainServiceServicer(power_train_service_api_v1_pb2_grpc.PowerTrainSe
 		except Exception as e:
 			logging.debug(f"Failed to structure the data: \n{e}")
 			context.set_code(grpc.StatusCode.INTERNAL)
-			# context.set_details("bla bla")
+			context.set_details("Failure in Power Train Service")
 			raise e
 
 		# ________LOADING A PRE-TRAINED MODEL_______
@@ -193,7 +193,7 @@ class PowerTrainServiceServicer(power_train_service_api_v1_pb2_grpc.PowerTrainSe
 		except Exception as e:
 			logging.debug(f"Failed to load model: \n{e}")
 			context.set_code(grpc.StatusCode.INTERNAL)
-			# context.set_details("bla bla")
+			context.set_details("Failure in Power Train Service")
 			raise e
 
 		# ________RUN THE LOADED MODEL_______
@@ -203,7 +203,7 @@ class PowerTrainServiceServicer(power_train_service_api_v1_pb2_grpc.PowerTrainSe
 		except Exception as e:
 			logging.debug(f"Failed to run estimation model: \n{e}")
 			context.set_code(grpc.StatusCode.INTERNAL)
-			# context.set_details("bla bla")
+			context.set_details("Failure in Power Train Service")
 			raise e
 
 		# Populate response message

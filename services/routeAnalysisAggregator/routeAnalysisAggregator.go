@@ -180,7 +180,7 @@ type server struct {
 
 func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisRequest) (*serverPB.AnalysisResponse, error) {
 	/* This call provides foresight for tactical decision-making by providing a summary of the provided route.
-	 */
+	*/
 
 	InfoLogger.Println("Received Analyse Route service call.")
 
@@ -192,7 +192,7 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 		timeoutDuration, // Set the duration that the client will wait before timing out
 	)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("Failure in Route Analysis Aggregator: \n%v", err)
 	}
 
 	InfoLogger.Println("Creating Ocean Weather Service client.")
@@ -214,8 +214,8 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 	// Invoke the Ocean Weather Service
 	responseMessageOWS, err := clientOWS.OceanWeatherPrediction(owsContext, &requestMessageOWS)
 	if err != nil {
-		ErrorLogger.Println("Failed to make Ocean Weather Prediction service call: ")
-		return nil, err
+		ErrorLogger.Println("Failed to make Ocean Weather Prediction service call: \n", err)
+		return nil, fmt.Errorf("Failure in Route Analysis Aggregator: \n%v", err)
 	} else {
 		DebugLogger.Println("Successfully made service call to Ocean Weather Service.")
 		connOWS.Close()
@@ -229,7 +229,7 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 		timeoutDuration,
 	)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("Failure in Route Analysis Aggregator: \n%v", err)
 	}
 
 	InfoLogger.Println("Creating Power Train Service client.")
@@ -255,8 +255,8 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 
 	requestMessagePTS.WindDirectionRelative, err = calculateRelativeWindDirection(responseMessageOWS.WindDirection, request.Heading)
 	if err != nil {
-		ErrorLogger.Println("Failed to calculate relative wind direction: ")
-		return nil, err
+		ErrorLogger.Println("Failed to calculate relative wind direction: \n", err)
+		return nil, fmt.Errorf("Failure in Route Analysis Aggregator: \n%v", err)
 	}
 
 	DebugLogger.Println("Succesfully created a Power Train Estimate Request.")
@@ -268,8 +268,8 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 	// Invoke the Power Train Service
 	responseMessagePTS, err := clientPTS.CostEstimate(ptsContext, &requestMessagePTS)
 	if err != nil {
-		ErrorLogger.Println("Failed to make Cost Estimate service call: ")
-		return nil, err
+		ErrorLogger.Println("Failed to make Cost Estimate service call: \n", err)
+		return nil, fmt.Errorf("Failure in Route Analysis Aggregator: \n%v", err)
 	} else {
 		DebugLogger.Println("Successfully made service call to Power Train Service.")
 		connPTS.Close()
@@ -283,7 +283,7 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 		timeoutDuration,
 	)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("Failure in Route Analysis Aggregator: \n%v", err)
 	}
 
 	InfoLogger.Println("Creating Vessel Motion Service client.")
@@ -303,8 +303,8 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 
 	requestMessageVMS.WindSpeedRelative, err = calculateRelativeWindSpeed(responseMessageOWS.WindSpeed, requestMessagePTS.WindDirectionRelative, request.SOG)
 	if err != nil {
-		ErrorLogger.Println("Failed to calculate relative wind direction: ")
-		return nil, err
+		ErrorLogger.Println("Failed to calculate relative wind direction: \n", err)
+		return nil, fmt.Errorf("Failure in Route Analysis Aggregator: \n%v", err)
 	}
 
 	DebugLogger.Println("Succesfully created a Motion Estimate Request.")
@@ -316,14 +316,12 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 	// Invoke the Vessel Motion Service
 	responseMessageVMS, err := clientVMS.MotionEstimate(vmsContext, &requestMessageVMS)
 	if err != nil {
-		ErrorLogger.Println("Failed to make Motion Estimate service call: ")
-		return nil, err
+		ErrorLogger.Println("Failed to make Motion Estimate service call: \n", err)
+		return nil, fmt.Errorf("Failure in Route Analysis Aggregator: \n%v", err)
 	} else {
 		DebugLogger.Println("Successfully made service call to Vessel Motion Service.")
 		connVMS.Close()
 	}
-
-	fmt.Println(responseMessageVMS)
 
 	// ________Query Process Vibration Service________
 
@@ -333,7 +331,7 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 		timeoutDuration,
 	)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("Failure in Route Analysis Aggregator: \n%v", err)
 	}
 
 	InfoLogger.Println("Creating Process Vibration Service client.")
@@ -357,8 +355,8 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 	// Invoke the Process Vibratiion Service
 	responseMessagePVS, err := clientPVS.CalculateRMSBatch(pvsContext, &requestMessagePVS)
 	if (err != nil) {
-		ErrorLogger.Println("Failed to make Calculate RMS Batch service call: ")
-		return nil, err
+		ErrorLogger.Println("Failed to make Calculate RMS Batch service call: \n", err)
+		return nil, fmt.Errorf("Failure in Route Analysis Aggregator: \n%v", err)
 	} else {
 		DebugLogger.Println("Successfully made service call to Process Vibration Service.")
 		connPVS.Close()
@@ -372,7 +370,7 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 		timeoutDuration,
 	)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("Failure in Route Analysis Aggregator: \n%v", err)
 	}
 
 	InfoLogger.Println("Creating Comfort Service client.")
@@ -396,8 +394,8 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 	// Invoke the Comfort Service
 	responseMessageCS, err := clientCS.ComfortRating(csContext, &requestMessageCS)
 	if err != nil {
-		ErrorLogger.Println("Failed to make Comfort Rating service call: ")
-		return nil, err
+		ErrorLogger.Println("Failed to make Comfort Rating service call: \n", err)
+		return nil, fmt.Errorf("Failure in Route Analysis Aggregator: \n%v", err)
 	} else {
 		DebugLogger.Println("Successfully made service call to Comfort Service.")
 		connCS.Close()
@@ -476,7 +474,7 @@ func DecodeConfig(configPath string) (*Config, error) {
 	file, err := os.Open(configPath)
 	if err != nil {
 		fmt.Println("Could not open config file")
-		return nil, err
+		return nil, fmt.Errorf("Failure in Route Analysis Aggregator: \n%v", err)
 	}
 	defer file.Close()
 
@@ -486,7 +484,7 @@ func DecodeConfig(configPath string) (*Config, error) {
 	// Start YAML decoding from file
 	if err := decoder.Decode(&config); err != nil {
 		fmt.Println("Could not decode config file: \n", err)
-		return nil, err
+		return nil, fmt.Errorf("Failure in Route Analysis Aggregator: \n%v", err)
 	}
 
 	return config, nil
@@ -513,7 +511,7 @@ func createInsecureServerConnection(port string, timeout int) (*grpc.ClientConn,
 	// Hamndle errors, if any
 	if err != nil {
 		ErrorLogger.Println("Failed to create connection to the server on port: " + port)
-		return nil, err
+		return nil, fmt.Errorf("Failure in Route Analysis Aggregator: \n%v", err)
 	}
 
 	InfoLogger.Println("Succesfully created connection to the server on port: " + port)
