@@ -171,6 +171,7 @@ func (s *server) LoginAuth(ctx context.Context, request *serverPB.LoginAuthReque
 
 	// Check that the provided password matches the password stored in the DB
 	if !user.CheckPassword(request.Password) {
+		ErrorLogger.Println("Failed to verify user: Passwords don't match.")
 		return nil, status.Errorf(codes.Unauthenticated, "the password you provided is incorrect")
 	}
 
@@ -183,8 +184,11 @@ func (s *server) LoginAuth(ctx context.Context, request *serverPB.LoginAuthReque
 	// Generate and return a JWT for the user
 	token, err := jwtManager.GenerateToken(user)
 	if err != nil {
+		ErrorLogger.Println("Failed to generate access token: \n", err)
 		return nil, status.Errorf(codes.Internal, "could not generate access token")
 	}
+
+	InfoLogger.Println("Successfully generated access token.")
 
 	// Create and populate the response message for the request being served
 	response := &serverPB.LoginAuthResponse{
@@ -210,6 +214,7 @@ func find(username string) (*authentication.User, error) {
 	accessDetails := fmt.Sprintf("%s:%s@tcp(0.0.0.0:%s)/%s", dbUsername, dbPassword, dbPort, dbName)
     db, err := sql.Open(dbDriverName, accessDetails)
     if (err != nil) {
+		ErrorLogger.Println("Failed to connect to user database: \n", err)
         return nil, status.Errorf(codes.Unavailable, "Failed to connect to user database.")
     }
 
@@ -222,9 +227,11 @@ func find(username string) (*authentication.User, error) {
     userInfo, err := db.Query(myQuery)
 
 	if err != nil {
+		ErrorLogger.Println("Failed to make query user database: \n", err)
         return nil, status.Errorf(codes.Internal, "Failed to query user database.")
     } else if (!userInfo.Next()) {
 		// If userInfo.Next() returns False, then no results were returned by the DB (and thus, the requested username doesn't exist)
+		ErrorLogger.Println("Failed to log user in: Requested user does not exist.")
 		return nil, status.Errorf(codes.NotFound, "requested user does not exist.") 
 	} else {
 		// Create user object
@@ -233,6 +240,7 @@ func find(username string) (*authentication.User, error) {
 		// Scan the result into our user object
 		err = userInfo.Scan(&userObject.Username, &userObject.HashedPassword, &userObject.Role)
 		if err != nil {
+			ErrorLogger.Println("Failed to map database response: \n", err)
 			return nil, status.Errorf(codes.Internal, "Failed to map database response.") 
 		}
 
