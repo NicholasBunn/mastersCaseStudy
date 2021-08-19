@@ -38,6 +38,7 @@ protoGenPy:
 	python3 -m grpc_tools.protoc -I=services/comfortService/proto/v1 --python_out=protoFiles/python/comfortService/v1  --grpc_python_out=protoFiles/python/comfortService/v1   services/comfortService/proto/v1/comfort_service_api_v1.proto # add 'from .' to line 5 of the _grpc.py file
 
 protoGenCSharp:
+	# Vessel motion service
 	# protoc -I=services/vesselMotionService/proto/v1 services/vesselMotionService/proto/v1/vessel_motion_service_api_v1.proto --csharp_out=services/vesselMotionService/proto/v1/generated # --grpc_out=services/vesselMotionService/proto/v1/generated --plugin=protoc-gen-grpc=tools\grpc_csharp_plugin.exe
 	# NEED TO ADD A COMMAND HERE TO CREATE CLIENT STUBS FOR AGGREGATORS
 	
@@ -46,8 +47,12 @@ protoGenCSharp:
 # 	protoc -I=services/comfortService/proto/v1 --grpc_out=services/comfortService/proto/v1/generated --plugin=protoc-gen-grpc=/usr/local/bin/grpc_cpp_plugin services/comfortService/proto/v1/comfort_service_api_v1.proto
 # 	protoc -I=services/comfortService/proto/v1 --cpp_out=services/comfortService/proto/v1/generated services/comfortService/proto/v1/comfort_service_api_v1.proto
 
+protoGenJS:
+	# Web gateway
+	protoc -I=services/webGateway/proto/v1/ web_gateway_api_v1.proto --js_out=import_style=commonjs:protoFiles/javaScript/webGateway/v1 --grpc-web_out=import_style=commonjs,mode=grpcwebtext:protoFiles/javaScript/webGateway/v1
+
 protoGenAll:
-	make protoGenGo; make protoGenPy; protoGenCSharp
+	make protoGenGo; make protoGenPy; protoGenCSharp; make protoGenJS
 
 protoCleanGo:
 	find . -type f -name '*.pb.go' -delete
@@ -140,7 +145,7 @@ runRouteAnalysisAggregator:
 runAuthenticationService:
 	cd /home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/authenticationService; go run authenticationService.go
 
-run webGateway:
+runWebGateway:
 	cd /home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/webGateway; go run webGateway.go
 
 runPrometheus:
@@ -159,7 +164,7 @@ runPy:
 runCSharp:
 	make runVesselMotionService
 
-runAll:
+runAll:cd
 	make runGo
 	make runPy
 	make runCSharp
