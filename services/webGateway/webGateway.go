@@ -12,23 +12,22 @@ import (
 
 	// Third-party packages
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
 	"github.com/go-yaml/yaml"
-	"database/sql"
-    _ "github.com/go-sql-driver/mysql"
-
-	authentication "github.com/NicholasBunn/mastersCaseStudy/generalComponents/authenticationStuff"	
 
 	// Proto packages
 	serverPB "github.com/NicholasBunn/mastersCaseStudy/protoFiles/go/webGateway/v1"
 	authenticationServicePB "github.com/NicholasBunn/mastersCaseStudy/protoFiles/go/authenticationService/v1"
+	routeAnalysisAggregatorPB "github.com/NicholasBunn/mastersCaseStudy/protoFiles/go/routeAnalysisAggregator/v1"
 )
 
 var (
 	// Addresses
 	addrMyself string
 	addrAS string
+	addrRAA string
+
+	timeoutDuration     int           // The time, in seconds, that the client should wait when dialing (connecting to) the server before throwing an error
+	callTimeoutDuration time.Duration // The time, in seconds, that the client should wait when making a call to the server before throwing an error
 
 	// JWT stuff
 	secretKey     string
@@ -52,7 +51,12 @@ func init() {
 	// Load port addresses from config
 	addrMyself = os.Getenv("WEBHOST") + ":" + config.Server.Port.Myself
 	addrAS = os.Getenv("AUTHENTICATIONHOST") + ":" + config.Client.Port.AuthenticationService
+	addrRAA = os.Getenv("ROUTEANALYSISHOST") + ":" + config.Client.Port.RouteAnalysisAggregator
 
+	// Load timeouts from config
+	timeoutDuration = config.Client.Timeout.Connection
+	callTimeoutDuration = time.Duration(config.Client.Timeout.Call) * time.Second
+	
 	// Load JWT parameters from config
 	secretKey = config.Server.Authentication.Jwt.SecretKey
 	tokenDuration = time.Duration(config.Server.Authentication.Jwt.TokenDuration) * (time.Minute)
@@ -102,7 +106,7 @@ func main() {
 	)
 
 	// Attach the authentication service offering to the server
-	serverPB.RegisterLoginServiceServer(webServer, &server{})
+	serverPB.RegisterLoginServiceServer(webServer, &loginServer{})
 	DebugLogger.Println("Succesfully registered Login Service to the server")
 
 	// Start the server
@@ -129,6 +133,7 @@ type Config struct {
 	Client struct {
 		Port struct {
 			AuthenticationService      string `yaml:"authenticationService"`
+			RouteAnalysisAggregator string `yaml:"routeAnalysisAggregator"`
 		} `yaml:"port"`
 		Timeout struct {
 			Connection int `yaml:"connection"`
@@ -149,19 +154,25 @@ type Config struct {
 	} `yaml:"client"`
 }
 
-type server struct {
+type loginServer struct {
 	// Use this to implement the authentication service
 
 	serverPB.UnimplementedLoginServiceServer
 }
 
+type routeAnalysisServer struct {
+	// Use this to implement the route analysis aggregator
+
+	serverPB.UnimplementedRouteAnalysisAggregatorServer
+}
+
 // ________IMPLEMENT THE OFFERED SERVICES________
 
-func (s *server) Login(ctx context.Context, request *serverPB.LoginRequest) (*serverPB.LoginResponse, error) {
+func (s *loginServer) Login(ctx context.Context, request *serverPB.LoginRequest) (*serverPB.LoginResponse, error) {
 
 	InfoLogger.Println("Received Login service call.")
 		
-	// Create an insecure connection to the comfort service server
+	// Create an insecure connection to the login service server
 	connAS, err := createInsecureServerConnection(
 		addrAS,
 		timeoutDuration,
@@ -171,7 +182,7 @@ func (s *server) Login(ctx context.Context, request *serverPB.LoginRequest) (*se
 	}
 
 	InfoLogger.Println("Creating Authentication Service client.")
-	clientCS := authenticationServicePB.NewAuthenticationServiceClient(connAS)
+	clientAS := authenticationServicePB.NewAuthenticationServiceClient(connAS)
 	DebugLogger.Println("Succesfully created client connection to Authentication Service.")
 
 	// Create a login auth request message
@@ -189,14 +200,80 @@ func (s *server) Login(ctx context.Context, request *serverPB.LoginRequest) (*se
 	// Invoke the Authentication Service
 	responseMessageAS, err := clientAS.LoginAuth(asContext, &requestMessageAS)
 	if err != nil {
-		ErrorLogger.Println("Failed to make Login Auth service call: ")
+		ErrorLogger.Println("Failed to make Login Auth service call: \n", err)
 		return nil, err
 	} else {
 		DebugLogger.Println("Successfully made service call to Authentication Service.")
 		connAS.Close()
 	}
 
-	fmt.Println(responseMessageAS)
+	response := serverPB.LoginResponse{
+		Permissions: responseMessageAS.Permissions,
+		AccessToken: responseMessageAS.AccessToken,
+	}
+
+	return &response, nil
+}
+
+func (s *routeAnalysisServer) RouteAnalysis(ctx context.Context, request *serverPB.RouteAnalysisRequest) (*serverPB.RouteAnalysisResponse, error) {
+	
+	InfoLogger.Println("Received Route Analysis Service Call.")
+
+	// Create an insecure connection to the route analysis aggregator server
+	connRAA, err := createInsecureServerConnection(
+		addrRAA,
+		timeoutDuration,
+	)
+	if err != nil {
+		return nil, err
+	}	
+
+
+	InfoLogger.Println("Creating Route Analysis Aggregator client.")
+	clientRAA := routeAnalysisAggregatorPB.NewAnalysisServiceClient(connRAA)
+	DebugLogger.Println("Succesfully created client connection to Route Analysis Aggregator.")
+
+	// Create an analysis request message
+	requestMessageRAA := routeAnalysisAggregatorPB.AnalysisRequest{
+		UnixTime: request.UnixTime,
+		Latitude: request.Latitude,
+		Longitude: request.Longitude,
+		Heading: request.Heading,
+		PropPitch: request.PropPitch,
+		MotorSpeed: request.MotorSpeed,
+		SOG: request.SOG,
+	}
+	
+	DebugLogger.Println("Succesfully created an Analysis Request.")
+
+	InfoLogger.Println("Making Analyse Route Call.")
+	raaContext, cancel := context.WithTimeout(context.Background(), callTimeoutDuration)
+	defer cancel()
+
+	// Invoke the Route Analysis Aggregator
+	responseMessageRAA, err := clientRAA.AnalyseRoute(raaContext, &requestMessageRAA)
+	if err != nil {
+		ErrorLogger.Println("Failed to make Analyse Route service call: \n", err)
+
+		return nil, err
+	} else {
+		DebugLogger.Println("Successfully made service call to Route Analysis Aggregator.")
+		connRAA.Close()
+	}
+
+	fmt.Println(responseMessageRAA)
+
+	response := serverPB.RouteAnalysisResponse{
+		UnixTime: responseMessageRAA.UnixTime,
+		AveragePower: responseMessageRAA.AveragePower,
+		TotalCost: responseMessageRAA.TotalCost,
+		AverageRmsX: responseMessageRAA.AverageRmsX,
+		AverageRmsY: responseMessageRAA.AverageRmsY,
+		AverageRmsZ: responseMessageRAA.AverageRmsZ,
+		// ComfortLevel: responseMessageRAA.ComfortLevel,
+	}
+
+	return &response, nil
 }
 
 // ________SUPPORTING FUNCTIONS________
