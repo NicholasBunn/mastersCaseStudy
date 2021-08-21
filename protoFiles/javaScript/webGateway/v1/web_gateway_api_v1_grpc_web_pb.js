@@ -30,7 +30,7 @@ proto.webGateway.v1 = require('./web_gateway_api_v1_pb.js');
 proto.webGateway.v1.LoginServiceClient =
     function(hostname, credentials, options) {
   if (!options) options = {};
-  options['format'] = 'text';
+  options['format'] = 'binary';
 
   /**
    * @private @const {!grpc.web.GrpcWebClientBase} The client
@@ -56,7 +56,7 @@ proto.webGateway.v1.LoginServiceClient =
 proto.webGateway.v1.LoginServicePromiseClient =
     function(hostname, credentials, options) {
   if (!options) options = {};
-  options['format'] = 'text';
+  options['format'] = 'binary';
 
   /**
    * @private @const {!grpc.web.GrpcWebClientBase} The client
@@ -162,7 +162,7 @@ proto.webGateway.v1.LoginServicePromiseClient.prototype.login =
 proto.webGateway.v1.RouteAnalysisAggregatorClient =
     function(hostname, credentials, options) {
   if (!options) options = {};
-  options['format'] = 'text';
+  options['format'] = 'binary';
 
   /**
    * @private @const {!grpc.web.GrpcWebClientBase} The client
@@ -188,7 +188,7 @@ proto.webGateway.v1.RouteAnalysisAggregatorClient =
 proto.webGateway.v1.RouteAnalysisAggregatorPromiseClient =
     function(hostname, credentials, options) {
   if (!options) options = {};
-  options['format'] = 'text';
+  options['format'] = 'binary';
 
   /**
    * @private @const {!grpc.web.GrpcWebClientBase} The client
