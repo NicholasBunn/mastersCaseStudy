@@ -14,86 +14,86 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// PTEsimateServiceClient is the client API for PTEsimateService service.
+// PTEstimateServiceClient is the client API for PTEstimateService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type PTEsimateServiceClient interface {
+type PTEstimateServiceClient interface {
 	EstimatePowerTrain(ctx context.Context, in *PTEstimateRequest, opts ...grpc.CallOption) (*PTEstimateResponse, error)
 }
 
-type pTEsimateServiceClient struct {
+type pTEstimateServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewPTEsimateServiceClient(cc grpc.ClientConnInterface) PTEsimateServiceClient {
-	return &pTEsimateServiceClient{cc}
+func NewPTEstimateServiceClient(cc grpc.ClientConnInterface) PTEstimateServiceClient {
+	return &pTEstimateServiceClient{cc}
 }
 
-func (c *pTEsimateServiceClient) EstimatePowerTrain(ctx context.Context, in *PTEstimateRequest, opts ...grpc.CallOption) (*PTEstimateResponse, error) {
+func (c *pTEstimateServiceClient) EstimatePowerTrain(ctx context.Context, in *PTEstimateRequest, opts ...grpc.CallOption) (*PTEstimateResponse, error) {
 	out := new(PTEstimateResponse)
-	err := c.cc.Invoke(ctx, "/powerTrainAggregator.v1.PTEsimateService/EstimatePowerTrain", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/powerTrainAggregator.v1.PTEstimateService/EstimatePowerTrain", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// PTEsimateServiceServer is the server API for PTEsimateService service.
-// All implementations must embed UnimplementedPTEsimateServiceServer
+// PTEstimateServiceServer is the server API for PTEstimateService service.
+// All implementations must embed UnimplementedPTEstimateServiceServer
 // for forward compatibility
-type PTEsimateServiceServer interface {
+type PTEstimateServiceServer interface {
 	EstimatePowerTrain(context.Context, *PTEstimateRequest) (*PTEstimateResponse, error)
-	mustEmbedUnimplementedPTEsimateServiceServer()
+	mustEmbedUnimplementedPTEstimateServiceServer()
 }
 
-// UnimplementedPTEsimateServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedPTEsimateServiceServer struct {
+// UnimplementedPTEstimateServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedPTEstimateServiceServer struct {
 }
 
-func (UnimplementedPTEsimateServiceServer) EstimatePowerTrain(context.Context, *PTEstimateRequest) (*PTEstimateResponse, error) {
+func (UnimplementedPTEstimateServiceServer) EstimatePowerTrain(context.Context, *PTEstimateRequest) (*PTEstimateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method EstimatePowerTrain not implemented")
 }
-func (UnimplementedPTEsimateServiceServer) mustEmbedUnimplementedPTEsimateServiceServer() {}
+func (UnimplementedPTEstimateServiceServer) mustEmbedUnimplementedPTEstimateServiceServer() {}
 
-// UnsafePTEsimateServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to PTEsimateServiceServer will
+// UnsafePTEstimateServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to PTEstimateServiceServer will
 // result in compilation errors.
-type UnsafePTEsimateServiceServer interface {
-	mustEmbedUnimplementedPTEsimateServiceServer()
+type UnsafePTEstimateServiceServer interface {
+	mustEmbedUnimplementedPTEstimateServiceServer()
 }
 
-func RegisterPTEsimateServiceServer(s grpc.ServiceRegistrar, srv PTEsimateServiceServer) {
-	s.RegisterService(&PTEsimateService_ServiceDesc, srv)
+func RegisterPTEstimateServiceServer(s grpc.ServiceRegistrar, srv PTEstimateServiceServer) {
+	s.RegisterService(&PTEstimateService_ServiceDesc, srv)
 }
 
-func _PTEsimateService_EstimatePowerTrain_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _PTEstimateService_EstimatePowerTrain_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(PTEstimateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PTEsimateServiceServer).EstimatePowerTrain(ctx, in)
+		return srv.(PTEstimateServiceServer).EstimatePowerTrain(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/powerTrainAggregator.v1.PTEsimateService/EstimatePowerTrain",
+		FullMethod: "/powerTrainAggregator.v1.PTEstimateService/EstimatePowerTrain",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PTEsimateServiceServer).EstimatePowerTrain(ctx, req.(*PTEstimateRequest))
+		return srv.(PTEstimateServiceServer).EstimatePowerTrain(ctx, req.(*PTEstimateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// PTEsimateService_ServiceDesc is the grpc.ServiceDesc for PTEsimateService service.
+// PTEstimateService_ServiceDesc is the grpc.ServiceDesc for PTEstimateService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var PTEsimateService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "powerTrainAggregator.v1.PTEsimateService",
-	HandlerType: (*PTEsimateServiceServer)(nil),
+var PTEstimateService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "powerTrainAggregator.v1.PTEstimateService",
+	HandlerType: (*PTEstimateServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "EstimatePowerTrain",
-			Handler:    _PTEsimateService_EstimatePowerTrain_Handler,
+			Handler:    _PTEstimateService_EstimatePowerTrain_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
