@@ -14,86 +14,86 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// VMEsimateServiceClient is the client API for VMEsimateService service.
+// VMEstimateServiceClient is the client API for VMEstimateService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type VMEsimateServiceClient interface {
+type VMEstimateServiceClient interface {
 	EstimateVesselMotion(ctx context.Context, in *VMEstimateRequest, opts ...grpc.CallOption) (*VMEstimateResponse, error)
 }
 
-type vMEsimateServiceClient struct {
+type vMEstimateServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewVMEsimateServiceClient(cc grpc.ClientConnInterface) VMEsimateServiceClient {
-	return &vMEsimateServiceClient{cc}
+func NewVMEstimateServiceClient(cc grpc.ClientConnInterface) VMEstimateServiceClient {
+	return &vMEstimateServiceClient{cc}
 }
 
-func (c *vMEsimateServiceClient) EstimateVesselMotion(ctx context.Context, in *VMEstimateRequest, opts ...grpc.CallOption) (*VMEstimateResponse, error) {
+func (c *vMEstimateServiceClient) EstimateVesselMotion(ctx context.Context, in *VMEstimateRequest, opts ...grpc.CallOption) (*VMEstimateResponse, error) {
 	out := new(VMEstimateResponse)
-	err := c.cc.Invoke(ctx, "/vesselMotionAggregator.v1.VMEsimateService/EstimateVesselMotion", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/vesselMotionAggregator.v1.VMEstimateService/EstimateVesselMotion", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// VMEsimateServiceServer is the server API for VMEsimateService service.
-// All implementations must embed UnimplementedVMEsimateServiceServer
+// VMEstimateServiceServer is the server API for VMEstimateService service.
+// All implementations must embed UnimplementedVMEstimateServiceServer
 // for forward compatibility
-type VMEsimateServiceServer interface {
+type VMEstimateServiceServer interface {
 	EstimateVesselMotion(context.Context, *VMEstimateRequest) (*VMEstimateResponse, error)
-	mustEmbedUnimplementedVMEsimateServiceServer()
+	mustEmbedUnimplementedVMEstimateServiceServer()
 }
 
-// UnimplementedVMEsimateServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedVMEsimateServiceServer struct {
+// UnimplementedVMEstimateServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedVMEstimateServiceServer struct {
 }
 
-func (UnimplementedVMEsimateServiceServer) EstimateVesselMotion(context.Context, *VMEstimateRequest) (*VMEstimateResponse, error) {
+func (UnimplementedVMEstimateServiceServer) EstimateVesselMotion(context.Context, *VMEstimateRequest) (*VMEstimateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method EstimateVesselMotion not implemented")
 }
-func (UnimplementedVMEsimateServiceServer) mustEmbedUnimplementedVMEsimateServiceServer() {}
+func (UnimplementedVMEstimateServiceServer) mustEmbedUnimplementedVMEstimateServiceServer() {}
 
-// UnsafeVMEsimateServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to VMEsimateServiceServer will
+// UnsafeVMEstimateServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to VMEstimateServiceServer will
 // result in compilation errors.
-type UnsafeVMEsimateServiceServer interface {
-	mustEmbedUnimplementedVMEsimateServiceServer()
+type UnsafeVMEstimateServiceServer interface {
+	mustEmbedUnimplementedVMEstimateServiceServer()
 }
 
-func RegisterVMEsimateServiceServer(s grpc.ServiceRegistrar, srv VMEsimateServiceServer) {
-	s.RegisterService(&VMEsimateService_ServiceDesc, srv)
+func RegisterVMEstimateServiceServer(s grpc.ServiceRegistrar, srv VMEstimateServiceServer) {
+	s.RegisterService(&VMEstimateService_ServiceDesc, srv)
 }
 
-func _VMEsimateService_EstimateVesselMotion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _VMEstimateService_EstimateVesselMotion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(VMEstimateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(VMEsimateServiceServer).EstimateVesselMotion(ctx, in)
+		return srv.(VMEstimateServiceServer).EstimateVesselMotion(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/vesselMotionAggregator.v1.VMEsimateService/EstimateVesselMotion",
+		FullMethod: "/vesselMotionAggregator.v1.VMEstimateService/EstimateVesselMotion",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(VMEsimateServiceServer).EstimateVesselMotion(ctx, req.(*VMEstimateRequest))
+		return srv.(VMEstimateServiceServer).EstimateVesselMotion(ctx, req.(*VMEstimateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// VMEsimateService_ServiceDesc is the grpc.ServiceDesc for VMEsimateService service.
+// VMEstimateService_ServiceDesc is the grpc.ServiceDesc for VMEstimateService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var VMEsimateService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "vesselMotionAggregator.v1.VMEsimateService",
-	HandlerType: (*VMEsimateServiceServer)(nil),
+var VMEstimateService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "vesselMotionAggregator.v1.VMEstimateService",
+	HandlerType: (*VMEstimateServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "EstimateVesselMotion",
-			Handler:    _VMEsimateService_EstimateVesselMotion_Handler,
+			Handler:    _VMEstimateService_EstimateVesselMotion_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
