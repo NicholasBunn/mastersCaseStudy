@@ -18,6 +18,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PTEstimateServiceClient interface {
+	// The 'Estimate Power Train' call provides foresight for tactical decision-making by providing detailed information into the power train of the S.A. Agulhas for a porential route.
 	EstimatePowerTrain(ctx context.Context, in *PTEstimateRequest, opts ...grpc.CallOption) (*PTEstimateResponse, error)
 }
 
@@ -42,6 +43,7 @@ func (c *pTEstimateServiceClient) EstimatePowerTrain(ctx context.Context, in *PT
 // All implementations must embed UnimplementedPTEstimateServiceServer
 // for forward compatibility
 type PTEstimateServiceServer interface {
+	// The 'Estimate Power Train' call provides foresight for tactical decision-making by providing detailed information into the power train of the S.A. Agulhas for a porential route.
 	EstimatePowerTrain(context.Context, *PTEstimateRequest) (*PTEstimateResponse, error)
 	mustEmbedUnimplementedPTEstimateServiceServer()
 }

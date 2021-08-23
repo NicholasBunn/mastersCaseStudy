@@ -186,3 +186,175 @@ var RouteAnalysisAggregator_ServiceDesc = grpc.ServiceDesc{
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "webGateway/proto/v1/web_gateway_api_v1.proto",
 }
+
+// RoutePowerAggregatorClient is the client API for RoutePowerAggregator service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type RoutePowerAggregatorClient interface {
+	RoutePower(ctx context.Context, in *RoutePowerRequest, opts ...grpc.CallOption) (*RoutePowerResponse, error)
+}
+
+type routePowerAggregatorClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewRoutePowerAggregatorClient(cc grpc.ClientConnInterface) RoutePowerAggregatorClient {
+	return &routePowerAggregatorClient{cc}
+}
+
+func (c *routePowerAggregatorClient) RoutePower(ctx context.Context, in *RoutePowerRequest, opts ...grpc.CallOption) (*RoutePowerResponse, error) {
+	out := new(RoutePowerResponse)
+	err := c.cc.Invoke(ctx, "/webGateway.v1.RoutePowerAggregator/RoutePower", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// RoutePowerAggregatorServer is the server API for RoutePowerAggregator service.
+// All implementations must embed UnimplementedRoutePowerAggregatorServer
+// for forward compatibility
+type RoutePowerAggregatorServer interface {
+	RoutePower(context.Context, *RoutePowerRequest) (*RoutePowerResponse, error)
+	mustEmbedUnimplementedRoutePowerAggregatorServer()
+}
+
+// UnimplementedRoutePowerAggregatorServer must be embedded to have forward compatible implementations.
+type UnimplementedRoutePowerAggregatorServer struct {
+}
+
+func (UnimplementedRoutePowerAggregatorServer) RoutePower(context.Context, *RoutePowerRequest) (*RoutePowerResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RoutePower not implemented")
+}
+func (UnimplementedRoutePowerAggregatorServer) mustEmbedUnimplementedRoutePowerAggregatorServer() {}
+
+// UnsafeRoutePowerAggregatorServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to RoutePowerAggregatorServer will
+// result in compilation errors.
+type UnsafeRoutePowerAggregatorServer interface {
+	mustEmbedUnimplementedRoutePowerAggregatorServer()
+}
+
+func RegisterRoutePowerAggregatorServer(s grpc.ServiceRegistrar, srv RoutePowerAggregatorServer) {
+	s.RegisterService(&RoutePowerAggregator_ServiceDesc, srv)
+}
+
+func _RoutePowerAggregator_RoutePower_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RoutePowerRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RoutePowerAggregatorServer).RoutePower(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/webGateway.v1.RoutePowerAggregator/RoutePower",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RoutePowerAggregatorServer).RoutePower(ctx, req.(*RoutePowerRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// RoutePowerAggregator_ServiceDesc is the grpc.ServiceDesc for RoutePowerAggregator service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var RoutePowerAggregator_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "webGateway.v1.RoutePowerAggregator",
+	HandlerType: (*RoutePowerAggregatorServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "RoutePower",
+			Handler:    _RoutePowerAggregator_RoutePower_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "webGateway/proto/v1/web_gateway_api_v1.proto",
+}
+
+// RouteMotionAggregatorClient is the client API for RouteMotionAggregator service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type RouteMotionAggregatorClient interface {
+	RouteMotion(ctx context.Context, in *RouteMotionRequest, opts ...grpc.CallOption) (*RouteMotionResponse, error)
+}
+
+type routeMotionAggregatorClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewRouteMotionAggregatorClient(cc grpc.ClientConnInterface) RouteMotionAggregatorClient {
+	return &routeMotionAggregatorClient{cc}
+}
+
+func (c *routeMotionAggregatorClient) RouteMotion(ctx context.Context, in *RouteMotionRequest, opts ...grpc.CallOption) (*RouteMotionResponse, error) {
+	out := new(RouteMotionResponse)
+	err := c.cc.Invoke(ctx, "/webGateway.v1.RouteMotionAggregator/RouteMotion", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// RouteMotionAggregatorServer is the server API for RouteMotionAggregator service.
+// All implementations must embed UnimplementedRouteMotionAggregatorServer
+// for forward compatibility
+type RouteMotionAggregatorServer interface {
+	RouteMotion(context.Context, *RouteMotionRequest) (*RouteMotionResponse, error)
+	mustEmbedUnimplementedRouteMotionAggregatorServer()
+}
+
+// UnimplementedRouteMotionAggregatorServer must be embedded to have forward compatible implementations.
+type UnimplementedRouteMotionAggregatorServer struct {
+}
+
+func (UnimplementedRouteMotionAggregatorServer) RouteMotion(context.Context, *RouteMotionRequest) (*RouteMotionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RouteMotion not implemented")
+}
+func (UnimplementedRouteMotionAggregatorServer) mustEmbedUnimplementedRouteMotionAggregatorServer() {}
+
+// UnsafeRouteMotionAggregatorServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to RouteMotionAggregatorServer will
+// result in compilation errors.
+type UnsafeRouteMotionAggregatorServer interface {
+	mustEmbedUnimplementedRouteMotionAggregatorServer()
+}
+
+func RegisterRouteMotionAggregatorServer(s grpc.ServiceRegistrar, srv RouteMotionAggregatorServer) {
+	s.RegisterService(&RouteMotionAggregator_ServiceDesc, srv)
+}
+
+func _RouteMotionAggregator_RouteMotion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RouteMotionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RouteMotionAggregatorServer).RouteMotion(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/webGateway.v1.RouteMotionAggregator/RouteMotion",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RouteMotionAggregatorServer).RouteMotion(ctx, req.(*RouteMotionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// RouteMotionAggregator_ServiceDesc is the grpc.ServiceDesc for RouteMotionAggregator service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var RouteMotionAggregator_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "webGateway.v1.RouteMotionAggregator",
+	HandlerType: (*RouteMotionAggregatorServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "RouteMotion",
+			Handler:    _RouteMotionAggregator_RouteMotion_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "webGateway/proto/v1/web_gateway_api_v1.proto",
+}

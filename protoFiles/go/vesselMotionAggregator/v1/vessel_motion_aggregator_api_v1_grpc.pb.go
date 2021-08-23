@@ -18,6 +18,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type VMEstimateServiceClient interface {
+	// The 'Estimate Vessel Motion' call provides foresight for tactical decision-making by providing detailed information into the motion of the S.A. Agulhas for a porential route.
 	EstimateVesselMotion(ctx context.Context, in *VMEstimateRequest, opts ...grpc.CallOption) (*VMEstimateResponse, error)
 }
 
@@ -42,6 +43,7 @@ func (c *vMEstimateServiceClient) EstimateVesselMotion(ctx context.Context, in *
 // All implementations must embed UnimplementedVMEstimateServiceServer
 // for forward compatibility
 type VMEstimateServiceServer interface {
+	// The 'Estimate Vessel Motion' call provides foresight for tactical decision-making by providing detailed information into the motion of the S.A. Agulhas for a porential route.
 	EstimateVesselMotion(context.Context, *VMEstimateRequest) (*VMEstimateResponse, error)
 	mustEmbedUnimplementedVMEstimateServiceServer()
 }
