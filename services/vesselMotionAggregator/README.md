@@ -31,7 +31,7 @@ For information on the API design (calls and messages), check out the proto file
 - Open a terminal instance and navigate to the directory in which you'd like to install the project.
 - Run "git clone https://github.com/NicholasBunn/mastersCaseStudy.git" to clone the project onto your machine.
 - Run "cd MastersCaseStudy" to change directory so that you are situated in "MastersCaseStudy").
-- Run "docker build . -f services/vesselMotionAggregator/DockerFile -t vessel_motion_aggregator" to build the Docker image for this service.
+- Run "docker build . -f services/vesselMotionAggregator/Dockerfile -t vessel_motion_aggregator" to build the Docker image for this service.
 - Run "docker run -p 127.0.0.1:50103:50103/tcp vessel_motion_aggregator" to start up a Docker container with the service.
 
 ## **Contributing**

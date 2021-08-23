@@ -10,7 +10,6 @@ RUN mkdir /project/services/oceanWeatherService/
 RUN mkdir /project/services/oceanWeatherService/program\ logs
 
 # Copy the 'proto' folder into the services directory
-COPY services/oceanWeatherService/proto/v1/ project/services/oceanWeatherService/proto/v1
 COPY protoFiles/python/oceanWeatherService/v1/ project/protoFiles/python/oceanWeatherService/v1
 # Copy the 'interceptor' folder into the project directory
 COPY interceptors/python/ project/interceptors/python/

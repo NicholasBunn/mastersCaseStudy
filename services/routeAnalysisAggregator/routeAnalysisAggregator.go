@@ -63,7 +63,7 @@ func init() {
 	addrPTS = os.Getenv("PTSHOST") + ":" + config.Client.Port.PowerTrainService
 	addrVMS = os.Getenv("VMSHOST") + ":" + config.Client.Port.VesselMotionService
 	addrCS = os.Getenv("CSHOST") + ":" + config.Client.Port.ComfortService
-	addrPVS = os.Getenv("VPSHOST") + ":" + config.Client.Port.ProcessVibrationService
+	addrPVS = os.Getenv("PVSHOST") + ":" + config.Client.Port.ProcessVibrationService
 
 	// Load timeouts from config
 	timeoutDuration = config.Client.Timeout.Connection

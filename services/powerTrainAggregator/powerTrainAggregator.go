@@ -52,7 +52,7 @@ func init() {
 	// Load YAML configurations into config struct
 	config, _ := DecodeConfig("configuration.yaml")
 
-	addrMyself = os.Getenv("ROUTEANALYSISHOST") + ":" + config.Server.Port.Myself
+	addrMyself = os.Getenv("POWERTRAINHOST") + ":" + config.Server.Port.Myself
 	addrOWS = os.Getenv("OWSHOST") + ":" + config.Client.Port.OceanWeatherService
 	addrPTS = os.Getenv("PTSHOST") + ":" + config.Client.Port.PowerTrainService
 

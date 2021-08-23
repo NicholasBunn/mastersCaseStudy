@@ -10,7 +10,6 @@ RUN mkdir /project/services/processVibrationService/
 RUN mkdir /project/services/processVibrationService/program\ logs
 
 # Copy the 'proto' folder into the services directory
-COPY services/processVibrationService/proto/v1/ project/services/processVibrationService/proto/v1/
 COPY protoFiles/python/processVibrationService/v1/ project/protoFiles/python/processVibrationService/v1
 # Copy the 'interceptor' folder into the project directory
 COPY interceptors/python project/interceptors/python

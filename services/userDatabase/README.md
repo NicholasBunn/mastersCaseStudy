@@ -21,7 +21,7 @@ For more information on the table structure, check out the table desing at https
 - Open a terminal instance and navigate to the directory in which you'd like to install the project.
 - Run "git clone https://github.com/NicholasBunn/mastersCaseStudy.git" to clone the project onto your machine.
 - Run "cd MastersCaseStudy" to change directory so that you are situated in "MastersCaseStudy").
-- Run "docker build . -f services/userDatabase/DockerFile -t user_database" to build the Docker image for this service.
+- Run "docker build . -f services/userDatabase/Dockerfile -t user_database" to build the Docker image for this service.
 - Run "docker run -d -p 127.0.0.1:3306:3306/tcp --name user_database -e MYSQL_ROOT_PASSWORD="supersecret" user_database" to start up a Docker container with the service.
 
 ## **Contributing**

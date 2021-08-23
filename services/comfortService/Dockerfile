@@ -10,7 +10,6 @@ RUN mkdir /project/services/comfortService/
 RUN mkdir /project/services/comfortService/program\ logs
 
 # Copy the 'proto' folder into the services directory
-COPY services/comfortService/proto/v1/ project/services/comfortService/proto/v1/
 COPY protoFiles/python/comfortService/v1/ project/protoFiles/python/comfortService/v1
 # Copy the 'interceptor' folder into the project directory
 COPY interceptors/python project/interceptors/python

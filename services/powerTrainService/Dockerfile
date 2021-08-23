@@ -14,7 +14,6 @@ ENV REQUIRED_FILE_PATH "services/powerTrainService/required files/"
 ENV TEST_DATA_PATH "services/powerTrainService/test data/"
 
 # Copy the 'proto' folder into the services directory
-COPY services/powerTrainService/proto/v1/ project/services/powerTrainService/proto/v1/
 COPY protoFiles/python/powerTrainService/v1/ project/protoFiles/python/powerTrainService/v1
 # Copy the 'interceptor' folder into the project directory
 COPY interceptors/python project/interceptors/python
