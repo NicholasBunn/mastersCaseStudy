@@ -17,7 +17,7 @@ import (
 	"github.com/go-yaml/yaml"
 	"database/sql"
     _ "github.com/go-sql-driver/mysql"
-	authentication "github.com/NicholasBunn/mastersCaseStudy/generalComponents/authenticationStuff"	
+	"github.com/NicholasBunn/mastersCaseStudy/generalComponents/authenticationStuff"	
 
 	// Proto packages
 	serverPB "github.com/NicholasBunn/mastersCaseStudy/protoFiles/go/authenticationService/v1"

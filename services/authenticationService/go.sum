@@ -1,10 +1,10 @@
 cloud.google.com/go v0.26.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
 cloud.google.com/go v0.34.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
-github.com/NicholasBunn/mastersCaseStudy/generalComponents/authenticationStuff v0.0.0-20210816160223-c1d9b244e803 h1:G8nuR6SchuAWmJXn+X/O84dfrFEEbuwxVGFWZsdcgBQ=
-github.com/NicholasBunn/mastersCaseStudy/generalComponents/authenticationStuff v0.0.0-20210816160223-c1d9b244e803/go.mod h1:5YTcQoVOYtfRqAMKk9U/dQ15G2QyV4wRlAfk/d6lFrk=
-github.com/NicholasBunn/mastersCaseStudy/protoFiles/go v0.0.0-20210817062937-259bd7c46989 h1:VGodisGz8nKxrB1lwI+otwPgLb1QFlU1baif7oqKSWE=
-github.com/NicholasBunn/mastersCaseStudy/protoFiles/go v0.0.0-20210817062937-259bd7c46989/go.mod h1:UFxYKqrrDA3q/RWkt0J1H8jI9Dv3NZqMjwVKGJBDBY0=
+github.com/NicholasBunn/mastersCaseStudy/generalComponents/authenticationStuff v0.0.0-20210819131254-26fe76948d3c h1:DmyLLYsbVbFtaFrdwLY4fFVrhAaQdwyRUSbykQfcVqg=
+github.com/NicholasBunn/mastersCaseStudy/generalComponents/authenticationStuff v0.0.0-20210819131254-26fe76948d3c/go.mod h1:5YTcQoVOYtfRqAMKk9U/dQ15G2QyV4wRlAfk/d6lFrk=
+github.com/NicholasBunn/mastersCaseStudy/protoFiles/go v0.0.0-20210823073820-caca5d8357a1 h1:hAB3tQJg81s3YW0T4CDc5hKD4GHBMe19kQXN/W/uogY=
+github.com/NicholasBunn/mastersCaseStudy/protoFiles/go v0.0.0-20210823073820-caca5d8357a1/go.mod h1:UFxYKqrrDA3q/RWkt0J1H8jI9Dv3NZqMjwVKGJBDBY0=
 github.com/OneOfOne/xxhash v1.2.2/go.mod h1:HSdplMjZKSmBqAxg5vPj2TmRDmfkzw+cTzAElWljhcU=
 github.com/antihax/optional v1.0.0/go.mod h1:uupD/76wgC+ih3iEmQUL+0Ugr19nfwCT1kdvxnR2qWY=
 github.com/census-instrumentation/opencensus-proto v0.2.1/go.mod h1:f6KPmirojxKA12rnyqOA5BBL4O983OfeGPqjHWSTneU=
