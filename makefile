@@ -18,6 +18,12 @@ protoGenGo:
 	# Route analysis aggregator
 	protoc -I services --go_out=protoFiles/go --go-grpc_out=protoFiles/go services/routeAnalysisAggregator/proto/v1/route_analysis_aggregator_api_v1.proto
 
+	# Power train aggregator
+	protoc -I services --go_out=protoFiles/go --go-grpc_out=protoFiles/go services/powerTrainAggregator/proto/v1/power_train_aggregator_api_v1.proto
+
+	# Vessel motion aggregator
+	protoc -I services --go_out=protoFiles/go --go-grpc_out=protoFiles/go services/vesselMotionAggregator/proto/v1/vessel_motion_aggregator_api_v1.proto
+
 	# Authentication service
 	protoc -I services --go_out=protoFiles/go --go-grpc_out=protoFiles/go services/authenticationService/proto/v1/authentication_service_api_v1.proto
 
@@ -49,7 +55,7 @@ protoGenCSharp:
 
 protoGenJS:
 	# Web gateway
-	protoc -I=services/webGateway/proto/v1/ web_gateway_api_v1.proto --js_out=import_style=commonjs:protoFiles/javaScript/webGateway/v1 --grpc-web_out=import_style=commonjs,mode=grpcwebtext:protoFiles/javaScript/webGateway/v1
+	protoc -I=services/webGateway/proto/v1/ web_gateway_api_v1.proto --js_out=import_style=commonjs:protoFiles/javaScript/webGateway/v1 --grpc-web_out=import_style=commonjs,mode=grpcweb:protoFiles/javaScript/webGateway/v1
 
 protoGenAll:
 	make protoGenGo; make protoGenPy; protoGenCSharp; make protoGenJS
@@ -95,6 +101,12 @@ testVesselMotionService:
 testRouteAnalysisAggregator:
 	cd services/routeAnalysisAggregator; go test; cd ..
 
+testPowerTrainAggregator:
+	cd services/powerTrainAggregator; go test; cd ..
+
+testVesselMotionAggregator:
+	cd services/vesselMotionAggregator; go test; cd ..
+
 testAuthenticationStuff:
 	cd generalComponents/authenticationStuff; go test; cd ..
 	
@@ -108,6 +120,7 @@ testGo:
 	make testAuthenticationStuff
 	make testAuthenticationService
 	# make testRouteAnalysisAggregator
+	# make testPowerTrainAggregator
 
 testPy:
 	make testOceanWeatherService
@@ -142,6 +155,12 @@ runComfortService:
 runRouteAnalysisAggregator:
 	cd /home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/routeAnalysisAggregator;	go run routeAnalysisAggregator.go
 
+runPowerTrainAggregator:
+	cd /home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/powerTrainAggregator;	go run powerTrainAggregator.go
+
+runVesselMotionAggregator:
+	cd /home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/vesselMotionAggregator;	go run vesselMotionAggregator.go
+
 runAuthenticationService:
 	cd /home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/authenticationService; go run authenticationService.go
 
@@ -152,19 +171,39 @@ runPrometheus:
 
 runPushGateway:
 
+runServiceLayer:
+	make runOceanWeatherService &
+	make runPowerTrainService &
+	make runVesselMotionService &
+	make runProcessVibrationService &
+	make runComfortService &
+
+runAggregatorLayer:
+	make runRouteAnalysisAggregator &
+	make runPowerTrainAggregator &
+	make runVesselMotionAggregator &
+
+runGatewayLayer:
+	make runAuthenticationService &
+	make runWebGateway &
+	
 runGo:
-	make runRouteAnalysisAggregator
+	make runRouteAnalysisAggregator &
+	make runPowerTrainAggregator &
+	make runVesselMotionAggregator &
+	make runAuthenticationService &
+	make runWebGateway &
 
 runPy:
-	make runOceanWeatherService
-	make runPowerTrainService
-	make runProcessVibrationService
-	make runComfortService
+	make runOceanWeatherService &
+	make runPowerTrainService &
+	make runProcessVibrationService &
+	make runComfortService &
 
 runCSharp:
-	make runVesselMotionService
+	make runVesselMotionService &
 
 runAll:cd
-	make runGo
-	make runPy
-	make runCSharp
+	make runGo &
+	make runPy &
+	make runCSharp &
