@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package vesselMotionAggregator.v1;
+
+option go_package = "vesselMotionAggregator/v1/;vesselMotionAggregator";
+
+message VMEstimateRequest {
+    repeated double unix_time = 1;
+    repeated float latitude = 2;
+    repeated float longitude = 3;
+    repeated float heading = 4;
+    repeated float prop_pitch = 5;
+    repeated float motor_speed = 6;
+    repeated float SOG = 7; 
+}
+
+message VMEstimateResponse {
+    repeated double unix_time = 1;
+    repeated double acceleration_estimate_x = 2; 
+    repeated double acceleration_estimate_y = 3;
+    repeated double acceleration_estimate_z = 4;
+}
+
+// 'VM Estimate Service' offers a single service call that aggregates information to provide detailed information into the motion of the S.A. Agulhas.
+
+service VMEstimateService {
+            // The 'Estimate Vessel Motion' call provides foresight for tactical decision-making by providing detailed information into the motion of the S.A. Agulhas for a porential route.
+    rpc EstimateVesselMotion(VMEstimateRequest) returns (VMEstimateResponse);
+}
