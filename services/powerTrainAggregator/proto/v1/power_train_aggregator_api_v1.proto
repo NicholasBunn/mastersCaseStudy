@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package powerTrainAggregator.v1;
+
+option go_package = "powerTrainAggregator/v1/;powerTrainAggregator";
+
+message PTEstimateRequest {
+    repeated double unix_time = 1;
+    repeated float latitude = 2;
+    repeated float longitude = 3;
+    repeated float heading = 4;
+    repeated float prop_pitch = 5;
+    repeated float motor_speed = 6;
+    repeated float SOG = 7; 
+}
+
+message PTEstimateResponse {
+    repeated double unix_time = 1;
+    repeated float power_estimate = 2;
+    repeated float cost_estimate = 3;
+    float total_cost = 4;
+}
+
+// 'PT Estimate Service' offers a single service call that aggregates information to provide detailed information into the power train of the S.A. Agulhas.
+service PTEstimateService {
+        // The 'Estimate Power Train' call provides foresight for tactical decision-making by providing detailed information into the power train of the S.A. Agulhas for a porential route.
+    rpc EstimatePowerTrain(PTEstimateRequest) returns (PTEstimateResponse);
+}
