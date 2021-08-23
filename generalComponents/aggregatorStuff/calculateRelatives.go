@@ -1,5 +1,10 @@
 package aggregator
 
+import (
+	"fmt"
+	"math"
+)
+
 func calculateRelativeWindDirection(windDirection []float32, heading []float32) ([]float32, error) {
 	/* This function takes the wind direction and vessel heading as inputs. Using these, it 
 	calculates and returns the wind direction relative to the vessels direction.
