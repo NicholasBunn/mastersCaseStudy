@@ -18,6 +18,8 @@ import (
 	serverPB "github.com/NicholasBunn/mastersCaseStudy/protoFiles/go/webGateway/v1"
 	authenticationServicePB "github.com/NicholasBunn/mastersCaseStudy/protoFiles/go/authenticationService/v1"
 	routeAnalysisAggregatorPB "github.com/NicholasBunn/mastersCaseStudy/protoFiles/go/routeAnalysisAggregator/v1"
+	powerTrainAggregatorPB "github.com/NicholasBunn/mastersCaseStudy/protoFiles/go/powerTrainAggregator/v1"
+	vesselMotionAggregatorPB "github.com/NicholasBunn/mastersCaseStudy/protoFiles/go/vesselMotionAggregator/v1"
 )
 
 var (
@@ -25,6 +27,8 @@ var (
 	addrMyself string
 	addrAS string
 	addrRAA string
+	addrPTA string
+	addrVMA string
 
 	timeoutDuration     int           // The time, in seconds, that the client should wait when dialing (connecting to) the server before throwing an error
 	callTimeoutDuration time.Duration // The time, in seconds, that the client should wait when making a call to the server before throwing an error
@@ -52,6 +56,8 @@ func init() {
 	addrMyself = os.Getenv("WEBHOST") + ":" + config.Server.Port.Myself
 	addrAS = os.Getenv("AUTHENTICATIONHOST") + ":" + config.Client.Port.AuthenticationService
 	addrRAA = os.Getenv("ROUTEANALYSISHOST") + ":" + config.Client.Port.RouteAnalysisAggregator
+	addrPTA = os.Getenv("POWERTRAINHOST") + ":" + config.Client.Port.PowerTrainAggregator
+	addrVMA = os.Getenv("VESSELMOTIONHOST") + ":" + config.Client.Port.VesselMotionAggregator
 
 	// Load timeouts from config
 	timeoutDuration = config.Client.Timeout.Connection
@@ -112,6 +118,12 @@ func main() {
 	serverPB.RegisterRouteAnalysisAggregatorServer(webServer, &routeAnalysisServer{})
 	DebugLogger.Println("Succesfully registered Route Analysis Service to the server")
 
+	serverPB.RegisterRoutePowerAggregatorServer(webServer, &routePowerServer{})
+	DebugLogger.Println("Succesfully registered Route Power Service to the server")
+
+	serverPB.RegisterRouteMotionAggregatorServer(webServer, &routeMotionServer{})
+	DebugLogger.Println("Succesfully registered Route Motion Service to the server")
+
 	// Start the server
 	if err := webServer.Serve(listener); err != nil {
 		ErrorLogger.Fatalf("Failed to expose service: \n%v", err)
@@ -137,6 +149,8 @@ type Config struct {
 		Port struct {
 			AuthenticationService      string `yaml:"authenticationService"`
 			RouteAnalysisAggregator string `yaml:"routeAnalysisAggregator"`
+			PowerTrainAggregator string `yaml:"powerTrainAggregator"`
+			VesselMotionAggregator string `yaml:"vesselMotionAggregator"`
 		} `yaml:"port"`
 		Timeout struct {
 			Connection int `yaml:"connection"`
@@ -167,6 +181,18 @@ type routeAnalysisServer struct {
 	// Use this to implement the route analysis aggregator
 
 	serverPB.UnimplementedRouteAnalysisAggregatorServer
+}
+
+type routePowerServer struct {
+	// Use this to implement the power train aggregator
+
+	serverPB.UnimplementedRoutePowerAggregatorServer
+}
+
+type routeMotionServer struct {
+	// Use this to implement the motion aggregator
+
+	serverPB.UnimplementedRouteMotionAggregatorServer
 }
 
 // ________IMPLEMENT THE OFFERED SERVICES________
@@ -274,6 +300,122 @@ func (s *routeAnalysisServer) RouteAnalysis(ctx context.Context, request *server
 		AverageRmsY: responseMessageRAA.AverageRmsY,
 		AverageRmsZ: responseMessageRAA.AverageRmsZ,
 		// ComfortLevel: responseMessageRAA.ComfortLevel,
+	}
+
+	return &response, nil
+}
+
+func (s *routePowerServer) RoutePower(ctx context.Context, request *serverPB.RoutePowerRequest) (*serverPB.RoutePowerResponse, error) {
+
+	InfoLogger.Println("Received Route Power Service Call.")
+
+	// Create an insecure connection to the route power aggregator server
+	connPTA, err := createInsecureServerConnection(
+		addrPTA,
+		timeoutDuration,
+	)
+	if err != nil {
+		return nil, err
+	}	
+
+
+	InfoLogger.Println("Creating Route Power Aggregator client.")
+	clientRPA := powerTrainAggregatorPB.NewPTEstimateServiceClient(connPTA)
+	DebugLogger.Println("Succesfully created client connection to Power Train Aggregator.")
+
+	// Create a PT estimate request message
+	requestMessagePTA := powerTrainAggregatorPB.PTEstimateRequest{
+		UnixTime: request.UnixTime,
+		Latitude: request.Latitude,
+		Longitude: request.Longitude,
+		Heading: request.Heading,
+		PropPitch: request.PropPitch,
+		MotorSpeed: request.MotorSpeed,
+		SOG: request.SOG,
+	}
+	
+	DebugLogger.Println("Succesfully created a PT Estimate Request.")
+
+	InfoLogger.Println("Making Estimate Power Train Call.")
+	ptaContext, cancel := context.WithTimeout(context.Background(), callTimeoutDuration)
+	defer cancel()
+
+	// Invoke the Power Train Aggregator
+	responseMessagePTA, err := clientRPA.EstimatePowerTrain(ptaContext, &requestMessagePTA)
+	if err != nil {
+		ErrorLogger.Println("Failed to make Estimate Power Train service call: \n", err)
+
+		return nil, err
+	} else {
+		DebugLogger.Println("Successfully made service call to Power Train Aggregator.")
+		connPTA.Close()
+	}
+
+	fmt.Println(responseMessagePTA)
+
+	response := serverPB.RoutePowerResponse{
+		UnixTime: responseMessagePTA.UnixTime,
+		PowerEstimate: responseMessagePTA.PowerEstimate,
+		CostEstimate: responseMessagePTA.CostEstimate,
+		TotalCost: responseMessagePTA.TotalCost,
+	}
+
+	return &response, nil
+}
+
+func (s *routeMotionServer) RouteMotion(ctx context.Context, request *serverPB.RouteMotionRequest) (*serverPB.RouteMotionResponse, error) {
+
+	InfoLogger.Println("Received Route Motion Service Call.")
+
+	// Create an insecure connection to the route motion aggregator server
+	connVMA, err := createInsecureServerConnection(
+		addrVMA,
+		timeoutDuration,
+	)
+	if err != nil {
+		return nil, err
+	}	
+
+
+	InfoLogger.Println("Creating Route Motion Aggregator client.")
+	clientVMA := vesselMotionAggregatorPB.NewVMEstimateServiceClient(connVMA)
+	DebugLogger.Println("Succesfully created client connection to Vessel Motion Aggregator.")
+
+	// Create a VM estimate request message
+	requestMessageVMA := vesselMotionAggregatorPB.VMEstimateRequest{
+		UnixTime: request.UnixTime,
+		Latitude: request.Latitude,
+		Longitude: request.Longitude,
+		Heading: request.Heading,
+		PropPitch: request.PropPitch,
+		MotorSpeed: request.MotorSpeed,
+		SOG: request.SOG,
+	}
+	
+	DebugLogger.Println("Succesfully created a VM Estimate Request.")
+
+	InfoLogger.Println("Making Estimate Vessel Motion Call.")
+	vmaContext, cancel := context.WithTimeout(context.Background(), callTimeoutDuration)
+	defer cancel()
+
+	// Invoke the Vessel Motion Aggregator
+	responseMessageVMA, err := clientVMA.EstimateVesselMotion(vmaContext, &requestMessageVMA)
+	if err != nil {
+		ErrorLogger.Println("Failed to make Estimate Vessel Motion service call: \n", err)
+
+		return nil, err
+	} else {
+		DebugLogger.Println("Successfully made service call to Vessel Motion Aggregator.")
+		connVMA.Close()
+	}
+
+	fmt.Println(responseMessageVMA)
+
+	response := serverPB.RouteMotionResponse{
+		UnixTime: responseMessageVMA.UnixTime,
+		AccelerationEstimateX: responseMessageVMA.AccelerationEstimateX,
+		AccelerationEstimateY: responseMessageVMA.AccelerationEstimateY,
+		AccelerationEstimateZ: responseMessageVMA.AccelerationEstimateZ,
 	}
 
 	return &response, nil
