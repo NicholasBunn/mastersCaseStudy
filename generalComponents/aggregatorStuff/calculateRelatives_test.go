@@ -1,7 +1,6 @@
 package aggregator
 
 import (
-	"context"
 	"fmt"
 	"testing"
 )
@@ -173,4 +172,13 @@ func TestCalculateRelativeWindSpeed( t *testing.T) {
 		}
 	})
 
+}
+
+func compareSlices32(sliceOne []float32, sliceTwo []float32) (bool) {
+	for i, entry := range sliceOne {
+        if entry != sliceTwo[i] {
+            return false
+        }
+    }
+    return true
 }
