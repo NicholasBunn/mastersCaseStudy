@@ -14,86 +14,86 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// EsimateServiceClient is the client API for EsimateService service.
+// VMEsimateServiceClient is the client API for VMEsimateService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type EsimateServiceClient interface {
-	EstimatePowerTrain(ctx context.Context, in *PTEstimateRequest, opts ...grpc.CallOption) (*PTEstimateResponse, error)
+type VMEsimateServiceClient interface {
+	EstimateVesselMotion(ctx context.Context, in *VMEstimateRequest, opts ...grpc.CallOption) (*VMEstimateResponse, error)
 }
 
-type esimateServiceClient struct {
+type vMEsimateServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewEsimateServiceClient(cc grpc.ClientConnInterface) EsimateServiceClient {
-	return &esimateServiceClient{cc}
+func NewVMEsimateServiceClient(cc grpc.ClientConnInterface) VMEsimateServiceClient {
+	return &vMEsimateServiceClient{cc}
 }
 
-func (c *esimateServiceClient) EstimatePowerTrain(ctx context.Context, in *PTEstimateRequest, opts ...grpc.CallOption) (*PTEstimateResponse, error) {
-	out := new(PTEstimateResponse)
-	err := c.cc.Invoke(ctx, "/vesselMotionAggregator.v1.EsimateService/EstimatePowerTrain", in, out, opts...)
+func (c *vMEsimateServiceClient) EstimateVesselMotion(ctx context.Context, in *VMEstimateRequest, opts ...grpc.CallOption) (*VMEstimateResponse, error) {
+	out := new(VMEstimateResponse)
+	err := c.cc.Invoke(ctx, "/vesselMotionAggregator.v1.VMEsimateService/EstimateVesselMotion", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// EsimateServiceServer is the server API for EsimateService service.
-// All implementations must embed UnimplementedEsimateServiceServer
+// VMEsimateServiceServer is the server API for VMEsimateService service.
+// All implementations must embed UnimplementedVMEsimateServiceServer
 // for forward compatibility
-type EsimateServiceServer interface {
-	EstimatePowerTrain(context.Context, *PTEstimateRequest) (*PTEstimateResponse, error)
-	mustEmbedUnimplementedEsimateServiceServer()
+type VMEsimateServiceServer interface {
+	EstimateVesselMotion(context.Context, *VMEstimateRequest) (*VMEstimateResponse, error)
+	mustEmbedUnimplementedVMEsimateServiceServer()
 }
 
-// UnimplementedEsimateServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedEsimateServiceServer struct {
+// UnimplementedVMEsimateServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedVMEsimateServiceServer struct {
 }
 
-func (UnimplementedEsimateServiceServer) EstimatePowerTrain(context.Context, *PTEstimateRequest) (*PTEstimateResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method EstimatePowerTrain not implemented")
+func (UnimplementedVMEsimateServiceServer) EstimateVesselMotion(context.Context, *VMEstimateRequest) (*VMEstimateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EstimateVesselMotion not implemented")
 }
-func (UnimplementedEsimateServiceServer) mustEmbedUnimplementedEsimateServiceServer() {}
+func (UnimplementedVMEsimateServiceServer) mustEmbedUnimplementedVMEsimateServiceServer() {}
 
-// UnsafeEsimateServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to EsimateServiceServer will
+// UnsafeVMEsimateServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to VMEsimateServiceServer will
 // result in compilation errors.
-type UnsafeEsimateServiceServer interface {
-	mustEmbedUnimplementedEsimateServiceServer()
+type UnsafeVMEsimateServiceServer interface {
+	mustEmbedUnimplementedVMEsimateServiceServer()
 }
 
-func RegisterEsimateServiceServer(s grpc.ServiceRegistrar, srv EsimateServiceServer) {
-	s.RegisterService(&EsimateService_ServiceDesc, srv)
+func RegisterVMEsimateServiceServer(s grpc.ServiceRegistrar, srv VMEsimateServiceServer) {
+	s.RegisterService(&VMEsimateService_ServiceDesc, srv)
 }
 
-func _EsimateService_EstimatePowerTrain_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PTEstimateRequest)
+func _VMEsimateService_EstimateVesselMotion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(VMEstimateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(EsimateServiceServer).EstimatePowerTrain(ctx, in)
+		return srv.(VMEsimateServiceServer).EstimateVesselMotion(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/vesselMotionAggregator.v1.EsimateService/EstimatePowerTrain",
+		FullMethod: "/vesselMotionAggregator.v1.VMEsimateService/EstimateVesselMotion",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(EsimateServiceServer).EstimatePowerTrain(ctx, req.(*PTEstimateRequest))
+		return srv.(VMEsimateServiceServer).EstimateVesselMotion(ctx, req.(*VMEstimateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// EsimateService_ServiceDesc is the grpc.ServiceDesc for EsimateService service.
+// VMEsimateService_ServiceDesc is the grpc.ServiceDesc for VMEsimateService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var EsimateService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "vesselMotionAggregator.v1.EsimateService",
-	HandlerType: (*EsimateServiceServer)(nil),
+var VMEsimateService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "vesselMotionAggregator.v1.VMEsimateService",
+	HandlerType: (*VMEsimateServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "EstimatePowerTrain",
-			Handler:    _EsimateService_EstimatePowerTrain_Handler,
+			MethodName: "EstimateVesselMotion",
+			Handler:    _VMEsimateService_EstimateVesselMotion_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
