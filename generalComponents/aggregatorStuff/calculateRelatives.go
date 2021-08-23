@@ -5,7 +5,7 @@ import (
 	"math"
 )
 
-func calculateRelativeWindDirection(windDirection []float32, heading []float32) ([]float32, error) {
+func CalculateRelativeWindDirection(windDirection []float32, heading []float32) ([]float32, error) {
 	/* This function takes the wind direction and vessel heading as inputs. Using these, it 
 	calculates and returns the wind direction relative to the vessels direction.
 	*/
@@ -26,7 +26,7 @@ func calculateRelativeWindDirection(windDirection []float32, heading []float32) 
 	return relativeWindDirection, nil
 }
 
-func calculateRelativeWindSpeed(windSpeed []float32, relativeWindDirection []float32, sog []float32) ([]float32, error) {
+func CalculateRelativeWindSpeed(windSpeed []float32, relativeWindDirection []float32, sog []float32) ([]float32, error) {
 	/* This function takes the wind speed, wind direction, vessel speed, and vessel direction as inputs. Uisng these, it calculates and returns the wind speed relative to the vessel's speed.
 	*/
 

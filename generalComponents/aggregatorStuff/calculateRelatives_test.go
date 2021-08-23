@@ -25,7 +25,7 @@ func TestCalculateRelativeWindDirection(t *testing.T) {
 
 		testCase := Tests[0]
 
-		output, err := calculateRelativeWindDirection(testCase.windDirection, testCase.heading)
+		output, err := CalculateRelativeWindDirection(testCase.windDirection, testCase.heading)
 		if (err != nil){
 			fmt.Println(err)
 		} else {
@@ -43,7 +43,7 @@ func TestCalculateRelativeWindDirection(t *testing.T) {
 
 		testCase := Tests[1]
 
-		output, err := calculateRelativeWindDirection(testCase.windDirection, testCase.heading)
+		output, err := CalculateRelativeWindDirection(testCase.windDirection, testCase.heading)
 		if (err != nil){
 			fmt.Println(err)
 		} else {
@@ -82,7 +82,7 @@ func TestCalculateRelativeWindSpeed( t *testing.T) {
 		*/
 		testCase := Tests[0]
 
-		output, err := calculateRelativeWindSpeed(testCase.windSpeed, testCase.relativeWindDirection, testCase.sog)
+		output, err := CalculateRelativeWindSpeed(testCase.windSpeed, testCase.relativeWindDirection, testCase.sog)
 		if (err != nil){
 			fmt.Println(err)
 		} else {
@@ -98,7 +98,7 @@ func TestCalculateRelativeWindSpeed( t *testing.T) {
 		*/
 		testCase := Tests[1]
 
-		output, err := calculateRelativeWindSpeed(testCase.windSpeed, testCase.relativeWindDirection, testCase.sog)
+		output, err := CalculateRelativeWindSpeed(testCase.windSpeed, testCase.relativeWindDirection, testCase.sog)
 		if (err != nil){
 			fmt.Println(err)
 		} else {
@@ -114,7 +114,7 @@ func TestCalculateRelativeWindSpeed( t *testing.T) {
 		*/
 		testCase := Tests[2]
 
-		output, err := calculateRelativeWindSpeed(testCase.windSpeed, testCase.relativeWindDirection, testCase.sog)
+		output, err := CalculateRelativeWindSpeed(testCase.windSpeed, testCase.relativeWindDirection, testCase.sog)
 		if (err != nil){
 			fmt.Println(err)
 		} else {
@@ -130,7 +130,7 @@ func TestCalculateRelativeWindSpeed( t *testing.T) {
 		*/
 		testCase := Tests[3]
 
-		output, err := calculateRelativeWindSpeed(testCase.windSpeed, testCase.relativeWindDirection, testCase.sog)
+		output, err := CalculateRelativeWindSpeed(testCase.windSpeed, testCase.relativeWindDirection, testCase.sog)
 		if (err != nil){
 			fmt.Println(err)
 		} else {
@@ -148,7 +148,7 @@ func TestCalculateRelativeWindSpeed( t *testing.T) {
 		*/
 		testCase := Tests[4]
 
-		output, err := calculateRelativeWindSpeed(testCase.windSpeed, testCase.relativeWindDirection, testCase.sog)
+		output, err := CalculateRelativeWindSpeed(testCase.windSpeed, testCase.relativeWindDirection, testCase.sog)
 		if (err != nil){
 			fmt.Println(err)
 		} else {
@@ -165,7 +165,7 @@ func TestCalculateRelativeWindSpeed( t *testing.T) {
 		*/
 		testCase := Tests[5]
 
-		output, err := calculateRelativeWindSpeed(testCase.windSpeed, testCase.relativeWindDirection, testCase.sog)
+		output, err := CalculateRelativeWindSpeed(testCase.windSpeed, testCase.relativeWindDirection, testCase.sog)
 		if (err != nil){
 			fmt.Println("Calculate Relative Wind Speed: Incorrect Input Value Passed")
 		} else {
