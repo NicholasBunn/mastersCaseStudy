@@ -109,6 +109,9 @@ func main() {
 	serverPB.RegisterLoginServiceServer(webServer, &loginServer{})
 	DebugLogger.Println("Succesfully registered Login Service to the server")
 
+	serverPB.RegisterRouteAnalysisAggregatorServer(webServer, &routeAnalysisServer{})
+	DebugLogger.Println("Succesfully registered Route Analysis Service to the server")
+
 	// Start the server
 	if err := webServer.Serve(listener); err != nil {
 		ErrorLogger.Fatalf("Failed to expose service: \n%v", err)
