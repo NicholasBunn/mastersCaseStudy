@@ -18,8 +18,7 @@ For information on the configuration and setup used in this proxy, check out the
 - Run "git clone https://github.com/NicholasBunn/mastersCaseStudy.git" to clone the project onto your machine.
 - Run "cd MastersCaseStudy" to change directory so that you are situated in "MastersCaseStudy").
 - Run "docker build . -f services/envoyProxy/Dockerfile -t web_proxy" to build the Docker image for envoy.
-- Run "docker run -p 127.0.0.1:8080:8080/tcp web_proxy" to start up a Docker container with the service.
-  docker run -d -p 8080:8080 -p 9901:9901 --network=host web_proxy
+- Run "docker run -d -p 8080:8080 --network=host web_proxy" to start up a Docker container with the service.
 
 ## **Contributing**
 
