@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package powerTrainService.v1;
+package powerTrainServiceAPI.v1;
 
 option go_package = "powerTrainService/v1/;powerTrainService";
 

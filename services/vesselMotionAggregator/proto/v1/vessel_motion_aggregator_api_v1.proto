@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package vesselMotionAggregator.v1;
+package vesselMotionAggregatorAPI.v1;
 
 option go_package = "vesselMotionAggregator/v1/;vesselMotionAggregator";
 

@@ -57,6 +57,18 @@ protoGenJS:
 	# Web gateway
 	protoc -I=services/webGateway/proto/v1/ web_gateway_api_v1.proto --js_out=import_style=commonjs:protoFiles/javaScript/webGateway/v1 --grpc-web_out=import_style=commonjs,mode=grpcweb:protoFiles/javaScript/webGateway/v1
 
+	# Route analysis aggregator
+	protoc -I=services/routeAnalysisAggregator/proto/v1/ route_analysis_aggregator_api_v1.proto --js_out=import_style=commonjs:protoFiles/javaScript/routeAnalysisAggregator/v1 --grpc-web_out=import_style=commonjs,mode=grpcweb:protoFiles/javaScript/routeAnalysisAggregator/v1
+
+	# Power train aggregator
+	protoc -I=services/powerTrainAggregator/proto/v1/ power_train_aggregator_api_v1.proto --js_out=import_style=commonjs:protoFiles/javaScript/powerTrainAggregator/v1 --grpc-web_out=import_style=commonjs,mode=grpcweb:protoFiles/javaScript/powerTrainAggregator/v1
+
+	# Vessel motion aggregator
+	protoc -I=services/vesselMotionAggregator/proto/v1/ vessel_motion_aggregator_api_v1.proto --js_out=import_style=commonjs:protoFiles/javaScript/vesselMotionAggregator/v1 --grpc-web_out=import_style=commonjs,mode=grpcweb:protoFiles/javaScript/vesselMotionAggregator/v1
+
+	# Authentication service
+	protoc -I=services/authenticationService/proto/v1/ authentication_service_api_v1.proto --js_out=import_style=commonjs:protoFiles/javaScript/authenticationService/v1 --grpc-web_out=import_style=commonjs,mode=grpcweb:protoFiles/javaScript/authenticationService/v1
+
 protoGenAll:
 	make protoGenGo; make protoGenPy; protoGenCSharp; make protoGenJS
 
@@ -164,9 +176,6 @@ runVesselMotionAggregator:
 runAuthenticationService:
 	cd /home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/authenticationService; go run authenticationService.go
 
-runWebGateway:
-	cd /home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/webGateway; go run webGateway.go
-
 runPrometheus:
 
 runPushGateway:
@@ -185,14 +194,12 @@ runAggregatorLayer:
 
 runGatewayLayer:
 	make runAuthenticationService &
-	make runWebGateway &
 	
 runGo:
 	make runRouteAnalysisAggregator &
 	make runPowerTrainAggregator &
 	make runVesselMotionAggregator &
 	make runAuthenticationService &
-	make runWebGateway &
 
 runPy:
 	make runOceanWeatherService &
@@ -212,3 +219,21 @@ runAll:
 	make runPy &
 	make runCSharp &
 	make runDockerOnly &
+
+killGo:
+	sudo killall vesselMotionAgg
+	sudo killall routeAnalysisAg
+	sudo killall authenticationS
+	sudo killall routeAnalysisAg
+	sudo killall powerTrainAggre
+
+killPy:
+	sudo killall python3
+
+killCSharp:
+	sudo killall vesselMotionSer
+
+killAll:
+	make killGo
+	make killPy
+	make killCSharp

@@ -13,7 +13,7 @@ namespace vesselMotionService {
   /// </summary>
   public static partial class vesselMotionService
   {
-    static readonly string __ServiceName = "vesselMotionService.v1.vesselMotionService";
+    static readonly string __ServiceName = "vesselMotionServiceAPI.v1.vesselMotionService";
 
     static void __Helper_SerializeMessage(global::Google.Protobuf.IMessage message, grpc::SerializationContext context)
     {
@@ -45,32 +45,32 @@ namespace vesselMotionService {
       return parser.ParseFrom(context.PayloadAsNewBuffer());
     }
 
-    static readonly grpc::Marshaller<global::vesselMotionService.MotionEstimateRequest> __Marshaller_vesselMotionService_v1_MotionEstimateRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::vesselMotionService.MotionEstimateRequest.Parser));
-    static readonly grpc::Marshaller<global::vesselMotionService.MotionEstimateResponse> __Marshaller_vesselMotionService_v1_MotionEstimateResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::vesselMotionService.MotionEstimateResponse.Parser));
-    static readonly grpc::Marshaller<global::vesselMotionService.MotionTrackingRequest> __Marshaller_vesselMotionService_v1_MotionTrackingRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::vesselMotionService.MotionTrackingRequest.Parser));
-    static readonly grpc::Marshaller<global::vesselMotionService.MotionTrackingResponse> __Marshaller_vesselMotionService_v1_MotionTrackingResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::vesselMotionService.MotionTrackingResponse.Parser));
-    static readonly grpc::Marshaller<global::vesselMotionService.MotionEvaluationResponse> __Marshaller_vesselMotionService_v1_MotionEvaluationResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::vesselMotionService.MotionEvaluationResponse.Parser));
+    static readonly grpc::Marshaller<global::vesselMotionService.MotionEstimateRequest> __Marshaller_vesselMotionServiceAPI_v1_MotionEstimateRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::vesselMotionService.MotionEstimateRequest.Parser));
+    static readonly grpc::Marshaller<global::vesselMotionService.MotionEstimateResponse> __Marshaller_vesselMotionServiceAPI_v1_MotionEstimateResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::vesselMotionService.MotionEstimateResponse.Parser));
+    static readonly grpc::Marshaller<global::vesselMotionService.MotionTrackingRequest> __Marshaller_vesselMotionServiceAPI_v1_MotionTrackingRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::vesselMotionService.MotionTrackingRequest.Parser));
+    static readonly grpc::Marshaller<global::vesselMotionService.MotionTrackingResponse> __Marshaller_vesselMotionServiceAPI_v1_MotionTrackingResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::vesselMotionService.MotionTrackingResponse.Parser));
+    static readonly grpc::Marshaller<global::vesselMotionService.MotionEvaluationResponse> __Marshaller_vesselMotionServiceAPI_v1_MotionEvaluationResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::vesselMotionService.MotionEvaluationResponse.Parser));
 
     static readonly grpc::Method<global::vesselMotionService.MotionEstimateRequest, global::vesselMotionService.MotionEstimateResponse> __Method_MotionEstimate = new grpc::Method<global::vesselMotionService.MotionEstimateRequest, global::vesselMotionService.MotionEstimateResponse>(
         grpc::MethodType.Unary,
         __ServiceName,
         "MotionEstimate",
-        __Marshaller_vesselMotionService_v1_MotionEstimateRequest,
-        __Marshaller_vesselMotionService_v1_MotionEstimateResponse);
+        __Marshaller_vesselMotionServiceAPI_v1_MotionEstimateRequest,
+        __Marshaller_vesselMotionServiceAPI_v1_MotionEstimateResponse);
 
     static readonly grpc::Method<global::vesselMotionService.MotionTrackingRequest, global::vesselMotionService.MotionTrackingResponse> __Method_MotionTracking = new grpc::Method<global::vesselMotionService.MotionTrackingRequest, global::vesselMotionService.MotionTrackingResponse>(
         grpc::MethodType.Unary,
         __ServiceName,
         "MotionTracking",
-        __Marshaller_vesselMotionService_v1_MotionTrackingRequest,
-        __Marshaller_vesselMotionService_v1_MotionTrackingResponse);
+        __Marshaller_vesselMotionServiceAPI_v1_MotionTrackingRequest,
+        __Marshaller_vesselMotionServiceAPI_v1_MotionTrackingResponse);
 
     static readonly grpc::Method<global::vesselMotionService.MotionEstimateRequest, global::vesselMotionService.MotionEvaluationResponse> __Method_MotionEstimateEvaluation = new grpc::Method<global::vesselMotionService.MotionEstimateRequest, global::vesselMotionService.MotionEvaluationResponse>(
         grpc::MethodType.Unary,
         __ServiceName,
         "MotionEstimateEvaluation",
-        __Marshaller_vesselMotionService_v1_MotionEstimateRequest,
-        __Marshaller_vesselMotionService_v1_MotionEvaluationResponse);
+        __Marshaller_vesselMotionServiceAPI_v1_MotionEstimateRequest,
+        __Marshaller_vesselMotionServiceAPI_v1_MotionEvaluationResponse);
 
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor

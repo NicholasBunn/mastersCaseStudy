@@ -2,7 +2,7 @@ syntax = "proto3";
 
 option csharp_namespace = "vesselMotionService";
 
-package vesselMotionService.v1;
+package vesselMotionServiceAPI.v1;
 
 option go_package = "vesselMotionService/v1;vesselMotionService";
 

@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package powerTrainAggregator.v1;
+package powerTrainAggregatorAPI.v1;
 
 option go_package = "powerTrainAggregator/v1/;powerTrainAggregator";
 
