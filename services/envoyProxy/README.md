@@ -2,7 +2,7 @@
 
 ## **Description**
 
-The envoy proxy is used here to enable a webpage frontend to integrate with the system. Frontends, using grpc-web, can communicate with this proxy on port 8080. The proxy then "translates" the HTTP request sent by the frontend into an HTTP2 request, as used by the gRPC services, and routes the requests to the web gateway on port 50000.
+The envoy proxy is used here to enable a webpage frontend to integrate with the system. Frontends, using grpc-web, can communicate with this proxy on port 8080. The proxy then "translates" the HTTP request sent by the frontend into an HTTP2 request, as used by the gRPC services, and routes the requests to the responsible backend services.
 
 For information on the configuration and setup used in this proxy, check out the yaml file at https://github.com/NicholasBunn/mastersCaseStudy/blob/main/services/envoyProxy/envoy.yaml
 
