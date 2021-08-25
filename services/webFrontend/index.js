@@ -1,31 +1,31 @@
 const {
-  LoginRequest,
-  LoginResponse,
-} = require("./../../protoFiles/javaScript/webGateway/v1/web_gateway_api_v1_pb.js");
+  LoginAuthRequest,
+  LoginAuthResponse,
+} = require("./../../protoFiles/javaScript/authenticationService/v1/authentication_service_api_v1_pb.js");
 const {
-  LoginServiceClient,
-} = require("./../../protoFiles/javaScript/webGateway/v1/web_gateway_api_v1_grpc_web_pb.js");
+  AuthenticationServiceClient,
+} = require("./../../protoFiles/javaScript/authenticationService/v1/authentication_service_api_v1_grpc_web_pb.js");
 const {
-  RouteAnalysisRequest,
-  RouteAnalysisResponse,
-} = require("./../../protoFiles/javaScript/webGateway/v1/web_gateway_api_v1_pb.js");
+  AnalysisRequest,
+  AnalysisResponse,
+} = require("./../../protoFiles/javaScript/routeAnalysisAggregator/v1/route_analysis_aggregator_api_v1_pb.js");
 const {
-  RouteAnalysisAggregatorClient,
-} = require("./../../protoFiles/javaScript/webGateway/v1/web_gateway_api_v1_grpc_web_pb.js");
+  AnalysisServiceClient,
+} = require("./../../protoFiles/javaScript/routeAnalysisAggregator/v1/route_analysis_aggregator_api_v1_grpc_web_pb.js");
 const {
-  RoutePowerRequest,
-  RoutPowerResponse,
-} = require("./../../protoFiles/javaScript/webGateway/v1/web_gateway_api_v1_pb.js");
+  PTEstimateRequest,
+  PTEstimateResponse,
+} = require("./../../protoFiles/javaScript/powerTrainAggregator/v1/power_train_aggregator_api_v1_pb.js");
 const {
-  RoutePowerAggregatorClient,
-} = require("./../../protoFiles/javaScript/webGateway/v1/web_gateway_api_v1_grpc_web_pb.js");
+  PTEstimateServiceClient,
+} = require("./../../protoFiles/javaScript/powerTrainAggregator/v1/power_train_aggregator_api_v1_grpc_web_pb.js");
 const {
-  RouteMotionRequest,
-  RoutMotionResponse,
-} = require("./../../protoFiles/javaScript/webGateway/v1/web_gateway_api_v1_pb.js");
+  VMEstimateRequest,
+  VMEstimateResponse,
+} = require("./../../protoFiles/javaScript/vesselMotionAggregator/v1/vessel_motion_aggregator_api_v1_pb.js");
 const {
-  RouteMotionAggregatorClient,
-} = require("./../../protoFiles/javaScript/webGateway/v1/web_gateway_api_v1_grpc_web_pb.js");
+  VMEstimateServiceClient,
+} = require("./../../protoFiles/javaScript/vesselMotionAggregator/v1/vessel_motion_aggregator_api_v1_grpc_web_pb.js");
 
 import Chart from "chart.js/auto";
 
@@ -47,15 +47,14 @@ window.LogMeIn = function (guest) {
   document.getElementById("password").value = "";
 
   console.log("Username is: ", username, " and password is: ", password);
-  var loginService = new LoginServiceClient("http://localhost:8080");
+  var loginService = new AuthenticationServiceClient("http://localhost:8080");
 
-  var request = new LoginRequest();
+  var request = new LoginAuthRequest();
 
   request.setUsername(username);
   request.setPassword(password);
 
-  var metadata = { authorisation: managerObject.userToken };
-  loginService.login(request, metadata, function (err, response) {
+  loginService.loginAuth(request, {}, function (err, response) {
     if (err) {
       console.log(err.code);
       console.log(err.message);
@@ -512,9 +511,9 @@ window.queryRAS = function () {
 
   console.log(managerObject);
 
-  var rasService = new RouteAnalysisAggregatorClient("http://localhost:8080");
+  var rasService = new AnalysisServiceClient("http://localhost:8080");
 
-  var request = new RouteAnalysisRequest();
+  var request = new AnalysisRequest();
   request.setUnixTimeList(managerObject.routeInfo.unixTime);
   request.setLatitudeList(managerObject.routeInfo.latitude);
   request.setLongitudeList(managerObject.routeInfo.longitude);
@@ -526,7 +525,7 @@ window.queryRAS = function () {
   console.log("Request: ", request);
 
   var metadata = { authorisation: managerObject.userToken };
-  rasService.routeAnalysis(request, metadata, function (err, response) {
+  rasService.analyseRoute(request, metadata, function (err, response) {
     if (err) {
       console.log(err.code);
       console.log(err.message);
@@ -557,9 +556,9 @@ window.queryPTS = function () {
   }
   console.log(managerObject);
 
-  var ptsService = new RoutePowerAggregatorClient("http://localhost:8080");
+  var ptsService = new PTEstimateServiceClient("http://localhost:8080");
 
-  var request = new RoutePowerRequest();
+  var request = new PTEstimateRequest();
   request.setUnixTimeList(managerObject.routeInfo.unixTime);
   request.setLatitudeList(managerObject.routeInfo.latitude);
   request.setLongitudeList(managerObject.routeInfo.longitude);
@@ -571,7 +570,7 @@ window.queryPTS = function () {
   console.log("Request: ", request);
 
   var metadata = { authorisation: managerObject.userToken };
-  ptsService.routePower(request, metadata, function (err, response) {
+  ptsService.estimatePowerTrain(request, metadata, function (err, response) {
     if (err) {
       console.log(err.code);
       console.log(err.message);
@@ -600,9 +599,9 @@ window.queryVMS = function () {
   }
   console.log(managerObject);
 
-  var vmsService = new RouteMotionAggregatorClient("http://localhost:8080");
+  var vmsService = new VMEstimateServiceClient("http://localhost:8080");
 
-  var request = new RouteMotionRequest();
+  var request = new VMEstimateRequest();
   request.setUnixTimeList(managerObject.routeInfo.unixTime);
   request.setLatitudeList(managerObject.routeInfo.latitude);
   request.setLongitudeList(managerObject.routeInfo.longitude);
@@ -614,7 +613,7 @@ window.queryVMS = function () {
   console.log("Request: ", request);
 
   var metadata = { authorisation: managerObject.userToken };
-  vmsService.routeMotion(request, metadata, function (err, response) {
+  vmsService.estimateVesselMotion(request, metadata, function (err, response) {
     if (err) {
       console.log(err.code);
       console.log(err.message);
