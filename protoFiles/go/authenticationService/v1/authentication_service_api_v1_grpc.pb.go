@@ -33,7 +33,7 @@ func NewAuthenticationServiceClient(cc grpc.ClientConnInterface) AuthenticationS
 
 func (c *authenticationServiceClient) CreateNewUser(ctx context.Context, in *NewUserRequest, opts ...grpc.CallOption) (*LoginAuthResponse, error) {
 	out := new(LoginAuthResponse)
-	err := c.cc.Invoke(ctx, "/authenticationService.v1.AuthenticationService/CreateNewUser", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/authenticationServiceAPI.v1.AuthenticationService/CreateNewUser", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -42,7 +42,7 @@ func (c *authenticationServiceClient) CreateNewUser(ctx context.Context, in *New
 
 func (c *authenticationServiceClient) LoginAuth(ctx context.Context, in *LoginAuthRequest, opts ...grpc.CallOption) (*LoginAuthResponse, error) {
 	out := new(LoginAuthResponse)
-	err := c.cc.Invoke(ctx, "/authenticationService.v1.AuthenticationService/LoginAuth", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/authenticationServiceAPI.v1.AuthenticationService/LoginAuth", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -92,7 +92,7 @@ func _AuthenticationService_CreateNewUser_Handler(srv interface{}, ctx context.C
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/authenticationService.v1.AuthenticationService/CreateNewUser",
+		FullMethod: "/authenticationServiceAPI.v1.AuthenticationService/CreateNewUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AuthenticationServiceServer).CreateNewUser(ctx, req.(*NewUserRequest))
@@ -110,7 +110,7 @@ func _AuthenticationService_LoginAuth_Handler(srv interface{}, ctx context.Conte
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/authenticationService.v1.AuthenticationService/LoginAuth",
+		FullMethod: "/authenticationServiceAPI.v1.AuthenticationService/LoginAuth",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AuthenticationServiceServer).LoginAuth(ctx, req.(*LoginAuthRequest))
@@ -122,7 +122,7 @@ func _AuthenticationService_LoginAuth_Handler(srv interface{}, ctx context.Conte
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var AuthenticationService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "authenticationService.v1.AuthenticationService",
+	ServiceName: "authenticationServiceAPI.v1.AuthenticationService",
 	HandlerType: (*AuthenticationServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

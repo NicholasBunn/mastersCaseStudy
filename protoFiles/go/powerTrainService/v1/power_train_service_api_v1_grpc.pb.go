@@ -38,7 +38,7 @@ func NewPowerTrainServiceClient(cc grpc.ClientConnInterface) PowerTrainServiceCl
 
 func (c *powerTrainServiceClient) PowerEstimate(ctx context.Context, in *PowerTrainEstimateRequest, opts ...grpc.CallOption) (*PowerEstimateResponse, error) {
 	out := new(PowerEstimateResponse)
-	err := c.cc.Invoke(ctx, "/powerTrainService.v1.PowerTrainService/PowerEstimate", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/powerTrainServiceAPI.v1.PowerTrainService/PowerEstimate", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -47,7 +47,7 @@ func (c *powerTrainServiceClient) PowerEstimate(ctx context.Context, in *PowerTr
 
 func (c *powerTrainServiceClient) CostEstimate(ctx context.Context, in *PowerTrainEstimateRequest, opts ...grpc.CallOption) (*CostEstimateResponse, error) {
 	out := new(CostEstimateResponse)
-	err := c.cc.Invoke(ctx, "/powerTrainService.v1.PowerTrainService/CostEstimate", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/powerTrainServiceAPI.v1.PowerTrainService/CostEstimate", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -56,7 +56,7 @@ func (c *powerTrainServiceClient) CostEstimate(ctx context.Context, in *PowerTra
 
 func (c *powerTrainServiceClient) PowerTracking(ctx context.Context, in *PowerTrackingRequest, opts ...grpc.CallOption) (*PowerTrackingResponse, error) {
 	out := new(PowerTrackingResponse)
-	err := c.cc.Invoke(ctx, "/powerTrainService.v1.PowerTrainService/PowerTracking", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/powerTrainServiceAPI.v1.PowerTrainService/PowerTracking", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -65,7 +65,7 @@ func (c *powerTrainServiceClient) PowerTracking(ctx context.Context, in *PowerTr
 
 func (c *powerTrainServiceClient) PowerEstimateEvaluation(ctx context.Context, in *PowerTrainEstimateRequest, opts ...grpc.CallOption) (*PowerEvaluationResponse, error) {
 	out := new(PowerEvaluationResponse)
-	err := c.cc.Invoke(ctx, "/powerTrainService.v1.PowerTrainService/PowerEstimateEvaluation", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/powerTrainServiceAPI.v1.PowerTrainService/PowerEstimateEvaluation", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -126,7 +126,7 @@ func _PowerTrainService_PowerEstimate_Handler(srv interface{}, ctx context.Conte
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/powerTrainService.v1.PowerTrainService/PowerEstimate",
+		FullMethod: "/powerTrainServiceAPI.v1.PowerTrainService/PowerEstimate",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PowerTrainServiceServer).PowerEstimate(ctx, req.(*PowerTrainEstimateRequest))
@@ -144,7 +144,7 @@ func _PowerTrainService_CostEstimate_Handler(srv interface{}, ctx context.Contex
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/powerTrainService.v1.PowerTrainService/CostEstimate",
+		FullMethod: "/powerTrainServiceAPI.v1.PowerTrainService/CostEstimate",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PowerTrainServiceServer).CostEstimate(ctx, req.(*PowerTrainEstimateRequest))
@@ -162,7 +162,7 @@ func _PowerTrainService_PowerTracking_Handler(srv interface{}, ctx context.Conte
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/powerTrainService.v1.PowerTrainService/PowerTracking",
+		FullMethod: "/powerTrainServiceAPI.v1.PowerTrainService/PowerTracking",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PowerTrainServiceServer).PowerTracking(ctx, req.(*PowerTrackingRequest))
@@ -180,7 +180,7 @@ func _PowerTrainService_PowerEstimateEvaluation_Handler(srv interface{}, ctx con
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/powerTrainService.v1.PowerTrainService/PowerEstimateEvaluation",
+		FullMethod: "/powerTrainServiceAPI.v1.PowerTrainService/PowerEstimateEvaluation",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PowerTrainServiceServer).PowerEstimateEvaluation(ctx, req.(*PowerTrainEstimateRequest))
@@ -192,7 +192,7 @@ func _PowerTrainService_PowerEstimateEvaluation_Handler(srv interface{}, ctx con
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var PowerTrainService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "powerTrainService.v1.PowerTrainService",
+	ServiceName: "powerTrainServiceAPI.v1.PowerTrainService",
 	HandlerType: (*PowerTrainServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

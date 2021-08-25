@@ -32,7 +32,7 @@ func NewPTEstimateServiceClient(cc grpc.ClientConnInterface) PTEstimateServiceCl
 
 func (c *pTEstimateServiceClient) EstimatePowerTrain(ctx context.Context, in *PTEstimateRequest, opts ...grpc.CallOption) (*PTEstimateResponse, error) {
 	out := new(PTEstimateResponse)
-	err := c.cc.Invoke(ctx, "/powerTrainAggregator.v1.PTEstimateService/EstimatePowerTrain", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/powerTrainAggregatorAPI.v1.PTEstimateService/EstimatePowerTrain", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -78,7 +78,7 @@ func _PTEstimateService_EstimatePowerTrain_Handler(srv interface{}, ctx context.
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/powerTrainAggregator.v1.PTEstimateService/EstimatePowerTrain",
+		FullMethod: "/powerTrainAggregatorAPI.v1.PTEstimateService/EstimatePowerTrain",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PTEstimateServiceServer).EstimatePowerTrain(ctx, req.(*PTEstimateRequest))
@@ -90,7 +90,7 @@ func _PTEstimateService_EstimatePowerTrain_Handler(srv interface{}, ctx context.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var PTEstimateService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "powerTrainAggregator.v1.PTEstimateService",
+	ServiceName: "powerTrainAggregatorAPI.v1.PTEstimateService",
 	HandlerType: (*PTEstimateServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

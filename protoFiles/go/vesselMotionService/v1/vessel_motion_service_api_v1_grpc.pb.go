@@ -36,7 +36,7 @@ func NewVesselMotionServiceClient(cc grpc.ClientConnInterface) VesselMotionServi
 
 func (c *vesselMotionServiceClient) MotionEstimate(ctx context.Context, in *MotionEstimateRequest, opts ...grpc.CallOption) (*MotionEstimateResponse, error) {
 	out := new(MotionEstimateResponse)
-	err := c.cc.Invoke(ctx, "/vesselMotionService.v1.vesselMotionService/MotionEstimate", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/vesselMotionServiceAPI.v1.vesselMotionService/MotionEstimate", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -45,7 +45,7 @@ func (c *vesselMotionServiceClient) MotionEstimate(ctx context.Context, in *Moti
 
 func (c *vesselMotionServiceClient) MotionTracking(ctx context.Context, in *MotionTrackingRequest, opts ...grpc.CallOption) (*MotionTrackingResponse, error) {
 	out := new(MotionTrackingResponse)
-	err := c.cc.Invoke(ctx, "/vesselMotionService.v1.vesselMotionService/MotionTracking", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/vesselMotionServiceAPI.v1.vesselMotionService/MotionTracking", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -54,7 +54,7 @@ func (c *vesselMotionServiceClient) MotionTracking(ctx context.Context, in *Moti
 
 func (c *vesselMotionServiceClient) MotionEstimateEvaluation(ctx context.Context, in *MotionEstimateRequest, opts ...grpc.CallOption) (*MotionEvaluationResponse, error) {
 	out := new(MotionEvaluationResponse)
-	err := c.cc.Invoke(ctx, "/vesselMotionService.v1.vesselMotionService/MotionEstimateEvaluation", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/vesselMotionServiceAPI.v1.vesselMotionService/MotionEstimateEvaluation", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -110,7 +110,7 @@ func _VesselMotionService_MotionEstimate_Handler(srv interface{}, ctx context.Co
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/vesselMotionService.v1.vesselMotionService/MotionEstimate",
+		FullMethod: "/vesselMotionServiceAPI.v1.vesselMotionService/MotionEstimate",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(VesselMotionServiceServer).MotionEstimate(ctx, req.(*MotionEstimateRequest))
@@ -128,7 +128,7 @@ func _VesselMotionService_MotionTracking_Handler(srv interface{}, ctx context.Co
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/vesselMotionService.v1.vesselMotionService/MotionTracking",
+		FullMethod: "/vesselMotionServiceAPI.v1.vesselMotionService/MotionTracking",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(VesselMotionServiceServer).MotionTracking(ctx, req.(*MotionTrackingRequest))
@@ -146,7 +146,7 @@ func _VesselMotionService_MotionEstimateEvaluation_Handler(srv interface{}, ctx 
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/vesselMotionService.v1.vesselMotionService/MotionEstimateEvaluation",
+		FullMethod: "/vesselMotionServiceAPI.v1.vesselMotionService/MotionEstimateEvaluation",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(VesselMotionServiceServer).MotionEstimateEvaluation(ctx, req.(*MotionEstimateRequest))
@@ -158,7 +158,7 @@ func _VesselMotionService_MotionEstimateEvaluation_Handler(srv interface{}, ctx 
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var VesselMotionService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "vesselMotionService.v1.vesselMotionService",
+	ServiceName: "vesselMotionServiceAPI.v1.vesselMotionService",
 	HandlerType: (*VesselMotionServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

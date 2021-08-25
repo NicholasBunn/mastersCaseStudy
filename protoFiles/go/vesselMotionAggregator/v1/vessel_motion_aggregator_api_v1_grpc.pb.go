@@ -32,7 +32,7 @@ func NewVMEstimateServiceClient(cc grpc.ClientConnInterface) VMEstimateServiceCl
 
 func (c *vMEstimateServiceClient) EstimateVesselMotion(ctx context.Context, in *VMEstimateRequest, opts ...grpc.CallOption) (*VMEstimateResponse, error) {
 	out := new(VMEstimateResponse)
-	err := c.cc.Invoke(ctx, "/vesselMotionAggregator.v1.VMEstimateService/EstimateVesselMotion", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/vesselMotionAggregatorAPI.v1.VMEstimateService/EstimateVesselMotion", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -78,7 +78,7 @@ func _VMEstimateService_EstimateVesselMotion_Handler(srv interface{}, ctx contex
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/vesselMotionAggregator.v1.VMEstimateService/EstimateVesselMotion",
+		FullMethod: "/vesselMotionAggregatorAPI.v1.VMEstimateService/EstimateVesselMotion",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(VMEstimateServiceServer).EstimateVesselMotion(ctx, req.(*VMEstimateRequest))
@@ -90,7 +90,7 @@ func _VMEstimateService_EstimateVesselMotion_Handler(srv interface{}, ctx contex
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var VMEstimateService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "vesselMotionAggregator.v1.VMEstimateService",
+	ServiceName: "vesselMotionAggregatorAPI.v1.VMEstimateService",
 	HandlerType: (*VMEstimateServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
