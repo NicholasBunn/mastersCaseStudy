@@ -202,8 +202,13 @@ runPy:
 
 runCSharp:
 	make runVesselMotionService &
+	
+runDockerOnly:
+	docker run -d -p 8080:8080 --network=host web_proxy &
+	docker run -d -p 127.0.0.1:3306:3306/tcp --name user_database -e MYSQL_ROOT_PASSWORD="supersecret" user_database &
 
-runAll:cd
+runAll:
 	make runGo &
 	make runPy &
 	make runCSharp &
+	make runDockerOnly &
