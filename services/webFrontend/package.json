@@ -1,0 +1,24 @@
+{
+  "name": "webFrontend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chart": "^0.1.2",
+    "chart.js": "^3.5.1",
+    "google-protobuf": "^3.17.3",
+    "grpc": "^1.15.0",
+    "grpc-web": "^1.2.1"
+  },
+  "devDependencies": {
+    "browserify": "^16.2.2",
+    "webpack": "^4.16.5",
+    "webpack-cli": "^3.1.0"
+  }
+}

@@ -15,7 +15,50 @@ p {
   color: black;
   font-size: 14px;
 }
-.loginBox {
+.systemButton {
+  border: none;
+  outline: none;
+  background: rgb(0, 0, 78);
+  color: #fff;
+  border-radius: 0.5em;
+}
+.systembutton:hover {
+  cursor: pointer;
+  background: #ffc107;
+  color: #000;
+}
+.navButton {
+  border: 0.2em solid rgb(20, 34, 34);
+  background-color: rgb(20, 34, 34);
+  text-decoration: none;
+  color: rgb(176, 190, 197);
+  border-radius: 0.5em;
+}
+.navButton:hover {
+  cursor: pointer;
+  background-color: rgb(176, 190, 197);
+  border-color: rgb(176, 190, 197);
+  color: rgba(20, 34, 34, 0.9);
+}
+.processButton {
+  border: none;
+  background: cyan;
+  color: black;
+  border-radius: 0.5em;
+}
+.processButton:hover {
+  cursor: pointer;
+  background: rgb(0, 0, 78);
+  color: #fff;
+}
+.textInput {
+  border: none;
+  border-bottom: 1px solid #fff;
+  background: transparent;
+  outline: none;
+  color: #fff;
+}
+#loginBox {
   width: 320px;
   height: 420px;
   background-color: rgba(38, 50, 56, 0.9);
@@ -28,27 +71,22 @@ p {
   border-radius: 0.5em;
   padding: 70px 30px;
 }
-.loginBox p {
+#loginBox p {
   margin: 0;
   padding: 0;
   color: darkgrey;
   font-weight: bold;
 }
-.loginBox input {
+#loginBox input {
   width: 100%;
   margin-bottom: 20px;
 }
-.loginBox input[type="text"],
+#loginBox input[type="text"],
 input[type="password"] {
-  border: none;
-  border-bottom: 1px solid #fff;
-  background: transparent;
-  outline: none;
   height: 40px;
-  color: #fff;
   font-size: 16px;
 }
-.loginBox input[type="submit"] {
+#loginBox input[type="button"] {
   border: none;
   outline: none;
   height: 40px;
@@ -57,21 +95,22 @@ input[type="password"] {
   font-size: 18px;
   border-radius: 0.5em;
 }
-.loginBox input[type="submit"]:hover {
+#loginBox input[type="button"]:hover {
   cursor: pointer;
   background: #ffc107;
   color: #000;
 }
-.loginBox a {
+#loginBox a {
   text-decoration: none;
   font-size: 12px;
   line-height: 20px;
   color: darkgrey;
 }
-.loginBox a:hover {
+#loginBox a:hover {
+  cursor: pointer;
   color: #000;
 }
-.avatar {
+#avatar {
   width: 100px;
   height: 100px;
   border-radius: 50%;
@@ -80,7 +119,7 @@ input[type="password"] {
   top: -50px;
   left: calc(50% - 50px);
 }
-.home {
+#home {
   background-color: rgba(38, 50, 56, 0.9);
   position: fixed;
   top: 0;
@@ -88,7 +127,7 @@ input[type="password"] {
   height: 5%;
   width: 10%;
 }
-.home input[type="submit"] {
+#home input[type="button"] {
   border: none;
   outline: none;
   height: 40px;
@@ -98,12 +137,12 @@ input[type="password"] {
   font-size: 18px;
   border-radius: 0.5em;
 }
-.home input[type="submit"]:hover {
+#home input[type="button"]:hover {
   cursor: pointer;
   background: #ffc107;
   color: #000;
 }
-.primaryNavBar {
+#primaryNavBar {
   background-color: rgba(38, 50, 56, 0.9);
   position: fixed;
   display: inline-block;
@@ -113,19 +152,19 @@ input[type="password"] {
   width: 92%;
   padding-left: 2%;
 }
-.primaryNavBar h1 {
+#primaryNavBar h1 {
   position: relative;
   width: 10%;
   left: 0%;
 }
-.services {
+#services {
   position: absolute;
   left: 10%;
   width: 75%;
   height: 80%;
   top: 5%;
 }
-.services input[type="submit"] {
+#services input[type="button"] {
   position: relative;
   float: left;
   padding-left: 8px;
@@ -138,12 +177,13 @@ input[type="password"] {
   border: 0.2em solid rgb(20, 34, 34);
   border-radius: 0.5em;
 }
-.services input[type="submit"]:hover {
+#services input[type="button"]:hover {
+  cursor: pointer;
   background-color: rgb(176, 190, 197);
   border-color: rgb(176, 190, 197);
   color: rgba(20, 34, 34, 0.9);
 }
-.secondaryNavBar {
+#secondaryNavBar {
   background-color: rgba(38, 50, 56, 0.9);
   position: fixed;
   height: 95%;
@@ -153,20 +193,20 @@ input[type="password"] {
   left: 0;
   padding-top: 60px; /* Place content 60px from the top */
 }
-.secondaryNavBar h1 {
+#secondaryNavBar h1 {
   position: absolute;
   width: 90%;
   top: 0%;
   left: 10%;
 }
-.temporals {
+#temporals {
   position: absolute;
   left: 5%;
   width: 90%;
   height: 80%;
   top: 13%;
 }
-.temporals input[type="submit"] {
+#temporals input[type="button"] {
   position: relative;
   display: block;
   padding-left: 8px;
@@ -182,12 +222,13 @@ input[type="password"] {
   border: 0.2em solid rgb(20, 34, 34);
   border-radius: 0.5em;
 }
-.temporals input[type="submit"]:hover {
+#temporals input[type="button"]:hover {
+  cursor: pointer;
   background-color: rgb(176, 190, 197);
   border-color: rgb(176, 190, 197);
   color: rgba(20, 34, 34, 0.9);
 }
-.ServiceContent {
+#ServiceContent {
   background-color: rgba(120, 144, 156, 0.8);
   position: fixed;
   height: 75%;
@@ -199,23 +240,35 @@ input[type="password"] {
   padding-left: 50px;
   border-radius: 0.5em;
 }
-.SystemResponse {
+#SystemResponse {
   background-color: rgba(120, 144, 156, 0.9);
   position: fixed;
   height: 5%;
   width: 90%;
-  z-index: 1;
+  /* z-index: 1; */
   bottom: 0%;
   left: 10%;
   padding-left: 20px;
 }
-.Logout {
+#SystemResponse h1 {
+  margin: 0;
+  padding: 11px 0 15px 0;
+  text-align: left;
+  font-size: 22px;
+  color: #142222e6;
+}
+#SystemResponse p {
+  font-size: 14px;
+  font-weight: bold;
+  color: #142222e6;
+}
+#Logout {
   position: fixed;
   z-index: 1;
   top: 0.5%;
   right: 0%;
 }
-.Logout input[type="submit"] {
+#Logout input[type="button"] {
   border: none;
   outline: none;
   height: 40px;
@@ -224,22 +277,8 @@ input[type="password"] {
   font-size: 18px;
   border-radius: 0.5em;
 }
-.Logout input[type="submit"]:hover {
+#Logout input[type="button"]:hover {
   cursor: pointer;
   background: #ffc107;
   color: #000;
-}
-.logoutButton {
-  background-color: rgba(112, 128, 144, 0.4);
-  color: rgb(0, 0, 0);
-  position: fixed;
-  font-size: 14px;
-  height: 3%;
-  width: 8%;
-  z-index: 1;
-  top: 1%;
-  right: 0%;
-  padding-left: 10px;
-  border: 0.2em solid rgba(95, 100, 105, 0.4);
-  border-radius: 0.5em;
 }
