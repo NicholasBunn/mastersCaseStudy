@@ -12,6 +12,20 @@ const {
 const {
   RouteAnalysisAggregatorClient,
 } = require("./../../protoFiles/javaScript/webGateway/v1/web_gateway_api_v1_grpc_web_pb.js");
+const {
+  RoutePowerRequest,
+  RoutPowerResponse,
+} = require("./../../protoFiles/javaScript/webGateway/v1/web_gateway_api_v1_pb.js");
+const {
+  RoutePowerAggregatorClient,
+} = require("./../../protoFiles/javaScript/webGateway/v1/web_gateway_api_v1_grpc_web_pb.js");
+const {
+  RouteMotionRequest,
+  RoutMotionResponse,
+} = require("./../../protoFiles/javaScript/webGateway/v1/web_gateway_api_v1_pb.js");
+const {
+  RouteMotionAggregatorClient,
+} = require("./../../protoFiles/javaScript/webGateway/v1/web_gateway_api_v1_grpc_web_pb.js");
 
 import Chart from "chart.js/auto";
 
@@ -40,7 +54,7 @@ window.LogMeIn = function (guest) {
   request.setUsername(username);
   request.setPassword(password);
 
-  var metadata = { "custom-header-1": "value1" };
+  var metadata = { authorisation: managerObject.userToken };
   loginService.login(request, metadata, function (err, response) {
     if (err) {
       console.log(err.code);
@@ -55,13 +69,14 @@ window.LogMeIn = function (guest) {
         queryID: null,
         userToken: response.getAccessToken(),
         routeInfo: {
-          unixTime: [null],
-          latitude: [null],
-          longitude: [null],
-          heading: [null],
-          propellerPitch: [null],
-          motorSpeed: [null],
-          sog: [null],
+          exists: false,
+          unixTime: [],
+          latitude: [],
+          longitude: [],
+          heading: [],
+          propellerPitch: [],
+          motorSpeed: [],
+          sog: [],
         },
       };
 
@@ -92,64 +107,87 @@ window.LoadHomePage = function () {
   // Clear service content div
   clearDiv("ServiceContent");
 
+  closeNav();
+
   // Load route providing div
 
   console.log("Not implemented yet");
 };
 
 window.LoadRouteInput = function () {
-  // Clear service content div
-  clearDiv("ServiceContent");
-
-  // Create new div
-  var div = document.createElement("Div");
-  div.id = "loadRoute";
-  div.style.width = "95%";
-  div.style.height = "95%";
-
-  // Add div to service content div
-  document.getElementById("ServiceContent").appendChild(div);
-
-  // Create input elements
-  createTextInput("Unix time", "unixTimeIn", "loadRoute");
-  createTextInput("Latitude", "latitudeIn", "loadRoute");
-  createTextInput("Longitude", "longitudeIn", "loadRoute");
-  createTextInput("Heading", "headingIn", "loadRoute");
-  createTextInput("Propeller Pitch", "propPitchIn", "loadRoute");
-  createTextInput("Motor Speed", "motorSpeedIn", "loadRoute");
-  createTextInput("SOG", "sogIn", "loadRoute");
-
   var managerObject = JSON.parse(localStorage.getItem("myManager"));
 
-  createButtonInput(
-    "Query",
-    "query" + managerObject.currentService,
-    "loadRoute"
-  );
+  // If a route has already been entered, make the request for that route
+  if (managerObject.routeInfo.exists) {
+    switch (managerObject.queryID) {
+      case "queryRAS":
+        console.log("Calling RAS");
+        queryRAS();
+        break;
+      case "queryPTS":
+        queryPTS();
+        break;
+      case "queryVMS":
+        queryVMS();
+        break;
+      case "queryCS":
+        queryCS();
+        break;
+    }
+  } else {
+    // Clear service content div
+    clearDiv("ServiceContent");
 
-  // Add event to Query button
-  var sendQueryButton = document.getElementById(
-    "query" + managerObject.currentService
-  );
+    // Create new div
+    var div = document.createElement("Div");
+    div.id = "loadRoute";
+    div.style.width = "95%";
+    div.style.height = "95%";
 
-  var func = null;
+    // Add div to service content div
+    document.getElementById("ServiceContent").appendChild(div);
 
-  switch (managerObject.queryID) {
-    case "queryRAS":
-      func = queryRAS;
-      break;
-    case "queryPTS":
-      func = queryPTS;
-      break;
-    case "queryVMS":
-      func = queryVMS;
-      break;
-    case "queryCS":
-      func = queryCS;
-      break;
+    // Create input elements
+    createTextInput("Unix time", "unixTimeIn", "loadRoute");
+    createTextInput("Latitude", "latitudeIn", "loadRoute");
+    createTextInput("Longitude", "longitudeIn", "loadRoute");
+    createTextInput("Heading", "headingIn", "loadRoute");
+    createTextInput("Propeller Pitch", "propPitchIn", "loadRoute");
+    createTextInput("Motor Speed", "motorSpeedIn", "loadRoute");
+    createTextInput("SOG", "sogIn", "loadRoute");
+
+    var managerObject = JSON.parse(localStorage.getItem("myManager"));
+
+    createButtonInput(
+      "Query",
+      "query" + managerObject.currentService,
+      "loadRoute"
+    );
+
+    // Add event to Query button
+    var sendQueryButton = document.getElementById(
+      "query" + managerObject.currentService
+    );
+
+    var func = null;
+
+    switch (managerObject.queryID) {
+      case "queryRAS":
+        func = queryRAS;
+        break;
+      case "queryPTS":
+        func = queryPTS;
+        break;
+      case "queryVMS":
+        func = queryVMS;
+        break;
+      case "queryCS":
+        func = queryCS;
+        break;
+    }
+
+    sendQueryButton.onclick = func;
   }
-
-  sendQueryButton.onclick = func;
 };
 
 window.LoadRouteAnalysisHome = function () {
@@ -160,6 +198,8 @@ window.LoadRouteAnalysisHome = function () {
   managerObject.queryID = "queryRAS";
 
   localStorage.setItem("myManager", JSON.stringify(managerObject));
+
+  openNav();
 
   // Clear service content div
   clearDiv("ServiceContent");
@@ -174,6 +214,8 @@ window.LoadRouteAnalysisHome = function () {
 };
 
 window.LoadRouteAnalysisDisplay = function (responseObject) {
+  openNav();
+
   console.log(responseObject);
 };
 
@@ -185,6 +227,8 @@ window.LoadPowerTrainHome = function () {
   managerObject.queryID = "queryPTS";
 
   localStorage.setItem("myManager", JSON.stringify(managerObject));
+
+  openNav();
 
   // Clear service content div
   clearDiv("ServiceContent");
@@ -199,6 +243,8 @@ window.LoadPowerTrainHome = function () {
 };
 
 window.LoadPowerTrainDisplay = function (responseObject) {
+  openNav();
+
   // Clear service content div
   clearDiv("ServiceContent");
 
@@ -317,11 +363,15 @@ window.LoadVesselMotionHome = function () {
 
   localStorage.setItem("myManager", JSON.stringify(managerObject));
 
+  openNav();
+
   // Clear service content div
   clearDiv("ServiceContent");
 };
 
 window.LoadVesselMotionDisplay = function (responseObject) {
+  openNav();
+
   // Clear service content div
   clearDiv("ServiceContent");
 
@@ -452,9 +502,13 @@ window.LoadComfortDisplay = function () {
 // ________QUERY FUNCTIONS_________
 
 window.queryRAS = function () {
+  console.log("Received RAS");
+
   var managerObject = JSON.parse(localStorage.getItem("myManager"));
 
-  updateManagerRoute(managerObject);
+  if (!managerObject.routeInfo.exists) {
+    updateManagerRoute(managerObject);
+  }
 
   console.log(managerObject);
 
@@ -471,7 +525,7 @@ window.queryRAS = function () {
 
   console.log("Request: ", request);
 
-  var metadata = { "custom-header-1": "value1" };
+  var metadata = { authorisation: managerObject.userToken };
   rasService.routeAnalysis(request, metadata, function (err, response) {
     if (err) {
       console.log(err.code);
@@ -498,58 +552,96 @@ window.queryRAS = function () {
 window.queryPTS = function () {
   var managerObject = JSON.parse(localStorage.getItem("myManager"));
 
-  updateManagerRoute(managerObject);
+  if (!managerObject.routeInfo.exists) {
+    updateManagerRoute(managerObject);
+  }
+  console.log(managerObject);
 
-  var responseObject = {
-    time: [
-      new Date(1630080753 * 1000).toLocaleString(),
-      new Date(1630084353 * 1000).toLocaleString(),
-      new Date(1630087953 * 1000).toLocaleString(),
-      new Date(1630095153 * 1000).toLocaleString(),
-      new Date(1630098753 * 1000).toLocaleString(),
-    ],
-    powerEstimate: [3200, 3100, 2983, 3251, 3653],
-    costEstimate: [1000, 2000, 3000, 4000, 5000],
-    totalCost: [150000],
-  };
+  var ptsService = new RoutePowerAggregatorClient("http://localhost:8080");
 
-  console.log(responseObject);
+  var request = new RoutePowerRequest();
+  request.setUnixTimeList(managerObject.routeInfo.unixTime);
+  request.setLatitudeList(managerObject.routeInfo.latitude);
+  request.setLongitudeList(managerObject.routeInfo.longitude);
+  request.setHeadingList(managerObject.routeInfo.heading);
+  request.setPropPitchList(managerObject.routeInfo.propellerPitch);
+  request.setMotorSpeedList(managerObject.routeInfo.motorSpeed);
+  request.setSogList(managerObject.routeInfo.sog);
 
-  LoadPowerTrainDisplay(responseObject);
+  console.log("Request: ", request);
+
+  var metadata = { authorisation: managerObject.userToken };
+  ptsService.routePower(request, metadata, function (err, response) {
+    if (err) {
+      console.log(err.code);
+      console.log(err.message);
+      document.getElementById("consoleOutput").innerHTML =
+        "Error " + err.code + ": " + err.message;
+    } else {
+      var responseObject = {
+        time: response.getUnixTimeList(),
+        powerEstimate: response.getPowerEstimateList(),
+        costEstimate: response.getCostEstimateList(),
+        totalCost: response.getTotalCost(),
+      };
+
+      console.log("Response: ", response);
+
+      LoadPowerTrainDisplay(responseObject);
+    }
+  });
 };
 
 window.queryVMS = function () {
   var managerObject = JSON.parse(localStorage.getItem("myManager"));
 
-  updateManagerRoute(managerObject);
+  if (!managerObject.routeInfo.exists) {
+    updateManagerRoute(managerObject);
+  }
+  console.log(managerObject);
 
-  var responseObject = {
-    time: [
-      new Date(1630080753 * 1000).toLocaleString(),
-      new Date(1630084353 * 1000).toLocaleString(),
-      new Date(1630087953 * 1000).toLocaleString(),
-      new Date(1630095153 * 1000).toLocaleString(),
-      new Date(1630098753 * 1000).toLocaleString(),
-    ],
-    xAxisVibration: [0.00032524, 0.00024432, 0.00005324, 0.0000432, 0.0005325],
-    yAxisVibration: [
-      0.0000312434, 0.00005324, 0.000024325, 0.00006325, 0.00002356,
-    ],
-    zAxisVibration: [
-      0.0005324, 0.0003245, 0.00003525, 0.0006436, 0.00003524235,
-    ],
-  };
+  var vmsService = new RouteMotionAggregatorClient("http://localhost:8080");
 
-  LoadVesselMotionDisplay(responseObject);
+  var request = new RouteMotionRequest();
+  request.setUnixTimeList(managerObject.routeInfo.unixTime);
+  request.setLatitudeList(managerObject.routeInfo.latitude);
+  request.setLongitudeList(managerObject.routeInfo.longitude);
+  request.setHeadingList(managerObject.routeInfo.heading);
+  request.setPropPitchList(managerObject.routeInfo.propellerPitch);
+  request.setMotorSpeedList(managerObject.routeInfo.motorSpeed);
+  request.setSogList(managerObject.routeInfo.sog);
 
-  console.log("Unimplemented");
+  console.log("Request: ", request);
+
+  var metadata = { authorisation: managerObject.userToken };
+  vmsService.routeMotion(request, metadata, function (err, response) {
+    if (err) {
+      console.log(err.code);
+      console.log(err.message);
+      document.getElementById("consoleOutput").innerHTML =
+        "Error " + err.code + ": " + err.message;
+    } else {
+      var responseObject = {
+        // new Date(1630080753 * 1000).toLocaleString(),
+        time: response.getUnixTimeList(),
+        xAxisVibration: response.getAccelerationEstimateXList(),
+        yAxisVibration: response.getAccelerationEstimateYList(),
+        zAxisVibration: response.getAccelerationEstimateZList(),
+      };
+
+      console.log("Response: ", response);
+
+      LoadVesselMotionDisplay(responseObject);
+    }
+  });
 };
 
 window.queryCS = function () {
   var managerObject = JSON.parse(localStorage.getItem("myManager"));
 
-  updateManagerRoute(managerObject);
-
+  if (!managerObject.routeInfo.exists) {
+    updateManagerRoute(managerObject);
+  }
   console.log("Unimplemented");
 };
 
@@ -575,6 +667,22 @@ function clearDiv(divID) {
     // Remove the first child (popping the first element of a stack)
     div.removeChild(div.firstChild);
   }
+}
+
+function openNav() {
+  document.getElementById("secondaryNavBar").style.display = "block";
+  document.getElementById("SystemResponse").style.width = "90%";
+  document.getElementById("SystemResponse").style.left = "10%";
+  document.getElementById("ServiceContent").style.width = "82%";
+  document.getElementById("ServiceContent").style.left = "13%";
+}
+
+function closeNav() {
+  document.getElementById("secondaryNavBar").style.display = "none";
+  document.getElementById("SystemResponse").style.width = "100%";
+  document.getElementById("SystemResponse").style.left = "0%";
+  document.getElementById("ServiceContent").style.width = "92%";
+  document.getElementById("ServiceContent").style.left = "3%";
 }
 
 function createTextInput(placeholderName, id, parentDiv) {
@@ -638,6 +746,7 @@ function updateManagerRoute(managerObject) {
     .getElementById("sogIn")
     .value.split(",")
     .map((x) => +x);
+  managerObject.routeInfo.exists = true;
 
   localStorage.setItem("myManager", JSON.stringify(managerObject));
 }
