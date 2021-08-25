@@ -64,7 +64,7 @@ func init() {
 	dbDriverName = config.Database.DriverName
 	dbUsername = config.Database.User.Username
 	dbPassword = config.Database.User.Password
-	dbPort = config.Database.Details.Port
+	dbPort = os.Getenv("DATABASEHOST") + ":" + config.Database.Details.Port
 	dbName = config.Database.Details.DBName
 
 	// If the file doesn't exist, create it, otherwise append to the file
@@ -211,7 +211,7 @@ func find(username string) (*authentication.User, error) {
 	*/
 
 	// Create connection to the user database
-	accessDetails := fmt.Sprintf("%s:%s@tcp(0.0.0.0:%s)/%s", dbUsername, dbPassword, dbPort, dbName)
+	accessDetails := fmt.Sprintf("%s:%s@(%s)/%s", dbUsername, dbPassword, dbPort, dbName)
     db, err := sql.Open(dbDriverName, accessDetails)
     if (err != nil) {
 		ErrorLogger.Println("Failed to connect to user database: \n", err)
@@ -227,10 +227,17 @@ func find(username string) (*authentication.User, error) {
     userInfo, err := db.Query(myQuery)
 
 	if err != nil {
-		ErrorLogger.Println("Failed to make query user database: \n", err)
+		// Close the database connection
+		db.Close()
+
+		ErrorLogger.Println("Failed to query user database: \n", err)
         return nil, status.Errorf(codes.Internal, "Failed to query user database.")
     } else if (!userInfo.Next()) {
 		// If userInfo.Next() returns False, then no results were returned by the DB (and thus, the requested username doesn't exist)
+
+		// Close the database connection
+		db.Close()
+
 		ErrorLogger.Println("Failed to log user in: Requested user does not exist.")
 		return nil, status.Errorf(codes.NotFound, "requested user does not exist.") 
 	} else {
