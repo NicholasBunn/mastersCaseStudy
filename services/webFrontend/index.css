@@ -1,7 +1,7 @@
 body {
   /* background-color: rgb(55, 71, 79); */
   background-image: url("oceanBackground");
-  font-family: sans-serif;
+  font-family: Raleway;
   background-color: rgb(55, 71, 79);
 }
 h1 {
@@ -260,7 +260,7 @@ input[type="password"] {
 #SystemResponse p {
   font-size: 14px;
   font-weight: bold;
-  color: #142222e6;
+  color: #8f0000e6;
 }
 #Logout {
   position: fixed;
@@ -281,4 +281,83 @@ input[type="password"] {
   cursor: pointer;
   background: #ffc107;
   color: #000;
+}
+.LandingPageHeading {
+  margin: 0;
+  padding: 20px 0 36px 0;
+  text-align: center;
+  font-size: 36px;
+  color: navy;
+}
+.LandingPageSubText {
+  color: black;
+  font-size: 22px;
+  text-align: center;
+  width: 70%;
+  padding-left: 15%;
+}
+.loaderInner {
+  margin: auto;
+  position: absolute;
+  top: 275px;
+  left: 525px;
+  border: 5px solid #00fafa00;
+  border-radius: 50%;
+  border-top: 5px solid navy;
+  border-left: 5px solid navy;
+  width: 150px;
+  height: 150px;
+  animation: spin 4s linear infinite;
+}
+.loaderMid {
+  margin: auto;
+  position: absolute;
+  top: 250px;
+  left: 500px;
+  border: 5px solid #00fafa00;
+  border-radius: 50%;
+  border-top: 5px solid navy;
+  border-left: 5px solid navy;
+  width: 200px;
+  height: 200px;
+  animation: spinInverse 8s linear infinite;
+}
+.loaderOuter {
+  margin: auto;
+  position: absolute;
+  top: 225px;
+  left: 475px;
+  border: 5px solid #00fafa00;
+  border-radius: 50%;
+  border-top: 5px solid navy;
+  border-left: 5px solid navy;
+  width: 250px;
+  height: 250px;
+  animation: spin 6s linear infinite;
+}
+.SimulationHeading {
+  margin: 0;
+  width: 100px;
+  padding-top: 285px;
+  padding-left: 510px;
+  font-size: 14px;
+  color: black;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spinInverse {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
 }

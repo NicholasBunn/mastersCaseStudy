@@ -100,7 +100,28 @@ window.LogMeOut = function () {
   console.log("Not implemented yet");
 };
 
-// ________LOAD PAGE FUNCTIONS_________
+// ________LANDING PAGES________
+
+window.LoadLoadingPage = function () {
+  clearDiv("ServiceContent");
+
+  var innerSpinner = document.createElement("Div");
+  innerSpinner.className = "loaderInner";
+
+  var midSpinner = document.createElement("Div");
+  midSpinner.className = "loaderMid";
+
+  var outerSpinner = document.createElement("Div");
+  outerSpinner.className = "loaderOuter";
+
+  var loadingText = document.createElement("h1");
+  loadingText.className = "SimulationHeading";
+  loadingText.appendChild(document.createTextNode("Running simulation"));
+  document.getElementById("ServiceContent").appendChild(loadingText);
+  document.getElementById("ServiceContent").appendChild(innerSpinner);
+  document.getElementById("ServiceContent").appendChild(midSpinner);
+  document.getElementById("ServiceContent").appendChild(outerSpinner);
+};
 
 window.LoadHomePage = function () {
   // Clear service content div
@@ -108,10 +129,164 @@ window.LoadHomePage = function () {
 
   closeNav();
 
-  // Load route providing div
+  document.getElementById("ServiceContent");
+  // Add a welcome message
+  // Add a subtitle here to guide the user
+
+  // Load available services into blocks with a nice pic
+
+  // Create new div
 
   console.log("Not implemented yet");
 };
+
+window.LoadRouteAnalysisHome = function () {
+  // Update manager object
+  var managerObject = JSON.parse(localStorage.getItem("myManager"));
+
+  managerObject.currentService = "routeAnalysisService";
+  managerObject.queryID = "queryRAS";
+
+  localStorage.setItem("myManager", JSON.stringify(managerObject));
+
+  openNav();
+
+  // Clear service content div
+  clearDiv("ServiceContent");
+
+  // Create new div
+  var div = document.createElement("Div");
+  div.style.width = "95%";
+  div.style.height = "95%";
+
+  var heading = document.createElement("h1");
+  heading.className = "LandingPageHeading";
+  heading.appendChild(
+    document.createTextNode("Welcome to the route analysis service")
+  );
+  var subText = document.createElement("p");
+  subText.className = "LandingPageSubText";
+  subText.appendChild(
+    document.createTextNode(
+      "This service will provide you with a summary of the selected route. Please use the navigation bar on the left to analyse a proposed route."
+    )
+  );
+
+  heading.appendChild(subText);
+  div.appendChild(heading);
+  document.getElementById("ServiceContent").appendChild(div);
+};
+
+window.LoadPowerTrainHome = function () {
+  // Update manager object
+  var managerObject = JSON.parse(localStorage.getItem("myManager"));
+
+  managerObject.currentService = "powerTrainService";
+  managerObject.queryID = "queryPTS";
+
+  localStorage.setItem("myManager", JSON.stringify(managerObject));
+
+  openNav();
+
+  // Clear service content div
+  clearDiv("ServiceContent");
+
+  // Create new div
+  var div = document.createElement("Div");
+  div.style.width = "95%";
+  div.style.height = "95%";
+
+  var heading = document.createElement("h1");
+  heading.className = "LandingPageHeading";
+  heading.appendChild(
+    document.createTextNode("Welcome to the power train service")
+  );
+  var subText = document.createElement("p");
+  subText.className = "LandingPageSubText";
+  subText.appendChild(
+    document.createTextNode(
+      "This service will provide you with insight into the power train of your vessel. Please use the navigation bar on the left to select a power train service."
+    )
+  );
+
+  heading.appendChild(subText);
+  div.appendChild(heading);
+  document.getElementById("ServiceContent").appendChild(div);
+};
+
+window.LoadVesselMotionHome = function () {
+  // Update manager object
+  var managerObject = JSON.parse(localStorage.getItem("myManager"));
+
+  managerObject.currentService = "vesselMotionService";
+  managerObject.queryID = "queryVMS";
+
+  localStorage.setItem("myManager", JSON.stringify(managerObject));
+
+  openNav();
+
+  // Clear service content div
+  clearDiv("ServiceContent");
+
+  // Create new div
+  var div = document.createElement("Div");
+  div.style.width = "95%";
+  div.style.height = "95%";
+
+  var heading = document.createElement("h1");
+  heading.className = "LandingPageHeading";
+  heading.appendChild(
+    document.createTextNode("Welcome to the vessel motion service")
+  );
+  var subText = document.createElement("p");
+  subText.className = "LandingPageSubText";
+  subText.appendChild(
+    document.createTextNode(
+      "This service will provide you with insight into the motion of your vessel. Please use the navigation bar on the left to select a motion service."
+    )
+  );
+
+  heading.appendChild(subText);
+  div.appendChild(heading);
+  document.getElementById("ServiceContent").appendChild(div);
+};
+
+window.LoadComfortHome = function () {
+  // Update manager object
+  var managerObject = JSON.parse(localStorage.getItem("myManager"));
+
+  managerObject.currentService = "comfortService";
+  managerObject.queryID = "queryCS";
+
+  localStorage.setItem("myManager", JSON.stringify(managerObject));
+
+  // Clear service content div
+  clearDiv("ServiceContent");
+
+  // Create new div
+  var div = document.createElement("Div");
+  div.style.width = "95%";
+  div.style.height = "95%";
+
+  var heading = document.createElement("h1");
+  heading.className = "LandingPageHeading";
+  heading.appendChild(
+    document.createTextNode("Welcome to the comfort service")
+  );
+  var subText = document.createElement("p");
+  subText.className = "LandingPageSubText";
+  subText.appendChild(
+    document.createTextNode(
+      "This service will provide you with insight into the perceived comfort on board your vessel. Please use the navigation bar on the left to select a comfort service."
+    )
+  );
+
+  heading.appendChild(subText);
+  div.appendChild(heading);
+  document.getElementById("ServiceContent").appendChild(div);
+};
+
+// ________INPUT PAGES_________
 
 window.LoadRouteInput = function () {
   var managerObject = JSON.parse(localStorage.getItem("myManager"));
@@ -189,56 +364,12 @@ window.LoadRouteInput = function () {
   }
 };
 
-window.LoadRouteAnalysisHome = function () {
-  // Update manager object
-  var managerObject = JSON.parse(localStorage.getItem("myManager"));
-
-  managerObject.currentService = "routeAnalysisService";
-  managerObject.queryID = "queryRAS";
-
-  localStorage.setItem("myManager", JSON.stringify(managerObject));
-
-  openNav();
-
-  // Clear service content div
-  clearDiv("ServiceContent");
-
-  // Create new div
-  var div = document.createElement("Div");
-  div.style.width = "95%";
-  div.style.height = "95%";
-  div.style.background = "blue";
-
-  document.getElementById("ServiceContent").appendChild(div);
-};
+// ________DISPLAY PAGES_______
 
 window.LoadRouteAnalysisDisplay = function (responseObject) {
   openNav();
 
   console.log(responseObject);
-};
-
-window.LoadPowerTrainHome = function () {
-  // Update manager object
-  var managerObject = JSON.parse(localStorage.getItem("myManager"));
-
-  managerObject.currentService = "powerTrainService";
-  managerObject.queryID = "queryPTS";
-
-  localStorage.setItem("myManager", JSON.stringify(managerObject));
-
-  openNav();
-
-  // Clear service content div
-  clearDiv("ServiceContent");
-
-  // Create new div
-  var div = document.createElement("Div");
-  div.style.width = "95%";
-  div.style.height = "95%";
-  div.style.background = "blue";
-
-  document.getElementById("ServiceContent").appendChild(div);
 };
 
 window.LoadPowerTrainDisplay = function (responseObject) {
@@ -353,21 +484,6 @@ window.LoadPowerTrainDisplay = function (responseObject) {
   });
 };
 
-window.LoadVesselMotionHome = function () {
-  // Update manager object
-  var managerObject = JSON.parse(localStorage.getItem("myManager"));
-
-  managerObject.currentService = "vesselMotionService";
-  managerObject.queryID = "queryVMS";
-
-  localStorage.setItem("myManager", JSON.stringify(managerObject));
-
-  openNav();
-
-  // Clear service content div
-  clearDiv("ServiceContent");
-};
-
 window.LoadVesselMotionDisplay = function (responseObject) {
   openNav();
 
@@ -473,27 +589,6 @@ window.LoadVesselMotionDisplay = function (responseObject) {
   });
 };
 
-window.LoadComfortHome = function () {
-  // Update manager object
-  var managerObject = JSON.parse(localStorage.getItem("myManager"));
-
-  managerObject.currentService = "comfortService";
-  managerObject.queryID = "queryCS";
-
-  localStorage.setItem("myManager", JSON.stringify(managerObject));
-
-  // Clear service content div
-  clearDiv("ServiceContent");
-
-  // Create new div
-  var div = document.createElement("Div");
-  div.style.width = "95%";
-  div.style.height = "95%";
-  div.style.background = "yellow";
-
-  document.getElementById("ServiceContent").appendChild(div);
-};
-
 window.LoadComfortDisplay = function () {
   console.log("Not implemented yet");
 };
@@ -502,6 +597,8 @@ window.LoadComfortDisplay = function () {
 
 window.queryRAS = function () {
   console.log("Received RAS");
+
+  LoadLoadingPage();
 
   var managerObject = JSON.parse(localStorage.getItem("myManager"));
 
@@ -531,6 +628,8 @@ window.queryRAS = function () {
       console.log(err.message);
       document.getElementById("consoleOutput").innerHTML =
         "Error " + err.code + ": " + err.message;
+
+      LoadRouteAnalysisHome();
     } else {
       var responseObject = {
         time: response.getUnixTimeList(),
@@ -548,33 +647,9 @@ window.queryRAS = function () {
   });
 };
 
-// window.queryPTS = function () {
-//   var managerObject = JSON.parse(localStorage.getItem("myManager"));
-
-//   if (!managerObject.routeInfo.exists) {
-//     updateManagerRoute(managerObject);
-//   }
-//   console.log(managerObject);
-
-//   var responseObject = {
-//     time: [
-//       new Date(1630080753 * 1000).toLocaleString(),
-//       new Date(1630084353 * 1000).toLocaleString(),
-//       new Date(1630087953 * 1000).toLocaleString(),
-//       new Date(1630095153 * 1000).toLocaleString(),
-//       new Date(1630098753 * 1000).toLocaleString(),
-//     ],
-//     powerEstimate: [3200, 3100, 2983, 3251, 3653],
-//     costEstimate: [1000, 2430, 3135, 4636, 6253],
-//     totalCost: [150000],
-//   };
-
-//   console.log(responseObject);
-
-//   LoadPowerTrainDisplay(responseObject);
-// };
-
 window.queryPTS = function () {
+  LoadLoadingPage();
+
   var managerObject = JSON.parse(localStorage.getItem("myManager"));
 
   if (!managerObject.routeInfo.exists) {
@@ -582,42 +657,27 @@ window.queryPTS = function () {
   }
   console.log(managerObject);
 
-  var ptsService = new PTEstimateServiceClient("http://localhost:8080");
+  var responseObject = {
+    time: [
+      new Date(1630080753 * 1000).toLocaleString(),
+      new Date(1630084353 * 1000).toLocaleString(),
+      new Date(1630087953 * 1000).toLocaleString(),
+      new Date(1630095153 * 1000).toLocaleString(),
+      new Date(1630098753 * 1000).toLocaleString(),
+    ],
+    powerEstimate: [3200, 3100, 2983, 3251, 3653],
+    costEstimate: [1000, 2430, 3135, 4636, 6253],
+    totalCost: [150000],
+  };
 
-  var request = new PTEstimateRequest();
-  request.setUnixTimeList(managerObject.routeInfo.unixTime);
-  request.setLatitudeList(managerObject.routeInfo.latitude);
-  request.setLongitudeList(managerObject.routeInfo.longitude);
-  request.setHeadingList(managerObject.routeInfo.heading);
-  request.setPropPitchList(managerObject.routeInfo.propellerPitch);
-  request.setMotorSpeedList(managerObject.routeInfo.motorSpeed);
-  request.setSogList(managerObject.routeInfo.sog);
+  console.log(responseObject);
 
-  console.log("Request: ", request);
-
-  var metadata = { authorisation: managerObject.userToken };
-  ptsService.estimatePowerTrain(request, metadata, function (err, response) {
-    if (err) {
-      console.log(err.code);
-      console.log(err.message);
-      document.getElementById("consoleOutput").innerHTML =
-        "Error " + err.code + ": " + err.message;
-    } else {
-      var responseObject = {
-        time: response.getUnixTimeList(),
-        powerEstimate: response.getPowerEstimateList(),
-        costEstimate: response.getCostEstimateList(),
-        totalCost: response.getTotalCost(),
-      };
-
-      console.log("Response: ", response);
-
-      LoadPowerTrainDisplay(responseObject);
-    }
-  });
+  LoadPowerTrainDisplay(responseObject);
 };
 
-// window.queryVMS = function () {
+// window.queryPTS = function () {
+//   LoadLoadingPage();
+
 //   var managerObject = JSON.parse(localStorage.getItem("myManager"));
 
 //   if (!managerObject.routeInfo.exists) {
@@ -625,29 +685,46 @@ window.queryPTS = function () {
 //   }
 //   console.log(managerObject);
 
-//   var responseObject = {
-//     time: [
-//       new Date(1630080753 * 1000).toLocaleString(),
-//       new Date(1630084353 * 1000).toLocaleString(),
-//       new Date(1630087953 * 1000).toLocaleString(),
-//       new Date(1630095153 * 1000).toLocaleString(),
-//       new Date(1630098753 * 1000).toLocaleString(),
-//     ],
-//     xAxisVibration: [0.00032524, 0.00024432, 0.00005324, 0.0000432, 0.0005325],
-//     yAxisVibration: [
-//       0.0000312434, 0.00005324, 0.000024325, 0.00006325, 0.00002356,
-//     ],
-//     zAxisVibration: [
-//       0.0005324, 0.0003245, 0.00003525, 0.0006436, 0.00003524235,
-//     ],
-//   };
+//   var ptsService = new PTEstimateServiceClient("http://localhost:8080");
 
-//   LoadVesselMotionDisplay(responseObject);
+//   var request = new PTEstimateRequest();
+//   request.setUnixTimeList(managerObject.routeInfo.unixTime);
+//   request.setLatitudeList(managerObject.routeInfo.latitude);
+//   request.setLongitudeList(managerObject.routeInfo.longitude);
+//   request.setHeadingList(managerObject.routeInfo.heading);
+//   request.setPropPitchList(managerObject.routeInfo.propellerPitch);
+//   request.setMotorSpeedList(managerObject.routeInfo.motorSpeed);
+//   request.setSogList(managerObject.routeInfo.sog);
 
-//   console.log("Unimplemented");
+//   console.log("Request: ", request);
+
+//   var metadata = { authorisation: managerObject.userToken };
+//   ptsService.estimatePowerTrain(request, metadata, function (err, response) {
+//     if (err) {
+//       console.log(err.code);
+//       console.log(err.message);
+//       document.getElementById("consoleOutput").innerHTML =
+//         "Error " + err.code + ": " + err.message;
+
+// LoadPowerTrainHome();
+//     } else {
+//       var responseObject = {
+//         time: response.getUnixTimeList(),
+//         powerEstimate: response.getPowerEstimateList(),
+//         costEstimate: response.getCostEstimateList(),
+//         totalCost: response.getTotalCost(),
+//       };
+
+//       console.log("Response: ", response);
+
+//       LoadPowerTrainDisplay(responseObject);
+//     }
+//   });
 // };
 
 window.queryVMS = function () {
+  LoadLoadingPage();
+
   var managerObject = JSON.parse(localStorage.getItem("myManager"));
 
   if (!managerObject.routeInfo.exists) {
@@ -655,41 +732,76 @@ window.queryVMS = function () {
   }
   console.log(managerObject);
 
-  var vmsService = new VMEstimateServiceClient("http://localhost:8080");
+  var responseObject = {
+    time: [
+      new Date(1630080753 * 1000).toLocaleString(),
+      new Date(1630084353 * 1000).toLocaleString(),
+      new Date(1630087953 * 1000).toLocaleString(),
+      new Date(1630095153 * 1000).toLocaleString(),
+      new Date(1630098753 * 1000).toLocaleString(),
+    ],
+    xAxisVibration: [0.00032524, 0.00024432, 0.00005324, 0.0000432, 0.0005325],
+    yAxisVibration: [
+      0.0000312434, 0.00005324, 0.000024325, 0.00006325, 0.00002356,
+    ],
+    zAxisVibration: [
+      0.0005324, 0.0003245, 0.00003525, 0.0006436, 0.00003524235,
+    ],
+  };
 
-  var request = new VMEstimateRequest();
-  request.setUnixTimeList(managerObject.routeInfo.unixTime);
-  request.setLatitudeList(managerObject.routeInfo.latitude);
-  request.setLongitudeList(managerObject.routeInfo.longitude);
-  request.setHeadingList(managerObject.routeInfo.heading);
-  request.setPropPitchList(managerObject.routeInfo.propellerPitch);
-  request.setMotorSpeedList(managerObject.routeInfo.motorSpeed);
-  request.setSogList(managerObject.routeInfo.sog);
+  LoadVesselMotionDisplay(responseObject);
 
-  console.log("Request: ", request);
-
-  var metadata = { authorisation: managerObject.userToken };
-  vmsService.estimateVesselMotion(request, metadata, function (err, response) {
-    if (err) {
-      console.log(err.code);
-      console.log(err.message);
-      document.getElementById("consoleOutput").innerHTML =
-        "Error " + err.code + ": " + err.message;
-    } else {
-      var responseObject = {
-        // new Date(1630080753 * 1000).toLocaleString(),
-        time: response.getUnixTimeList(),
-        xAxisVibration: response.getAccelerationEstimateXList(),
-        yAxisVibration: response.getAccelerationEstimateYList(),
-        zAxisVibration: response.getAccelerationEstimateZList(),
-      };
-
-      console.log("Response: ", response);
-
-      LoadVesselMotionDisplay(responseObject);
-    }
-  });
+  console.log("Unimplemented");
 };
+
+// window.queryVMS = function () {
+// LoadLoadingPage();
+
+//   var managerObject = JSON.parse(localStorage.getItem("myManager"));
+
+//   if (!managerObject.routeInfo.exists) {
+//     updateManagerRoute(managerObject);
+//   }
+//   console.log(managerObject);
+
+//   var vmsService = new VMEstimateServiceClient("http://localhost:8080");
+
+//   var request = new VMEstimateRequest();
+//   request.setUnixTimeList(managerObject.routeInfo.unixTime);
+//   request.setLatitudeList(managerObject.routeInfo.latitude);
+//   request.setLongitudeList(managerObject.routeInfo.longitude);
+//   request.setHeadingList(managerObject.routeInfo.heading);
+//   request.setPropPitchList(managerObject.routeInfo.propellerPitch);
+//   request.setMotorSpeedList(managerObject.routeInfo.motorSpeed);
+//   request.setSogList(managerObject.routeInfo.sog);
+
+//   console.log("Request: ", request);
+
+//   var metadata = { authorisation: managerObject.userToken };
+//   vmsService.estimateVesselMotion(request, metadata, function (err, response) {
+//     if (err) {
+//       console.log(err.code);
+//       console.log(err.message);
+//       document.getElementById("consoleOutput").innerHTML =
+//         "Error " + err.code + ": " + err.message;
+
+// LoadVesselMotionHome();
+
+//     } else {
+//       var responseObject = {
+//         // new Date(1630080753 * 1000).toLocaleString(),
+//         time: response.getUnixTimeList(),
+//         xAxisVibration: response.getAccelerationEstimateXList(),
+//         yAxisVibration: response.getAccelerationEstimateYList(),
+//         zAxisVibration: response.getAccelerationEstimateZList(),
+//       };
+
+//       console.log("Response: ", response);
+
+//       LoadVesselMotionDisplay(responseObject);
+//     }
+//   });
+// };
 
 window.queryCS = function () {
   var managerObject = JSON.parse(localStorage.getItem("myManager"));
@@ -701,6 +813,7 @@ window.queryCS = function () {
 };
 
 // ________SUPPORTING FUNCTIONS________
+
 function toggleDiv(divID) {
   var x = document.getElementById(divID);
   if (x.style.display === "none") {
