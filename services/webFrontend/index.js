@@ -253,8 +253,8 @@ window.LoadPowerTrainDisplay = function (responseObject) {
   div.style.height = "95%";
 
   var canvas = document.createElement("canvas");
-  div.style.width = "95%";
-  div.style.height = "95%";
+  canvas.style.width = "95%";
+  canvas.style.height = "95%";
   canvas.id = "chartID";
 
   div.appendChild(canvas);
@@ -380,8 +380,8 @@ window.LoadVesselMotionDisplay = function (responseObject) {
   div.style.height = "95%";
 
   var canvas = document.createElement("canvas");
-  div.style.width = "95%";
-  div.style.height = "95%";
+  canvas.style.width = "95%";
+  canvas.style.height = "95%";
   canvas.id = "chartID";
 
   div.appendChild(canvas);
@@ -548,6 +548,32 @@ window.queryRAS = function () {
   });
 };
 
+// window.queryPTS = function () {
+//   var managerObject = JSON.parse(localStorage.getItem("myManager"));
+
+//   if (!managerObject.routeInfo.exists) {
+//     updateManagerRoute(managerObject);
+//   }
+//   console.log(managerObject);
+
+//   var responseObject = {
+//     time: [
+//       new Date(1630080753 * 1000).toLocaleString(),
+//       new Date(1630084353 * 1000).toLocaleString(),
+//       new Date(1630087953 * 1000).toLocaleString(),
+//       new Date(1630095153 * 1000).toLocaleString(),
+//       new Date(1630098753 * 1000).toLocaleString(),
+//     ],
+//     powerEstimate: [3200, 3100, 2983, 3251, 3653],
+//     costEstimate: [1000, 2430, 3135, 4636, 6253],
+//     totalCost: [150000],
+//   };
+
+//   console.log(responseObject);
+
+//   LoadPowerTrainDisplay(responseObject);
+// };
+
 window.queryPTS = function () {
   var managerObject = JSON.parse(localStorage.getItem("myManager"));
 
@@ -590,6 +616,36 @@ window.queryPTS = function () {
     }
   });
 };
+
+// window.queryVMS = function () {
+//   var managerObject = JSON.parse(localStorage.getItem("myManager"));
+
+//   if (!managerObject.routeInfo.exists) {
+//     updateManagerRoute(managerObject);
+//   }
+//   console.log(managerObject);
+
+//   var responseObject = {
+//     time: [
+//       new Date(1630080753 * 1000).toLocaleString(),
+//       new Date(1630084353 * 1000).toLocaleString(),
+//       new Date(1630087953 * 1000).toLocaleString(),
+//       new Date(1630095153 * 1000).toLocaleString(),
+//       new Date(1630098753 * 1000).toLocaleString(),
+//     ],
+//     xAxisVibration: [0.00032524, 0.00024432, 0.00005324, 0.0000432, 0.0005325],
+//     yAxisVibration: [
+//       0.0000312434, 0.00005324, 0.000024325, 0.00006325, 0.00002356,
+//     ],
+//     zAxisVibration: [
+//       0.0005324, 0.0003245, 0.00003525, 0.0006436, 0.00003524235,
+//     ],
+//   };
+
+//   LoadVesselMotionDisplay(responseObject);
+
+//   console.log("Unimplemented");
+// };
 
 window.queryVMS = function () {
   var managerObject = JSON.parse(localStorage.getItem("myManager"));

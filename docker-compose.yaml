@@ -1,0 +1,197 @@
+version: "3.8"
+
+services:
+  # 5005x(+) Service Layer
+  oceanWeatherService:
+    build:
+      context: .
+      dockerfile: services/oceanWeatherService/Dockerfile
+    environment:
+      OCEANWEATHERHOST: oceanweatherservice
+      PROMETHEUSHOST: prometheus
+      PUSHGATEWAYHOST: pushgateway
+    image: ocean_weather_service
+    networks:
+      - southernOcean
+    ports:
+      - 50050:50050
+    restart: on-failure
+
+  powerTrainService:
+    build:
+      context: .
+      dockerfile: services/powerTrainService/Dockerfile
+    environment:
+      POWERTRAINHOST: powertrainservice
+      PROMETHEUSHOST: prometheus
+      PUSHGATEWAYHOST: pushgateway
+    image: power_train_service
+    networks:
+      - southernOcean
+    ports:
+      - 50051:50051
+    restart: on-failure
+
+  vesselMotionService:
+    build:
+      context: .
+      dockerfile: services/vesselMotionService/Dockerfile
+    environment:
+      VESSELMOTIONHOST: vesselmotionservice
+      # PROMETHEUSHOST: prometheus
+      # PUSHGATEWAYHOST: pushgateway
+    image: vessel_motion_service
+    networks:
+      - southernOcean
+    ports:
+      - 50054:50054
+    restart: on-failure
+
+  processVibrationService:
+    build:
+      context: .
+      dockerfile: services/processVibrationService/Dockerfile
+    environment:
+      PROCESSVIBRATIONHOST: processvibrationservice
+      PROMETHEUSHOST: prometheus
+      PUSHGATEWAYHOST: pushgateway
+    image: process_vibration_service
+    networks:
+      - southernOcean
+    ports:
+      - 50052:50052
+    restart: on-failure
+
+  comfortService:
+    build:
+      context: .
+      dockerfile: services/comfortService/Dockerfile
+    environment:
+      COMFORTHOST: comfortservice
+      PROMETHEUSHOST: prometheus
+      PUSHGATEWAYHOST: pushgateway
+    image: comfort_service
+    networks:
+      - southernOcean
+    ports:
+      - 50053:50053
+    restart: on-failure
+
+  # 501xx(+) Aggregator Layer
+  powerTrainAggregator:
+    build:
+      context: .
+      dockerfile: services/powerTrainAggregator/Dockerfile
+    environment:
+      POWERTRAINHOST: powertrainaggregator
+      OWSHOST: oceanweatherservice
+      PTSHOST: powertrainservice
+      PROMETHEUSHOST: prometheus
+      PUSHGATEWAYHOST: pushgateway
+    image: power_train_aggregator
+    networks:
+      - southernOcean
+    ports:
+      - 50102:50102
+    restart: on-failure
+
+  vesselMotionAggregator:
+    build:
+      context: .
+      dockerfile: services/vesselMotionAggregator/Dockerfile
+    environment:
+      VESSELMOTIONHOST: vesselmotionaggregator
+      OWSHOST: oceanweatherservice
+      PTSHOST: powertrainservice
+      VMSHOST: vesselmotionservice
+      PROMETHEUSHOST: prometheus
+      PUSHGATEWAYHOST: pushgateway
+    image: vessel_motion_aggregator
+    networks:
+      - southernOcean
+    ports:
+      - 50103:50103
+    restart: on-failure
+
+  routeAnalysisAggregator:
+    build:
+      context: .
+      dockerfile: services/routeAnalysisAggregator/Dockerfile
+    environment:
+      ROUTEANALYSISHOST: routeanalysisaggregator
+      OWSHOST: oceanweatherservice
+      PTSHOST: powertrainservice
+      VMSHOST: vesselmotionservice
+      CSHOST: comfortservice
+      PVSHOST: processVibrationService
+      PROMETHEUSHOST: prometheus
+      PUSHGATEWAYHOST: pushgateway
+    image: route_analysis_aggregator
+    networks:
+      - southernOcean
+    ports:
+      - 50100:50100
+    restart: on-failure
+
+  pushgateway:
+    image: prom/pushgateway
+    networks:
+      - southernOcean
+    ports:
+      - 9091:9091
+    restart: on-failure
+
+  prometheus:
+    build:
+      context: .
+      dockerfile: services/prometheus/Dockerfile
+    image: my_prometheus
+    networks:
+      - southernOcean
+    ports:
+      - 9090:9090
+    command: --web.enable-lifecycle  --config.file=/etc/prometheus/prometheus.yml
+    restart: on-failure
+
+  # 50000(+) Gateway Layer
+  authenticationService:
+    build:
+      context: .
+      dockerfile: services/authenticationService/Dockerfile
+    environment:
+      AUTHENTICATIONHOST: authenticationservice
+      DATABASEHOST: userdatabase
+    image: authentication_service
+    networks:
+      - southernOcean
+    ports:
+      - 50101:50101
+    restart: on-failure
+
+  userDatabase:
+    build:
+      context: .
+      dockerfile: services/userDatabase/Dockerfile
+    environment:
+      DATABASEHOST: userdatabase
+      MYSQL_ROOT_PASSWORD: "supersecret"
+    image: user_database
+    networks:
+      - southernOcean
+    ports:
+      - 3306:3306
+    restart: on-failure
+
+  envoyProxy:
+    build:
+      context: .
+      dockerfile: services/envoyProxy/Dockerfile
+    image: web_proxy
+    networks:
+      - southernOcean
+    ports:
+      - 8080:8080
+    restart: on-failure
+
+networks:
+  southernOcean:

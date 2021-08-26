@@ -221,11 +221,11 @@ runAll:
 	make runDockerOnly &
 
 killGo:
-	sudo killall vesselMotionAgg
-	sudo killall routeAnalysisAg
-	sudo killall authenticationS
-	sudo killall routeAnalysisAg
-	sudo killall powerTrainAggre
+	sudo killall vesselMotionAgg &
+	sudo killall routeAnalysisAg &
+	sudo killall authenticationS &
+	sudo killall routeAnalysisAg &
+	sudo killall powerTrainAggre &
 
 killPy:
 	sudo killall python3

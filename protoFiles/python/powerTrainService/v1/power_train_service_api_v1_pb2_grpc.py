@@ -16,22 +16,22 @@ class PowerTrainServiceStub(object):
             channel: A grpc.Channel.
         """
         self.PowerEstimate = channel.unary_unary(
-                '/powerTrainService.v1.PowerTrainService/PowerEstimate',
+                '/powerTrainServiceAPI.v1.PowerTrainService/PowerEstimate',
                 request_serializer=power__train__service__api__v1__pb2.PowerTrainEstimateRequest.SerializeToString,
                 response_deserializer=power__train__service__api__v1__pb2.PowerEstimateResponse.FromString,
                 )
         self.CostEstimate = channel.unary_unary(
-                '/powerTrainService.v1.PowerTrainService/CostEstimate',
+                '/powerTrainServiceAPI.v1.PowerTrainService/CostEstimate',
                 request_serializer=power__train__service__api__v1__pb2.PowerTrainEstimateRequest.SerializeToString,
                 response_deserializer=power__train__service__api__v1__pb2.CostEstimateResponse.FromString,
                 )
         self.PowerTracking = channel.unary_unary(
-                '/powerTrainService.v1.PowerTrainService/PowerTracking',
+                '/powerTrainServiceAPI.v1.PowerTrainService/PowerTracking',
                 request_serializer=power__train__service__api__v1__pb2.PowerTrackingRequest.SerializeToString,
                 response_deserializer=power__train__service__api__v1__pb2.PowerTrackingResponse.FromString,
                 )
         self.PowerEstimateEvaluation = channel.unary_unary(
-                '/powerTrainService.v1.PowerTrainService/PowerEstimateEvaluation',
+                '/powerTrainServiceAPI.v1.PowerTrainService/PowerEstimateEvaluation',
                 request_serializer=power__train__service__api__v1__pb2.PowerTrainEstimateRequest.SerializeToString,
                 response_deserializer=power__train__service__api__v1__pb2.PowerEvaluationResponse.FromString,
                 )
@@ -94,7 +94,7 @@ def add_PowerTrainServiceServicer_to_server(servicer, server):
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'powerTrainService.v1.PowerTrainService', rpc_method_handlers)
+            'powerTrainServiceAPI.v1.PowerTrainService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
@@ -114,7 +114,7 @@ class PowerTrainService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/powerTrainService.v1.PowerTrainService/PowerEstimate',
+        return grpc.experimental.unary_unary(request, target, '/powerTrainServiceAPI.v1.PowerTrainService/PowerEstimate',
             power__train__service__api__v1__pb2.PowerTrainEstimateRequest.SerializeToString,
             power__train__service__api__v1__pb2.PowerEstimateResponse.FromString,
             options, channel_credentials,
@@ -131,7 +131,7 @@ class PowerTrainService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/powerTrainService.v1.PowerTrainService/CostEstimate',
+        return grpc.experimental.unary_unary(request, target, '/powerTrainServiceAPI.v1.PowerTrainService/CostEstimate',
             power__train__service__api__v1__pb2.PowerTrainEstimateRequest.SerializeToString,
             power__train__service__api__v1__pb2.CostEstimateResponse.FromString,
             options, channel_credentials,
@@ -148,7 +148,7 @@ class PowerTrainService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/powerTrainService.v1.PowerTrainService/PowerTracking',
+        return grpc.experimental.unary_unary(request, target, '/powerTrainServiceAPI.v1.PowerTrainService/PowerTracking',
             power__train__service__api__v1__pb2.PowerTrackingRequest.SerializeToString,
             power__train__service__api__v1__pb2.PowerTrackingResponse.FromString,
             options, channel_credentials,
@@ -165,7 +165,7 @@ class PowerTrainService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/powerTrainService.v1.PowerTrainService/PowerEstimateEvaluation',
+        return grpc.experimental.unary_unary(request, target, '/powerTrainServiceAPI.v1.PowerTrainService/PowerEstimateEvaluation',
             power__train__service__api__v1__pb2.PowerTrainEstimateRequest.SerializeToString,
             power__train__service__api__v1__pb2.PowerEvaluationResponse.FromString,
             options, channel_credentials,

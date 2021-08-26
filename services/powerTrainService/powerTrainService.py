@@ -217,7 +217,7 @@ class PowerTrainServiceServicer(power_train_service_api_v1_pb2_grpc.PowerTrainSe
 		"""The 'CostEstimate' call provides foresight for tactical decision-making (As is described by https://www.researchgate.net/publication/332173693_Designing_Ship_Digital_Services) by providing cost estimates for a requested route and sailing conditions. It invokes the PowerEstimate service call to produce a power estimate, and then calculates the cost assosciated with the provided route's power requirement profile.
 		"""
 
-		logging.info("Received Power Estimate service call.")
+		logging.info("Received Cost Estimate service call.")
 
 		# Create the response message
 		responseMessage = power_train_service_api_v1_pb2.CostEstimateResponse()
