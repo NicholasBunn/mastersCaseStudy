@@ -29,6 +29,23 @@ const {
 
 import Chart from "chart.js/auto";
 
+var permissionMapping = {
+  admin: ["routeAnalysisService", "powerTrainService", "vesselMotionService"],
+  operator: [
+    "routeAnalysisService",
+    "powerTrainService",
+    "vesselMotionService",
+  ],
+  engineer: ["powerTrainService", "vesselMotionService"],
+  guest: ["routeAnalysisService", "powerTrainService", "vesselMotionService"], // This is just to make dev easier
+};
+
+var temporalMapping = {
+  routeAnalysisService: ["foresight", "insight", "hindsight"],
+  powerTrainService: ["foresight"],
+  vesselMotionService: ["foresight"],
+};
+
 // ________LOGIN FUNCTIONS________
 
 window.LogMeIn = function (guest) {
@@ -67,6 +84,7 @@ window.LogMeIn = function (guest) {
         currentService: null,
         queryID: null,
         userToken: response.getAccessToken(),
+        userPermissions: response.getPermissions(),
         routeInfo: {
           exists: false,
           unixTime: [],
@@ -86,6 +104,31 @@ window.LogMeIn = function (guest) {
 
       // Load main interface div
       toggleDiv("mainInterface");
+
+      for (var serviceName of permissionMapping[
+        managerObject.userPermissions
+      ]) {
+        // Add buttons to the primary nav bar
+        addInputToElement(
+          "query" + serviceName + "Primary",
+          "primaryNavBar",
+          "button",
+          "navButton",
+          {
+            height: "100%",
+            width: "200px",
+            fontSize: "18px",
+            value: serviceName,
+            callbackFunction:
+              "Load" +
+              serviceName.charAt(0).toUpperCase() +
+              serviceName.slice(1) +
+              "Home",
+          }
+        );
+      }
+
+      LoadHomePage();
     }
   });
 };
@@ -93,17 +136,15 @@ window.LogMeIn = function (guest) {
 window.LogMeOut = function () {
   localStorage.clear();
 
-  toggleDiv("mainInterface");
-  toggleDiv("loginBox");
-
-  // Clear user details
-  console.log("Not implemented yet");
+  location.reload();
+  return false;
 };
 
 // ________LANDING PAGES________
 
 window.LoadLoadingPage = function () {
   clearDiv("ServiceContent");
+  clearDiv("consoleOutput");
 
   var innerSpinner = document.createElement("Div");
   innerSpinner.className = "loaderInner";
@@ -126,21 +167,42 @@ window.LoadLoadingPage = function () {
 window.LoadHomePage = function () {
   // Clear service content div
   clearDiv("ServiceContent");
+  clearDiv("consoleOutput");
 
   closeNav();
+
+  var managerObject = JSON.parse(localStorage.getItem("myManager"));
 
   document.getElementById("ServiceContent");
   // Add a welcome message
   // Add a subtitle here to guide the user
 
   // Load available services into blocks with a nice pic
-
   // Create new div
 
-  console.log("Not implemented yet");
+  // Add buttons to the service content div
+  for (var serviceName of permissionMapping[managerObject.userPermissions]) {
+    addInputToElement(
+      "query" + serviceName + "Main",
+      "ServiceContent",
+      "button",
+      "processButton",
+      {
+        height: "200px",
+        width: "300px",
+        fontSize: "24px",
+        value: serviceName,
+        callbackFunction:
+          "Load" +
+          serviceName.charAt(0).toUpperCase() +
+          serviceName.slice(1) +
+          "Home",
+      }
+    );
+  }
 };
 
-window.LoadRouteAnalysisHome = function () {
+window.LoadRouteAnalysisServiceHome = function () {
   // Update manager object
   var managerObject = JSON.parse(localStorage.getItem("myManager"));
 
@@ -149,13 +211,15 @@ window.LoadRouteAnalysisHome = function () {
 
   localStorage.setItem("myManager", JSON.stringify(managerObject));
 
-  openNav();
+  closeNav();
 
   // Clear service content div
   clearDiv("ServiceContent");
+  clearDiv("temporals");
 
   // Create new div
   var div = document.createElement("Div");
+  div.id = "contentDiv";
   div.style.width = "95%";
   div.style.height = "95%";
 
@@ -175,9 +239,43 @@ window.LoadRouteAnalysisHome = function () {
   heading.appendChild(subText);
   div.appendChild(heading);
   document.getElementById("ServiceContent").appendChild(div);
+
+  // Add buttons to the service content div
+  for (var temporalAspect of temporalMapping[managerObject.currentService]) {
+    console.log(temporalAspect);
+    if (temporalAspect === "foresight") {
+      var callbackFunc = "LoadRouteInput";
+    }
+    addInputToElement(
+      temporalAspect + "Main",
+      "contentDiv",
+      "button",
+      "processButton",
+      {
+        height: "200px",
+        width: "300px",
+        fontSize: "24px",
+        value: temporalAspect,
+        callbackFunction: callbackFunc,
+      }
+    );
+    addInputToElement(
+      temporalAspect + "Secondary",
+      "temporals",
+      "button",
+      "navButton",
+      {
+        height: "50px",
+        width: "100%",
+        fontSize: "18px",
+        value: temporalAspect,
+        callbackFunction: callbackFunc,
+      }
+    );
+  }
 };
 
-window.LoadPowerTrainHome = function () {
+window.LoadPowerTrainServiceHome = function () {
   // Update manager object
   var managerObject = JSON.parse(localStorage.getItem("myManager"));
 
@@ -186,13 +284,15 @@ window.LoadPowerTrainHome = function () {
 
   localStorage.setItem("myManager", JSON.stringify(managerObject));
 
-  openNav();
+  closeNav();
 
   // Clear service content div
   clearDiv("ServiceContent");
+  clearDiv("temporals");
 
   // Create new div
   var div = document.createElement("Div");
+  div.id = "contentDiv";
   div.style.width = "95%";
   div.style.height = "95%";
 
@@ -212,9 +312,37 @@ window.LoadPowerTrainHome = function () {
   heading.appendChild(subText);
   div.appendChild(heading);
   document.getElementById("ServiceContent").appendChild(div);
+
+  // Add buttons to the service content div
+  for (var temporalAspect of temporalMapping[managerObject.currentService]) {
+    console.log(temporalAspect);
+    if (temporalAspect === "foresight") {
+      var callbackFunc = "LoadRouteInput";
+    }
+    addInputToElement(temporalAspect, "contentDiv", "button", "processButton", {
+      height: "200px",
+      width: "300px",
+      fontSize: "24px",
+      value: temporalAspect,
+      callbackFunction: callbackFunc,
+    });
+    addInputToElement(
+      temporalAspect + "Secondary",
+      "temporals",
+      "button",
+      "navButton",
+      {
+        height: "50px",
+        width: "100%",
+        fontSize: "18px",
+        value: temporalAspect,
+        callbackFunction: callbackFunc,
+      }
+    );
+  }
 };
 
-window.LoadVesselMotionHome = function () {
+window.LoadVesselMotionServiceHome = function () {
   // Update manager object
   var managerObject = JSON.parse(localStorage.getItem("myManager"));
 
@@ -223,13 +351,15 @@ window.LoadVesselMotionHome = function () {
 
   localStorage.setItem("myManager", JSON.stringify(managerObject));
 
-  openNav();
+  closeNav();
 
   // Clear service content div
   clearDiv("ServiceContent");
+  clearDiv("temporals");
 
   // Create new div
   var div = document.createElement("Div");
+  div.id = "contentDiv";
   div.style.width = "95%";
   div.style.height = "95%";
 
@@ -249,6 +379,34 @@ window.LoadVesselMotionHome = function () {
   heading.appendChild(subText);
   div.appendChild(heading);
   document.getElementById("ServiceContent").appendChild(div);
+
+  // Add buttons to the service content div
+  for (var temporalAspect of temporalMapping[managerObject.currentService]) {
+    console.log(temporalAspect);
+    if (temporalAspect === "foresight") {
+      var callbackFunc = "LoadRouteInput";
+    }
+    addInputToElement(temporalAspect, "contentDiv", "button", "processButton", {
+      height: "200px",
+      width: "300px",
+      fontSize: "24px",
+      value: temporalAspect,
+      callbackFunction: callbackFunc,
+    });
+    addInputToElement(
+      temporalAspect + "Secondary",
+      "temporals",
+      "button",
+      "navButton",
+      {
+        height: "50px",
+        width: "100%",
+        fontSize: "18px",
+        value: temporalAspect,
+        callbackFunction: callbackFunc,
+      }
+    );
+  }
 };
 
 window.LoadComfortHome = function () {
@@ -293,24 +451,28 @@ window.LoadRouteInput = function () {
 
   // If a route has already been entered, make the request for that route
   if (managerObject.routeInfo.exists) {
-    switch (managerObject.queryID) {
-      case "queryRAS":
-        console.log("Calling RAS");
-        queryRAS();
-        break;
-      case "queryPTS":
-        queryPTS();
-        break;
-      case "queryVMS":
-        queryVMS();
-        break;
-      case "queryCS":
-        queryCS();
-        break;
-    }
+    window[managerObject.queryID]();
+    // switch (managerObject.queryID) {
+    //   case "queryRAS":
+    //     console.log("Calling RAS");
+    //     queryRAS();
+    //     break;
+    //   case "queryPTS":
+    //     queryPTS();
+    //     break;
+    //   case "queryVMS":
+    //     queryVMS();
+    //     break;
+    //   case "queryCS":
+    //     queryCS();
+    //     break;
+    // }
   } else {
     // Clear service content div
     clearDiv("ServiceContent");
+    clearDiv("consoleOutput");
+
+    openNav();
 
     // Create new div
     var div = document.createElement("Div");
@@ -322,45 +484,64 @@ window.LoadRouteInput = function () {
     document.getElementById("ServiceContent").appendChild(div);
 
     // Create input elements
-    createTextInput("Unix time", "unixTimeIn", "loadRoute");
-    createTextInput("Latitude", "latitudeIn", "loadRoute");
-    createTextInput("Longitude", "longitudeIn", "loadRoute");
-    createTextInput("Heading", "headingIn", "loadRoute");
-    createTextInput("Propeller Pitch", "propPitchIn", "loadRoute");
-    createTextInput("Motor Speed", "motorSpeedIn", "loadRoute");
-    createTextInput("SOG", "sogIn", "loadRoute");
+    addInputToElement("unixTimeIn", "loadRoute", "text", "textInput", {
+      height: "40px",
+      width: "200px",
+      fontSize: "16px",
+      placeholder: "Unix time",
+    });
+    addInputToElement("latitudeIn", "loadRoute", "text", "textInput", {
+      height: "40px",
+      width: "200px",
+      fontSize: "16px",
+      placeholder: "Latitude",
+    });
+    addInputToElement("longitudeIn", "loadRoute", "text", "textInput", {
+      height: "40px",
+      width: "200px",
+      fontSize: "16px",
+      placeholder: "Longitude",
+    });
+    addInputToElement("headingIn", "loadRoute", "text", "textInput", {
+      height: "40px",
+      width: "200px",
+      fontSize: "16px",
+      placeholder: "Heading",
+    });
+    addInputToElement("propPitchIn", "loadRoute", "text", "textInput", {
+      height: "40px",
+      width: "200px",
+      fontSize: "16px",
+      placeholder: "Propeller Pitch",
+    });
+    addInputToElement("motorSpeedIn", "loadRoute", "text", "textInput", {
+      height: "40px",
+      width: "200px",
+      fontSize: "16px",
+      placeholder: "Motor Speed",
+    });
+    addInputToElement("sogIn", "loadRoute", "text", "textInput", {
+      height: "40px",
+      width: "200px",
+      fontSize: "16px",
+      placeholder: "SOG",
+    });
 
-    var managerObject = JSON.parse(localStorage.getItem("myManager"));
+    // var managerObject = JSON.parse(localStorage.getItem("myManager"));
 
-    createButtonInput(
-      "Query",
+    addInputToElement(
       "query" + managerObject.currentService,
-      "loadRoute"
+      "loadRoute",
+      "button",
+      "processButton",
+      {
+        height: "40px",
+        width: "200px",
+        fontSize: "16px",
+        value: "Submit",
+        callbackFunction: managerObject.queryID,
+      }
     );
-
-    // Add event to Query button
-    var sendQueryButton = document.getElementById(
-      "query" + managerObject.currentService
-    );
-
-    var func = null;
-
-    switch (managerObject.queryID) {
-      case "queryRAS":
-        func = queryRAS;
-        break;
-      case "queryPTS":
-        func = queryPTS;
-        break;
-      case "queryVMS":
-        func = queryVMS;
-        break;
-      case "queryCS":
-        func = queryCS;
-        break;
-    }
-
-    sendQueryButton.onclick = func;
   }
 };
 
@@ -377,9 +558,11 @@ window.LoadPowerTrainDisplay = function (responseObject) {
 
   // Clear service content div
   clearDiv("ServiceContent");
+  clearDiv("consoleOutput");
 
   // Create new div
   var div = document.createElement("Div");
+  div.id = "contentDiv";
   div.style.width = "95%";
   div.style.height = "95%";
 
@@ -392,7 +575,21 @@ window.LoadPowerTrainDisplay = function (responseObject) {
 
   document.getElementById("ServiceContent").appendChild(div);
 
-  console.log(responseObject);
+  addInputToElement("backButton", "contentDiv", "button", "systemButton", {
+    height: "40px",
+    width: "60px",
+    fontSize: "18px",
+    value: "Back",
+    callbackFunction: "LoadPowerTrainServiceHome",
+  });
+
+  addInputToElement("newRoute", "contentDiv", "button", "systemButton", {
+    height: "40px",
+    width: "60px",
+    fontSize: "18px",
+    value: "New Route",
+    callbackFunction: "AddNewRoute",
+  });
 
   var chartData = {
     labels: responseObject.time,
@@ -420,6 +617,7 @@ window.LoadPowerTrainDisplay = function (responseObject) {
       },
     ],
   };
+  console.log(responseObject);
 
   var myChart = new Chart(canvas, {
     type: "bar",
@@ -489,9 +687,11 @@ window.LoadVesselMotionDisplay = function (responseObject) {
 
   // Clear service content div
   clearDiv("ServiceContent");
+  clearDiv("consoleOutput");
 
   // Create new div
   var div = document.createElement("Div");
+  div.id = "contentDiv";
   div.style.width = "95%";
   div.style.height = "95%";
 
@@ -503,6 +703,22 @@ window.LoadVesselMotionDisplay = function (responseObject) {
   div.appendChild(canvas);
 
   document.getElementById("ServiceContent").appendChild(div);
+
+  addInputToElement("backButton", "contentDiv", "button", "systemButton", {
+    height: "40px",
+    width: "60px",
+    fontSize: "18px",
+    value: "Back",
+    callbackFunction: "LoadPowerTrainServiceHome",
+  });
+
+  addInputToElement("newRoute", "contentDiv", "button", "systemButton", {
+    height: "40px",
+    width: "60px",
+    fontSize: "18px",
+    value: "New Route",
+    callbackFunction: "AddNewRoute",
+  });
 
   console.log(responseObject);
 
@@ -598,15 +814,14 @@ window.LoadComfortDisplay = function () {
 window.queryRAS = function () {
   console.log("Received RAS");
 
-  LoadLoadingPage();
-
   var managerObject = JSON.parse(localStorage.getItem("myManager"));
 
   if (!managerObject.routeInfo.exists) {
     updateManagerRoute(managerObject);
   }
-
   console.log(managerObject);
+
+  LoadLoadingPage();
 
   var rasService = new AnalysisServiceClient("http://localhost:8080");
 
@@ -629,7 +844,7 @@ window.queryRAS = function () {
       document.getElementById("consoleOutput").innerHTML =
         "Error " + err.code + ": " + err.message;
 
-      LoadRouteAnalysisHome();
+      LoadRouteAnalysisServiceHome();
     } else {
       var responseObject = {
         time: response.getUnixTimeList(),
@@ -648,14 +863,14 @@ window.queryRAS = function () {
 };
 
 window.queryPTS = function () {
-  LoadLoadingPage();
-
   var managerObject = JSON.parse(localStorage.getItem("myManager"));
 
   if (!managerObject.routeInfo.exists) {
     updateManagerRoute(managerObject);
   }
   console.log(managerObject);
+
+  LoadLoadingPage();
 
   var responseObject = {
     time: [
@@ -706,7 +921,7 @@ window.queryPTS = function () {
 //       document.getElementById("consoleOutput").innerHTML =
 //         "Error " + err.code + ": " + err.message;
 
-// LoadPowerTrainHome();
+// LoadPowerTrainServiceHome();
 //     } else {
 //       var responseObject = {
 //         time: response.getUnixTimeList(),
@@ -723,14 +938,14 @@ window.queryPTS = function () {
 // };
 
 window.queryVMS = function () {
-  LoadLoadingPage();
-
   var managerObject = JSON.parse(localStorage.getItem("myManager"));
 
   if (!managerObject.routeInfo.exists) {
     updateManagerRoute(managerObject);
   }
   console.log(managerObject);
+
+  LoadLoadingPage();
 
   var responseObject = {
     time: [
@@ -785,7 +1000,7 @@ window.queryVMS = function () {
 //       document.getElementById("consoleOutput").innerHTML =
 //         "Error " + err.code + ": " + err.message;
 
-// LoadVesselMotionHome();
+// LoadVesselMotionServiceHome();
 
 //     } else {
 //       var responseObject = {
@@ -813,6 +1028,40 @@ window.queryCS = function () {
 };
 
 // ________SUPPORTING FUNCTIONS________
+
+window.AddNewRoute = function () {
+  var managerObject = JSON.parse(localStorage.getItem("myManager"));
+  managerObject.routeInfo.exists = false;
+  localStorage.setItem("myManager", JSON.stringify(managerObject));
+
+  LoadRouteInput();
+};
+
+function addInputToElement(
+  elementID,
+  parentElement,
+  elementType,
+  elementClass,
+  elementInfo
+) {
+  var newElement = document.createElement("input");
+
+  newElement.id = elementID;
+  newElement.type = elementType;
+  newElement.className = elementClass;
+  newElement.style.height = elementInfo.height;
+  newElement.style.width = elementInfo.width;
+  newElement.style.fontSize = elementInfo.fontSize;
+
+  if (elementType === "button") {
+    newElement.value = elementInfo.value;
+    newElement.onclick = window[elementInfo.callbackFunction];
+  } else if (elementType === "text") {
+    newElement.placeholder = elementInfo.placeholder;
+  }
+
+  document.getElementById(parentElement).appendChild(newElement);
+}
 
 function toggleDiv(divID) {
   var x = document.getElementById(divID);
@@ -853,39 +1102,8 @@ function closeNav() {
   document.getElementById("ServiceContent").style.left = "3%";
 }
 
-function createTextInput(placeholderName, id, parentDiv) {
-  var elementName = document.createElement("input");
-
-  elementName.placeholder = placeholderName;
-  elementName.className = "textInput";
-  elementName.type = "text";
-  elementName.id = id;
-  elementName.style.border = null;
-  elementName.style.borderBottom = "thin solid white";
-  elementName.style.background = "transparent";
-  elementName.style.outline = null;
-  elementName.style.height = "40px";
-  elementName.style.color = "black";
-  elementName.style.fontSize = "16px";
-
-  // Add input elements to parent div
-  document.getElementById(parentDiv).appendChild(elementName);
-}
-
-function createButtonInput(elementName, idName, parentDiv) {
-  var elementName = document.createElement("input");
-
-  elementName.type = "submit";
-  elementName.id = idName;
-  elementName.className = "processButton";
-  elementName.style.height = "40px";
-  elementName.style.fontSize = "18x";
-
-  // Add input elements to parent div
-  document.getElementById(parentDiv).appendChild(elementName);
-}
-
 function updateManagerRoute(managerObject) {
+  console.log(document.getElementById("unixTimeIn"));
   managerObject.routeInfo.unixTime = document
     .getElementById("unixTimeIn")
     .value.split(",")

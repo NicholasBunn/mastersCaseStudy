@@ -9,7 +9,7 @@
     <title>MIS</title>
   </head>
   <body>
-    <div id="loginBox" style="display: none">
+    <div id="loginBox">
       <img src="avatar.png" id="avatar" />
       <h1>Login Here</h1>
       <form>
@@ -32,7 +32,7 @@
         <a href="#" onclick="LogMeIn(true)">Login as a guest</a><br />
       </form>
     </div>
-    <div id="mainInterface">
+    <div id="mainInterface" style="display: none">
       <div id="home">
         <input
           type="button"
@@ -42,51 +42,11 @@
         />
       </div>
       <div id="primaryNavBar">
-        <div id="services">
-          <input
-            type="button"
-            id="RAS"
-            onclick="LoadRouteAnalysisHome()"
-            value="Route Analysis Service"
-          />
-          <input
-            type="button"
-            id="PTR"
-            onclick="LoadPowerTrainHome()"
-            value="Power Train Service"
-          />
-          <input
-            type="button"
-            id="VMS"
-            onclick="LoadVesselMotionHome()"
-            value="Vessel Motion Service"
-          />
-          <input
-            type="button"
-            id="CS"
-            onclick="LoadComfortHome()"
-            value="Comfort Service"
-          />
-        </div>
+        <div id="services"></div>
       </div>
       <div id="secondaryNavBar" class="sidebar" style="display: none">
         <h1>Temporal Aspects</h1>
-        <div id="temporals">
-          <input
-            type="button"
-            class="navButton"
-            id="foresight"
-            value="Foresight"
-            onclick="LoadRouteInput()"
-          />
-          <input type="button" class="navButton" id="insight" value="Insight" />
-          <input
-            type="button"
-            class="navButton"
-            id="hindsight"
-            value="Hindsight"
-          />
-        </div>
+        <div id="temporals"></div>
       </div>
       <div id="ServiceContent"></div>
       <div id="SystemResponse">
