@@ -125,7 +125,7 @@ func (metr *ClientMetricStruct) ClientMetricInterceptor(ctx context.Context, met
 
 	// Extract service and method names
 	requesterInfo := strings.Split(method, "/")
-	serviceName := requesterInfo[1]
+	serviceName := strings.Split(requesterInfo[1], ".")[2]
 	serviceMethod := requesterInfo[2]
 
 	// Increment the request call counter
@@ -139,7 +139,7 @@ func (metr *ClientMetricStruct) ClientMetricInterceptor(ctx context.Context, met
 	err := invoker(ctx, method, req, reply, cc, opts...)
 	if err != nil {
 		ErrorLogger.Println("Failed to make service call from client-side metric interceptor: \n", err)
-		_ = pushClientMetrics(metr)
+		_ = pushClientMetrics(metr, serviceName)
 		return err
 	}
 
@@ -151,7 +151,7 @@ func (metr *ClientMetricStruct) ClientMetricInterceptor(ctx context.Context, met
 	metr.clientResponseMessageSize.With(prometheus.Labels{"grpc_type": "unary", "grpc_service": serviceName, "grpc_method": serviceMethod}).Observe(float64(size))
 
 	// Push metrics to the pushgateway
-	err = pushClientMetrics(metr)
+	err = pushClientMetrics(metr, serviceName)
 
 	return err
 }
@@ -163,7 +163,7 @@ func (metr *ServerMetricStruct) ServerMetricInterceptor(ctx context.Context, req
 
 	// Extract service and method names
 	requesterInfo := strings.Split(info.FullMethod, "/")
-	serviceName := requesterInfo[1]
+	serviceName := strings.Split(requesterInfo[1], ".")[2]
 	serviceMethod := requesterInfo[2]
 
 	// Increment the request call counter
@@ -179,7 +179,7 @@ func (metr *ServerMetricStruct) ServerMetricInterceptor(ctx context.Context, req
 	h, err := handler(ctx, req)
 	if err != nil {
 		ErrorLogger.Println("Failed to make service call from server-side metric interceptor: \n", err)
-		_ = pushServerMetrics(metr)
+		_ = pushServerMetrics(metr, serviceName)
 		return h, err
 	}
 
@@ -190,7 +190,7 @@ func (metr *ServerMetricStruct) ServerMetricInterceptor(ctx context.Context, req
 	metr.serverResponseCounter.With(prometheus.Labels{"grpc_type": "unary", "grpc_service": serviceName, "grpc_method": serviceMethod}).Inc()
 
 	// Push metrics to the pushgateway
-	err = pushServerMetrics(metr)
+	err = pushServerMetrics(metr, serviceName)
 
 	return h, err
 }
@@ -210,9 +210,9 @@ func getMessageSize(val interface{}) (int, error) {
 	return binary.Size(buff.Bytes()), nil
 }
 
-func pushClientMetrics(metrics *ClientMetricStruct) error {
+func pushClientMetrics(metrics *ClientMetricStruct, service string) error {
 	InfoLogger.Println("Pushing metrics to gateway")
-	err := push.New(os.Getenv("PUSHGATEWAYHOST")+":9091", "DesktopGateway").
+	err := push.New(os.Getenv("PUSHGATEWAYHOST")+":9091", service).
 		Collector(*metrics.clientRequestCounter).
 		Collector(*metrics.clientRequestMessageSize).
 		Collector(*metrics.clientResponseCounter).
@@ -229,9 +229,9 @@ func pushClientMetrics(metrics *ClientMetricStruct) error {
 	return err
 }
 
-func pushServerMetrics(metrics *ServerMetricStruct) error {
+func pushServerMetrics(metrics *ServerMetricStruct, service string) error {
 	InfoLogger.Println("Pushing metrics to gateway")
-	err := push.New(os.Getenv("PUSHGATEWAYHOST")+":9091", "DesktopGateway").
+	err := push.New(os.Getenv("PUSHGATEWAYHOST")+":9091", service).
 		Collector(*metrics.serverRequestCounter).
 		Collector(*metrics.serverLastCallTime).
 		Collector(*metrics.serverResponseCounter).

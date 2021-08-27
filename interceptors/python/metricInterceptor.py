@@ -53,7 +53,7 @@ def sendMetrics(func):
 			raise
 		finally:
 			responseTime = time.time() - startTime
-			pushToPrometheus(args[0].c, args[0].g, args[0].h, responseTime, serviceName.rsplit(".")[1], args[0].address, methodName, args[0].registry)
+			pushToPrometheus(args[0].c, args[0].g, args[0].h, responseTime, serviceName.rsplit(".")[2], args[0].address, methodName, args[0].registry)
 		return result
 	return wrapper
 

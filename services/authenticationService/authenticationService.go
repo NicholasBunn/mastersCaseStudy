@@ -12,12 +12,18 @@ import (
 
 	// Third-party packages
 	"google.golang.org/grpc"
+	// "google.golang.org/grpc/credentials"
+	// "google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"github.com/go-yaml/yaml"
+	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
+	// grpc_retry "github.com/grpc-ecosystem/go-grpc-middleware/retry"
 	"database/sql"
     _ "github.com/go-sql-driver/mysql"
-	"github.com/NicholasBunn/mastersCaseStudy/generalComponents/authenticationStuff"	
+	"github.com/NicholasBunn/mastersCaseStudy/generalComponents/authenticationStuff"
+	"github.com/NicholasBunn/mastersCaseStudy/interceptors/go"
+	
 
 	// Proto packages
 	serverPB "github.com/NicholasBunn/mastersCaseStudy/protoFiles/go/authenticationService/v1"
@@ -31,6 +37,8 @@ var (
 	secretKey     string
 	tokenDuration time.Duration
 
+	accessibleRoles map[string][]string // This is a map of service calls with their required permission levels
+
 	// Database stuff
 	dbDriverName string
 	dbUsername string
@@ -43,6 +51,10 @@ var (
 	InfoLogger    *log.Logger
 	WarningLogger *log.Logger
 	ErrorLogger   *log.Logger
+
+	// Metric interceptors
+	clientMetricInterceptor *interceptors.ClientMetricStruct
+	serverMetricInterceptor *interceptors.ServerMetricStruct
 )
 
 func init() {
@@ -59,6 +71,10 @@ func init() {
 	// Load JWT parameters from config
 	secretKey = config.Server.Authentication.Jwt.SecretKey
 	tokenDuration = time.Duration(config.Server.Authentication.Jwt.TokenDuration) * (time.Minute)
+
+	accessibleRoles = map[string][]string{
+		config.Server.Authentication.AccessLevel.Name.CreateNewUser: config.Server.Authentication.AccessLevel.Role.CreateNewUser,
+	}
 
 	// Load database details from config
 	dbDriverName = config.Database.DriverName
@@ -81,6 +97,10 @@ func init() {
 	InfoLogger = log.New(file, "INFO: ", log.Ldate|log.Ltime|log.Lmicroseconds|log.Lshortfile)
 	WarningLogger = log.New(file, "WARNING: ", log.Ldate|log.Ltime|log.Lmicroseconds|log.Lshortfile)
 	ErrorLogger = log.New(file, "ERROR: ", log.Ldate|log.Ltime|log.Lmicroseconds|log.Lshortfile)
+
+	// Metric interceptor
+	clientMetricInterceptor = interceptors.NewClientMetrics() // Custom metric (Prometheus) interceptor
+	serverMetricInterceptor = interceptors.NewServerMetrics() // Custom metric (Prometheus) interceptor
 }
 
 func main() {
@@ -105,10 +125,21 @@ func main() {
 	}
 	InfoLogger.Println("Listening on port: ", addrMyself)
 
+	// Create the interceptors required for this connection
+	authInterceptor := interceptors.ServerAuthStruct{          // Custom auth (JWT) interceptor
+		JwtManager:	authentication.NewJWTManager(secretKey, tokenDuration),
+		AuthenticatedMethods: accessibleRoles,
+	}
+	// Create an interceptor chain with the above interceptors
+	interceptorChain := grpc_middleware.ChainUnaryServer(
+		serverMetricInterceptor.ServerMetricInterceptor,
+		authInterceptor.ServerAuthInterceptor,
+	)
+	
 	// Create a gRPC server object
 	authenticationServer := grpc.NewServer(
 	// grpc.Creds(creds), // Add the TLS credentials to this server
-	// grpc.UnaryInterceptor(interceptors.AuthenticationInterceptor), // Add the interceptor chain to this server
+	grpc.UnaryInterceptor(interceptorChain), // Add the interceptor chain to this server
 	)
 
 	// Attach the authentication service offering to the server
@@ -133,6 +164,14 @@ type Config struct {
 				SecretKey     string `yaml:"secretKey"`
 				TokenDuration int    `yaml:"tokenDuration"`
 			} `yaml:"jwt"`
+			AccessLevel struct {
+				Name struct {
+					CreateNewUser string `yaml:"createNewUser`
+				} `yaml:"name"`
+				Role struct {
+					CreateNewUser []string `yaml:"createNewUser`
+				} `yaml:"role"`
+			} `yaml:"accessLevel"`
 		} `yaml:"authentication"`
 	} `yaml:"server"`
 	
