@@ -15,7 +15,7 @@ import (
 	"google.golang.org/grpc/status"
 
 	// Personal packages
-	authentication "github.com/nicholasbunn/mastersSandbox/src/authenticationStuff"
+	authentication "github.com/NicholasBunn/mastersCaseStudy/generalComponents/authenticationStuff"
 )
 
 // var (
