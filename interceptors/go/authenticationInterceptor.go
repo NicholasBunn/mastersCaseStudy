@@ -58,7 +58,6 @@ type ServerAuthStruct struct {
 
 func (interceptor *ClientAuthStruct) ClientAuthInterceptor(ctx context.Context, method string, req interface{}, reply interface{}, cc *grpc.ClientConn, invoker grpc.UnaryInvoker, opts ...grpc.CallOption) error {
 	InfoLogger.Println("Starting client-side authentication interceptor")
-	log.Println(method)
 
 	// Always inject JWT, even if the requested service is publically available. This removes the need for the frontend to know of what calls are on offer
 	InfoLogger.Println("Injecting JWT into metadata")

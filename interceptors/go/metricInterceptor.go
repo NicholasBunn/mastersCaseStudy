@@ -122,10 +122,10 @@ func (metr *ClientMetricStruct) ClientMetricInterceptor(ctx context.Context, met
 	// Client side interceptor, to be attached to all client connections
 
 	InfoLogger.Println("Starting client interceptor method")
+	DebugLogger.Println(ctx)
 
 	// Extract service and method names
 	requesterInfo := strings.Split(method, "/")
-	DebugLogger.Println(requesterInfo)
 	serviceName := strings.Split(requesterInfo[1], ".")[2]
 	serviceMethod := requesterInfo[2]
 
@@ -161,6 +161,7 @@ func (metr *ServerMetricStruct) ServerMetricInterceptor(ctx context.Context, req
 	// Server-side interceptor, to be attached to all server connections
 
 	InfoLogger.Println("Starting server interceptor method")
+	DebugLogger.Println(ctx)
 
 	// Extract service and method names
 	requesterInfo := strings.Split(info.FullMethod, "/")
