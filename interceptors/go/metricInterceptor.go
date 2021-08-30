@@ -125,6 +125,7 @@ func (metr *ClientMetricStruct) ClientMetricInterceptor(ctx context.Context, met
 
 	// Extract service and method names
 	requesterInfo := strings.Split(method, "/")
+	DebugLogger.Println(requesterInfo)
 	serviceName := strings.Split(requesterInfo[1], ".")[2]
 	serviceMethod := requesterInfo[2]
 
