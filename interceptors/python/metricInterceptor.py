@@ -15,12 +15,12 @@ try:
 except:
 	print("Unable to initialise log file, good luck")
 
-def pushToPrometheus(c, g, h, executionTime, serviceName, address, job, registry):
+def pushToPrometheus(c, g, h, executionTime, serviceName, address, method, job, registry):
 	'''This function sets the labels for a Prometheus entry and pushes metrics to the push-gateway.
 	'''
-	c.labels(grpc_type = 'unary', grpc_service = serviceName, grpc_method = job).inc()
-	g.labels(grpc_type = 'unary', grpc_service = serviceName, grpc_method = job).set_to_current_time()
-	h.labels(grpc_type = 'unary', grpc_service = serviceName, grpc_method = job).observe(executionTime)
+	c.labels(Role="Server", grpc_type = 'unary', grpc_service = serviceName, grpc_method = method).inc()
+	g.labels(Role="Server", grpc_type = 'unary', grpc_service = serviceName, grpc_method = method).set_to_current_time()
+	h.labels(Role="Server", grpc_type = 'unary', grpc_service = serviceName, grpc_method = method).observe(executionTime)
 	
 	prometheus.push_to_gateway(address, job=job, registry=registry)
 	logger.info("Succesfully pushed metrics")
@@ -53,7 +53,7 @@ def sendMetrics(func):
 			raise
 		finally:
 			responseTime = time.time() - startTime
-			pushToPrometheus(args[0].c, args[0].g, args[0].h, responseTime, serviceName.rsplit(".")[2], args[0].address, methodName, args[0].registry)
+			pushToPrometheus(args[0].c, args[0].g, args[0].h, responseTime, serviceName.rsplit(".")[2], args[0].address, methodName, args[0].microserviceName, args[0].registry)
 		return result
 	return wrapper
 
@@ -61,8 +61,10 @@ class MetricInterceptor(ServerInterceptor):
 	pushGatewayaHost = os.getenv("PUSHGATEWAYHOST", "localhost") # Receives the hostname from the environmental variables for Docker, or defaults to localhost for local testing
 	address = "http://" + pushGatewayaHost + ":9091" # Todo: pass/pull this from the message metadata
 
-	def __init__(self):
+	def __init__(self, microserviceName):
 		logger.debug("Initialising metric interceptor")
+
+		self.microserviceName = microserviceName
 
 		self.registry = prometheus.CollectorRegistry()
 		self.c = prometheus.Counter("server_request_counter", "Number of times this API has been called", registry=self.registry, labelnames= ['grpc_type', 'grpc_service', 'grpc_method'])

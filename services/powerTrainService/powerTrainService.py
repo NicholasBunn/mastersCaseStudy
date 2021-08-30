@@ -281,7 +281,7 @@ def serve():
 
 	# Create interceptor chain
 	activeInterceptors = [
-		metricInterceptor.MetricInterceptor(), 
+		metricInterceptor.MetricInterceptor("PowerTrainService"), 
 		authenticationInterceptor.AuthenticationInterceptor(
 			config["authentication"]["jwt"]["secretKey"], 
 			config["authentication"]["jwt"]["tokenDuration"], 
