@@ -35,10 +35,10 @@ github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03
 github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
 github.com/NicholasBunn/mastersCaseStudy/generalComponents/authenticationStuff v0.0.0-20210819131254-26fe76948d3c h1:DmyLLYsbVbFtaFrdwLY4fFVrhAaQdwyRUSbykQfcVqg=
 github.com/NicholasBunn/mastersCaseStudy/generalComponents/authenticationStuff v0.0.0-20210819131254-26fe76948d3c/go.mod h1:5YTcQoVOYtfRqAMKk9U/dQ15G2QyV4wRlAfk/d6lFrk=
-github.com/NicholasBunn/mastersCaseStudy/interceptors/go v0.0.0-20210827170800-5dc43fe4ca40 h1:PSUelI5cCoVh6s8PzApOLByinz4ReEtNF1zNmZl7r8o=
-github.com/NicholasBunn/mastersCaseStudy/interceptors/go v0.0.0-20210827170800-5dc43fe4ca40/go.mod h1:nSBSkD1prHRbEbRpyE+vxnBvgNwhJQlpTsQ28fiiBb4=
-github.com/NicholasBunn/mastersCaseStudy/protoFiles/go v0.0.0-20210827170800-5dc43fe4ca40 h1:Lwz6yKLIwEvqeK+cPPN9YbemfetO8GF6mjrAV8cWHCg=
-github.com/NicholasBunn/mastersCaseStudy/protoFiles/go v0.0.0-20210827170800-5dc43fe4ca40/go.mod h1:UFxYKqrrDA3q/RWkt0J1H8jI9Dv3NZqMjwVKGJBDBY0=
+github.com/NicholasBunn/mastersCaseStudy/interceptors/go v0.0.0-20210827182926-8402daf74775 h1:5i8DZbwyggEeORvklPACgdDvWxaMLylMktCO3iK/bKE=
+github.com/NicholasBunn/mastersCaseStudy/interceptors/go v0.0.0-20210827182926-8402daf74775/go.mod h1:jZn20qFgHu7ctIXJ5AFRvizcLoptTAQwcFxP+Z1RL9A=
+github.com/NicholasBunn/mastersCaseStudy/protoFiles/go v0.0.0-20210830063717-75269b08c847 h1:iFuacfxN3FEaG+LesXm54mz2BcmJ/+7cyRAAgG/QHZo=
+github.com/NicholasBunn/mastersCaseStudy/protoFiles/go v0.0.0-20210830063717-75269b08c847/go.mod h1:UFxYKqrrDA3q/RWkt0J1H8jI9Dv3NZqMjwVKGJBDBY0=
 github.com/OneOfOne/xxhash v1.2.2/go.mod h1:HSdplMjZKSmBqAxg5vPj2TmRDmfkzw+cTzAElWljhcU=
 github.com/alecthomas/template v0.0.0-20160405071501-a0175ee3bccc/go.mod h1:LOuyumcjzFXgccqObfd/Ljyb9UuFJ6TxHnclSeseNhc=
 github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751/go.mod h1:LOuyumcjzFXgccqObfd/Ljyb9UuFJ6TxHnclSeseNhc=
@@ -479,8 +479,9 @@ google.golang.org/genproto v0.0.0-20200729003335-053ba62fc06f/go.mod h1:FWY/as6D
 google.golang.org/genproto v0.0.0-20200804131852-c06518451d9c/go.mod h1:FWY/as6DDZQgahTzZj3fqbO1CbirC29ZNUFHwi0/+no=
 google.golang.org/genproto v0.0.0-20200825200019-8632dd797987/go.mod h1:FWY/as6DDZQgahTzZj3fqbO1CbirC29ZNUFHwi0/+no=
 google.golang.org/genproto v0.0.0-20210813162853-db860fec028c/go.mod h1:cFeNkxwySK631ADgubI+/XFU/xp8FD5KIVV4rj8UC5w=
-google.golang.org/genproto v0.0.0-20210825212027-de86158e7fda h1:iT5uhT54PtbqUsWddv/nnEWdE5e/MTr+Nv3vjxlBP1A=
 google.golang.org/genproto v0.0.0-20210825212027-de86158e7fda/go.mod h1:eFjDcFEctNawg4eG61bRv87N7iHBWyVhJu7u1kqDUXY=
+google.golang.org/genproto v0.0.0-20210828152312-66f60bf46e71 h1:z+ErRPu0+KS02Td3fOAgdX+lnPDh/VyaABEJPD4JRQs=
+google.golang.org/genproto v0.0.0-20210828152312-66f60bf46e71/go.mod h1:eFjDcFEctNawg4eG61bRv87N7iHBWyVhJu7u1kqDUXY=
 google.golang.org/grpc v1.19.0/go.mod h1:mqu4LbDTu4XGKhr4mRzUsmM4RtVoemTSY81AxZiDr8c=
 google.golang.org/grpc v1.20.1/go.mod h1:10oTOabMzJvdu6/UiuZezV6QK5dSlG84ov/aaiqXj38=
 google.golang.org/grpc v1.21.1/go.mod h1:oYelfM1adQP15Ek0mdvEgi9Df8B9CZIaU1084ijfRaM=

@@ -53,7 +53,6 @@ var (
 	ErrorLogger   *log.Logger
 
 	// Metric interceptors
-	clientMetricInterceptor *interceptors.ClientMetricStruct
 	serverMetricInterceptor *interceptors.ServerMetricStruct
 )
 
@@ -99,7 +98,6 @@ func init() {
 	ErrorLogger = log.New(file, "ERROR: ", log.Ldate|log.Ltime|log.Lmicroseconds|log.Lshortfile)
 
 	// Metric interceptor
-	clientMetricInterceptor = interceptors.NewClientMetrics() // Custom metric (Prometheus) interceptor
 	serverMetricInterceptor = interceptors.NewServerMetrics() // Custom metric (Prometheus) interceptor
 }
 

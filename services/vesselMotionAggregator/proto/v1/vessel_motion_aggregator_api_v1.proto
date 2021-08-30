@@ -24,6 +24,6 @@ message VMEstimateResponse {
 // 'VM Estimate Service' offers a single service call that aggregates information to provide detailed information into the motion of the S.A. Agulhas.
 
 service VMEstimateService {
-            // The 'Estimate Vessel Motion' call provides foresight for tactical decision-making by providing detailed information into the motion of the S.A. Agulhas for a porential route.
+    // The 'Estimate Vessel Motion' call provides foresight for tactical decision-making by providing detailed information into the motion of the S.A. Agulhas for a porential route.
     rpc EstimateVesselMotion(VMEstimateRequest) returns (VMEstimateResponse);
 }

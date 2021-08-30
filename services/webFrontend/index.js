@@ -862,6 +862,34 @@ window.queryRAS = function () {
   });
 };
 
+// window.queryPTS = function () {
+//   var managerObject = JSON.parse(localStorage.getItem("myManager"));
+
+//   if (!managerObject.routeInfo.exists) {
+//     updateManagerRoute(managerObject);
+//   }
+//   console.log(managerObject);
+
+//   LoadLoadingPage();
+
+//   var responseObject = {
+//     time: [
+//       new Date(1630080753 * 1000).toLocaleString(),
+//       new Date(1630084353 * 1000).toLocaleString(),
+//       new Date(1630087953 * 1000).toLocaleString(),
+//       new Date(1630095153 * 1000).toLocaleString(),
+//       new Date(1630098753 * 1000).toLocaleString(),
+//     ],
+//     powerEstimate: [3200, 3100, 2983, 3251, 3653],
+//     costEstimate: [1000, 2430, 3135, 4636, 6253],
+//     totalCost: [150000],
+//   };
+
+//   console.log(responseObject);
+
+//   LoadPowerTrainDisplay(responseObject);
+// };
+
 window.queryPTS = function () {
   var managerObject = JSON.parse(localStorage.getItem("myManager"));
 
@@ -872,27 +900,44 @@ window.queryPTS = function () {
 
   LoadLoadingPage();
 
-  var responseObject = {
-    time: [
-      new Date(1630080753 * 1000).toLocaleString(),
-      new Date(1630084353 * 1000).toLocaleString(),
-      new Date(1630087953 * 1000).toLocaleString(),
-      new Date(1630095153 * 1000).toLocaleString(),
-      new Date(1630098753 * 1000).toLocaleString(),
-    ],
-    powerEstimate: [3200, 3100, 2983, 3251, 3653],
-    costEstimate: [1000, 2430, 3135, 4636, 6253],
-    totalCost: [150000],
-  };
+  var ptsService = new PTEstimateServiceClient("http://localhost:8080");
 
-  console.log(responseObject);
+  var request = new PTEstimateRequest();
+  request.setUnixTimeList(managerObject.routeInfo.unixTime);
+  request.setLatitudeList(managerObject.routeInfo.latitude);
+  request.setLongitudeList(managerObject.routeInfo.longitude);
+  request.setHeadingList(managerObject.routeInfo.heading);
+  request.setPropPitchList(managerObject.routeInfo.propellerPitch);
+  request.setMotorSpeedList(managerObject.routeInfo.motorSpeed);
+  request.setSogList(managerObject.routeInfo.sog);
 
-  LoadPowerTrainDisplay(responseObject);
+  console.log("Request: ", request);
+
+  var metadata = { authorisation: managerObject.userToken };
+  ptsService.estimatePowerTrain(request, metadata, function (err, response) {
+    if (err) {
+      console.log(err.code);
+      console.log(err.message);
+      document.getElementById("consoleOutput").innerHTML =
+        "Error " + err.code + ": " + err.message;
+
+      LoadPowerTrainServiceHome();
+    } else {
+      var responseObject = {
+        time: response.getUnixTimeList(),
+        powerEstimate: response.getPowerEstimateList(),
+        costEstimate: response.getCostEstimateList(),
+        totalCost: response.getTotalCost(),
+      };
+
+      console.log("Response: ", response);
+
+      LoadPowerTrainDisplay(responseObject);
+    }
+  });
 };
 
-// window.queryPTS = function () {
-//   LoadLoadingPage();
-
+// window.queryVMS = function () {
 //   var managerObject = JSON.parse(localStorage.getItem("myManager"));
 
 //   if (!managerObject.routeInfo.exists) {
@@ -900,41 +945,28 @@ window.queryPTS = function () {
 //   }
 //   console.log(managerObject);
 
-//   var ptsService = new PTEstimateServiceClient("http://localhost:8080");
+//   LoadLoadingPage();
 
-//   var request = new PTEstimateRequest();
-//   request.setUnixTimeList(managerObject.routeInfo.unixTime);
-//   request.setLatitudeList(managerObject.routeInfo.latitude);
-//   request.setLongitudeList(managerObject.routeInfo.longitude);
-//   request.setHeadingList(managerObject.routeInfo.heading);
-//   request.setPropPitchList(managerObject.routeInfo.propellerPitch);
-//   request.setMotorSpeedList(managerObject.routeInfo.motorSpeed);
-//   request.setSogList(managerObject.routeInfo.sog);
+//   var responseObject = {
+//     time: [
+//       new Date(1630080753 * 1000).toLocaleString(),
+//       new Date(1630084353 * 1000).toLocaleString(),
+//       new Date(1630087953 * 1000).toLocaleString(),
+//       new Date(1630095153 * 1000).toLocaleString(),
+//       new Date(1630098753 * 1000).toLocaleString(),
+//     ],
+//     xAxisVibration: [0.00032524, 0.00024432, 0.00005324, 0.0000432, 0.0005325],
+//     yAxisVibration: [
+//       0.0000312434, 0.00005324, 0.000024325, 0.00006325, 0.00002356,
+//     ],
+//     zAxisVibration: [
+//       0.0005324, 0.0003245, 0.00003525, 0.0006436, 0.00003524235,
+//     ],
+//   };
 
-//   console.log("Request: ", request);
+//   LoadVesselMotionDisplay(responseObject);
 
-//   var metadata = { authorisation: managerObject.userToken };
-//   ptsService.estimatePowerTrain(request, metadata, function (err, response) {
-//     if (err) {
-//       console.log(err.code);
-//       console.log(err.message);
-//       document.getElementById("consoleOutput").innerHTML =
-//         "Error " + err.code + ": " + err.message;
-
-// LoadPowerTrainServiceHome();
-//     } else {
-//       var responseObject = {
-//         time: response.getUnixTimeList(),
-//         powerEstimate: response.getPowerEstimateList(),
-//         costEstimate: response.getCostEstimateList(),
-//         totalCost: response.getTotalCost(),
-//       };
-
-//       console.log("Response: ", response);
-
-//       LoadPowerTrainDisplay(responseObject);
-//     }
-//   });
+//   console.log("Unimplemented");
 // };
 
 window.queryVMS = function () {
@@ -947,76 +979,43 @@ window.queryVMS = function () {
 
   LoadLoadingPage();
 
-  var responseObject = {
-    time: [
-      new Date(1630080753 * 1000).toLocaleString(),
-      new Date(1630084353 * 1000).toLocaleString(),
-      new Date(1630087953 * 1000).toLocaleString(),
-      new Date(1630095153 * 1000).toLocaleString(),
-      new Date(1630098753 * 1000).toLocaleString(),
-    ],
-    xAxisVibration: [0.00032524, 0.00024432, 0.00005324, 0.0000432, 0.0005325],
-    yAxisVibration: [
-      0.0000312434, 0.00005324, 0.000024325, 0.00006325, 0.00002356,
-    ],
-    zAxisVibration: [
-      0.0005324, 0.0003245, 0.00003525, 0.0006436, 0.00003524235,
-    ],
-  };
+  var vmsService = new VMEstimateServiceClient("http://localhost:8080");
 
-  LoadVesselMotionDisplay(responseObject);
+  var request = new VMEstimateRequest();
+  request.setUnixTimeList(managerObject.routeInfo.unixTime);
+  request.setLatitudeList(managerObject.routeInfo.latitude);
+  request.setLongitudeList(managerObject.routeInfo.longitude);
+  request.setHeadingList(managerObject.routeInfo.heading);
+  request.setPropPitchList(managerObject.routeInfo.propellerPitch);
+  request.setMotorSpeedList(managerObject.routeInfo.motorSpeed);
+  request.setSogList(managerObject.routeInfo.sog);
 
-  console.log("Unimplemented");
+  console.log("Request: ", request);
+
+  var metadata = { authorisation: managerObject.userToken };
+  vmsService.estimateVesselMotion(request, metadata, function (err, response) {
+    if (err) {
+      console.log(err.code);
+      console.log(err.message);
+      document.getElementById("consoleOutput").innerHTML =
+        "Error " + err.code + ": " + err.message;
+
+      LoadVesselMotionServiceHome();
+    } else {
+      var responseObject = {
+        // new Date(1630080753 * 1000).toLocaleString(),
+        time: response.getUnixTimeList(),
+        xAxisVibration: response.getAccelerationEstimateXList(),
+        yAxisVibration: response.getAccelerationEstimateYList(),
+        zAxisVibration: response.getAccelerationEstimateZList(),
+      };
+
+      console.log("Response: ", response);
+
+      LoadVesselMotionDisplay(responseObject);
+    }
+  });
 };
-
-// window.queryVMS = function () {
-// LoadLoadingPage();
-
-//   var managerObject = JSON.parse(localStorage.getItem("myManager"));
-
-//   if (!managerObject.routeInfo.exists) {
-//     updateManagerRoute(managerObject);
-//   }
-//   console.log(managerObject);
-
-//   var vmsService = new VMEstimateServiceClient("http://localhost:8080");
-
-//   var request = new VMEstimateRequest();
-//   request.setUnixTimeList(managerObject.routeInfo.unixTime);
-//   request.setLatitudeList(managerObject.routeInfo.latitude);
-//   request.setLongitudeList(managerObject.routeInfo.longitude);
-//   request.setHeadingList(managerObject.routeInfo.heading);
-//   request.setPropPitchList(managerObject.routeInfo.propellerPitch);
-//   request.setMotorSpeedList(managerObject.routeInfo.motorSpeed);
-//   request.setSogList(managerObject.routeInfo.sog);
-
-//   console.log("Request: ", request);
-
-//   var metadata = { authorisation: managerObject.userToken };
-//   vmsService.estimateVesselMotion(request, metadata, function (err, response) {
-//     if (err) {
-//       console.log(err.code);
-//       console.log(err.message);
-//       document.getElementById("consoleOutput").innerHTML =
-//         "Error " + err.code + ": " + err.message;
-
-// LoadVesselMotionServiceHome();
-
-//     } else {
-//       var responseObject = {
-//         // new Date(1630080753 * 1000).toLocaleString(),
-//         time: response.getUnixTimeList(),
-//         xAxisVibration: response.getAccelerationEstimateXList(),
-//         yAxisVibration: response.getAccelerationEstimateYList(),
-//         zAxisVibration: response.getAccelerationEstimateZList(),
-//       };
-
-//       console.log("Response: ", response);
-
-//       LoadVesselMotionDisplay(responseObject);
-//     }
-//   });
-// };
 
 window.queryCS = function () {
   var managerObject = JSON.parse(localStorage.getItem("myManager"));

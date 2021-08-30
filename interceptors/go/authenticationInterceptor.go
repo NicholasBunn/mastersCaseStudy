@@ -27,7 +27,7 @@ import (
 // )
 
 func init() {
-	/* The init functin is used to set up the logger and metric interceptors whenever the service is started
+	/* The init function is used to set up the logger and metric interceptors whenever the service is started
 	 */
 
 	// If the file doesn't exist, create it, otherwise append to the file

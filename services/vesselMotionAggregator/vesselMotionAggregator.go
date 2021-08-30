@@ -9,11 +9,16 @@ import (
 	"os"
 	"strings"
 	"time"
-	"math"
 
 	// Third-party packages
 	"github.com/go-yaml/yaml"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/metadata"
+	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
+	grpc_retry "github.com/grpc-ecosystem/go-grpc-middleware/retry"
+	"github.com/NicholasBunn/mastersCaseStudy/generalComponents/aggregatorStuff"
+	"github.com/NicholasBunn/mastersCaseStudy/generalComponents/authenticationStuff"
+	"github.com/NicholasBunn/mastersCaseStudy/interceptors/go"
 
 	// Proto packages
 	oceanWeatherServicePB "github.com/NicholasBunn/mastersCaseStudy/protoFiles/go/oceanWeatherService/v1"
@@ -33,8 +38,8 @@ var (
 	callTimeoutDuration time.Duration // The time, in seconds, that the client should wait when making a call to the server before throwing an error
 
 	// JWT stuff, load this in from config
-	secretkey     string
-	tokenduration time.Duration
+	secretKey     string
+	tokenDuration time.Duration
 
 	accessibleRoles map[string][]string // This is a map of service calls with their required permission levels
 
@@ -45,6 +50,10 @@ var (
 	InfoLogger    *log.Logger
 	WarningLogger *log.Logger
 	ErrorLogger   *log.Logger
+
+	// Metric interceptors
+	clientMetricInterceptor *interceptors.ClientMetricStruct
+	serverMetricInterceptor *interceptors.ServerMetricStruct
 )
 
 func init() {
@@ -64,12 +73,20 @@ func init() {
 	callTimeoutDuration = time.Duration(config.Client.Timeout.Call) * time.Second
 
 	// Load JWT parameters from config
-	secretkey = config.Server.Authentication.Jwt.SecretKey
-	tokenduration = time.Duration(config.Server.Authentication.Jwt.TokenDuration) * (time.Minute)
+	secretKey = config.Server.Authentication.Jwt.SecretKey
+	tokenDuration = time.Duration(config.Server.Authentication.Jwt.TokenDuration) * (time.Minute)
 
-	// accessibleRoles = map[string][]string{
-	// 	config.Server.Authentication.AccessLevel.Name.AnalyseRoute: config.Server.Authentication.AccessLevel.Role.AnalyseRoute,
-	// }
+	accessibleRoles = map[string][]string{
+		config.Server.Authentication.AccessLevel.Name.EstimateVesselMotion: config.Server.Authentication.AccessLevel.Role.EstimateVesselMotion,
+	}
+
+	authMethods = map[string]bool{
+		config.Client.AuthenticatedMethods.Name.OceanWeatherPrediction:   config.Client.AuthenticatedMethods.RequiresAuthentication.OceanWeatherPrediction,
+		config.Client.AuthenticatedMethods.Name.OceanWeatherHistory:   config.Client.AuthenticatedMethods.RequiresAuthentication.OceanWeatherHistory,
+		config.Client.AuthenticatedMethods.Name.PowerEstimate:   config.Client.AuthenticatedMethods.RequiresAuthentication.PowerEstimate,
+		config.Client.AuthenticatedMethods.Name.CostEstimate:   config.Client.AuthenticatedMethods.RequiresAuthentication.CostEstimate,
+		config.Client.AuthenticatedMethods.Name.MotionEstimate:   config.Client.AuthenticatedMethods.RequiresAuthentication.MotionEstimate,
+	}
 
 	// If the file doesn't exist, create it, otherwise append to the file
 	pathSlice := strings.Split(os.Args[0], "/") // This just extracts the services name (filename)
@@ -85,6 +102,10 @@ func init() {
 	InfoLogger = log.New(file, "INFO: ", log.Ldate|log.Ltime|log.Lmicroseconds|log.Lshortfile)
 	WarningLogger = log.New(file, "WARNING: ", log.Ldate|log.Ltime|log.Lmicroseconds|log.Lshortfile)
 	ErrorLogger = log.New(file, "ERROR: ", log.Ldate|log.Ltime|log.Lmicroseconds|log.Lshortfile)
+
+	// Metric interceptor
+	clientMetricInterceptor = interceptors.NewClientMetrics() // Custom metric (Prometheus) interceptor
+	serverMetricInterceptor = interceptors.NewServerMetrics() // Custom metric (Prometheus) interceptor
 }
 
 func main() {
@@ -101,8 +122,21 @@ func main() {
 	}
 	InfoLogger.Println("Listening on port: ", addrMyself)
 
+	// Create the interceptors required for this connection
+	authInterceptor := interceptors.ServerAuthStruct{          // Custom auth (JWT) interceptor
+		JwtManager:	authentication.NewJWTManager(secretKey, tokenDuration),
+		AuthenticatedMethods: accessibleRoles,
+	}
+	// Create an interceptor chain with the above interceptors
+	interceptorChain := grpc_middleware.ChainUnaryServer(
+		serverMetricInterceptor.ServerMetricInterceptor,
+		authInterceptor.ServerAuthInterceptor,
+	)
+
 	// Create a gRPC server object
-	vmServer := grpc.NewServer()
+	vmServer := grpc.NewServer(
+		grpc.UnaryInterceptor(interceptorChain), // Add the interceptor chain to this server
+	)
 
 	// Attach the analysis service offering to the server
 	serverPB.RegisterVMEstimateServiceServer(vmServer, &server{})
@@ -128,10 +162,10 @@ type Config struct {
 			} `yaml:"jwt"`
 			AccessLevel struct {
 				Name struct {
-					AnalyseRoute string `yaml:"analyseRoute"`
+					EstimateVesselMotion string `yaml:"estimateVesselMotion"`
 				} `yaml:"name"`
 				Role struct {
-					AnalyseRoute []string `yaml:"analyseRoute"`
+					EstimateVesselMotion []string `yaml:"estimateVesselMotion"`
 				} `yaml:"role"`
 			} `yaml:"accessLevel"`
 		} `yaml:"authentication"`
@@ -147,6 +181,22 @@ type Config struct {
 			Connection int `yaml:"connection"`
 			Call       int `yaml:"call"`
 		} `yaml:"timeout"`
+		AuthenticatedMethods struct {
+			Name struct {
+				OceanWeatherPrediction string `yaml:"oceanWeatherPrediction"`
+				OceanWeatherHistory string `yaml:"oceanWeatherHistory"`
+				PowerEstimate string `yaml:"powerEstimate"`
+				CostEstimate  string `yaml:"costEstimate"`
+				MotionEstimate string `yaml:"motionEsimate"`
+			} `yaml:"name"`
+			RequiresAuthentication struct {
+				OceanWeatherPrediction bool `yaml:"oceanWeatherPrediction"`
+				OceanWeatherHistory bool `yaml:"oceanWeatherHistory"`
+				PowerEstimate bool `yaml:"powerEstimate"`
+				CostEstimate  bool `yaml:"costEstimate"`
+				MotionEstimate bool `yaml:"motionEsimate"`
+			} `yaml:"requiresAuthentication"`
+		} `yaml:"authenticatedMethods"`
 	} `yaml:"client"`
 }
 
@@ -163,12 +213,36 @@ func (s *server) EstimateVesselMotion(ctx context.Context, request *serverPB.VME
 
 	InfoLogger.Println("Received Estimate Vessel Motion service call.")
 
+	// Extract the user's JWT from the incoming request. Can ignore the ok output as ths has already been checked.
+	md, _ := metadata.FromIncomingContext(ctx)
+
+	// Create the interceptors required for this connection
+	clientMetricInterceptor := interceptors.NewClientMetrics() // Custom metric (Prometheus) interceptor
+	authInterceptor := interceptors.ClientAuthStruct{          // Custom auth (JWT) interceptor
+		AccessToken:          md["authorisation"][0], // Pass the user's JWT to the outgoing request
+		AuthenticatedMethods: authMethods,
+	}
+
+	// Create the retry options to specify how the client should retry connection interrupts
+	retryOptions := []grpc_retry.CallOption{
+		grpc_retry.WithBackoff(grpc_retry.BackoffExponential(100 * time.Millisecond)), // Use exponential backoff to progressively wait longer between retries
+		grpc_retry.WithMax(5), // Set the maximum number of retries
+	}
+
+	// Create an interceptor chain with the above interceptors
+	interceptorChain := grpc_middleware.ChainUnaryClient(
+		clientMetricInterceptor.ClientMetricInterceptor,
+		authInterceptor.ClientAuthInterceptor,
+		grpc_retry.UnaryClientInterceptor(retryOptions...),
+	)
+
 	// ________Query Ocean Weather Service________
 	
 	// Create an insecure connection to the ocean weather service server
 	connOWS, err := createInsecureServerConnection(
 		addrOWS, // Set the address of the server
 		timeoutDuration, // Set the duration that the client will wait before timing out
+		interceptorChain, // Add the interceptor chain to this server
 	)
 	if err != nil {
 		return nil, fmt.Errorf("Failure in Route Analysis Aggregator: \n%v", err)
@@ -206,6 +280,7 @@ func (s *server) EstimateVesselMotion(ctx context.Context, request *serverPB.VME
 	connPTS, err := createInsecureServerConnection(
 		addrPTS,
 		timeoutDuration,
+		interceptorChain, // Add the interceptor chain to this server
 	)
 	if err != nil {
 		return nil, fmt.Errorf("Failure in Route Analysis Aggregator: \n%v", err)
@@ -232,7 +307,7 @@ func (s *server) EstimateVesselMotion(ctx context.Context, request *serverPB.VME
 
 	DebugLogger.Println(requestMessagePTS)
 
-	requestMessagePTS.WindDirectionRelative, err = calculateRelativeWindDirection(responseMessageOWS.WindDirection, request.Heading)
+	requestMessagePTS.WindDirectionRelative, err = aggregator.CalculateRelativeWindDirection(responseMessageOWS.WindDirection, request.Heading)
 	if err != nil {
 		ErrorLogger.Println("Failed to calculate relative wind direction: \n", err)
 		return nil, fmt.Errorf("Failure in Route Analysis Aggregator: \n%v", err)
@@ -260,6 +335,7 @@ func (s *server) EstimateVesselMotion(ctx context.Context, request *serverPB.VME
 	connVMS, err := createInsecureServerConnection(
 		addrVMS,
 		timeoutDuration,
+		interceptorChain, // Add the interceptor chain to this server
 	)
 	if err != nil {
 		return nil, fmt.Errorf("Failure in Route Analysis Aggregator: \n%v", err)
@@ -280,7 +356,7 @@ func (s *server) EstimateVesselMotion(ctx context.Context, request *serverPB.VME
 		QueryLocation: vesselMotionServicePB.LocationOnShipEnum_UNKNOWN_LOCATION,
 	}
 
-	requestMessageVMS.WindSpeedRelative, err = calculateRelativeWindSpeed(responseMessageOWS.WindSpeed, requestMessagePTS.WindDirectionRelative, request.SOG)
+	requestMessageVMS.WindSpeedRelative, err = aggregator.CalculateRelativeWindSpeed(responseMessageOWS.WindSpeed, requestMessagePTS.WindDirectionRelative, request.SOG)
 	if err != nil {
 		ErrorLogger.Println("Failed to calculate relative wind direction: \n", err)
 		return nil, fmt.Errorf("Failure in Route Analysis Aggregator: \n%v", err)
@@ -316,52 +392,6 @@ func (s *server) EstimateVesselMotion(ctx context.Context, request *serverPB.VME
 
 // ________SUPPORTING FUNCTIONS________
 
-func calculateRelativeWindDirection(windDirection []float32, heading []float32) ([]float32, error) {
-	/* This function takes the wind direction and vessel heading as inputs. Using these, it 
-	calculates and returns the wind direction relative to the vessels direction.
-	*/
-
-	var relativeWindDirection []float32
-	var tempRelativeWindDirection float32
-
-	for index, windDirectionInstance := range windDirection {
-		tempRelativeWindDirection = windDirectionInstance - heading[index]
-
-		// Check whether the relative wind direction is negative and add 360 degrees until it is positive so that all directions returned are on the same coordinate system.
-		for (tempRelativeWindDirection < 0) {
-			tempRelativeWindDirection += 360
-		}
-		relativeWindDirection = append(relativeWindDirection, tempRelativeWindDirection)
-	}
-
-	return relativeWindDirection, nil
-}
-
-func calculateRelativeWindSpeed(windSpeed []float32, relativeWindDirection []float32, sog []float32) ([]float32, error) {
-	/* This function takes the wind speed, wind direction, vessel speed, and vessel direction as inputs. Uisng these, it calculates and returns the wind speed relative to the vessel's speed.
-	*/
-
-	var relativeWindSpeed []float32
-
-	for index, windSpeedInstance := range windSpeed {
-
-		// Decompose the wind speed to get the component of wind acting head on to the ship and add that to the ship's SOG, done on a case-by-case basis depending on where the wind is incident on the ship. PS: There's a lot of type conversion going on here so it looks a bit messy, but it's just basic trigonometry
-		if (relativeWindDirection[index] < 90) {
-			relativeWindSpeed = append(relativeWindSpeed, float32(float64(sog[index]) + float64(windSpeedInstance)*math.Cos(float64(relativeWindDirection[index])*math.Pi/180)))
-		} else if (relativeWindDirection[index] < 180) {
-			relativeWindSpeed = append(relativeWindSpeed, float32(float64(sog[index]) - float64(windSpeedInstance)*math.Cos((180 - float64(relativeWindDirection[index]))*math.Pi/180)))
-		} else if (relativeWindDirection[index] < 270) {
-			relativeWindSpeed = append(relativeWindSpeed, float32(float64(sog[index]) - float64(windSpeedInstance)*math.Cos((float64(relativeWindDirection[index])-180)*math.Pi/180)))
-		} else if (relativeWindDirection[index] <= 360) {
-			relativeWindSpeed = append(relativeWindSpeed, float32(float64(sog[index]) + float64(windSpeedInstance)*math.Cos((360 - float64(relativeWindDirection[index]))*math.Pi/180)))
-		} else {
-			return nil, fmt.Errorf("Provided relative wind direction is out of range (greater than 360 degrees)")
-		}
-	}
-
-	return relativeWindSpeed, nil
-}
-
 func DecodeConfig(configPath string) (*Config, error) {
 	
 	// Create a new config structure
@@ -387,8 +417,9 @@ func DecodeConfig(configPath string) (*Config, error) {
 	return config, nil
 }
 
-func createInsecureServerConnection(port string, timeout int) (*grpc.ClientConn, error) {
-	/* This (unexported) function takes a port address and timeout as inputs. It creates a connection to the server	at the port adress
+func createInsecureServerConnection(port string, timeout int, interceptor grpc.UnaryClientInterceptor) (*grpc.ClientConn, error) {
+	/* This (unexported) function takes a port address, timeout, and UnaryClientInterceptor
+	object as inputs. It creates a connection to the server	at the port adress
 	and returns an insecure gRPC connection with the specified interceptor */
 
 	// Create the context for the request
@@ -403,12 +434,13 @@ func createInsecureServerConnection(port string, timeout int) (*grpc.ClientConn,
 		port,                                   // Add the port that the server is listening on
 		grpc.WithBlock(),                       // Make the dial a blocking call so that we can ensure the connection is indeed created
 		grpc.WithInsecure(),                    // Specify that the connection is insecure (no credentials/authorisation required)
+		grpc.WithUnaryInterceptor(interceptor), // Add the provided interceptors to the connection
 	)
 
 	// Hamndle errors, if any
 	if err != nil {
 		ErrorLogger.Println("Failed to create connection to the server on port: " + port)
-		return nil, fmt.Errorf("Failure in Route Analysis Aggregator: \n%v", err)
+		return nil, err
 	}
 
 	InfoLogger.Println("Succesfully created connection to the server on port: " + port)
