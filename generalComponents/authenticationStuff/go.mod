@@ -1,4 +1,4 @@
-module github.com/NicholasBunn/mastersCaseStudy/generalComponents
+module github.com/NicholasBunn/mastersCaseStudy/generalComponents/authenticationStuff
 
 go 1.16
 
