@@ -98,7 +98,7 @@ func init() {
 	ErrorLogger = log.New(file, "ERROR: ", log.Ldate|log.Ltime|log.Lmicroseconds|log.Lshortfile)
 
 	// Metric interceptor
-	serverMetricInterceptor = interceptors.NewServerMetrics() // Custom metric (Prometheus) interceptor
+	serverMetricInterceptor = interceptors.NewServerMetrics("AuthenticationService") // Custom metric (Prometheus) interceptor
 }
 
 func main() {

@@ -35,10 +35,10 @@ github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03
 github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
 github.com/NicholasBunn/mastersCaseStudy/generalComponents v0.0.0-20210827182926-8402daf74775 h1:ROI7/q/Iv7NOyDwfKGSn3gAuBTwKKgLkdiA2nflg7MU=
 github.com/NicholasBunn/mastersCaseStudy/generalComponents v0.0.0-20210827182926-8402daf74775/go.mod h1:HUsreCL3ySHXndh355Iz2vR5/9AXHC3bAJemyUdv2Z8=
-github.com/NicholasBunn/mastersCaseStudy/interceptors/go v0.0.0-20210830063717-75269b08c847 h1:JrnAC9UX058Ct/I/bo4xYTCmVIKQYM1WPKX4OJm3qkg=
-github.com/NicholasBunn/mastersCaseStudy/interceptors/go v0.0.0-20210830063717-75269b08c847/go.mod h1:SL4nygTOaOlNWAfvNdfGgyGggHJ+1dCoO54B/h/RoyY=
-github.com/NicholasBunn/mastersCaseStudy/protoFiles/go v0.0.0-20210830063717-75269b08c847 h1:iFuacfxN3FEaG+LesXm54mz2BcmJ/+7cyRAAgG/QHZo=
-github.com/NicholasBunn/mastersCaseStudy/protoFiles/go v0.0.0-20210830063717-75269b08c847/go.mod h1:UFxYKqrrDA3q/RWkt0J1H8jI9Dv3NZqMjwVKGJBDBY0=
+github.com/NicholasBunn/mastersCaseStudy/interceptors/go v0.0.0-20210830101314-416b02a598cc h1:ZNIeBDuCMJ6dHlfPbelUo5kn3FDUwdo2CK4rnU/je10=
+github.com/NicholasBunn/mastersCaseStudy/interceptors/go v0.0.0-20210830101314-416b02a598cc/go.mod h1:SL4nygTOaOlNWAfvNdfGgyGggHJ+1dCoO54B/h/RoyY=
+github.com/NicholasBunn/mastersCaseStudy/protoFiles/go v0.0.0-20210830101314-416b02a598cc h1:M7ztgaIZ93St7dLLB5NICiZ7yhLr+6zqz8JZ8PaCses=
+github.com/NicholasBunn/mastersCaseStudy/protoFiles/go v0.0.0-20210830101314-416b02a598cc/go.mod h1:UFxYKqrrDA3q/RWkt0J1H8jI9Dv3NZqMjwVKGJBDBY0=
 github.com/OneOfOne/xxhash v1.2.2/go.mod h1:HSdplMjZKSmBqAxg5vPj2TmRDmfkzw+cTzAElWljhcU=
 github.com/alecthomas/template v0.0.0-20160405071501-a0175ee3bccc/go.mod h1:LOuyumcjzFXgccqObfd/Ljyb9UuFJ6TxHnclSeseNhc=
 github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751/go.mod h1:LOuyumcjzFXgccqObfd/Ljyb9UuFJ6TxHnclSeseNhc=

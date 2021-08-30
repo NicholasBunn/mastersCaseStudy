@@ -100,8 +100,8 @@ func init() {
 	ErrorLogger = log.New(file, "ERROR: ", log.Ldate|log.Ltime|log.Lmicroseconds|log.Lshortfile)
 
 	// Metric interceptor
-	clientMetricInterceptor = interceptors.NewClientMetrics() // Custom metric (Prometheus) interceptor
-	serverMetricInterceptor = interceptors.NewServerMetrics() // Custom metric (Prometheus) interceptor
+	clientMetricInterceptor = interceptors.NewClientMetrics("PowerTrainAggregator") // Custom metric (Prometheus) interceptor
+	serverMetricInterceptor = interceptors.NewServerMetrics("PowerTrainAggregator") // Custom metric (Prometheus) interceptor
 }
 
 func main() {
@@ -211,7 +211,6 @@ func (s *server) EstimatePowerTrain(ctx context.Context, request *serverPB.PTEst
 	md, _ := metadata.FromIncomingContext(ctx)
 
 	// Create the interceptors required for this connection
-	clientMetricInterceptor := interceptors.NewClientMetrics() // Custom metric (Prometheus) interceptor
 	authInterceptor := interceptors.ClientAuthStruct{          // Custom auth (JWT) interceptor
 		AccessToken:          md["authorisation"][0], // Pass the user's JWT to the outgoing request
 		AuthenticatedMethods: authMethods,
