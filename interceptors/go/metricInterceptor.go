@@ -70,7 +70,7 @@ type ServerMetricStruct struct {
 	serverRequestLatency  *prometheus.HistogramVec // Records the amount of time the server took to serve the call
 }
 
-func NewClientMetrics(string serviceName) *ClientMetricStruct {
+func NewClientMetrics(serviceName string) *ClientMetricStruct {
 	return &ClientMetricStruct{
 		serviceName: serviceName,
 		clientRequestCounter: prometheus.NewCounterVec(
@@ -96,7 +96,7 @@ func NewClientMetrics(string serviceName) *ClientMetricStruct {
 	}
 }
 
-func NewServerMetrics() *ServerMetricStruct {
+func NewServerMetrics(serviceName string) *ServerMetricStruct {
 	return &ServerMetricStruct{
 		serviceName: serviceName,
 		serverRequestCounter: prometheus.NewCounterVec(
