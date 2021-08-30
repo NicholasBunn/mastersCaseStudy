@@ -53,6 +53,7 @@ func init() {
 type ClientMetricStruct struct {
 	/* This struct represents a collection of client-side metrics to be registered on a
 	Prometheus metrics registry */
+	serviceName string // Name of the microservice involved in this transaction
 	clientRequestCounter      *prometheus.CounterVec   // Counts the number of call made by the client
 	clientResponseCounter     *prometheus.CounterVec   // Counts the number of responses received by the client
 	clientRequestMessageSize  *prometheus.HistogramVec // Records the size of the request message sent out
@@ -62,14 +63,16 @@ type ClientMetricStruct struct {
 type ServerMetricStruct struct {
 	/* This struct represents a collection of server-side metrics to be reqistered on a
 	Prometheus metrics registry */
+	serviceName string // Name of the microservice involved in this transaction
 	serverRequestCounter  *prometheus.CounterVec   // Counts the number of requests received by the server
 	serverResponseCounter *prometheus.CounterVec   // Counts the number of responses sent by the server
 	serverLastCallTime    *prometheus.GaugeVec     // Records the lat time a call was made to the server
 	serverRequestLatency  *prometheus.HistogramVec // Records the amount of time the server took to serve the call
 }
 
-func NewClientMetrics() *ClientMetricStruct {
+func NewClientMetrics(string serviceName) *ClientMetricStruct {
 	return &ClientMetricStruct{
+		serviceName: serviceName,
 		clientRequestCounter: prometheus.NewCounterVec(
 			prometheus.CounterOpts{
 				Name: "client_request_counter",
@@ -95,6 +98,7 @@ func NewClientMetrics() *ClientMetricStruct {
 
 func NewServerMetrics() *ServerMetricStruct {
 	return &ServerMetricStruct{
+		serviceName: serviceName,
 		serverRequestCounter: prometheus.NewCounterVec(
 			prometheus.CounterOpts{
 				Name: "server_request_counter",
@@ -122,7 +126,6 @@ func (metr *ClientMetricStruct) ClientMetricInterceptor(ctx context.Context, met
 	// Client side interceptor, to be attached to all client connections
 
 	InfoLogger.Println("Starting client interceptor method")
-	DebugLogger.Println(ctx)
 
 	// Extract service and method names
 	requesterInfo := strings.Split(method, "/")
@@ -140,7 +143,7 @@ func (metr *ClientMetricStruct) ClientMetricInterceptor(ctx context.Context, met
 	err := invoker(ctx, method, req, reply, cc, opts...)
 	if err != nil {
 		ErrorLogger.Println("Failed to make service call from client-side metric interceptor: \n", err)
-		_ = pushClientMetrics(metr, serviceName)
+		_ = pushClientMetrics(metr)
 		return err
 	}
 
@@ -152,7 +155,7 @@ func (metr *ClientMetricStruct) ClientMetricInterceptor(ctx context.Context, met
 	metr.clientResponseMessageSize.With(prometheus.Labels{"grpc_type": "unary", "grpc_service": serviceName, "grpc_method": serviceMethod}).Observe(float64(size))
 
 	// Push metrics to the pushgateway
-	err = pushClientMetrics(metr, serviceName)
+	err = pushClientMetrics(metr)
 
 	return err
 }
@@ -161,7 +164,6 @@ func (metr *ServerMetricStruct) ServerMetricInterceptor(ctx context.Context, req
 	// Server-side interceptor, to be attached to all server connections
 
 	InfoLogger.Println("Starting server interceptor method")
-	DebugLogger.Println(ctx)
 
 	// Extract service and method names
 	requesterInfo := strings.Split(info.FullMethod, "/")
@@ -181,7 +183,7 @@ func (metr *ServerMetricStruct) ServerMetricInterceptor(ctx context.Context, req
 	h, err := handler(ctx, req)
 	if err != nil {
 		ErrorLogger.Println("Failed to make service call from server-side metric interceptor: \n", err)
-		_ = pushServerMetrics(metr, serviceName)
+		_ = pushServerMetrics(metr)
 		return h, err
 	}
 
@@ -192,7 +194,7 @@ func (metr *ServerMetricStruct) ServerMetricInterceptor(ctx context.Context, req
 	metr.serverResponseCounter.With(prometheus.Labels{"grpc_type": "unary", "grpc_service": serviceName, "grpc_method": serviceMethod}).Inc()
 
 	// Push metrics to the pushgateway
-	err = pushServerMetrics(metr, serviceName)
+	err = pushServerMetrics(metr)
 
 	return h, err
 }
@@ -212,9 +214,9 @@ func getMessageSize(val interface{}) (int, error) {
 	return binary.Size(buff.Bytes()), nil
 }
 
-func pushClientMetrics(metrics *ClientMetricStruct, service string) error {
+func pushClientMetrics(metrics *ClientMetricStruct) error {
 	InfoLogger.Println("Pushing metrics to gateway")
-	err := push.New(os.Getenv("PUSHGATEWAYHOST")+":9091", service).
+	err := push.New(os.Getenv("PUSHGATEWAYHOST")+":9091", metrics.serviceName).
 		Collector(*metrics.clientRequestCounter).
 		Collector(*metrics.clientRequestMessageSize).
 		Collector(*metrics.clientResponseCounter).
@@ -231,9 +233,9 @@ func pushClientMetrics(metrics *ClientMetricStruct, service string) error {
 	return err
 }
 
-func pushServerMetrics(metrics *ServerMetricStruct, service string) error {
+func pushServerMetrics(metrics *ServerMetricStruct) error {
 	InfoLogger.Println("Pushing metrics to gateway")
-	err := push.New(os.Getenv("PUSHGATEWAYHOST")+":9091", service).
+	err := push.New(os.Getenv("PUSHGATEWAYHOST")+":9091", metrics.serviceName).
 		Collector(*metrics.serverRequestCounter).
 		Collector(*metrics.serverLastCallTime).
 		Collector(*metrics.serverResponseCounter).
