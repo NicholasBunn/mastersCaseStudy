@@ -80,13 +80,15 @@ window.LogMeIn = function (guest) {
       console.log(response.getAccessToken());
 
       // Manager object to make things a lil cleaner :)
-      var managerObject = {
+      var userManagerObject = {
         currentService: null,
         queryID: null,
         userToken: response.getAccessToken(),
         userPermissions: response.getPermissions(),
+      };
+      var routeManagerObject = {
+        exists: false,
         routeInfo: {
-          exists: false,
           unixTime: [],
           latitude: [],
           longitude: [],
@@ -97,7 +99,8 @@ window.LogMeIn = function (guest) {
         },
       };
 
-      localStorage.setItem("myManager", JSON.stringify(managerObject));
+      localStorage.setItem("routeManager", JSON.stringify(routeManagerObject));
+      localStorage.setItem("userManager", JSON.stringify(userManagerObject));
 
       // Hide login div
       toggleDiv("loginBox");
@@ -106,7 +109,7 @@ window.LogMeIn = function (guest) {
       toggleDiv("mainInterface");
 
       for (var serviceName of permissionMapping[
-        managerObject.userPermissions
+        userManagerObject.userPermissions
       ]) {
         // Add buttons to the primary nav bar
         addInputToElement(
@@ -171,7 +174,7 @@ window.LoadHomePage = function () {
 
   closeNav();
 
-  var managerObject = JSON.parse(localStorage.getItem("myManager"));
+  var userManagerObject = JSON.parse(localStorage.getItem("userManager"));
 
   document.getElementById("ServiceContent");
   // Add a welcome message
@@ -181,7 +184,9 @@ window.LoadHomePage = function () {
   // Create new div
 
   // Add buttons to the service content div
-  for (var serviceName of permissionMapping[managerObject.userPermissions]) {
+  for (var serviceName of permissionMapping[
+    userManagerObject.userPermissions
+  ]) {
     addInputToElement(
       "query" + serviceName + "Main",
       "ServiceContent",
@@ -204,12 +209,12 @@ window.LoadHomePage = function () {
 
 window.LoadRouteAnalysisServiceHome = function () {
   // Update manager object
-  var managerObject = JSON.parse(localStorage.getItem("myManager"));
+  var userManagerObject = JSON.parse(localStorage.getItem("userManager"));
 
-  managerObject.currentService = "routeAnalysisService";
-  managerObject.queryID = "queryRAS";
+  userManagerObject.currentService = "routeAnalysisService";
+  userManagerObject.queryID = "queryRAS";
 
-  localStorage.setItem("myManager", JSON.stringify(managerObject));
+  localStorage.setItem("userManager", JSON.stringify(userManagerObject));
 
   closeNav();
 
@@ -241,7 +246,9 @@ window.LoadRouteAnalysisServiceHome = function () {
   document.getElementById("ServiceContent").appendChild(div);
 
   // Add buttons to the service content div
-  for (var temporalAspect of temporalMapping[managerObject.currentService]) {
+  for (var temporalAspect of temporalMapping[
+    userManagerObject.currentService
+  ]) {
     console.log(temporalAspect);
     if (temporalAspect === "foresight") {
       var callbackFunc = "LoadRouteInput";
@@ -277,12 +284,12 @@ window.LoadRouteAnalysisServiceHome = function () {
 
 window.LoadPowerTrainServiceHome = function () {
   // Update manager object
-  var managerObject = JSON.parse(localStorage.getItem("myManager"));
+  var userManagerObject = JSON.parse(localStorage.getItem("userManager"));
 
-  managerObject.currentService = "powerTrainService";
-  managerObject.queryID = "queryPTS";
+  userManagerObject.currentService = "powerTrainService";
+  userManagerObject.queryID = "queryPTS";
 
-  localStorage.setItem("myManager", JSON.stringify(managerObject));
+  localStorage.setItem("userManager", JSON.stringify(userManagerObject));
 
   closeNav();
 
@@ -314,7 +321,9 @@ window.LoadPowerTrainServiceHome = function () {
   document.getElementById("ServiceContent").appendChild(div);
 
   // Add buttons to the service content div
-  for (var temporalAspect of temporalMapping[managerObject.currentService]) {
+  for (var temporalAspect of temporalMapping[
+    userManagerObject.currentService
+  ]) {
     console.log(temporalAspect);
     if (temporalAspect === "foresight") {
       var callbackFunc = "LoadRouteInput";
@@ -344,12 +353,12 @@ window.LoadPowerTrainServiceHome = function () {
 
 window.LoadVesselMotionServiceHome = function () {
   // Update manager object
-  var managerObject = JSON.parse(localStorage.getItem("myManager"));
+  var userManagerObject = JSON.parse(localStorage.getItem("userManager"));
 
-  managerObject.currentService = "vesselMotionService";
-  managerObject.queryID = "queryVMS";
+  userManagerObject.currentService = "vesselMotionService";
+  userManagerObject.queryID = "queryVMS";
 
-  localStorage.setItem("myManager", JSON.stringify(managerObject));
+  localStorage.setItem("userManager", JSON.stringify(userManagerObject));
 
   closeNav();
 
@@ -381,7 +390,9 @@ window.LoadVesselMotionServiceHome = function () {
   document.getElementById("ServiceContent").appendChild(div);
 
   // Add buttons to the service content div
-  for (var temporalAspect of temporalMapping[managerObject.currentService]) {
+  for (var temporalAspect of temporalMapping[
+    userManagerObject.currentService
+  ]) {
     console.log(temporalAspect);
     if (temporalAspect === "foresight") {
       var callbackFunc = "LoadRouteInput";
@@ -411,12 +422,12 @@ window.LoadVesselMotionServiceHome = function () {
 
 window.LoadComfortHome = function () {
   // Update manager object
-  var managerObject = JSON.parse(localStorage.getItem("myManager"));
+  var userManagerObject = JSON.parse(localStorage.getItem("userManager"));
 
-  managerObject.currentService = "comfortService";
-  managerObject.queryID = "queryCS";
+  userManagerObject.currentService = "comfortService";
+  userManagerObject.queryID = "queryCS";
 
-  localStorage.setItem("myManager", JSON.stringify(managerObject));
+  localStorage.setItem("userManager", JSON.stringify(userManagerObject));
 
   // Clear service content div
   clearDiv("ServiceContent");
@@ -447,26 +458,12 @@ window.LoadComfortHome = function () {
 // ________INPUT PAGES_________
 
 window.LoadRouteInput = function () {
-  var managerObject = JSON.parse(localStorage.getItem("myManager"));
+  var routeManagerObject = JSON.parse(localStorage.getItem("routeManager"));
+  var userManagerObject = JSON.parse(localStorage.getItem("userManager"));
 
   // If a route has already been entered, make the request for that route
-  if (managerObject.routeInfo.exists) {
-    window[managerObject.queryID]();
-    // switch (managerObject.queryID) {
-    //   case "queryRAS":
-    //     console.log("Calling RAS");
-    //     queryRAS();
-    //     break;
-    //   case "queryPTS":
-    //     queryPTS();
-    //     break;
-    //   case "queryVMS":
-    //     queryVMS();
-    //     break;
-    //   case "queryCS":
-    //     queryCS();
-    //     break;
-    // }
+  if (routeManagerObject.exists) {
+    window[userManagerObject.queryID]();
   } else {
     // Clear service content div
     clearDiv("ServiceContent");
@@ -527,10 +524,8 @@ window.LoadRouteInput = function () {
       placeholder: "SOG",
     });
 
-    // var managerObject = JSON.parse(localStorage.getItem("myManager"));
-
     addInputToElement(
-      "query" + managerObject.currentService,
+      "query" + userManagerObject.currentService,
       "loadRoute",
       "button",
       "processButton",
@@ -539,7 +534,7 @@ window.LoadRouteInput = function () {
         width: "200px",
         fontSize: "16px",
         value: "Submit",
-        callbackFunction: managerObject.queryID,
+        callbackFunction: userManagerObject.queryID,
       }
     );
   }
@@ -814,29 +809,29 @@ window.LoadComfortDisplay = function () {
 window.queryRAS = function () {
   console.log("Received RAS");
 
-  var managerObject = JSON.parse(localStorage.getItem("myManager"));
+  var routeManagerObject = JSON.parse(localStorage.getItem("routeManager"));
+  var userManagerObject = JSON.parse(localStorage.getItem("userManager"));
 
-  if (!managerObject.routeInfo.exists) {
-    updateManagerRoute(managerObject);
+  if (!routeManagerObject.exists) {
+    updateManagerRoute(routeManagerObject);
   }
-  console.log(managerObject);
 
   LoadLoadingPage();
 
   var rasService = new AnalysisServiceClient("http://localhost:8080");
 
   var request = new AnalysisRequest();
-  request.setUnixTimeList(managerObject.routeInfo.unixTime);
-  request.setLatitudeList(managerObject.routeInfo.latitude);
-  request.setLongitudeList(managerObject.routeInfo.longitude);
-  request.setHeadingList(managerObject.routeInfo.heading);
-  request.setPropPitchList(managerObject.routeInfo.propellerPitch);
-  request.setMotorSpeedList(managerObject.routeInfo.motorSpeed);
-  request.setSogList(managerObject.routeInfo.sog);
+  request.setUnixTimeList(routeManagerObject.routeInfo.unixTime);
+  request.setLatitudeList(routeManagerObject.routeInfo.latitude);
+  request.setLongitudeList(routeManagerObject.routeInfo.longitude);
+  request.setHeadingList(routeManagerObject.routeInfo.heading);
+  request.setPropPitchList(routeManagerObject.routeInfo.propellerPitch);
+  request.setMotorSpeedList(routeManagerObject.routeInfo.motorSpeed);
+  request.setSogList(routeManagerObject.routeInfo.sog);
 
   console.log("Request: ", request);
 
-  var metadata = { authorisation: managerObject.userToken };
+  var metadata = { authorisation: userManagerObject.userToken };
   rasService.analyseRoute(request, metadata, function (err, response) {
     if (err) {
       console.log(err.code);
@@ -863,12 +858,12 @@ window.queryRAS = function () {
 };
 
 // window.queryPTS = function () {
-//   var managerObject = JSON.parse(localStorage.getItem("myManager"));
+//   var userManagerObject = JSON.parse(localStorage.getItem("userManager"));
 
-//   if (!managerObject.routeInfo.exists) {
-//     updateManagerRoute(managerObject);
+//   if (!userManagerObject.routeInfo.exists) {
+//     updateManagerRoute(userManagerObject);
 //   }
-//   console.log(managerObject);
+//   console.log(userManagerObject);
 
 //   LoadLoadingPage();
 
@@ -891,29 +886,29 @@ window.queryRAS = function () {
 // };
 
 window.queryPTS = function () {
-  var managerObject = JSON.parse(localStorage.getItem("myManager"));
+  var routeManagerObject = JSON.parse(localStorage.getItem("routeManager"));
+  var userManagerObject = JSON.parse(localStorage.getItem("userManager"));
 
-  if (!managerObject.routeInfo.exists) {
-    updateManagerRoute(managerObject);
+  if (!routeManagerObject.exists) {
+    updateManagerRoute(userManagerObject);
   }
-  console.log(managerObject);
 
   LoadLoadingPage();
 
   var ptsService = new PTEstimateServiceClient("http://localhost:8080");
 
   var request = new PTEstimateRequest();
-  request.setUnixTimeList(managerObject.routeInfo.unixTime);
-  request.setLatitudeList(managerObject.routeInfo.latitude);
-  request.setLongitudeList(managerObject.routeInfo.longitude);
-  request.setHeadingList(managerObject.routeInfo.heading);
-  request.setPropPitchList(managerObject.routeInfo.propellerPitch);
-  request.setMotorSpeedList(managerObject.routeInfo.motorSpeed);
-  request.setSogList(managerObject.routeInfo.sog);
+  request.setUnixTimeList(routeManagerObject.routeInfo.unixTime);
+  request.setLatitudeList(routeManagerObject.routeInfo.latitude);
+  request.setLongitudeList(routeManagerObject.routeInfo.longitude);
+  request.setHeadingList(routeManagerObject.routeInfo.heading);
+  request.setPropPitchList(routeManagerObject.routeInfo.propellerPitch);
+  request.setMotorSpeedList(routeManagerObject.routeInfo.motorSpeed);
+  request.setSogList(routeManagerObject.routeInfo.sog);
 
   console.log("Request: ", request);
 
-  var metadata = { authorisation: managerObject.userToken };
+  var metadata = { authorisation: userManagerObject.userToken };
   ptsService.estimatePowerTrain(request, metadata, function (err, response) {
     if (err) {
       console.log(err.code);
@@ -938,12 +933,12 @@ window.queryPTS = function () {
 };
 
 // window.queryVMS = function () {
-//   var managerObject = JSON.parse(localStorage.getItem("myManager"));
+//   var userManagerObject = JSON.parse(localStorage.getItem("userManager"));
 
-//   if (!managerObject.routeInfo.exists) {
-//     updateManagerRoute(managerObject);
+//   if (!userManagerObject.routeInfo.exists) {
+//     updateManagerRoute(userManagerObject);
 //   }
-//   console.log(managerObject);
+//   console.log(userManagerObject);
 
 //   LoadLoadingPage();
 
@@ -970,29 +965,30 @@ window.queryPTS = function () {
 // };
 
 window.queryVMS = function () {
-  var managerObject = JSON.parse(localStorage.getItem("myManager"));
+  var routeManagerObject = JSON.parse(localStorage.getItem("routeManager"));
+  var userManagerObject = JSON.parse(localStorage.getItem("userManager"));
 
-  if (!managerObject.routeInfo.exists) {
-    updateManagerRoute(managerObject);
+  if (!routeManagerObject.exists) {
+    updateManagerRoute(userManagerObject);
   }
-  console.log(managerObject);
+  console.log(userManagerObject);
 
   LoadLoadingPage();
 
   var vmsService = new VMEstimateServiceClient("http://localhost:8080");
 
   var request = new VMEstimateRequest();
-  request.setUnixTimeList(managerObject.routeInfo.unixTime);
-  request.setLatitudeList(managerObject.routeInfo.latitude);
-  request.setLongitudeList(managerObject.routeInfo.longitude);
-  request.setHeadingList(managerObject.routeInfo.heading);
-  request.setPropPitchList(managerObject.routeInfo.propellerPitch);
-  request.setMotorSpeedList(managerObject.routeInfo.motorSpeed);
-  request.setSogList(managerObject.routeInfo.sog);
+  request.setUnixTimeList(routeManagerObject.routeInfo.unixTime);
+  request.setLatitudeList(routeManagerObject.routeInfo.latitude);
+  request.setLongitudeList(routeManagerObject.routeInfo.longitude);
+  request.setHeadingList(routeManagerObject.routeInfo.heading);
+  request.setPropPitchList(routeManagerObject.routeInfo.propellerPitch);
+  request.setMotorSpeedList(routeManagerObject.routeInfo.motorSpeed);
+  request.setSogList(routeManagerObject.routeInfo.sog);
 
   console.log("Request: ", request);
 
-  var metadata = { authorisation: managerObject.userToken };
+  var metadata = { authorisation: userManagerObject.userToken };
   vmsService.estimateVesselMotion(request, metadata, function (err, response) {
     if (err) {
       console.log(err.code);
@@ -1018,10 +1014,11 @@ window.queryVMS = function () {
 };
 
 window.queryCS = function () {
-  var managerObject = JSON.parse(localStorage.getItem("myManager"));
+  var routeManagerObject = JSON.parse(localStorage.getItem("routeManager"));
+  var userManagerObject = JSON.parse(localStorage.getItem("userManager"));
 
-  if (!managerObject.routeInfo.exists) {
-    updateManagerRoute(managerObject);
+  if (!routeManagerObject.exists) {
+    updateManagerRoute(userManagerObject);
   }
   console.log("Unimplemented");
 };
@@ -1029,9 +1026,9 @@ window.queryCS = function () {
 // ________SUPPORTING FUNCTIONS________
 
 window.AddNewRoute = function () {
-  var managerObject = JSON.parse(localStorage.getItem("myManager"));
-  managerObject.routeInfo.exists = false;
-  localStorage.setItem("myManager", JSON.stringify(managerObject));
+  var routeManagerObject = JSON.parse(localStorage.getItem("routeManager"));
+  routeManagerObject.exists = false;
+  localStorage.setItem("routeManager", JSON.stringify(routeManagerObject));
 
   LoadRouteInput();
 };
@@ -1101,37 +1098,36 @@ function closeNav() {
   document.getElementById("ServiceContent").style.left = "3%";
 }
 
-function updateManagerRoute(managerObject) {
-  console.log(document.getElementById("unixTimeIn"));
-  managerObject.routeInfo.unixTime = document
+function updateManagerRoute(routeManagerObject) {
+  routeManagerObject.routeInfo.unixTime = document
     .getElementById("unixTimeIn")
     .value.split(",")
     .map((x) => +x);
-  managerObject.routeInfo.latitude = document
+  routeManagerObject.routeInfo.latitude = document
     .getElementById("latitudeIn")
     .value.split(",")
     .map((x) => +x);
-  managerObject.routeInfo.longitude = document
+  routeManagerObject.routeInfo.longitude = document
     .getElementById("longitudeIn")
     .value.split(",")
     .map((x) => +x);
-  managerObject.routeInfo.heading = document
+  routeManagerObject.routeInfo.heading = document
     .getElementById("headingIn")
     .value.split(",")
     .map((x) => +x);
-  managerObject.routeInfo.propellerPitch = document
+  routeManagerObject.routeInfo.propellerPitch = document
     .getElementById("propPitchIn")
     .value.split(",")
     .map((x) => +x);
-  managerObject.routeInfo.motorSpeed = document
+  routeManagerObject.routeInfo.motorSpeed = document
     .getElementById("motorSpeedIn")
     .value.split(",")
     .map((x) => +x);
-  managerObject.routeInfo.sog = document
+  routeManagerObject.routeInfo.sog = document
     .getElementById("sogIn")
     .value.split(",")
     .map((x) => +x);
-  managerObject.routeInfo.exists = true;
+  routeManagerObject.exists = true;
 
-  localStorage.setItem("myManager", JSON.stringify(managerObject));
+  localStorage.setItem("routeManager", JSON.stringify(routeManagerObject));
 }

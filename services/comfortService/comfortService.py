@@ -98,11 +98,11 @@ def serve():
 
 	# Create interceptor chain
 	activeInterceptors = [
-		metricInterceptor.MetricInterceptor(), 
+		metricInterceptor.MetricInterceptor("ComfortService"), 
 		authenticationInterceptor.AuthenticationInterceptor(
 			config["authentication"]["jwt"]["secretKey"], 
 			config["authentication"]["jwt"]["tokenDuration"], 
-			{config["authentication"]["accessLevel"]["name"]["powerEstimate"]: config["authentication"]["accessLevel"]["role"]["powerEstimate"]}
+			{config["authentication"]["accessLevel"]["name"]["comfortRating"]: config["authentication"]["accessLevel"]["role"]["comfortRating"]}
 		)
 	] # List containing the interceptors to be chained
 	

@@ -93,7 +93,8 @@ def serve():
 		authenticationInterceptor.AuthenticationInterceptor(
 			config["authentication"]["jwt"]["secretKey"], 
 			config["authentication"]["jwt"]["tokenDuration"], 
-			{config["authentication"]["accessLevel"]["name"]["processEstimate"]: config["authentication"]["accessLevel"]["role"]["processEstimate"]}
+			{config["authentication"]["accessLevel"]["name"]["calculateRMSBatch"]: config["authentication"]["accessLevel"]["role"]["calculateRMSBatch"], config["authentication"]["accessLevel"]["name"]["calculateRMSSeries"]: config["authentication"]["accessLevel"]["role"]["calculateRMSSeries"]
+			}
 		)
 	] # List containing the interceptors to be chained
 

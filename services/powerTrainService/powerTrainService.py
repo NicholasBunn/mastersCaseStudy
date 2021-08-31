@@ -285,7 +285,7 @@ def serve():
 		authenticationInterceptor.AuthenticationInterceptor(
 			config["authentication"]["jwt"]["secretKey"], 
 			config["authentication"]["jwt"]["tokenDuration"], 
-			{config["authentication"]["accessLevel"]["name"]["powerEstimate"]: config["authentication"]["accessLevel"]["role"]["powerEstimate"]}
+			{config["authentication"]["accessLevel"]["name"]["powerEstimate"]: config["authentication"]["accessLevel"]["role"]["powerEstimate"], config["authentication"]["accessLevel"]["name"]["costEstimate"]: config["authentication"]["accessLevel"]["role"]["costEstimate"]}	
 		)
 	] # List containing the interceptors to be chained
 	

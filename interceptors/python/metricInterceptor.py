@@ -67,9 +67,9 @@ class MetricInterceptor(ServerInterceptor):
 		self.microserviceName = microserviceName
 
 		self.registry = prometheus.CollectorRegistry()
-		self.c = prometheus.Counter("server_request_counter", "Number of times this API has been called", registry=self.registry, labelnames= ['grpc_type', 'grpc_service', 'grpc_method'])
-		self.g = prometheus.Gauge('server_last_call_time', 'Last time this API was called', registry=self.registry, labelnames= ['grpc_type', 'grpc_service', 'grpc_method'])
-		self.h = prometheus.Histogram('server_request_latency', 'Ammount of time for request to be processed', registry=self.registry, labelnames= ['grpc_type', 'grpc_service', 'grpc_method'])
+		self.c = prometheus.Counter("server_request_counter", "Number of times this API has been called", registry=self.registry, labelnames= ['Role', 'grpc_type', 'grpc_service', 'grpc_method'])
+		self.g = prometheus.Gauge('server_last_call_time', 'Last time this API was called', registry=self.registry, labelnames= ['Role', 'grpc_type', 'grpc_service', 'grpc_method'])
+		self.h = prometheus.Histogram('server_request_latency', 'Ammount of time for request to be processed', registry=self.registry, labelnames= ['Role', 'grpc_type', 'grpc_service', 'grpc_method'])
 
 	@sendMetrics
 	def intercept(self, method, request, context, methodName):
