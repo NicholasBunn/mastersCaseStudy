@@ -890,7 +890,7 @@ window.queryPTS = function () {
   var userManagerObject = JSON.parse(localStorage.getItem("userManager"));
 
   if (!routeManagerObject.exists) {
-    updateManagerRoute(userManagerObject);
+    updateManagerRoute(routeManagerObject);
   }
 
   LoadLoadingPage();
@@ -969,7 +969,7 @@ window.queryVMS = function () {
   var userManagerObject = JSON.parse(localStorage.getItem("userManager"));
 
   if (!routeManagerObject.exists) {
-    updateManagerRoute(userManagerObject);
+    updateManagerRoute(routeManagerObject);
   }
   console.log(userManagerObject);
 
@@ -1018,7 +1018,7 @@ window.queryCS = function () {
   var userManagerObject = JSON.parse(localStorage.getItem("userManager"));
 
   if (!routeManagerObject.exists) {
-    updateManagerRoute(userManagerObject);
+    updateManagerRoute(routeManagerObject);
   }
   console.log("Unimplemented");
 };
