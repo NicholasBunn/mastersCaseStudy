@@ -257,11 +257,11 @@ func find(username string) (*authentication.User, error) {
 
 	defer db.Close()
 
-    // Create select query to fetch hashed password and user permission
-	myQuery := fmt.Sprintf("SELECT * FROM users WHERE username = '%s';", username)
+    // Create select query to fetch hashed password and user permission (paramaterised to avoid those pesky SQL injections)    
+	myQuery := "SELECT * FROM users WHERE username = ?;"
 
 	// Execute query
-    userInfo, err := db.Query(myQuery)
+	userInfo, err := db.Query(myQuery, username)
 
 	if err != nil {
 		// Close the database connection
