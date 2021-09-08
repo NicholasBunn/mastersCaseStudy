@@ -71,8 +71,8 @@ class InverseSolutionSolver():
 
         # Populate additional inertial terms for flexible mode rows/columns
         for i in range(1, 102, 2):
-            for self.J in range(1, 102, 2):
-                self.massMatrix[i,self.J] = self.massMatrix[i,self.J] + self.Jp + self.Jm + self.Js*math.cos((i)*math.pi*21.525/self.L)*math.cos((self.J)*math.pi*21.525/self.L)
+            for j in range(1, 102, 2):
+                self.massMatrix[i,j] = self.massMatrix[i,j] + self.Jp + self.Jm + self.Js*math.cos((i)*math.pi*21.525/self.L)*math.cos((j)*math.pi*21.525/self.L)
 
         # Delete even rows and columns
         self.massMatrix = np.delete(self.massMatrix, range(2, self.massMatrix.shape[0]-2, 2), axis=0)
@@ -163,7 +163,7 @@ class InverseSolutionSolver():
         self.numDegreesOfFreedom = max(np.shape(self.massMatrix))
 
         # Initialise force vector
-        self.forceVector = np.zeros([self.numDegreesOfFreedom+2, self.numTimeSteps])
+        self.forceVector = np.zeros([self.numDegreesOfFreedom, self.numTimeSteps])
 
         # Load and filter measured internal torque
         self.forceVector[-2, :] = smoothN.smoothn(yin=torque[0:self.numTimeSteps], s=200)[0][:,0]*1000 # This doesn't really seem to smooth it out all that much
@@ -173,28 +173,41 @@ class InverseSolutionSolver():
             shaftSpeed[index] = rpm[0]*(2*math.pi/60)
 
         # THIS STILL NEEDS TO BE SCALED BY 10,000,000 BUT I'm RUNNING OUT OF MEMORY
-        self.forceVector[-1, :] = shaftSpeed[0:self.numTimeSteps]
+        self.forceVector[-1,:] = shaftSpeed[0:self.numTimeSteps]
+        self.forceVector[-1,:] = self.forceVector[-1,:]*(10**7) # Could move this line above
 
     def solveSystem(self):
 
-        res = self.inverseInitialCond(self.forceVector[-2,1], self.forceVector[-1,1]*(10**7))
+        DI, VI, AI = self.inverseInitialCond(self.forceVector[-2,1], self.forceVector[-1,1])
         
-        print(res[0])
-        print(res[1])
-        print(res[2])
+        # print(DI)
+        # print(VI)
+        # print(AI)
+
+        self.forceVector[-1,:] = self.forceVector[-1,:]*(10**7) # Could move this line above
+
+        q, qd, qdVer, qdd = self.jwhAlpha(DI, VI, AI, self.forceVector)
+
+        print(q[:4,:4])
+        print(q[-4:,:4])
+        print(q[:4,-4:])
+        print(q[-4:,-4:])
+        # print(qd)
+        # print(qdVer) # Verification matrix
+        # print(qdd)
 
     def inverseInitialCond(self, initialMeasuredForce, initialMeasuredVel):
-        F = np.zeros([self.numDegreesOfFreedom, self.numTimeSteps])
+        F = np.zeros([self.numDegreesOfFreedom, self.numTimeSteps], dtype=np.float64)
 
         F[-2, :] = initialMeasuredForce
         F[-1, :] = initialMeasuredVel
 
         rhoInf = 0
 
-        # Determine alphaM, alphaF, and gamma
-        alphaM = (1/2)*((3-rhoInf)/(1+rhoInf))
-        alphaF = 1/(1+rhoInf)
-        gamma = (1/2) + alphaM - alphaF
+        # Determine self.alphaM, self.alphaF, and self.gamma
+        self.alphaM = (1/2)*((3-rhoInf)/(1+rhoInf))
+        self.alphaF = 1/(1+rhoInf)
+        self.gamma = (1/2) + self.alphaM - self.alphaF
 
         # Initialise outputs
         u = np.zeros([self.numDegreesOfFreedom, self.numTimeSteps])
@@ -203,41 +216,45 @@ class InverseSolutionSolver():
         vd = np.zeros([self.numDegreesOfFreedom, self.numTimeSteps])
 
         # Set initial conditions
-        u[:,1] = 0
-        ud[:,1] = 0
-        v[:,1] = 0
-        vd[:,1] = 0
+        u[:,0] = 0
+        ud[:,0] = 0
+        v[:,0] = 0
+        vd[:,0] = 0
 
         # Constants for effective stiffnedd matrix
-        a1 = (alphaM**2)/(alphaF*(gamma**2)*(self.dt**2))
-        a2 = alphaM/(gamma*self.dt)
+        self.a1 = (self.alphaM**2)/(self.alphaF*(self.gamma**2)*(self.dt**2))
+        self.a2 = self.alphaM/(self.gamma*self.dt)
 
         # Constants for effective force
-        a3 = alphaM/(alphaF*gamma*self.dt)
-        a4 = (gamma-alphaM)/(gamma*alphaF)
-        a5 = (alphaF-1)/alphaF
-        a6 = alphaM/(alphaF*(gamma**2)*(self.dt**2))
-        a7 = 1/(alphaF*gamma*self.dt)
-        a8 = (gamma-1)/gamma
-        a9 = (gamma-alphaM)/(alphaF*(gamma**2)*self.dt)
-        a10 = 1/(gamma*self.dt)
+        self.a3 = self.alphaM/(self.alphaF*self.gamma*self.dt)
+        self.a4 = (self.gamma-self.alphaM)/(self.gamma*self.alphaF)
+        self.a5 = (self.alphaF-1)/self.alphaF
+        self.a6 = self.alphaM/(self.alphaF*(self.gamma**2)*(self.dt**2))
+        self.a7 = 1/(self.alphaF*self.gamma*self.dt)
+        self.a8 = (self.gamma-1)/self.gamma
+        self.a9 = (self.gamma-self.alphaM)/(self.alphaF*(self.gamma**2)*self.dt)
+        self.a10 = 1/(self.gamma*self.dt)
 
         # Determine effective stiffness matrix
-        effectiveStiffness = a1*self.massMatrix + a2*self.dampingMatrix + alphaF*self.stiffnessMatrix
+        self.effectiveStiffness = self.a1*self.massMatrix + self.a2*self.dampingMatrix + self.alphaF*self.stiffnessMatrix
 
+        # effectiveForce = np.ndarray(54, dtype=np.float64)
         for i in range(0, self.numTimeSteps-1):
             # Determine the effective force for this timestep
-            currF = F[:,i]
-            nextF = F[:,i+1]
-
-            effectiveForce = (alphaF*nextF + (1-alphaF)*currF - (1-alphaM)*self.massMatrix*vd[:,i] - (1-alphaF)*self.dampingMatrix*v[:,i] - (1-alphaF)*self.stiffnessMatrix*u[:,i] + alphaF*self.dampingMatrix*(a3*u[:,i] - a4*ud[:,i] - a5*v[:,i]) + alphaM*self.massMatrix*(a6*u[:,i] + a7*v[:,i] - a8*vd[:,i] - a9*ud[:,i]))[0]
-
+            effectiveForce = (
+                self.alphaF*F[:,i+1] + (1-self.alphaF)*F[:,i] - \
+                (1-self.alphaM)*np.dot(self.massMatrix, vd[:,i]) - (1-self.alphaF)*np.dot(self.dampingMatrix,v[:,i]) - (1-self.alphaF)*np.dot(self.stiffnessMatrix,u[:,i]) + \
+                self.alphaF*(np.dot(self.dampingMatrix, self.a3*u[:,i]) - np.dot(self.dampingMatrix, self.a4*ud[:,i]) - np.dot(self.dampingMatrix, self.a5*v[:,i])) + \
+                self.alphaM*(np.dot(self.massMatrix, self.a6*u[:,i]) + np.dot(self.massMatrix, self.a7*v[:,i]) - np.dot(self.massMatrix, self.a8*vd[:,i]) - np.dot(self.massMatrix, self.a9*ud[:,i]))
+                )
 
             # Determine the displacement for the next time step
-            u[:, i+1] = np.linalg.lstsq(effectiveStiffness, effectiveForce, rcond=-1)[0]            
-            ud[:, i+1] = a10*(u[:,i+1] - u[:,i]) + a8*ud[:,i]
-            v[:,i+1] = a3*(u[:,i+1] - u[:,i]) + a4*ud[:,i] + a5*v[:,i]
-            vd[:,i+1] = a6*(u[:,i+1] - u[:,i]) - a7*v[:,i] + a8*vd[:,i] + a9*ud[:,i]
+            u[:, i+1] = np.linalg.lstsq(self.effectiveStiffness, effectiveForce, rcond=-1)[0]    
+
+            # Determine the velocity and acceleration for the next time step        
+            ud[:, i+1] = self.a10*u[:,i+1] - self.a10*u[:,i] + self.a8*ud[:,i]
+            v[:,i+1] = self.a3*u[:,i+1] - self.a3*u[:,i] + self.a4*ud[:,i] + self.a5*v[:,i]
+            vd[:,i+1] = self.a6*u[:,i+1] - self.a6*u[:,i] - self.a7*v[:,i] + self.a8*vd[:,i] + self.a9*ud[:,i]
 
         DI = u[:,-1]
         VI = ud[:,-1]
@@ -245,17 +262,97 @@ class InverseSolutionSolver():
 
         return DI, VI, AI
 
-    def jwhAlpha(Self):
-        pass
+    def jwhAlpha(self, DI, VI, AI, F):
 
-mySolver = InverseSolutionSolver()
+        # Initialise outputs
+        u = np.zeros([self.numDegreesOfFreedom, self.numTimeSteps])
+        ud = np.zeros([self.numDegreesOfFreedom, self.numTimeSteps])
+        v = np.zeros([self.numDegreesOfFreedom, self.numTimeSteps])
+        vd = np.zeros([self.numDegreesOfFreedom, self.numTimeSteps])
 
-mySolver.setUpMatrices()
+        # Set initial conditions
+        u[:,0] = DI
+        ud[:,0] = VI
+        v[:,0] = VI
+        vd[:,0] = AI
 
-# print("Mass matrix: \n", mySolver.massMatrix)
+        for i in range(0, self.numTimeSteps-1, 1):
+            
+            # Determine the effective force for this timestep
+            effectiveForce = (
+                self.alphaF*F[:,i+1] + (1-self.alphaF)*F[:,i] - \
+                (1-self.alphaM)*np.dot(self.massMatrix, vd[:,i]) - (1-self.alphaF)*np.dot(self.dampingMatrix,v[:,i]) - (1-self.alphaF)*np.dot(self.stiffnessMatrix,u[:,i]) + \
+                self.alphaF*(np.dot(self.dampingMatrix, self.a3*u[:,i]) - np.dot(self.dampingMatrix, self.a4*ud[:,i]) - np.dot(self.dampingMatrix, self.a5*v[:,i])) + \
+                self.alphaM*(np.dot(self.massMatrix, self.a6*u[:,i]) + np.dot(self.massMatrix, self.a7*v[:,i]) - np.dot(self.massMatrix, self.a8*vd[:,i]) - np.dot(self.massMatrix, self.a9*ud[:,i]))
+                )
 
-inputData = loadmat("/home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/propellerMonitorService/test data/Case_2019_10_30_20_06_20.mat")
+            # Determine the displacement for the next time step
+            u[:, i+1] = np.linalg.lstsq(self.effectiveStiffness, effectiveForce, rcond=-1)[0]    
 
-mySolver.setUpVectors(inputData['Time_Final'], inputData['ForeTorqFinal'], inputData['rpmFinal'])
+            # Determine the velocity and acceleration for the next time step        
+            ud[:, i+1] = self.a10*(u[:,i+1] - u[:,i]) + self.a8*ud[:,i]
+            v[:,i+1] = self.a3*(u[:,i+1] - u[:,i]) + self.a4*ud[:,i] + self.a5*v[:,i]
+            vd[:,i+1] = self.a6*(u[:,i+1] - u[:,i]) - self.a7*v[:,i] + self.a8*vd[:,i] + self.a9*ud[:,i]
 
-mySolver.solveSystem()
+        return u, ud, v, vd
+
+    def calculateInternalTorqueAndThetas(self, q, qd, qdd):
+        # Shaft angular displacement at torque measurement location
+        thetaX = q[:,0]
+        for i in range(0, 51, 1):
+            thetaX = thetaX + np.dot( math.cos((2*(i+1)-1)*math.pi*self.xt/self.L), q[:,i+1] )
+
+        thetaX = thetaX - thetaX[0]
+
+        # Shaft angular velocity at torque measurement location
+        thetaXD = qd[:,0]
+        for i in range(0, 51, 1):
+            thetaXD = thetaXD + np.dot( math.cos((2*(i+1)-1)*math.pi*self.xt/self.L), qd[:,i+1] )
+
+        # Shaft angular velocity at torque measurement location
+        thetaXDD = qdd[:,0]
+        for i in range(0, 51, 1):
+            thetaXDD = thetaXDD + np.dot( math.cos((2*(i+1)-1)*math.pi*self.xt/self.L), qdd[:,i+1] )
+
+        torqueX = np.zeros(self.numTimeSteps)
+        for i in range(0, 51, 1):
+            torqueX = torqueX - (
+                np.dot(
+                    (self.G*self.J*math.sin((2*(i+1)-1)*math.pi*self.xt/self.L)*(2*(i+1)-1)*math.pi/self.L), q[:,i+1]
+                    )
+                )
+    
+        return thetaX, thetaXD, thetaXDD, torqueX
+    
+    def calculateAngularVelAndAccel(self, qd, qdd):
+        # Shaft angular velocity at propeller
+        thetaX0D = qd[:,0]
+        for i in range(0, 51, 1):
+            thetaX0D = thetaX0D + np.dot( math.cos((2*(i+1)-1)*math.pi*0/self.L), qd[:,i+1] )
+
+        # Shaft angular acceleration at propeller
+        thetaX0DD = qdd[:,0]
+        for i in range(0, 51, 1):
+            thetaX0DD = thetaX0DD + np.dot( math.cos((2*(i+1)-1)*math.pi*0/self.L), qdd[:,i+1] )
+
+        return thetaX0D, thetaX0DD
+    
+    def extractIceLoad(self, q, thetaX0D):
+        Qice = q[:, -2]*(10**9)
+        Qmotor = q[:,-1]*(10**9)
+        Qprop = (thetaX0D*self.Cp/1000) + (Qice/1000)
+
+        return Qice, Qmotor, Qprop
+
+if __name__=='__main__':
+    mySolver = InverseSolutionSolver()
+
+    mySolver.setUpMatrices()
+
+    # print("Mass matrix: \n", mySolver.massMatrix)
+
+    inputData = loadmat("services/propellerMonitorService/test data/Case_2019_10_30_20_06_20.mat")
+
+    mySolver.setUpVectors(inputData['Time_Final'], inputData['ForeTorqFinal'], inputData['rpmFinal'])
+
+    mySolver.solveSystem()
