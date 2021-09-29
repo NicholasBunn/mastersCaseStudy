@@ -1,0 +1,1 @@
+subjectAltName=DNS:localhost,DNS:oceanWeatherService,DNS:powerTrainService,DNS:vesselMotionService,DNS:processVibrationService,DNS:comfortService,DNS:powerTrainAggregator,DNS:vesselMotionAggregator,DNS:routeAnalysisAggregator,DNS:authenticationService,IP:127.0.0.1

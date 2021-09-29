@@ -36,20 +36,20 @@ class AuthenticationInterceptor(ServerInterceptor):
 			metadata = dict(context.invocation_metadata())
 		except:
 			logger.debug("Failed to authenticate: metadata is not provided")
-			return grpc.StatusCode.PERMISSION_DENIED
+			raise grpc.StatusCode.PERMISSION_DENIED
 
 		# Check if a JWT has been included in the metadata
 		try:
 			encodedToken = metadata["authorisation"]
 		except:
 			logger.debug("Failed to authenticate: JWT has not been provided")
-			return grpc.StatusCode.PERMISSION_DENIED
+			raise grpc.StatusCode.PERMISSION_DENIED
 
 		# Check that the provided JWT is valid
 		claims, err = self.verifyJWT(encodedToken)
 		if (err != None):
 			logger.debug("Failed to authenticate: Provided JWT is invalid")
-			return err
+			raise err
 
 			#RESUME: HANDLE ERRORS BETTER (return claims, err) AND IMPLEMENT ROLE CHECK
 

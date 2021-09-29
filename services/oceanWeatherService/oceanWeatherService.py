@@ -216,6 +216,30 @@ class OceanWeatherServiceServicer(ocean_weather_service_api_v1_pb2_grpc.OceanWea
 			context.set_details('Method not implemented!')
 			raise NotImplementedError(f'Default option not yet implemented! {request.archive_service}')
 
+def loadTLSCredentials(certDirectory):
+    	# This function loads in the generated TLS credentials from file, creates
+	# a server credentials object with the key and certificate, and  returns 
+	# that object for use in the server connection
+	
+	serverKeyFile = f"{certDirectory}/server-key.pem"
+	serverCertFile = f"{certDirectory}/server-cert.pem"
+	caCertFile = f"{certDirectory}/ca-cert.pem"
+
+	# Load the server's certificate and private key
+	private_key = open(serverKeyFile).read()
+	certificate_chain = open(serverCertFile).read()
+
+	# Load certificates of the CA who signed the client's certificate
+	certificate_pool = open(caCertFile).read()
+
+	credentials = grpc.ssl_server_credentials(
+		private_key_certificate_chain_pairs = [(bytes(private_key, 'utf-8'), bytes(certificate_chain, 'utf-8'))],
+		root_certificates = certificate_pool,
+		require_client_auth = True
+	)
+	
+	return credentials
+
 def serve():
 	''' This function creates a server with specified interceptors, registers the service calls offered by that server, and exposes
 	the server over a specified port.
@@ -242,10 +266,14 @@ def serve():
 	ocean_weather_service_api_v1_pb2_grpc.add_OceanWeatherServiceServicer_to_server(OceanWeatherServiceServicer(), server)
 	logging.debug("Successfully registered ocean weather service to server.")
 
-	# Create an insecure connection on port
+	# Load TLS credentials
+	creds = loadTLSCredentials("certification")
+
+	# Create a secure connection on port
 	oceanWeatherHost = os.getenv(key = "OCEANWEATHERHOST", default = "localhost") # Receives the hostname from the environmental variables (for Docker network), or defaults to localhost for local testing
 	try:
-		server.add_insecure_port(f'{oceanWeatherHost}:{config["port"]["myself"]}')
+		server.add_secure_port(f'{oceanWeatherHost}:{config["port"]["myself"]}', creds) # server.add_insecure_port(f'{oceanWeatherHost}:{config["port"]["myself"]}')
+
 		logging.debug("Succesfully added (insecure) port to server.")
 	except Exception as e:
 		logging.debug(f"Failed to add (insecure) port to server: \n{e}")
