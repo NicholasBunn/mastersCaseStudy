@@ -59,7 +59,7 @@ func (interceptor *ServerRateLimitStruct) ServerRateLimitInterceptor(ctx context
 	callCounter += 1
 	
 	if (callCounter > interceptor.CallLimit) {
-		return nil, status.Errorf(codes.ResourceExhausted, "%s is rejected by grpc_ratelimit middleware, please retry later.", info.FullMethod)
+		return status.Errorf(codes.ResourceExhausted, "%s is rejected by grpc_ratelimit middleware, please retry later.", info.FullMethod)
 	} else {
 		response := handler(ctx, req)
 		callCounter -= 1
