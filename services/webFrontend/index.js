@@ -26,17 +26,41 @@ const {
 const {
   VMEstimateServiceClient,
 } = require("./../../protoFiles/javaScript/vesselMotionAggregator/v1/vessel_motion_aggregator_api_v1_grpc_web_pb.js");
+const {
+  PropellerLoadRequest,
+  PropellerLoadResponse,
+} = require("./../../protoFiles/javaScript/propellerMonitorService/v1/propeller_monitor_service_api_v1_pb.js");
+const {
+  MonitorPropellerServiceClient,
+} = require("./../../protoFiles/javaScript/propellerMonitorService/v1/propeller_monitor_service_api_v1_grpc_web_pb.js");
 
 import Chart from "chart.js/auto";
+import zoomPlugin from "chartjs-plugin-zoom";
 
 var permissionMapping = {
-  admin: ["routeAnalysisService", "powerTrainService", "vesselMotionService"],
+  admin: [
+    "routeAnalysisService",
+    "powerTrainService",
+    "vesselMotionService",
+    "propellerMonitorService",
+  ],
   operator: [
     "routeAnalysisService",
     "powerTrainService",
     "vesselMotionService",
+    "propellerMonitorService",
   ],
-  engineer: ["powerTrainService", "vesselMotionService"],
+  engineer: [
+    "powerTrainService",
+    "vesselMotionService",
+    "propellerMonitorService",
+  ],
+  researcher: [
+    "routeAnalysisService",
+    "powerTrainService",
+    "vesselMotionService",
+    "propellerMonitorService",
+  ],
   guest: ["routeAnalysisService", "powerTrainService", "vesselMotionService"], // This is just to make dev easier
 };
 
@@ -44,6 +68,19 @@ var temporalMapping = {
   routeAnalysisService: ["foresight", "insight", "hindsight"],
   powerTrainService: ["foresight"],
   vesselMotionService: ["foresight"],
+  propellerMonitorService: ["insight"],
+};
+
+// A quick bit of code for the retry interceptor
+const RetryInterceptor = function () {
+  this.intercept = function (request, invoker) {
+    console.log("Started interceptor");
+    while (!response) {
+      var response = invoker(request);
+      console.log(response.a);
+    }
+    return response;
+  };
 };
 
 // ________LOGIN FUNCTIONS________
@@ -64,7 +101,12 @@ window.LogMeIn = function (guest) {
   document.getElementById("password").value = "";
 
   console.log("Username is: ", username, " and password is: ", password);
-  var loginService = new AuthenticationServiceClient("http://localhost:8080");
+
+  var loginService = new AuthenticationServiceClient(
+    "http://localhost:8080",
+    null,
+    { streamInterceptors: [new RetryInterceptor()] }
+  );
 
   var request = new LoginAuthRequest();
 
@@ -420,27 +462,29 @@ window.LoadVesselMotionServiceHome = function () {
   }
 };
 
-window.LoadComfortHome = function () {
+window.LoadPropellerMonitorServiceHome = function () {
   // Update manager object
   var userManagerObject = JSON.parse(localStorage.getItem("userManager"));
 
-  userManagerObject.currentService = "comfortService";
-  userManagerObject.queryID = "queryCS";
+  userManagerObject.currentService = "propellerMonitorService";
+  userManagerObject.queryID = "queryPMS";
 
   localStorage.setItem("userManager", JSON.stringify(userManagerObject));
 
   // Clear service content div
   clearDiv("ServiceContent");
+  clearDiv("temporals");
 
   // Create new div
   var div = document.createElement("Div");
+  div.id = "contentDiv";
   div.style.width = "95%";
   div.style.height = "95%";
 
   var heading = document.createElement("h1");
   heading.className = "LandingPageHeading";
   heading.appendChild(
-    document.createTextNode("Welcome to the comfort service")
+    document.createTextNode("Welcome to the propeller monitor service")
   );
   var subText = document.createElement("p");
   subText.className = "LandingPageSubText";
@@ -453,6 +497,36 @@ window.LoadComfortHome = function () {
   heading.appendChild(subText);
   div.appendChild(heading);
   document.getElementById("ServiceContent").appendChild(div);
+
+  // Add buttons to the service content div
+  for (var temporalAspect of temporalMapping[
+    userManagerObject.currentService
+  ]) {
+    console.log(temporalAspect);
+    if (temporalAspect === "insight") {
+      var callbackFunc = "LoadPropMonDisplay";
+    }
+    addInputToElement(temporalAspect, "contentDiv", "button", "processButton", {
+      height: "200px",
+      width: "300px",
+      fontSize: "24px",
+      value: temporalAspect,
+      callbackFunction: callbackFunc,
+    });
+    addInputToElement(
+      temporalAspect + "Secondary",
+      "temporals",
+      "button",
+      "navButton",
+      {
+        height: "50px",
+        width: "100%",
+        fontSize: "18px",
+        value: temporalAspect,
+        callbackFunction: callbackFunc,
+      }
+    );
+  }
 };
 
 // ________INPUT PAGES_________
@@ -800,8 +874,202 @@ window.LoadVesselMotionDisplay = function (responseObject) {
   });
 };
 
-window.LoadComfortDisplay = function () {
-  console.log("Not implemented yet");
+window.LoadPropMonDisplay = function () {
+  var userManagerObject = JSON.parse(localStorage.getItem("userManager"));
+
+  openNav();
+
+  // Clear service content div
+  clearDiv("ServiceContent");
+  clearDiv("consoleOutput");
+
+  // Create new div
+  var div = document.createElement("Div");
+  div.id = "contentDiv";
+  div.style.width = "95%";
+  div.style.height = "95%";
+
+  var canvas = document.createElement("canvas");
+  canvas.style.width = "95%";
+  canvas.style.height = "95%";
+  canvas.id = "chartID";
+
+  div.appendChild(canvas);
+
+  document.getElementById("ServiceContent").appendChild(div);
+
+  var responseObject = {
+    QIce: [{ x: null, y: null }],
+    QMotor: [{ x: null, y: null }],
+    QProp: [{ x: null, y: null }],
+    QIceThreshold: [{ x: null, y: null }],
+    QMotorThreshold: [{ x: null, y: null }],
+    QPropThreshold: [{ x: null, y: null }],
+  };
+
+  var chartData = {
+    datasets: [
+      {
+        data: responseObject.QIce,
+        label: "Ice-Induced Torque",
+        borderColor: "rgb(0, 0, 128)",
+        backgroundColor: "rgba(0, 0, 128, 0.5)",
+
+        fill: false,
+        type: "line",
+      },
+      {
+        data: responseObject.QMotor,
+        label: "Motor Torque",
+        borderColor: "rgb(0, 128, 0)",
+        backgroundColor: "rgba(0, 128, 0, 0.5)",
+
+        fill: false,
+        type: "line",
+      },
+      {
+        data: responseObject.QProp,
+        label: "Propeller Torque",
+        borderColor: "rgb(128, 0, 0)",
+        backgroundColor: "rgba(128, 0, 0, 0.5)",
+
+        fill: false,
+        type: "line",
+      },
+    ],
+    showLine: true,
+  };
+
+  var myChart = new Chart(canvas, {
+    type: "scatter",
+    data: chartData,
+    options: {
+      plugins: {
+        zoom: {
+          pan: {
+            enabled: true,
+            mode: "xy",
+            modifierKey: "ctrl",
+          },
+          zoom: {
+            wheel: {
+              enabled: true,
+            },
+            drag: {
+              enabled: true,
+            },
+            mode: "xy",
+          },
+        },
+      },
+      interaction: {
+        mode: "index",
+        intersect: false,
+      },
+      title: {
+        display: true,
+        text: "Propeller Torques",
+      },
+      hover: {
+        mode: "nearest",
+        intersect: true,
+      },
+      scales: {
+        xAxes: [
+          {
+            display: true,
+            type: "linear", // time
+            // time: {
+            // unit: "second",
+            // },
+            // distribution: "linear",
+            // gridLines: {
+            //   display: true,
+            //   color: "black",
+            // },
+            // ticks: {
+            //   fontColor: "black",
+            // },
+          },
+        ],
+        yAxes: [
+          {
+            display: true,
+            position: "left",
+            // gridLines: {
+            //   display: true,
+            //   color: "black",
+            // },
+            // ticks: {
+            //   fontColor: "black",
+            //   callback: function (value, index, values) {
+            //     return value + "N.m";
+            //   },
+            // },
+          },
+        ],
+      },
+    },
+  });
+  Chart.register(zoomPlugin);
+
+  var propMonService = new MonitorPropellerServiceClient(
+    "http://localhost:8080",
+    null,
+    { streamInterceptors: [new RetryInterceptor()] }
+  );
+
+  var request = new PropellerLoadRequest();
+
+  var metadata = { authorisation: userManagerObject.userToken };
+
+  var stream = propMonService.estimatePropellerLoad(request, metadata);
+
+  stream.on("data", function (response) {
+    // Update response object
+    console.log(myChart.data);
+    // for (const [index, element] of a.entries())
+    console.log("NEW DATA :)");
+    for (var i = 0; i < response.getUnixTimeList().length; i++) {
+      responseObject.QIce.push({
+        x: response.getUnixTimeList()[i],
+        y: response.getIceLoadList()[i],
+      });
+      myChart.data.datasets[0].data.push(responseObject.QIce);
+      responseObject.QMotor.push({
+        x: response.getUnixTimeList()[i],
+        y: response.getMotorTorqueList()[i],
+      });
+      myChart.data.datasets[1].data.push(responseObject.QMotor);
+      responseObject.QProp.push({
+        x: response.getUnixTimeList()[i],
+        y: response.getPropellerTorqueList()[i],
+      });
+      myChart.data.datasets[2].data.push(responseObject.QProp);
+    }
+
+    // Update with new data
+    console.log(myChart.data);
+    myChart.update();
+  });
+
+  stream.on("status", function (status) {
+    console.log(status.code);
+    console.log(status.details);
+    console.log(status.metadata);
+  });
+
+  stream.on("end", function (end) {
+    console.log("Server-side timeout due to no new data.");
+  });
+
+  addInputToElement("backButton", "contentDiv", "button", "systemButton", {
+    height: "40px",
+    width: "60px",
+    fontSize: "18px",
+    value: "Back",
+    callbackFunction: "stream.cancel()",
+  });
 };
 
 // ________QUERY FUNCTIONS_________
@@ -818,7 +1086,9 @@ window.queryRAS = function () {
 
   LoadLoadingPage();
 
-  var rasService = new AnalysisServiceClient("http://localhost:8080");
+  var rasService = new AnalysisServiceClient("http://localhost:8080", null, {
+    streamInterceptors: [new RetryInterceptor()],
+  });
 
   var request = new AnalysisRequest();
   request.setUnixTimeList(routeManagerObject.routeInfo.unixTime);
@@ -836,7 +1106,7 @@ window.queryRAS = function () {
     if (err) {
       console.log(err.code);
       console.log(err.message);
-      document.getElementById("consoleOutput").innerHTML =
+      document.getElementById("consoleOutput").textContent =
         "Error " + err.code + ": " + err.message;
 
       LoadRouteAnalysisServiceHome();
@@ -895,7 +1165,9 @@ window.queryPTS = function () {
 
   LoadLoadingPage();
 
-  var ptsService = new PTEstimateServiceClient("http://localhost:8080");
+  var ptsService = new PTEstimateServiceClient("http://localhost:8080", null, {
+    streamInterceptors: [new RetryInterceptor()],
+  });
 
   var request = new PTEstimateRequest();
   request.setUnixTimeList(routeManagerObject.routeInfo.unixTime);
@@ -913,7 +1185,7 @@ window.queryPTS = function () {
     if (err) {
       console.log(err.code);
       console.log(err.message);
-      document.getElementById("consoleOutput").innerHTML =
+      document.getElementById("consoleOutput").textContent =
         "Error " + err.code + ": " + err.message;
 
       LoadPowerTrainServiceHome();
@@ -975,7 +1247,9 @@ window.queryVMS = function () {
 
   LoadLoadingPage();
 
-  var vmsService = new VMEstimateServiceClient("http://localhost:8080");
+  var vmsService = new VMEstimateServiceClient("http://localhost:8080", null, {
+    streamInterceptors: [new RetryInterceptor()],
+  });
 
   var request = new VMEstimateRequest();
   request.setUnixTimeList(routeManagerObject.routeInfo.unixTime);
@@ -993,7 +1267,7 @@ window.queryVMS = function () {
     if (err) {
       console.log(err.code);
       console.log(err.message);
-      document.getElementById("consoleOutput").innerHTML =
+      document.getElementById("consoleOutput").textContent =
         "Error " + err.code + ": " + err.message;
 
       LoadVesselMotionServiceHome();
@@ -1013,14 +1287,8 @@ window.queryVMS = function () {
   });
 };
 
-window.queryCS = function () {
-  var routeManagerObject = JSON.parse(localStorage.getItem("routeManager"));
-  var userManagerObject = JSON.parse(localStorage.getItem("userManager"));
-
-  if (!routeManagerObject.exists) {
-    updateManagerRoute(routeManagerObject);
-  }
-  console.log("Unimplemented");
+window.queryPMS = function () {
+  console.log("UNIMPLEMENTED");
 };
 
 // ________SUPPORTING FUNCTIONS________
@@ -1051,7 +1319,10 @@ function addInputToElement(
 
   if (elementType === "button") {
     newElement.value = elementInfo.value;
-    newElement.onclick = window[elementInfo.callbackFunction];
+    // Only try to add a callback function if one has been provided
+    if (elementInfo.callbackFunction) {
+      newElement.onclick = window[elementInfo.callbackFunction];
+    }
   } else if (elementType === "text") {
     newElement.placeholder = elementInfo.placeholder;
   }

@@ -1,0 +1,341 @@
+body {
+  /* background-color: rgb(55, 71, 79); */
+  background-image: url("../oceanBackground");
+  font-family: Raleway;
+  background-color: rgb(55, 71, 79);
+}
+h1 {
+  margin: 0;
+  padding: 0 0 15px 0;
+  text-align: center;
+  font-size: 22px;
+  color: cyan;
+}
+p {
+  color: black;
+  font-size: 14px;
+}
+.systemButton {
+  border: none;
+  outline: none;
+  background: rgb(0, 0, 78);
+  color: #fff;
+  border-radius: 0.5em;
+}
+.systembutton:hover {
+  cursor: pointer;
+  background: #ffc107;
+  color: #000;
+}
+.navButton {
+  border: 0.2em solid rgb(20, 34, 34);
+  background-color: rgb(20, 34, 34);
+  text-decoration: none;
+  color: rgb(176, 190, 197);
+  border-radius: 0.5em;
+}
+.navButton:hover {
+  cursor: pointer;
+  background-color: rgb(176, 190, 197);
+  border-color: rgb(176, 190, 197);
+  color: rgba(20, 34, 34, 0.9);
+}
+.processButton {
+  border: none;
+  background: cyan;
+  color: black;
+  border-radius: 0.5em;
+}
+.processButton:hover {
+  cursor: pointer;
+  background: rgb(0, 0, 78);
+  color: #fff;
+}
+.textInput {
+  border: none;
+  border-bottom: 1px solid #fff;
+  background: transparent;
+  outline: none;
+  color: #fff;
+}
+#loginBox {
+  width: 320px;
+  height: 420px;
+  background-color: rgba(38, 50, 56, 0.9);
+  color: #fff;
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  border-radius: 0.5em;
+  padding: 70px 30px;
+}
+#loginBox p {
+  margin: 0;
+  padding: 0;
+  color: darkgrey;
+  font-weight: bold;
+}
+#loginBox input {
+  width: 100%;
+  margin-bottom: 20px;
+}
+#loginBox input[type="text"],
+input[type="password"] {
+  height: 40px;
+  font-size: 16px;
+}
+#loginBox input[type="button"] {
+  border: none;
+  outline: none;
+  height: 40px;
+  background: rgb(0, 0, 78);
+  color: #fff;
+  font-size: 18px;
+  border-radius: 0.5em;
+}
+#loginBox input[type="button"]:hover {
+  cursor: pointer;
+  background: #ffc107;
+  color: #000;
+}
+#loginBox a {
+  text-decoration: none;
+  font-size: 12px;
+  line-height: 20px;
+  color: darkgrey;
+}
+#loginBox a:hover {
+  cursor: pointer;
+  color: #000;
+}
+#avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border-color: rgb(20, 34, 34);
+  position: absolute;
+  top: -50px;
+  left: calc(50% - 50px);
+}
+#home {
+  background-color: rgba(38, 50, 56, 0.9);
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 5%;
+  width: 10%;
+}
+#home input[type="button"] {
+  border: none;
+  outline: none;
+  height: 40px;
+  width: 80%;
+  background: rgb(0, 0, 78);
+  color: #fff;
+  font-size: 18px;
+  border-radius: 0.5em;
+}
+#home input[type="button"]:hover {
+  cursor: pointer;
+  background: #ffc107;
+  color: #000;
+}
+#primaryNavBar {
+  background-color: rgba(38, 50, 56, 0.9);
+  position: fixed;
+  display: inline-block;
+  top: 0;
+  left: 10%;
+  height: 5%;
+  width: 92%;
+  padding-left: 2%;
+}
+#primaryNavBar h1 {
+  position: relative;
+  width: 10%;
+  left: 0%;
+}
+#services {
+  position: absolute;
+  left: 10%;
+  width: 75%;
+  height: 80%;
+  top: 5%;
+}
+#services input[type="button"] {
+  position: relative;
+  float: left;
+  padding-left: 8px;
+  width: 15%;
+  text-decoration: none;
+  height: 100%;
+  font-size: 20px;
+  color: rgb(176, 190, 197);
+  background-color: rgb(20, 34, 34);
+  border: 0.2em solid rgb(20, 34, 34);
+  border-radius: 0.5em;
+}
+#services input[type="button"]:hover {
+  cursor: pointer;
+  background-color: rgb(176, 190, 197);
+  border-color: rgb(176, 190, 197);
+  color: rgba(20, 34, 34, 0.9);
+}
+#secondaryNavBar {
+  background-color: rgba(38, 50, 56, 0.9);
+  position: fixed;
+  height: 95%;
+  width: 10%; /* Change to 0 and change in JS instead*/
+  z-index: 1;
+  top: 5%;
+  left: 0;
+  padding-top: 60px; /* Place content 60px from the top */
+}
+#secondaryNavBar h1 {
+  position: absolute;
+  width: 90%;
+  top: 0%;
+  left: 10%;
+}
+#temporals {
+  position: absolute;
+  left: 5%;
+  width: 90%;
+  height: 80%;
+  top: 13%;
+}
+#ServiceContent {
+  background-color: rgba(120, 144, 156, 0.8);
+  position: fixed;
+  height: 75%;
+  width: 92%; /* Change to 0 and change in JS instead*/
+  z-index: 1;
+  top: 10%;
+  left: 3%;
+  padding-top: 50px; /* Place content 60px from the top */
+  padding-left: 50px;
+  border-radius: 0.5em;
+}
+#SystemResponse {
+  background-color: rgba(120, 144, 156, 0.9);
+  position: fixed;
+  height: 5%;
+  width: 100%;
+  /* z-index: 1; */
+  bottom: 0%;
+  left: 0%;
+  padding-left: 20px;
+}
+#SystemResponse h1 {
+  margin: 0;
+  padding: 11px 0 15px 0;
+  text-align: left;
+  font-size: 22px;
+  color: #142222e6;
+}
+#SystemResponse p {
+  font-size: 14px;
+  font-weight: bold;
+  color: #8f0000e6;
+}
+#Logout {
+  position: fixed;
+  z-index: 1;
+  top: 0.5%;
+  right: 0%;
+}
+#Logout input[type="button"] {
+  border: none;
+  outline: none;
+  height: 40px;
+  background: rgb(0, 0, 78);
+  color: #fff;
+  font-size: 18px;
+  border-radius: 0.5em;
+}
+#Logout input[type="button"]:hover {
+  cursor: pointer;
+  background: #ffc107;
+  color: #000;
+}
+.LandingPageHeading {
+  margin: 0;
+  padding: 20px 0 36px 0;
+  text-align: center;
+  font-size: 36px;
+  color: navy;
+}
+.LandingPageSubText {
+  color: black;
+  font-size: 22px;
+  text-align: center;
+  width: 70%;
+  padding-left: 15%;
+}
+.loaderInner {
+  margin: auto;
+  position: absolute;
+  top: 275px;
+  left: 525px;
+  border: 5px solid #00fafa00;
+  border-radius: 50%;
+  border-top: 5px solid navy;
+  border-left: 5px solid navy;
+  width: 150px;
+  height: 150px;
+  animation: spin 4s linear infinite;
+}
+.loaderMid {
+  margin: auto;
+  position: absolute;
+  top: 250px;
+  left: 500px;
+  border: 5px solid #00fafa00;
+  border-radius: 50%;
+  border-top: 5px solid navy;
+  border-left: 5px solid navy;
+  width: 200px;
+  height: 200px;
+  animation: spinInverse 8s linear infinite;
+}
+.loaderOuter {
+  margin: auto;
+  position: absolute;
+  top: 225px;
+  left: 475px;
+  border: 5px solid #00fafa00;
+  border-radius: 50%;
+  border-top: 5px solid navy;
+  border-left: 5px solid navy;
+  width: 250px;
+  height: 250px;
+  animation: spin 6s linear infinite;
+}
+.SimulationHeading {
+  margin: 0;
+  width: 100px;
+  padding-top: 285px;
+  padding-left: 510px;
+  font-size: 14px;
+  color: black;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spinInverse {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}

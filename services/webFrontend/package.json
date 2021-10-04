@@ -12,9 +12,17 @@
   "dependencies": {
     "chart": "^0.1.2",
     "chart.js": "^3.5.1",
+    "chartjs-plugin-zoom": "^1.1.1",
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
     "google-protobuf": "^3.17.3",
-    "grpc": "^1.15.0",
+    "grpc": "^1.24.11",
     "grpc-web": "^1.2.1"
+  },
+  "browser": {
+    "fs": false,
+    "path": false,
+    "os": false
   },
   "devDependencies": {
     "browserify": "^16.2.2",
