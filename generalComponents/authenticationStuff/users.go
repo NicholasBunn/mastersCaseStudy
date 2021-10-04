@@ -38,3 +38,5 @@ func (user *User) CheckPassword(password string) bool {
 
 	return err == nil
 }
+
+// This line does nothing, it's just here to trick Go modules into updating this one ;)
