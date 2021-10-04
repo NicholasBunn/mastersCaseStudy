@@ -33,6 +33,8 @@ cloud.google.com/go/storage v1.10.0/go.mod h1:FLPqc6j+Ki4BU591ie1oL6qBQGu2Bl/tZ9
 dmitri.shuralyov.com/gpu/mtl v0.0.0-20190408044501-666a987793e9/go.mod h1:H6x//7gZCb22OMCxBHrMx7a5I7Hp++hsVxbQ4BYO7hU=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
+github.com/NicholasBunn/mastersCaseStudy v1.2.13 h1:n1+Bsb3vu2K5FxhNqD0Bsw1C34q+6QVi//O9COQxPs8=
+github.com/NicholasBunn/mastersCaseStudy v1.2.13/go.mod h1:OL9JPT2DDFOzXq2T89tKxktpxsLVg8fjxoPrmDt/Pd8=
 github.com/NicholasBunn/mastersCaseStudy/generalComponents v0.0.0-20210827182926-8402daf74775 h1:ROI7/q/Iv7NOyDwfKGSn3gAuBTwKKgLkdiA2nflg7MU=
 github.com/NicholasBunn/mastersCaseStudy/generalComponents v0.0.0-20210827182926-8402daf74775/go.mod h1:HUsreCL3ySHXndh355Iz2vR5/9AXHC3bAJemyUdv2Z8=
 github.com/NicholasBunn/mastersCaseStudy/interceptors/go v0.0.0-20210830101314-416b02a598cc h1:ZNIeBDuCMJ6dHlfPbelUo5kn3FDUwdo2CK4rnU/je10=
