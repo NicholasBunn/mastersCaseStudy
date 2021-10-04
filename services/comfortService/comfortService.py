@@ -15,6 +15,7 @@ import protoFiles.python.comfortService.v1.comfort_service_api_v1_pb2 as comfort
 import protoFiles.python.comfortService.v1.comfort_service_api_v1_pb2_grpc as comfort_service_api_v1_pb2_grpc
 import interceptors.python.metricInterceptor as metricInterceptor
 import interceptors.python.authenticationInterceptor as authenticationInterceptor
+import interceptors.python.rateLimitInterceptor as rateLimitInterceptor
 
 def loadConfigFile(filepath):
 	''' This function reads in a YAML configuration file. It takes the relative filepath as an input. It returns a dictionary (?) containing configuration variables.
@@ -127,7 +128,8 @@ def serve():
 			config["authentication"]["jwt"]["secretKey"], 
 			config["authentication"]["jwt"]["tokenDuration"], 
 			{config["authentication"]["accessLevel"]["name"]["comfortRating"]: config["authentication"]["accessLevel"]["role"]["comfortRating"]}
-		)
+		),
+		rateLimitInterceptor.RateLimitInterceptor(4)
 	] # List containing the interceptors to be chained
 	
 	# Create a server to serve calls in its own thread

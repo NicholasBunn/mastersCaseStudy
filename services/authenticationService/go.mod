@@ -4,7 +4,6 @@ go 1.16
 
 require (
 	github.com/NicholasBunn/mastersCaseStudy/generalComponents v0.0.0-20210827182926-8402daf74775
-	github.com/NicholasBunn/mastersCaseStudy/interceptors/go v0.0.0-20210830101314-416b02a598cc
 	github.com/NicholasBunn/mastersCaseStudy/protoFiles/go v0.0.0-20210830101314-416b02a598cc
 	github.com/go-sql-driver/mysql v1.6.0
 	github.com/go-yaml/yaml v2.1.0+incompatible

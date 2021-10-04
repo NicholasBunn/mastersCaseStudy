@@ -3,7 +3,10 @@ package main
 import (
 	// Native packages
 	"context"
+	"crypto/tls"
+	"crypto/x509"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net"
 	"os"
@@ -12,18 +15,16 @@ import (
 
 	// Third-party packages
 	"google.golang.org/grpc"
-	// "google.golang.org/grpc/credentials"
+	"google.golang.org/grpc/credentials"
 	// "google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"github.com/go-yaml/yaml"
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
-	// grpc_retry "github.com/grpc-ecosystem/go-grpc-middleware/retry"
 	"database/sql"
     _ "github.com/go-sql-driver/mysql"
 	"github.com/NicholasBunn/mastersCaseStudy/generalComponents/authenticationStuff"
 	"github.com/NicholasBunn/mastersCaseStudy/interceptors/go"
-	
 
 	// Proto packages
 	serverPB "github.com/NicholasBunn/mastersCaseStudy/protoFiles/go/authenticationService/v1"
@@ -109,12 +110,12 @@ func main() {
 	InfoLogger.Println("Stated authentication service")
 
 	// Load in TLS credentials
-	// creds, err := loadTLSCredentials()
-	// if err != nil {
-	// 	ErrorLogger.Printf("Error loading TLS credentials")
-	// } else {
-	// 	DebugLogger.Println("Succesfully loaded TLS certificates")
-	// }
+	creds, err := loadTLSCredentials()
+	if err != nil {
+		ErrorLogger.Printf("Error loading TLS credentials: ", err)
+	} else {
+		DebugLogger.Println("Succesfully loaded TLS certificates")
+	}
 
 	// Create a listener on the specified tcp port
 	listener, err := net.Listen("tcp", addrMyself)
@@ -128,16 +129,23 @@ func main() {
 		JwtManager:	authentication.NewJWTManager(secretKey, tokenDuration),
 		AuthenticatedMethods: accessibleRoles,
 	}
+
+	rateLimitInterceptor := interceptors.ServerRateLimitStruct {
+		CallLimit: 5,
+	}
+
 	// Create an interceptor chain with the above interceptors
 	interceptorChain := grpc_middleware.ChainUnaryServer(
 		serverMetricInterceptor.ServerMetricInterceptor,
 		authInterceptor.ServerAuthInterceptor,
+		rateLimitInterceptor.ServerRateLimitInterceptor,
 	)
 	
+	fmt.Println(creds)
 	// Create a gRPC server object
 	authenticationServer := grpc.NewServer(
-	// grpc.Creds(creds), // Add the TLS credentials to this server
-	grpc.UnaryInterceptor(interceptorChain), // Add the interceptor chain to this server
+		// grpc.Creds(creds), // Add the TLS credentials to this server
+		grpc.UnaryInterceptor(interceptorChain), // Add the interceptor chain to this server
 	)
 
 	// Attach the authentication service offering to the server
@@ -319,4 +327,35 @@ func DecodeConfig(configPath string) (*Config, error) {
 	}
 
 	return config, nil
+}
+
+func loadTLSCredentials() (credentials.TransportCredentials, error) {
+	/* This function loads TLS credentials for both the client and server,
+	enabling mutual TLS authentication between the client and server. It takes no inputs and returns a gRPC TransportCredentials object. */
+
+	// Load certificate of the CA who signed server's certificate
+	pemServerCA, err := ioutil.ReadFile("../../certification/ca-cert.pem")
+	if err != nil {
+		return nil, err
+	}
+
+	// Load the server CA's certificates
+	certificatePool := x509.NewCertPool()
+	if !certificatePool.AppendCertsFromPEM(pemServerCA) {
+		return nil, fmt.Errorf("failed to add the server CA's certificate")
+	}
+
+	// Load the client's certificate and private key
+	clientCertificate, err := tls.LoadX509KeyPair("../../certification/client-cert.pem", "../../certification/client-key.pem")
+	if err != nil {
+		return nil, err
+	}
+
+	// Create and return the credentials object
+	config := &tls.Config{
+		Certificates: []tls.Certificate{clientCertificate},
+		RootCAs:      certificatePool,
+	}
+
+	return credentials.NewTLS(config), nil
 }

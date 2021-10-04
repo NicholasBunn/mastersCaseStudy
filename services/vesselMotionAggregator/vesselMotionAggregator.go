@@ -3,7 +3,10 @@ package main
 import (
 	// Native packages
 	"context"
+	"crypto/tls"
+	"crypto/x509"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net"
 	"os"
@@ -13,6 +16,7 @@ import (
 	// Third-party packages
 	"github.com/go-yaml/yaml"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/metadata"
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	grpc_retry "github.com/grpc-ecosystem/go-grpc-middleware/retry"
@@ -115,6 +119,14 @@ func main() {
 
 	InfoLogger.Println("Started vessel motion aggregator.")
 
+	// Load in TLS credentials
+	creds, err := loadTLSCredentials()
+	if err != nil {
+		ErrorLogger.Printf("Error loading TLS credentials: \n%v", err)
+	} else {
+		DebugLogger.Println("Succesfully loaded TLS certificates")
+	}
+
 	// Create a listener on the specified tcp port
 	listener, err := net.Listen("tcp", addrMyself)
 	if err != nil {
@@ -135,6 +147,7 @@ func main() {
 
 	// Create a gRPC server object
 	vmServer := grpc.NewServer(
+		grpc.Creds(creds), // Add the TLS credentials to this server
 		grpc.UnaryInterceptor(interceptorChain), // Add the interceptor chain to this server
 	)
 
@@ -444,4 +457,35 @@ func createInsecureServerConnection(port string, timeout int, interceptor grpc.U
 
 	InfoLogger.Println("Succesfully created connection to the server on port: " + port)
 	return conn, nil
+}
+
+func loadTLSCredentials() (credentials.TransportCredentials, error) {
+	/* This function loads TLS credentials for both the client and server,
+	enabling mutual TLS authentication between the client and server. It takes no inputs and returns a gRPC TransportCredentials object. */
+
+	// Load certificate of the CA who signed server's certificate
+	pemServerCA, err := ioutil.ReadFile("../../certification/ca-cert.pem")
+	if err != nil {
+		return nil, err
+	}
+
+	// Load the server CA's certificates
+	certificatePool := x509.NewCertPool()
+	if !certificatePool.AppendCertsFromPEM(pemServerCA) {
+		return nil, fmt.Errorf("failed to add the server CA's certificate")
+	}
+
+	// Load the client's certificate and private key
+	clientCertificate, err := tls.LoadX509KeyPair("../../certification/client-cert.pem", "../../certification/client-key.pem")
+	if err != nil {
+		return nil, err
+	}
+
+	// Create and return the credentials object
+	config := &tls.Config{
+		Certificates: []tls.Certificate{clientCertificate},
+		RootCAs:      certificatePool,
+	}
+
+	return credentials.NewTLS(config), nil
 }

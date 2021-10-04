@@ -17,6 +17,7 @@ import protoFiles.python.oceanWeatherService.v1.ocean_weather_service_api_v1_pb2
 import protoFiles.python.oceanWeatherService.v1.ocean_weather_service_api_v1_pb2_grpc as ocean_weather_service_api_v1_pb2_grpc
 import interceptors.python.metricInterceptor as metricInterceptor
 import interceptors.python.authenticationInterceptor as authenticationInterceptor
+import interceptors.python.rateLimitInterceptor as rateLimitInterceptor
 
 # ToDo: Add wave_length to response message for OceanWeatherHistory
 
@@ -252,7 +253,8 @@ def serve():
 			config["authentication"]["jwt"]["secretKey"], 
 			config["authentication"]["jwt"]["tokenDuration"], 
 			{config["authentication"]["accessLevel"]["name"]["oceanWeatherEstimate"]: config["authentication"]["accessLevel"]["role"]["oceanWeatherEstimate"], config["authentication"]["accessLevel"]["name"]["oceanWeatherHistory"]: config["authentication"]["accessLevel"]["role"]["oceanWeatherHistory"]}
-		)
+		),
+		rateLimitInterceptor.RateLimitInterceptor(4)
 	] # List containing the interceptors to be chained
 	
 	# Create a server to serve calls in its own thread
