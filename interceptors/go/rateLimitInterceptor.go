@@ -11,11 +11,7 @@ import (
 	// gRPC packages
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
-
-	// Personal packages
-	"github.com/NicholasBunn/mastersCaseStudy/generalComponents/authenticationStuff"
 )
 
 var (
