@@ -135,10 +135,16 @@ func main() {
 		JwtManager:	authentication.NewJWTManager(secretKey, tokenDuration),
 		AuthenticatedMethods: accessibleRoles,
 	}
+
+	rateLimitInterceptor := interceptors.ServerRateLimitStruct {
+		CallLimit: 5,
+	}
+
 	// Create an interceptor chain with the above interceptors
 	interceptorChain := grpc_middleware.ChainUnaryServer(
 		serverMetricInterceptor.ServerMetricInterceptor,
 		authInterceptor.ServerAuthInterceptor,
+		rateLimitInterceptor.ServerRateLimitInterceptor,
 	)
 
 	fmt.Println(creds)
