@@ -6,3 +6,4 @@ certification/*.srl
 *.log
 configuration.yaml
 apiQueryTest.py
+node_modules/**
