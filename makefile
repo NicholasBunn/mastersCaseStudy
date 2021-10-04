@@ -43,6 +43,9 @@ protoGenPy:
 	# Comfort service
 	python3 -m grpc_tools.protoc -I=services/comfortService/proto/v1 --python_out=protoFiles/python/comfortService/v1  --grpc_python_out=protoFiles/python/comfortService/v1   services/comfortService/proto/v1/comfort_service_api_v1.proto # add 'from .' to line 5 of the _grpc.py file
 
+	# Propeller monitor service
+	python3 -m grpc_tools.protoc -I=services/propellerMonitorService/proto/v1 --python_out=protoFiles/python/propellerMonitorService/v1  --grpc_python_out=protoFiles/python/propellerMonitorService/v1   services/propellerMonitorService/proto/v1/propeller_monitor_service_api_v1.proto # add 'from .' to line 5 of the _grpc.py file
+
 protoGenCSharp:
 	# Vessel motion service
 	# protoc -I=services/vesselMotionService/proto/v1 services/vesselMotionService/proto/v1/vessel_motion_service_api_v1.proto --csharp_out=services/vesselMotionService/proto/v1/generated # --grpc_out=services/vesselMotionService/proto/v1/generated --plugin=protoc-gen-grpc=tools\grpc_csharp_plugin.exe
@@ -68,6 +71,9 @@ protoGenJS:
 
 	# Authentication service
 	protoc -I=services/authenticationService/proto/v1/ authentication_service_api_v1.proto --js_out=import_style=commonjs:protoFiles/javaScript/authenticationService/v1 --grpc-web_out=import_style=commonjs,mode=grpcweb:protoFiles/javaScript/authenticationService/v1
+
+	# Propeller monitor service
+	protoc -I=services/propellerMonitorService/proto/v1/ propeller_monitor_service_api_v1.proto --js_out=import_style=commonjs:protoFiles/javaScript/propellerMonitorService/v1 --grpc-web_out=import_style=commonjs,mode=grpcwebtext:protoFiles/javaScript/propellerMonitorService/v1
 
 protoGenAll:
 	make protoGenGo; make protoGenPy; protoGenCSharp; make protoGenJS
@@ -176,10 +182,15 @@ runVesselMotionAggregator:
 runAuthenticationService:
 	cd /home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/authenticationService; go run authenticationService.go
 
+runPropellerMonitorService:
+	/usr/bin/python3 /home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/propellerMonitorService/propellerMonitorService.py
+
 runPrometheus:
 
 runPushGateway:
 
+runFrontend:
+	cd services/webFrontend; node app.js
 runServiceLayer:
 	make runOceanWeatherService &
 	make runPowerTrainService &
@@ -206,6 +217,7 @@ runPy:
 	make runPowerTrainService &
 	make runProcessVibrationService &
 	make runComfortService &
+	make runPropellerMonitorService &
 
 runCSharp:
 	make runVesselMotionService &
@@ -219,6 +231,7 @@ runAll:
 	make runPy &
 	make runCSharp &
 	make runDockerOnly &
+	make runFrontend &
 
 killGo:
 	sudo killall vesselMotionAgg &
