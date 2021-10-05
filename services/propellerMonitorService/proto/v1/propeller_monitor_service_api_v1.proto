@@ -1,2 +1,23 @@
 syntax = "proto3";
 
+package propellerMonitorService.v1;
+
+option go_package = "propellerMonitorService/v1;propellerMonitorService";
+
+message PropellerLoadRequest {}
+
+message PropellerLoadResponse {
+    repeated double unix_time = 1;
+    repeated double ice_load = 2;
+    repeated double motor_torque = 3;
+    repeated double propeller_torque = 4;
+    // double ice_load_threshold = 5;
+    // double motor_torque_threshold = 6;
+    // double propeller_torque_threshold = 7;
+}
+
+//
+service MonitorPropellerService {
+  // Accepts a stream of Message sent while a route is being traversed,
+   rpc EstimatePropellerLoad(PropellerLoadRequest) returns (stream PropellerLoadResponse);
+}

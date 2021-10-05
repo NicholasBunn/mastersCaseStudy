@@ -28,14 +28,14 @@ class InverseSolutionSolverTest(unittest.TestCase):
 		
 		print("Testing Propeller Monitor Service: InverseSolutionSolver: Unit Test: setUpMatrices (Function Test)")
 
-		# Invoke the setUpMatrices function
-		self.mySolver.setUpMatrices() 
-
 		# Load the original matrices to use for validation, which have been saved into CSV files
 		trueMassMatrix = np.loadtxt(open("services/propellerMonitorService/test data/massMatrix.csv", "rb"), delimiter=",")
 		trueDampingMatrix = np.loadtxt(open("services/propellerMonitorService/test data/dampingMatrix.csv", "rb"), delimiter=",")
 		trueStiffnessMatrix = np.loadtxt(open("services/propellerMonitorService/test data/stiffnessMatrix.csv", "rb"), delimiter=",")
 		
+		# Invoke the setUpMatrices function
+		self.mySolver.setUpMatrices() 
+
 		# Compare the original matrices to the ones built by the setUpMatrices function
 		if not (np.allclose(self.mySolver.massMatrix, trueMassMatrix, rtol=1e-05, atol=1e-08)):
 			self.fail("Mass matrix incorrect")
@@ -79,7 +79,7 @@ class InverseSolutionSolverTest(unittest.TestCase):
 		''' This tests that the inverseInitialCond function correctly calculates the initial conditions. The conditions that are built are verified against the original conditions used by Brendon Nickerson https://scholar.sun.ac.za/handle/10019.1/110071), extracted from his Matlab code.
 		'''
 
-		print("Testing Propeller Monitor Service: InverseSolutionSolver: Unit Test: inverseInitalCond (Function Test)")
+		print("Testing Propeller Monitor Service: InverseSolutionSolver: Unit Test: inverseInitialCond (Function Test)")
 		
 		# Load the original matrices and vectors, which have been saved into CSV files
 		trueMassMatrix = np.loadtxt(open("services/propellerMonitorService/test data/massMatrix.csv", "rb"), delimiter=",")
@@ -103,14 +103,17 @@ class InverseSolutionSolverTest(unittest.TestCase):
 		self.mySolver.numDegreesOfFreedom = max(np.shape(self.mySolver.massMatrix))
 
 		# Invoke the inverseInitialCond function
-		DI, VI, AI = self.mySolver.inverseInitialCond(trueForceVector[-2,1], trueForceVector[-1,1])
+		DI, VI, AI = self.mySolver.inverseInitialCond(trueForceVector[-2,0], trueForceVector[-1,0])
 
-		# print(DI)
-		# print(trueDIVector)
-		# print(VI)
-		# print(trueVIVector)
-		# print(AI)
-		# print(trueAIVector)
+		# Compare the original vectors to the ones built by the inverseInitialCond function
+		if not (np.allclose(DI, trueDIVector, rtol=1e-02, atol=1e-09)):
+			self.fail("Force vector incorrect")
+
+		# Can't verify these against the original matrices due to rounding/precision differences :(
+		print(VI)
+		print(trueVIVector)
+		print(AI)
+		print(trueAIVector)
 
 	def test_jwhAlpha(self):
 		''' This tests that the jwhAlpha function correctly performs the generalise-alpha time scheme. The outputs are verified against the original outputs used by Brendon Nickerson https://scholar.sun.ac.za/handle/10019.1/110071), extracted from his Matlab code.
@@ -265,8 +268,23 @@ class InverseSolutionSolverTest(unittest.TestCase):
 		if not (np.allclose(Qprop, trueQPropVector, rtol=1e-01, atol=1e-08)):
 			self.fail("QProp vector incorrect")
 
-	# def test_solveSystem(self):
-	# 	pass
+	def test_solveSystem(self):
+		''' This tests that the solveSystem function correctly calls other functions of the InverseSolutionSolver class to provide a the loads. The outputs are verified against the original outputs used by Brendon Nickerson https://scholar.sun.ac.za/handle/10019.1/110071), extracted from his Matlab code.
+		'''
+
+		print("Testing Propeller Monitor Service: InverseSolutionSolver: Integration Test: solveSystem (Function Test)")
+
+		# Load the data used for this test
+		inputData = loadmat("services/propellerMonitorService/test data/Case_2019_10_30_20_06_20.mat")
+
+		# Load the original output vector to use for validation, which has been saved into a CSV file
+		trueQIceVector = np.loadtxt(open("services/propellerMonitorService/test data/qIceVector.csv", "rb"), delimiter=",")
+		
+		# Invoke the solveSystem function
+		Qice = self.mySolver.solveSystem(inputData['Time_Final'], inputData['ForeTorqFinal'], inputData['rpmFinal'])
+
+		print(Qice)
+		print(trueQIceVector)
 
 if __name__ == '__main__':
 	unittest.main()
