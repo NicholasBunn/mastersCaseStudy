@@ -272,7 +272,7 @@ def serve():
 	creds = loadTLSCredentials("certification")
 
 	# Create a secure connection on port
-	oceanWeatherHost = os.getenv(key = "OCEANWEATHERHOST", default = "localhost") # Receives the hostname from the environmental variables (for Docker network), or defaults to localhost for local testing
+	oceanWeatherHost = os.getenv(key = "OCEANWEATHERHOST", default = "[::]") # Receives the hostname from the environmental variables (for Docker network), or defaults to localhost for local testing
 	try:
 		server.add_secure_port(f'{oceanWeatherHost}:{config["port"]["myself"]}', creds) # server.add_insecure_port(f'{oceanWeatherHost}:{config["port"]["myself"]}')
 

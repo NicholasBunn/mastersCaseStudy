@@ -145,9 +145,11 @@ func main() {
 		authInterceptor.ServerAuthInterceptor,
 	)
 
+	fmt.Println(creds)
+	
 	// Create a gRPC server object
 	vmServer := grpc.NewServer(
-		grpc.Creds(creds), // Add the TLS credentials to this server
+		// grpc.Creds(creds), // Add the TLS credentials to this server
 		grpc.UnaryInterceptor(interceptorChain), // Add the interceptor chain to this server
 	)
 
@@ -226,6 +228,14 @@ func (s *server) EstimateVesselMotion(ctx context.Context, request *serverPB.VME
 
 	InfoLogger.Println("Received Estimate Vessel Motion service call.")
 
+	// Load in TLS credentials
+	creds, err := loadTLSCredentials()
+	if err != nil {
+		ErrorLogger.Printf("Error loading TLS credentials: \n%v", err)
+	} else {
+		DebugLogger.Println("Succesfully loaded TLS certificates")
+	}
+
 	// Extract the user's JWT from the incoming request. Can ignore the ok output as ths has already been checked.
 	md, _ := metadata.FromIncomingContext(ctx)
 
@@ -251,13 +261,14 @@ func (s *server) EstimateVesselMotion(ctx context.Context, request *serverPB.VME
 	// ________Query Ocean Weather Service________
 	
 	// Create an insecure connection to the ocean weather service server
-	connOWS, err := createInsecureServerConnection(
-		addrOWS, // Set the address of the server
-		timeoutDuration, // Set the duration that the client will wait before timing out
-		interceptorChain, // Add the interceptor chain to this server
+	connOWS, err := createSecureServerConnection(
+		addrOWS, 			// Set the address of the server
+		creds,            	// Add the TLS credentials
+		timeoutDuration, 	// Set the duration that the client will wait before timing out
+		interceptorChain, 	// Add the interceptor chain to this server
 	)
 	if err != nil {
-		return nil, fmt.Errorf("Failure in Route Analysis Aggregator: \n%v", err)
+		return nil, fmt.Errorf("Failure in Vessel Motion Aggregator: \n%v", err)
 	}
 
 	InfoLogger.Println("Creating Ocean Weather Service client.")
@@ -289,10 +300,11 @@ func (s *server) EstimateVesselMotion(ctx context.Context, request *serverPB.VME
 	// ________Query Power Train Service________
 	
 	// Create an insecure connection to the power train service server
-	connPTS, err := createInsecureServerConnection(
-		addrPTS,
-		timeoutDuration,
-		interceptorChain, // Add the interceptor chain to this server
+	connPTS, err := createSecureServerConnection(
+		addrPTS, 			// Set the address of the server
+		creds,            	// Add the TLS credentials
+		timeoutDuration, 	// Set the duration that the client will wait before timing out
+		interceptorChain, 	// Add the interceptor chain to this server
 	)
 	if err != nil {
 		return nil, fmt.Errorf("Failure in Route Analysis Aggregator: \n%v", err)
@@ -345,9 +357,9 @@ func (s *server) EstimateVesselMotion(ctx context.Context, request *serverPB.VME
 	
 	// Create an insecure connection to the power train service server
 	connVMS, err := createInsecureServerConnection(
-		addrVMS,
-		timeoutDuration,
-		interceptorChain, // Add the interceptor chain to this server
+		addrVMS, 			// Set the address of the server
+		timeoutDuration, 	// Set the duration that the client will wait before timing out
+		interceptorChain, 	// Add the interceptor chain to this server
 	)
 	if err != nil {
 		return nil, fmt.Errorf("Failure in Route Analysis Aggregator: \n%v", err)
@@ -427,6 +439,37 @@ func DecodeConfig(configPath string) (*Config, error) {
 	}
 
 	return config, nil
+}
+
+func createSecureServerConnection(port string, credentials credentials.TransportCredentials, timeout int, interceptor grpc.UnaryClientInterceptor) (*grpc.ClientConn, error) {
+	/* This (unexported) function takes a port address, gRPC TransportCredentials object, timeout,
+	and UnaryClientInterceptor object as inputs. It creates a connection to the server
+	at the port adress and returns a secure gRPC connection with the specified
+	interceptor */
+
+	// Create the context for the request
+	ctx, cancel := context.WithTimeout(
+		context.Background(),
+		(time.Duration(timeoutDuration) * time.Second),
+	)
+	defer cancel()
+
+	conn, err := grpc.DialContext(
+		ctx,              // Add the created context to the connection
+		port,             // Add the port that the server is listening on
+		grpc.WithBlock(), // Make the dial a blocking call so that we can ensure the connection is indeed created
+		grpc.WithTransportCredentials(credentials), // Add the TLS credentials
+		grpc.WithUnaryInterceptor(interceptor),     // Add the provided interceptors to the connection
+	)
+
+	// Handle errors, if any
+	if err != nil {
+		ErrorLogger.Println("Failed to create connection to the server on port: " + port)
+		return nil, err
+	}
+
+	InfoLogger.Println("Succesfully created connection to the server on port: " + port)
+	return conn, nil
 }
 
 func createInsecureServerConnection(port string, timeout int, interceptor grpc.UnaryClientInterceptor) (*grpc.ClientConn, error) {

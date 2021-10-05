@@ -139,7 +139,7 @@ def serve():
 	creds = loadTLSCredentials("certification")
 
 	# Create a secure connection on port
-	processVibrationHost = os.getenv(key = "PROCESSVIBRATIONHOST", default = "localhost") # Receives the hostname from the environmental variables (for Docker network), or defaults to localhost for local testing
+	processVibrationHost = os.getenv(key = "PROCESSVIBRATIONHOST", default = "[::]") # Receives the hostname from the environmental variables (for Docker network), or defaults to localhost for local testing
 	try:
 		server.add_secure_port(f'{processVibrationHost}:{config["port"]["myself"]}', creds) # server.add_insecure_port(f'{processVibrationHost}:{config["port"]["myself"]}')
 		logging.debug("Succesfully added (insecure) port to server.")

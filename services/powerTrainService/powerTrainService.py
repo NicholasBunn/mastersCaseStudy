@@ -330,7 +330,7 @@ def serve():
 	creds = loadTLSCredentials("certification")
 
 	# Create a secure connection on port
-	powerTrainHost = os.getenv(key = "POWERTRAINHOST", default = "localhost") # Receives the hostname from the environmental variables (for Docker network), or defaults to localhost for local testing
+	powerTrainHost = os.getenv(key = "POWERTRAINHOST", default = "[::]") # Receives the hostname from the environmental variables (for Docker network), or defaults to localhost for local testing
 	try:
 		server.add_secure_port(f'{powerTrainHost}:{config["port"]["myself"]}', creds) # server.add_insecure_port(f'{powerTrainHost}:{config["port"]["myself"]}')
 		logging.debug("Succesfully added (insecure) port to server.")

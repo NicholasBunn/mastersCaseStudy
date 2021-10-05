@@ -1,0 +1,11 @@
+pyjwt
+pyyaml
+grpcio
+grpcio-tools
+numpy
+scipy
+mat4py
+matplotlib
+grpcio-tools
+grpc-interceptor
+prometheus_client

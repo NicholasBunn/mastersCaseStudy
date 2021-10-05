@@ -132,7 +132,7 @@ static_resources:
               - endpoint:
                   address:
                     socket_address:
-                      address: authenticationservice #$AUTHENTICATIONHOST
+                      address: authenticationservice #${AUTHENTICATIONHOST}
                       port_value: 50101
       # transport_socket:
       #   name: envoy.transport_sockets.tls
@@ -156,7 +156,7 @@ static_resources:
               - endpoint:
                   address:
                     socket_address:
-                      address: 0.0.0.0 #$ROUTEANALYSISHOST
+                      address: routeanalysisaggregator #$ROUTEANALYSISHOST
                       port_value: 50100
     - name: power_train_service
       connect_timeout: 0.25s
@@ -170,7 +170,7 @@ static_resources:
               - endpoint:
                   address:
                     socket_address:
-                      address: 0.0.0.0 #$POWERTRAINHOST
+                      address: powertrainaggregator #$POWERTRAINHOST
                       port_value: 50102
     - name: vessel_motion_service
       connect_timeout: 0.25s
@@ -184,7 +184,7 @@ static_resources:
               - endpoint:
                   address:
                     socket_address:
-                      address: 0.0.0.0 #$VESSELMOTIONHOST
+                      address: vesselmotionaggregator #$VESSELMOTIONHOST
                       port_value: 50103
     - name: propeller_monitor_service
       connect_timeout: 0.25s
@@ -198,7 +198,7 @@ static_resources:
               - endpoint:
                   address:
                     socket_address:
-                      address: 0.0.0.0 #$PMSHOST
+                      address: 192.168.8.101 #$PMSHOST
                       port_value: 50055
     - name: rate_limit_cluster
       connect_timeout: 0.25s
@@ -212,5 +212,5 @@ static_resources:
               - endpoint:
                   address:
                     socket_address:
-                      address: 0.0.0.0 #$RLSHOST
+                      address: ratelimitservice #$RLSHOST
                       port_value: 8081

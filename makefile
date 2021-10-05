@@ -102,16 +102,16 @@ certClean:
 
 # Make commands relating to testing the program
 testOceanWeatherService:
-	/usr/bin/python3 /home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/oceanWeatherService/test_oceanWeatherService.py
+	python3 services/oceanWeatherService/test_oceanWeatherService.py
 
 testPowerTrainService:
-	/usr/bin/python3 /home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/powerTrainService/test_powerTrainService.py
+	python3 services/powerTrainService/test_powerTrainService.py
 
 testProcessVibrationService:
-	/usr/bin/python3 /home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/processVibrationService/test_processVibrationService.py
+	python3 services/processVibrationService/test_processVibrationService.py
 
 testComfortService:
-	/usr/bin/python3 /home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/comfortService/test_comfortService.py
+	python3 services/comfortService/test_comfortService.py
 
 testVesselMotionService:
 	cd services/vesselMotionService; dotnet test; cd ..
@@ -156,41 +156,43 @@ testAll:
 
 # Make commands relating to running the program
 runOceanWeatherService:
-	/usr/bin/python3 /home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/oceanWeatherService/oceanWeatherService.py
+	python3 services/oceanWeatherService/oceanWeatherService.py
 	
 runPowerTrainService:
-	/usr/bin/python3 /home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/powerTrainService/powerTrainService.py
+	python3 services/powerTrainService/powerTrainService.py
 
 runVesselMotionService:
 	cd services/vesselMotionService; dotnet run; cd ..
 
 runProcessVibrationService:
-	/usr/bin/python3 /home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/processVibrationService/processVibrationService.py
+	python3 services/processVibrationService/processVibrationService.py
 
 runComfortService:
-	/usr/bin/python3 /home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/comfortService/comfortService.py
+	python3 services/comfortService/comfortService.py
 
 runRouteAnalysisAggregator:
-	cd /home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/routeAnalysisAggregator;	go run routeAnalysisAggregator.go
+	cd services/routeAnalysisAggregator;	go run routeAnalysisAggregator.go
 
 runPowerTrainAggregator:
-	cd /home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/powerTrainAggregator;	go run powerTrainAggregator.go
+	cd services/powerTrainAggregator;	go run powerTrainAggregator.go
 
 runVesselMotionAggregator:
-	cd /home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/vesselMotionAggregator;	go run vesselMotionAggregator.go
+	cd services/vesselMotionAggregator;	go run vesselMotionAggregator.go
 
 runAuthenticationService:
-	cd /home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/authenticationService; go run authenticationService.go
+	cd services/authenticationService; go run authenticationService.go
 
 runPropellerMonitorService:
-	/usr/bin/python3 /home/nic/Documents/Work/Masters/Code/mastersCaseStudy/services/propellerMonitorService/propellerMonitorService.py
+	python3 services/propellerMonitorService/propellerMonitorService.py
 
 runPrometheus:
+	docker run -p 127.0.0.1:9090:9090 prometheus
 
 runPushGateway:
-
+	docker run 
 runFrontend:
 	cd services/webFrontend; node app.js
+
 runServiceLayer:
 	make runOceanWeatherService &
 	make runPowerTrainService &
@@ -223,8 +225,10 @@ runCSharp:
 	make runVesselMotionService &
 	
 runDockerOnly:
-	docker run -d -p 8080:8080 --network=host web_proxy &
+	docker run -d -p 10000:10000 --network=host web_proxy &
 	docker run -d -p 127.0.0.1:3306:3306/tcp --name user_database -e MYSQL_ROOT_PASSWORD="supersecret" user_database &
+	make runPrometheus &
+	make runPushGateway &
 
 runAll:
 	make runGo &

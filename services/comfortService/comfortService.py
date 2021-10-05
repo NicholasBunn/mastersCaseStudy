@@ -147,7 +147,7 @@ def serve():
 	creds = loadTLSCredentials("certification")
 
 	# Create a secure connection on port
-	comfortHost = os.getenv(key = "COMFORTHOST", default = "localhost") # Receives the hostname from the environmental variables (for Docker network), or defaults to localhost for local testing
+	comfortHost = os.getenv(key = "COMFORTHOST", default = "[::]") # Receives the hostname from the environmental variables (for Docker network), or defaults to localhost for local testing
 	try:
 		server.add_secure_port(f'{comfortHost}:{config["port"]["myself"]}', creds) # server.add_insecure_port(f'{comfortHost}:{config["port"]["myself"]}')
 		logging.debug("Succesfully added (insecure) port to server.")

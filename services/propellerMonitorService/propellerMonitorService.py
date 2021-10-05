@@ -4,12 +4,12 @@ import os
 import logging
 import math
 import time
+import glob
 from concurrent import futures
 
 # Third party imports
 import grpc
 import yaml
-import glob
 import numpy as np
 from mat4py import loadmat
 import matplotlib.pyplot as plt
@@ -465,9 +465,10 @@ def serve():
 	creds = loadTLSCredentials("certification")
 
 	# Create a secure connection on port
-	propMonHost = os.getenv(key = "PROPMONHOST", default = "localhost") # Receives the hostname from the environmental variables (for Docker network), or defaults to localhost for local testing
+	propMonHost = os.getenv(key = "PROPMONHOST", default = "[::]") # Receives the hostname from the environmental variables (for Docker network), or defaults to localhost for local testing
 	try:
-		server.add_secure_port(f'{propMonHost}:{config["port"]["myself"]}', creds)
+		# server.add_secure_port(f'{propMonHost}:{config["port"]["myself"]}', creds)
+		server.add_insecure_port(f'{propMonHost}:{config["port"]["myself"]}')
 		logging.debug("Succesfully added (secure) port to server.")
 	except Exception as e:
 		logging.debug(f"Failed to add (secure) port to server: \n{e}")

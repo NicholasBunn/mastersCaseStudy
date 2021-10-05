@@ -6,4 +6,5 @@ certification/*.srl
 *.log
 configuration.yaml
 apiQueryTest.py
-node_modules/**
+services/webFrontend/node_modules/*
+protoFiles/javaScript/propellerMonitorService/v1/node_modules/*
