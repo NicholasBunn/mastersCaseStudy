@@ -1,0 +1,7 @@
+domain: apis
+descriptors:
+  - key: generic_key
+    value: global
+    rate_limit:
+      unit: minute
+      requests_per_unit: 2

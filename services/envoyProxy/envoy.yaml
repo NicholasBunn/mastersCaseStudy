@@ -2,7 +2,7 @@ static_resources:
   listeners:
     - name: listener_0
       address:
-        socket_address: { address: 0.0.0.0, port_value: 8080 }
+        socket_address: { address: 0.0.0.0, port_value: 10000 }
       filter_chains:
         - filters:
             - name: envoy.filters.network.http_connection_manager
@@ -16,34 +16,55 @@ static_resources:
                   virtual_hosts:
                     - name: routing_service
                       domains: ["*"]
+                      rate_limits:
+                        - stage: 0
+                          actions:
+                            - generic_key:
+                                descriptor_value: "global"
                       routes:
                         - {
                             match:
                               {
                                 prefix: "/authenticationServiceAPI.v1.AuthenticationService",
                               },
-                            route: { cluster: authentication_service },
+                            route:
+                              {
+                                cluster: authentication_service,
+                                include_vh_rate_limits: true,
+                              },
                           }
                         - {
                             match:
                               {
                                 prefix: "/routeAnalysisAggregatorAPI.v1.AnalysisService",
                               },
-                            route: { cluster: route_analysis_service },
+                            route:
+                              {
+                                cluster: route_analysis_service,
+                                include_vh_rate_limits: true,
+                              },
                           }
                         - {
                             match:
                               {
                                 prefix: "/powerTrainAggregatorAPI.v1.PTEstimateService",
                               },
-                            route: { cluster: power_train_service },
+                            route:
+                              {
+                                cluster: power_train_service,
+                                include_vh_rate_limits: true,
+                              },
                           }
                         - {
                             match:
                               {
                                 prefix: "/vesselMotionAggregatorAPI.v1.VMEstimateService",
                               },
-                            route: { cluster: vessel_motion_service },
+                            route:
+                              {
+                                cluster: vessel_motion_service,
+                                include_vh_rate_limits: true,
+                              },
                           }
                         - {
                             match:
@@ -53,6 +74,7 @@ static_resources:
                             route:
                               {
                                 cluster: propeller_monitor_service,
+                                include_vh_rate_limits: true,
                                 max_grpc_timeout: 0s,
                               },
                           }
@@ -66,6 +88,20 @@ static_resources:
                 http_filters:
                   - name: envoy.filters.http.grpc_web
                   - name: envoy.filters.http.cors
+                  - name: envoy.filters.http.ratelimit
+                    typed_config:
+                      "@type": type.googleapis.com/envoy.extensions.filters.http.ratelimit.v3.RateLimit
+                      domain: apis
+                      failure_mode_deny: false
+                      request_type: external
+                      stage: 0
+                      rate_limited_as_resource_exhausted: true
+                      enable_x_ratelimit_headers: DRAFT_VERSION_03
+                      rate_limit_service:
+                        grpc_service:
+                          envoy_grpc:
+                            cluster_name: rate_limit_cluster
+                        transport_api_version: V3
                   - name: envoy.filters.http.router
           # transport_socket:
           #   name: envoy.transport_sockets.tls
@@ -96,7 +132,7 @@ static_resources:
               - endpoint:
                   address:
                     socket_address:
-                      address: 0.0.0.0
+                      address: authenticationservice #$AUTHENTICATIONHOST
                       port_value: 50101
       # transport_socket:
       #   name: envoy.transport_sockets.tls
@@ -120,7 +156,7 @@ static_resources:
               - endpoint:
                   address:
                     socket_address:
-                      address: 0.0.0.0
+                      address: 0.0.0.0 #$ROUTEANALYSISHOST
                       port_value: 50100
     - name: power_train_service
       connect_timeout: 0.25s
@@ -134,7 +170,7 @@ static_resources:
               - endpoint:
                   address:
                     socket_address:
-                      address: 0.0.0.0
+                      address: 0.0.0.0 #$POWERTRAINHOST
                       port_value: 50102
     - name: vessel_motion_service
       connect_timeout: 0.25s
@@ -148,7 +184,7 @@ static_resources:
               - endpoint:
                   address:
                     socket_address:
-                      address: 0.0.0.0
+                      address: 0.0.0.0 #$VESSELMOTIONHOST
                       port_value: 50103
     - name: propeller_monitor_service
       connect_timeout: 0.25s
@@ -162,5 +198,19 @@ static_resources:
               - endpoint:
                   address:
                     socket_address:
-                      address: 0.0.0.0
+                      address: 0.0.0.0 #$PMSHOST
                       port_value: 50055
+    - name: rate_limit_cluster
+      connect_timeout: 0.25s
+      type: strict_dns
+      http2_protocol_options: {}
+      lb_policy: round_robin
+      load_assignment:
+        cluster_name: cluster_0
+        endpoints:
+          - lb_endpoints:
+              - endpoint:
+                  address:
+                    socket_address:
+                      address: 0.0.0.0 #$RLSHOST
+                      port_value: 8081

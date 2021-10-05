@@ -103,7 +103,7 @@ window.LogMeIn = function (guest) {
   console.log("Username is: ", username, " and password is: ", password);
 
   var loginService = new AuthenticationServiceClient(
-    "http://localhost:8080",
+    "http://localhost:10000",
     null,
     { streamInterceptors: [new RetryInterceptor()] }
   );
@@ -1014,7 +1014,7 @@ window.LoadPropMonDisplay = function () {
   Chart.register(zoomPlugin);
 
   var propMonService = new MonitorPropellerServiceClient(
-    "http://localhost:8080",
+    "http://localhost:10000",
     null,
     { streamInterceptors: [new RetryInterceptor()] }
   );
@@ -1086,7 +1086,7 @@ window.queryRAS = function () {
 
   LoadLoadingPage();
 
-  var rasService = new AnalysisServiceClient("http://localhost:8080", null, {
+  var rasService = new AnalysisServiceClient("http://localhost:10000", null, {
     streamInterceptors: [new RetryInterceptor()],
   });
 
@@ -1165,7 +1165,7 @@ window.queryPTS = function () {
 
   LoadLoadingPage();
 
-  var ptsService = new PTEstimateServiceClient("http://localhost:8080", null, {
+  var ptsService = new PTEstimateServiceClient("http://localhost:10000", null, {
     streamInterceptors: [new RetryInterceptor()],
   });
 
@@ -1247,7 +1247,7 @@ window.queryVMS = function () {
 
   LoadLoadingPage();
 
-  var vmsService = new VMEstimateServiceClient("http://localhost:8080", null, {
+  var vmsService = new VMEstimateServiceClient("http://localhost:10000", null, {
     streamInterceptors: [new RetryInterceptor()],
   });
 
