@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package authenticationServiceAPI.v1;
+
+option go_package = "authenticationService/v1/;authenticationService";
+
+message NewUserRequest {
+    string username = 1;
+    string password = 2;
+    string permission = 3;
+}
+
+message LoginAuthRequest {
+    string username = 1;
+    string password = 2;
+}
+
+message LoginAuthResponse {
+    string permissions = 1;
+    string access_token = 2;
+}
+
+// 'Authentication Service' offers one service call that provides authentication details, enabling role-based authentication and access-control.
+service AuthenticationService {
+
+    rpc CreateNewUser(NewUserRequest) returns (LoginAuthResponse) {};
+    // The 'Login Auth' call takes a users login details, returning a JWT token and the user's permissions for the frontend.
+    rpc LoginAuth(LoginAuthRequest) returns (LoginAuthResponse) {};
+}
