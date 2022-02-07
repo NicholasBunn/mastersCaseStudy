@@ -38,8 +38,8 @@ services:
       dockerfile: services/vesselMotionService/Dockerfile
     environment:
       VESSELMOTIONHOST: vesselmotionservice
-      # PROMETHEUSHOST: prometheus
-      # PUSHGATEWAYHOST: pushgateway
+      PROMETHEUSHOST: prometheus
+      PUSHGATEWAYHOST: pushgateway
     image: vessel_motion_service
     networks:
       - southernOcean
@@ -77,20 +77,20 @@ services:
       - 50053:50053
     restart: on-failure
 
-  # propellerMonitorService:
-  #   build:
-  #     context: remote
-  #     dockerfile: services/propellerMonitorService/Dockerfile
-  #   environment:
-  #     PROPELLERMONITORHOST: propellermonitorservice
-  #     PROMETHEUSHOST: prometheus
-  #     PUSHGATEWAYHOST: pushgateway
-  #   image: propeller_monitor_service
-  #   networks:
-  #     - southernOcean
-  #   ports:
-  #     - 50055:50055
-  #   restart: on-failure
+  propellerMonitorService:
+    build:
+      context: . # remote
+      dockerfile: services/propellerMonitorService/Dockerfile
+    environment:
+      PROPMONHOST: propellermonitorservice
+      PROMETHEUSHOST: prometheus
+      PUSHGATEWAYHOST: pushgateway
+    image: propeller_monitor_service
+    networks:
+      - southernOcean
+    ports:
+      - 50055:50055
+    restart: on-failure
 
   # # 501xx(+) Aggregator Layer
   powerTrainAggregator:
@@ -137,7 +137,7 @@ services:
       OWSHOST: oceanweatherservice
       PTSHOST: powertrainservice
       VMSHOST: vesselmotionservice
-      CSHOST: comfortservice
+      CSHOST: comfortservice # 192.168.8.102
       PVSHOST: processVibrationService
       PROMETHEUSHOST: prometheus
       PUSHGATEWAYHOST: pushgateway
@@ -207,7 +207,7 @@ services:
       ROUTEANALYSISHOST: routeanalysisaggregator
       POWERTRAINHOST: powertrainaggregator
       VESSELMOTIONHOST: vesselmotionaggregator
-      PMSHOST: remoteAddress
+      PMSHOST: propellermonitorservice
       RLSHOST: rateLimitService
     image: web_proxy
     networks:
@@ -229,31 +229,28 @@ services:
       - 6379:6379
     restart: on-failure
 
-  rateLimitService:
-    build:
-      context: .
-      dockerfile: services/rateLimitService/Dockerfile
-    image: rate_limit_service
-    command: ratelimit
-    volumes:
-      - ./services/rateLimitService/config.yaml:/ratelimit/config/config.yaml
-    networks:
-      southernOcean:
-        aliases:
-          - ratelimitservice
+  ratelimit:
+    image: envoyproxy/ratelimit:master
+    command: /bin/ratelimit
     ports:
       - 8080:8080
       - 8081:8081
       - 6070:6070
     depends_on:
       - redis
+      # - statsd
+    networks:
+      - southernOcean
+    volumes:
+      - ./services/rateLimitService/config.yaml:/ratelimit/config/config.yaml
     environment:
       - USE_STATSD=false
       - LOG_LEVEL=debug
       - REDIS_SOCKET_TYPE=tcp
       - REDIS_URL=redis:6379
       - RUNTIME_ROOT=/
-      - RUNTIME_SUBDIRECTORY=ratelimit/config
+      - RUNTIME_SUBDIRECTORY=ratelimit
+      - RUNTIME_WATCH_ROOT=false
     restart: on-failure
 
   # Frontend Layer
