@@ -12,6 +12,8 @@ import numpy as np
 import pandas as pd
 from keras import models
 from sklearn.preprocessing import MinMaxScaler
+# import seaborn as sns
+# import matplotlib.pyplot as plt
 
 # Local application imports
 sys.path.append( os.path.dirname( os.path.dirname( os.path.dirname( os.path.abspath(__file__) ) ) ) )
@@ -152,6 +154,14 @@ def evaluateModel(myModel, modelInputs, actualPortMotorPower, actualStbdMotorPow
 
 	return scores
 
+# def plotResults(xData, yData):
+# 	sns.set_theme(style="darkgrid")
+
+# 	# Plot the responses for different events and regions
+# 	sns.lineplot(x=xData, y=yData)
+
+# 	plt.savefig('myPlot.png')
+
 class PowerTrainServiceServicer(power_train_service_api_v1_pb2_grpc.PowerTrainServiceServicer):
 	"""'PowerTrainService' offers four service calls that provide information about the power train of the vessel (namely power requirements and/or their assosciated costs).
 	"""
@@ -223,10 +233,10 @@ class PowerTrainServiceServicer(power_train_service_api_v1_pb2_grpc.PowerTrainSe
 		# Create the response message
 		responseMessage = power_train_service_api_v1_pb2.CostEstimateResponse()
 
-		startingCost = 100000 # Cost to start a voyage, in R
+		startingCost = 12000 # Cost to start a voyage, in R
 		hourlyCrewCost = 10000 # Cost of crew salaries per hour, in R
 		fuelDensity = 0.8323 # Density of diesel, in kg/litre
-		dieselPrice = 13 # Price of Diesel, in R/litler
+		dieselPrice = 18 # Price of Diesel, in R/litler
 		fuelConsumption = 179 # Fuel consumption of the S.A. Agulhas II, in g/kWh
 		costPerkWh = (dieselPrice/fuelDensity)*(fuelConsumption/1000) # Cost of running the ship, in R/kWh
 
@@ -243,10 +253,10 @@ class PowerTrainServiceServicer(power_train_service_api_v1_pb2_grpc.PowerTrainSe
 				# Increment the total cost 
 				totalCost += additionalCost
 
-				# Add the new values to the response message
-				responseMessage.unix_time.append(requiredPowerSet.unix_time[count])
-				responseMessage.power_estimate.append(powerEstimate)
-				responseMessage.cost_estimate.append(additionalCost)
+    					# Add the new values to the response message
+					responseMessage.unix_time.append(requiredPowerSet.unix_time[count])
+					responseMessage.power_estimate.append(powerEstimate)
+					responseMessage.cost_estimate.append(additionalCost)
 			else:
     			# For the first point, set the total cost as the starting cost
 				totalCost = startingCost 
@@ -258,6 +268,8 @@ class PowerTrainServiceServicer(power_train_service_api_v1_pb2_grpc.PowerTrainSe
 
 		responseMessage.total_cost = totalCost
 		responseMessage.power_estimate_average = requiredPowerSet.power_estimate_average
+
+		# plotResults(responseMessage.unix_time, responseMessage.power_estimate)
 
 		return responseMessage
 
@@ -312,12 +324,13 @@ def serve():
 			config["authentication"]["jwt"]["tokenDuration"], 
 			{config["authentication"]["accessLevel"]["name"]["powerEstimate"]: config["authentication"]["accessLevel"]["role"]["powerEstimate"], config["authentication"]["accessLevel"]["name"]["costEstimate"]: config["authentication"]["accessLevel"]["role"]["costEstimate"]}	
 		),
-		rateLimitInterceptor.RateLimitInterceptor(4)
+		rateLimitInterceptor.RateLimitInterceptor(14)
 	] # List containing the interceptors to be chained
 	
 	# Create a server to serve calls in its own thread
 	server = grpc.server(
-		futures.ThreadPoolExecutor(max_workers=10),
+		futures.ThreadPoolExecutor(max_workers=16),
+		maximum_concurrent_rpcs=16,
 		interceptors = activeInterceptors
 	)
 	logging.debug("Successfully created server.")
