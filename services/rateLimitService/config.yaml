@@ -4,4 +4,4 @@ descriptors:
     value: global
     rate_limit:
       unit: minute
-      requests_per_unit: 2
+      requests_per_unit: 150

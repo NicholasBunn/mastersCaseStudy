@@ -1,4 +1,6 @@
-FROM python
+# FROM python
+FROM ubuntu:20.10
+RUN apt-get update && apt-get install -y python3 python3-pip
 
 # Create project directory
 RUN mkdir /project
@@ -11,6 +13,7 @@ RUN mkdir /project/services/propellerMonitorService/program\ logs
 
 # Create variable for required files and test data (This is just because there are spaces in the file paths)
 ENV TEST_DATA_PATH "services/propellerMonitorService/test data/"
+ENV SIM_DATA_PATH "services/propellerMonitorService/simulation data/"
 
 # Copy the 'proto' folder into the services directory
 COPY protoFiles/python/propellerMonitorService/v1/ project/protoFiles/python/propellerMonitorService/v1
@@ -20,6 +23,8 @@ COPY interceptors/python/ project/interceptors/python/
 COPY certification/ /project/certification/
 # Copy the test data into the propellerMonitorService directory
 COPY ${TEST_DATA_PATH} project/${TEST_DATA_PATH}
+# Copy the simulation data into the propellerMonitorService directory
+COPY ${SIM_DATA_PATH} project/${SIM_DATA_PATH}
 # Copy the service contents into the propellerMonitorService directory
 COPY services/propellerMonitorService/configuration.yaml project/services/propellerMonitorService
 COPY services/propellerMonitorService/requirements.txt project/services/propellerMonitorService
