@@ -705,30 +705,34 @@ window.LoadPowerTrainDisplay = function (responseObject) {
         intersect: true,
       },
       scales: {
-        xAxes: [
-          {
+        x: {
+          grid: {
             display: true,
-            gridLines: {
-              display: true,
-              color: "black",
-            },
-            ticks: {
-              fontColor: "black",
-            },
+            drawBorder: true,
+            drawOnChartArea: true,
+            drawTicks: true,
+            color: "black",
           },
-        ],
+          ticks: {
+            color: "black",
+          },
+        },
         y1: {
           type: "linear",
           display: true,
           position: "left",
-          gridLines: {
+          grid: {
             display: true,
+            drawBorder: true,
+            drawOnChartArea: true,
+            drawTicks: true,
             color: "black",
           },
           ticks: {
+            color: "black",
             fontColor: "black",
             callback: function (value, index, values) {
-              return value + "MW";
+              return value + "kW";
             },
           },
         },
@@ -737,6 +741,7 @@ window.LoadPowerTrainDisplay = function (responseObject) {
           display: true,
           position: "right",
           ticks: {
+            color: "black",
             fontColor: "black",
             callback: function (value, index, values) {
               return "R" + value;
@@ -841,34 +846,34 @@ window.LoadVesselMotionDisplay = function (responseObject) {
         intersect: true,
       },
       scales: {
-        xAxes: [
-          {
+        x: {
+          grid: {
             display: true,
-            gridLines: {
-              display: true,
-              color: "black",
-            },
-            ticks: {
-              fontColor: "black",
+            drawBorder: true,
+            drawOnChartArea: true,
+            drawTicks: true,
+            color: "black",
+          },
+          ticks: {
+            color: "black",
+          },
+        },
+        y: {
+          grid: {
+            display: true,
+            drawBorder: true,
+            drawOnChartArea: true,
+            drawTicks: true,
+            color: "black",
+          },
+          ticks: {
+            color: "black",
+            fontColor: "black",
+            callback: function (value, index, values) {
+              return value + "m/s^2";
             },
           },
-        ],
-        yAxes: [
-          {
-            display: true,
-            position: "left",
-            gridLines: {
-              display: true,
-              color: "black",
-            },
-            ticks: {
-              fontColor: "black",
-              callback: function (value, index, values) {
-                return value + "m/s^2";
-              },
-            },
-          },
-        ],
+        },
       },
     },
   });
@@ -914,30 +919,23 @@ window.LoadPropMonDisplay = function () {
         label: "Ice-Induced Torque",
         borderColor: "rgb(0, 0, 128)",
         backgroundColor: "rgba(0, 0, 128, 0.5)",
-
-        fill: false,
-        type: "line",
+        showLine: true,
       },
       {
         data: responseObject.QMotor,
         label: "Motor Torque",
         borderColor: "rgb(0, 128, 0)",
         backgroundColor: "rgba(0, 128, 0, 0.5)",
-
-        fill: false,
-        type: "line",
+        showLine: true,
       },
       {
         data: responseObject.QProp,
         label: "Propeller Torque",
         borderColor: "rgb(128, 0, 0)",
         backgroundColor: "rgba(128, 0, 0, 0.5)",
-
-        fill: false,
-        type: "line",
+        showLine: true,
       },
     ],
-    showLine: true,
   };
 
   var myChart = new Chart(canvas, {
@@ -975,39 +973,30 @@ window.LoadPropMonDisplay = function () {
         intersect: true,
       },
       scales: {
-        xAxes: [
-          {
+        x: {
+          grid: {
             display: true,
-            type: "linear", // time
-            // time: {
-            // unit: "second",
-            // },
-            // distribution: "linear",
-            // gridLines: {
-            //   display: true,
-            //   color: "black",
-            // },
-            // ticks: {
-            //   fontColor: "black",
-            // },
+            drawBorder: true,
+            drawOnChartArea: true,
+            drawTicks: true,
+            color: "black",
           },
-        ],
-        yAxes: [
-          {
+          ticks: {
+            color: "black",
+          },
+        },
+        y: {
+          grid: {
             display: true,
-            position: "left",
-            // gridLines: {
-            //   display: true,
-            //   color: "black",
-            // },
-            // ticks: {
-            //   fontColor: "black",
-            //   callback: function (value, index, values) {
-            //     return value + "N.m";
-            //   },
-            // },
+            drawBorder: true,
+            drawOnChartArea: true,
+            drawTicks: true,
+            color: "black",
           },
-        ],
+          ticks: {
+            color: "black",
+          },
+        },
       },
     },
   });

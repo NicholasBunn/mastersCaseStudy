@@ -207,7 +207,7 @@ input[type="password"] {
   top: 13%;
 }
 #ServiceContent {
-  background-color: rgba(120, 144, 156, 0.8);
+  background-color: rgba(120, 144, 156, 0.9);
   position: fixed;
   height: 75%;
   width: 92%; /* Change to 0 and change in JS instead*/
