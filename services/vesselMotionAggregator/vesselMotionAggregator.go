@@ -291,7 +291,7 @@ func (s *server) EstimateVesselMotion(ctx context.Context, request *serverPB.VME
 	responseMessageOWS, err := clientOWS.OceanWeatherPrediction(owsContext, &requestMessageOWS)
 	if err != nil {
 		ErrorLogger.Println("Failed to make Ocean Weather Prediction service call: \n", err)
-		return nil, fmt.Errorf("Failure in Route Analysis Aggregator: \n%v", err)
+		return nil, fmt.Errorf("Failure in Vessel Motion Aggregator: \n%v", err)
 	} else {
 		DebugLogger.Println("Successfully made service call to Ocean Weather Service.")
 		connOWS.Close()
@@ -307,7 +307,7 @@ func (s *server) EstimateVesselMotion(ctx context.Context, request *serverPB.VME
 		interceptorChain, 	// Add the interceptor chain to this server
 	)
 	if err != nil {
-		return nil, fmt.Errorf("Failure in Route Analysis Aggregator: \n%v", err)
+		return nil, fmt.Errorf("Failure in Vessel Motion Aggregator: \n%v", err)
 	}
 
 	InfoLogger.Println("Creating Power Train Service client.")
@@ -334,7 +334,7 @@ func (s *server) EstimateVesselMotion(ctx context.Context, request *serverPB.VME
 	requestMessagePTS.WindDirectionRelative, err = aggregator.CalculateRelativeWindDirection(responseMessageOWS.WindDirection, request.Heading)
 	if err != nil {
 		ErrorLogger.Println("Failed to calculate relative wind direction: \n", err)
-		return nil, fmt.Errorf("Failure in Route Analysis Aggregator: \n%v", err)
+		return nil, fmt.Errorf("Failure in Vessel Motion Aggregator: \n%v", err)
 	}
 
 	DebugLogger.Println("Succesfully created a Power Train Estimate Request.")
@@ -347,7 +347,7 @@ func (s *server) EstimateVesselMotion(ctx context.Context, request *serverPB.VME
 	responseMessagePTS, err := clientPTS.CostEstimate(ptsContext, &requestMessagePTS)
 	if err != nil {
 		ErrorLogger.Println("Failed to make Cost Estimate service call: \n", err)
-		return nil, fmt.Errorf("Failure in Route Analysis Aggregator: \n%v", err)
+		return nil, fmt.Errorf("Failure in Vessel Motion Aggregator: \n%v", err)
 	} else {
 		DebugLogger.Println("Successfully made service call to Power Train Service.")
 		connPTS.Close()
@@ -362,7 +362,7 @@ func (s *server) EstimateVesselMotion(ctx context.Context, request *serverPB.VME
 		interceptorChain, 	// Add the interceptor chain to this server
 	)
 	if err != nil {
-		return nil, fmt.Errorf("Failure in Route Analysis Aggregator: \n%v", err)
+		return nil, fmt.Errorf("Failure in Vessel Motion Aggregator: \n%v", err)
 	}
 
 	InfoLogger.Println("Creating Vessel Motion Service client.")
@@ -383,7 +383,7 @@ func (s *server) EstimateVesselMotion(ctx context.Context, request *serverPB.VME
 	requestMessageVMS.WindSpeedRelative, err = aggregator.CalculateRelativeWindSpeed(responseMessageOWS.WindSpeed, requestMessagePTS.WindDirectionRelative, request.SOG)
 	if err != nil {
 		ErrorLogger.Println("Failed to calculate relative wind direction: \n", err)
-		return nil, fmt.Errorf("Failure in Route Analysis Aggregator: \n%v", err)
+		return nil, fmt.Errorf("Failure in Vessel Motion Aggregator: \n%v", err)
 	}
 
 	DebugLogger.Println("Succesfully created a Motion Estimate Request.")
@@ -396,7 +396,7 @@ func (s *server) EstimateVesselMotion(ctx context.Context, request *serverPB.VME
 	responseMessageVMS, err := clientVMS.MotionEstimate(vmsContext, &requestMessageVMS)
 	if err != nil {
 		ErrorLogger.Println("Failed to make Motion Estimate service call: \n", err)
-		return nil, fmt.Errorf("Failure in Route Analysis Aggregator: \n%v", err)
+		return nil, fmt.Errorf("Failure in Vessel Motion Aggregator: \n%v", err)
 	} else {
 		DebugLogger.Println("Successfully made service call to Vessel Motion Service.")
 		connVMS.Close()
@@ -425,7 +425,7 @@ func DecodeConfig(configPath string) (*Config, error) {
 	file, err := os.Open(configPath)
 	if err != nil {
 		fmt.Println("Could not open config file")
-		return nil, fmt.Errorf("Failure in Route Analysis Aggregator: \n%v", err)
+		return nil, fmt.Errorf("Failure in Vessel Motion Aggregator: \n%v", err)
 	}
 	defer file.Close()
 
@@ -435,7 +435,7 @@ func DecodeConfig(configPath string) (*Config, error) {
 	// Start YAML decoding from file
 	if err := decoder.Decode(&config); err != nil {
 		fmt.Println("Could not decode config file: \n", err)
-		return nil, fmt.Errorf("Failure in Route Analysis Aggregator: \n%v", err)
+		return nil, fmt.Errorf("Failure in Vessel Motion Aggregator: \n%v", err)
 	}
 
 	return config, nil
