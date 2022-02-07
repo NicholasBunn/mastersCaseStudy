@@ -92,7 +92,7 @@ class OceanWeatherServiceServicer(ocean_weather_service_api_v1_pb2_grpc.OceanWea
 		"""
 
 		logging.info("Received Ocean Weather Prediction service call.")
-
+		
 		# Create response message
 		responseMessage = ocean_weather_service_api_v1_pb2.OceanWeatherInformationResponse()
 
