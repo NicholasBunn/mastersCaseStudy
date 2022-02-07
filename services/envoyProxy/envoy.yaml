@@ -30,6 +30,7 @@ static_resources:
                             route:
                               {
                                 cluster: authentication_service,
+                                timeout: 30s,
                                 include_vh_rate_limits: true,
                               },
                           }
@@ -41,6 +42,7 @@ static_resources:
                             route:
                               {
                                 cluster: route_analysis_service,
+                                timeout: 30s,
                                 include_vh_rate_limits: true,
                               },
                           }
@@ -52,6 +54,7 @@ static_resources:
                             route:
                               {
                                 cluster: power_train_service,
+                                timeout: 80s,
                                 include_vh_rate_limits: true,
                               },
                           }
@@ -63,6 +66,7 @@ static_resources:
                             route:
                               {
                                 cluster: vessel_motion_service,
+                                timeout: 80s,
                                 include_vh_rate_limits: true,
                               },
                           }
@@ -71,10 +75,9 @@ static_resources:
                               {
                                 prefix: "/propellerMonitorService.v1.MonitorPropellerService",
                               },
-                            route:
-                              {
+                            route: {
                                 cluster: propeller_monitor_service,
-                                include_vh_rate_limits: true,
+                                # include_vh_rate_limits: true,
                                 max_grpc_timeout: 0s,
                               },
                           }
@@ -82,7 +85,7 @@ static_resources:
                         allow_origin_string_match:
                           - prefix: "*"
                         allow_methods: GET, PUT, DELETE, POST, OPTIONS
-                        allow_headers: keep-alive,user-agent,cache-control,content-type,content-transfer-encoding,authorisation,x-accept-content-transfer-encoding,x-accept-response-streaming,x-user-agent,x-grpc-web,grpc-timeout
+                        allow_headers: keep-alive,user-agent,cache-control,content-type,content-transfer-encoding,authorisation,x-accept-content-transfer-encoding, x-envoy-ratelimited, x-accept-response-streaming,x-user-agent,x-grpc-web,grpc-timeout
                         max_age: "1728000"
                         expose_headers: authorisation,grpc-status,grpc-message
                 http_filters:
@@ -92,33 +95,33 @@ static_resources:
                     typed_config:
                       "@type": type.googleapis.com/envoy.extensions.filters.http.ratelimit.v3.RateLimit
                       domain: apis
-                      failure_mode_deny: false
-                      request_type: external
+                      failure_mode_deny: true
+                      request_type: both
                       stage: 0
                       rate_limited_as_resource_exhausted: true
                       enable_x_ratelimit_headers: DRAFT_VERSION_03
                       rate_limit_service:
                         grpc_service:
                           envoy_grpc:
-                            cluster_name: rate_limit_cluster
+                            cluster_name: ratelimit
                         transport_api_version: V3
                   - name: envoy.filters.http.router
-          # transport_socket:
-          #   name: envoy.transport_sockets.tls
-          #   typed_config:
-          #     "@type": type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.DownstreamTlsContext
-          #     require_client_certificate: true
-          #     common_tls_context:
-          #       validation_context:
-          #         trusted_ca:
-          #           filename: ca-cert.pem
-          #         match_subject_alt_names:
-          #           - exact: localhost
-          #       tls_certificates:
-          #         - certificate_chain:
-          #             filename: server-cert.pem
-          #           private_key:
-          #             filename: "server-key.pem"
+          transport_socket:
+            name: envoy.transport_sockets.tls
+            typed_config:
+              "@type": type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.DownstreamTlsContext
+              require_client_certificate: true
+              common_tls_context:
+                validation_context:
+                  trusted_ca:
+                    filename: ca-cert.pem
+                  match_subject_alt_names:
+                    - exact: localhost
+                tls_certificates:
+                  - certificate_chain:
+                      filename: server-cert.pem
+                    private_key:
+                      filename: "server-key.pem"
   clusters:
     - name: authentication_service
       connect_timeout: 0.25s
@@ -198,19 +201,25 @@ static_resources:
               - endpoint:
                   address:
                     socket_address:
-                      address: 192.168.8.101 #$PMSHOST
+                      address: propellermonitorservice # 192.168.8.102 #$PMSHOST
                       port_value: 50055
-    - name: rate_limit_cluster
-      connect_timeout: 0.25s
+    - name: ratelimit
+      connect_timeout: 1s
       type: strict_dns
       http2_protocol_options: {}
       lb_policy: round_robin
       load_assignment:
-        cluster_name: cluster_0
+        cluster_name: ratelimit
         endpoints:
           - lb_endpoints:
               - endpoint:
                   address:
                     socket_address:
-                      address: ratelimitservice #$RLSHOST
+                      address: ratelimit #$RLSHOST
                       port_value: 8081
+admin:
+  access_log_path: "/dev/null"
+  address:
+    socket_address:
+      address: 0.0.0.0
+      port_value: 10001
