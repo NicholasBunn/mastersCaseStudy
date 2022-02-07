@@ -16,15 +16,25 @@ class ComfortServiceUnitTest(unittest.TestCase):
 
 	config = comfortService.loadConfigFile("configuration.yaml") # Load in the config file. This is needed for the Stormglass API key
 
-	def test_calculateEquivalentVibration(self):
-		''' This tests that the calculate equivalent vibration function correctly iterates through and sums inputs.
+	def test_calculateEquivalentVibrationSingleAxis(self):
+		''' This tests that the calculate equivalent vibration function correctly iterates through and sums inputs for a single axis.
 		'''
 
 		print("Testing Comfort Service: Unit Test: Calculate Equivalent Vibration (Function Test)")
 
-		response = comfortService.calculateEquivalentVibration([1608806700, 1608810300, 1608813900], [0.0070642624, 0.003242324, 0.004021232])
+		response = comfortService.calculateEquivalentVibrationSingleAxis([1608806700, 1608810300, 1608813900], [0.0070642624, 0.003242324, 0.004021232])
 
 		self.assertEqual(response, 0.003652599876717952)
+
+	def test_calculateEquivalentVibrationMultiAxis(self):
+		''' This tests that the calculate equivalent vibration function correctly iterates through and sums inputs for multiple axis inputs.
+		'''
+
+		print("Testing Comfort Service: Unit Test: Calculate Equivalent Vibration (Function Test)")
+
+		response = comfortService.calculateEquivalentVibrationMultiAxis([1608806700, 1608810300, 1608813900], [0.0070642624, 0.003242324, 0.004021232], [0.0070642624, 0.003242324, 0.004021232], [0.0070642624, 0.003242324, 0.004021232])
+
+		self.assertEqual(response, 0.00632648856619531)
 
 	def test_assessComfort(self):
 		''' This tests that the assess comfort function succesfully classifies vibration comfort according to SANS 2631-1.

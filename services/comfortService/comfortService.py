@@ -3,6 +3,7 @@ import sys
 import os
 import logging
 import math
+import time
 from concurrent import futures
 
 # Third party imports
@@ -28,8 +29,32 @@ def loadConfigFile(filepath):
 	logging.debug("Succesfully loaded configuration file")
 	return serverConfig
 
-def calculateEquivalentVibration(timeStamps, weightedVibration):
-	''' This function takes a time series of weighted vibration data as well as their assosciated timestamps. Using these, it calculates the equivalent vibration magnitude according to SANS 2631-1 (Appendix C, equ C.1).
+def calculateEquivalentVibrationMultiAxis(timeStamps, weightedVibrationX, weightedVibrationY, weightedVibrationZ):
+	''' This function takes a time series of weighted vibration data for 3 axes as well as their assosciated timestamps. Using these, it calculates the equivalent vibration magnitude according to SANS 2631-1 (Appendix C, equ C.1).
+	'''
+
+	numerator = 0.0 # This variables holds the accumulated numerator use in the calculation of the equivalent vibration magnitude
+
+	denominator = 0.0 # This variables holds the accumulated denominator use in the calculation of the equivalent vibration magnitude
+
+	# Iterate through the request samples
+	for i in range(1, len(timeStamps)):
+		# Find the time difference between estimates. Assume the acceleration signal is constant over this time period.
+
+		timeGap = timeStamps[i] - timeStamps[i-1]
+
+		# Increment numerator of the equivalent vibration equation.
+
+		numerator += (((weightedVibrationX[i]**2) + (weightedVibrationY[i]**2) + (weightedVibrationZ[i]**2)) * timeGap)
+
+		# Increment denominator of the equivalent vibration equation
+		denominator += timeGap
+
+	# Calculate and return the equivalent vibration
+	return math.sqrt(numerator/denominator)
+
+def calculateEquivalentVibrationSingleAxis(timeStamps, weightedVibration):
+	''' This function takes a time series of weighted vibration data for a single axis as well as their assosciated timestamps. Using these, it calculates the equivalent vibration magnitude according to SANS 2631-1 (Appendix C, equ C.1).
 	'''
 
 	numerator = 0.0 # This variables holds the accumulated numerator use in the calculation of the equivalent vibration magnitude
@@ -78,22 +103,28 @@ class ComfortServiceServicer(object):
 		"""The 'Comfort Rating' call provides foresight for tactical decision-making by providing a comfort rating for a proposed route, based on estimated vibrations on board.
 		"""
 
+		# print("Starting")
+		# startTime = time.time()
+		# while ((time.time() - startTime) < 5):
+		# 	pass
+
 		responseMessage = comfort_service_api_v1_pb2.ComfortResponse()
 		responseMessage.unix_time.extend(request.unix_time)
 		
 		# Calculate equivalent vibration
 		if (len(request.unix_time) > 1):
-			equivalentVibration = calculateEquivalentVibration(request.unix_time, request.human_weighted_vibration_z)
+			equivalentVibration = calculateEquivalentVibrationMultiAxis(request.unix_time, request.human_weighted_vibration_x, request.human_weighted_vibration_y, request.human_weighted_vibration_z)
 		else:
-			equivalentVibration = request.human_weighted_vibration_z[0]
+			equivalentVibration = math.sqrt((request.human_weighted_vibration_x[0]**2)+(request.human_weighted_vibration_y[0]**2)+(request.human_weighted_vibration_z[0]*2))
 
 		# Assess comfort
 		responseMessage = assessComfort(equivalentVibration, responseMessage)
 
+		# print("Sending")
 		return responseMessage
 	
 def loadTLSCredentials(certDirectory):
-    	# This function loads in the generated TLS credentials from file, creates
+		# This function loads in the generated TLS credentials from file, creates
 	# a server credentials object with the key and certificate, and  returns 
 	# that object for use in the server connection
 	
@@ -149,6 +180,7 @@ def serve():
 	# Create a secure connection on port
 	comfortHost = os.getenv(key = "COMFORTHOST", default = "[::]") # Receives the hostname from the environmental variables (for Docker network), or defaults to localhost for local testing
 	try:
+		# server.add_insecure_port(f'{comfortHost}:{config["port"]["myself"]}')
 		server.add_secure_port(f'{comfortHost}:{config["port"]["myself"]}', creds) # server.add_insecure_port(f'{comfortHost}:{config["port"]["myself"]}')
 		logging.debug("Succesfully added (insecure) port to server.")
 	except Exception as e:
