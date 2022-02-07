@@ -143,8 +143,8 @@ func main() {
 	// Create an interceptor chain with the above interceptors
 	interceptorChain := grpc_middleware.ChainUnaryServer(
 		serverMetricInterceptor.ServerMetricInterceptor,
-		authInterceptor.ServerAuthInterceptor,
 		rateLimitInterceptor.ServerRateLimitInterceptor,
+		authInterceptor.ServerAuthInterceptor,
 	)
 
 	fmt.Println(creds)
