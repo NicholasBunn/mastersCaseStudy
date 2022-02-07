@@ -464,6 +464,11 @@ func (s *server) AnalyseRoute(ctx context.Context, request *serverPB.AnalysisReq
 	// ________Query Comfort Service________
 	
 	// Create an insecure connection to the comfort service server
+	// connCS, err := createInsecureServerConnection(
+	// 	addrCS, 			// Set the address of the server
+	// 	timeoutDuration, 	// Set the duration that the client will wait before timing out
+	// 	interceptorChain, 	// Add the interceptor chain to this server
+	// )
 	connCS, err := createSecureServerConnection(
 		addrCS, 			// Set the address of the server
 		creds,            	// Add the TLS credentials
