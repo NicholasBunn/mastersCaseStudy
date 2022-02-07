@@ -1,5 +1,8 @@
 package interceptors
 
+/* To anyone looking at this without context - do not use this for a production application! This was thrown together very roughly to test a hypothesis and has not been written with actual implementation in mind.
+*/
+
 import (
 	// Native packages
 

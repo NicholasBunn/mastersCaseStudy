@@ -17,21 +17,21 @@ class AuthenticationInterceptor(ServerInterceptor):
 	def __init__(self, secretKey, tokenDuration, authenticatedMethods):
 		logger.debug("Initialising authentication interceptor")
 
-		self.secretKey = secretKey
-		self.tokenDuration = tokenDuration
-		self.authenticatedMethods = authenticatedMethods
+		self.secretKey = secretKey # Initialise a property with the secret key for decrypting the access token
+		self.authenticatedMethods = authenticatedMethods # Initialise a property with the methods that require authentication
 	
 	def authorise(self, methodName, context):
-		'''This function goes through a series of checks to verify that the user making a request is properly authenticated for that request.
+		'''This function goes through a series of checks to verify that the user
+		making a request is properly authenticated for that request.
 		'''
 
-		# Check if the method requires authentication
+		# Check if the requested method requires authentication
 		accessibleRoles = self.authenticatedMethods.get(methodName)
-		if accessibleRoles == None:
+		if (accessibleRoles == None):
 			logger.info(f"Authentication is not required for {methodName}")
 			return
 			
-		# Check if the request has metadata in it
+		# Extract the metadata from the request
 		try:
 			metadata = dict(context.invocation_metadata())
 		except:
@@ -46,40 +46,46 @@ class AuthenticationInterceptor(ServerInterceptor):
 			raise grpc.StatusCode.PERMISSION_DENIED
 
 		# Check that the provided JWT is valid
-		claims, err = self.verifyJWT(encodedToken)
+		claims, err = self.verifyJWT(encodedToken) # Extract the user claims from the token
 		if (err != None):
 			logger.debug("Failed to authenticate: Provided JWT is invalid")
 			raise err
 
-			#RESUME: HANDLE ERRORS BETTER (return claims, err) AND IMPLEMENT ROLE CHECK
-
-		# Check that the role of the user making the service call authenticates them for the service being called
+		''' Check that the role of the user making the service call authenticates them for the 
+		service being called
+		'''
 		for role in accessibleRoles:
 			if (role == claims["role"]):
 				logger.debug(f"Successfully authenticated request for {methodName}")
 				return
 
-		logger.debug("Failed to authenticate: the user does not have permission to access the requested service")
-		return grpc.StatusCode.PERMISSION_DENIED
+		logger.debug('''Failed to authenticate: the user does not have permission to access the 
+		requested service''')
+		raise grpc.StatusCode.PERMISSION_DENIED
 
 	def verifyJWT(self, accessToken):
-		'''This function takes a JWT token as an input, and decodes it to ensure that it is valid (according to the HS256 algorithm).
+		'''This function takes a JWT token as an input and decodes it to ensure that it is valid (according to the HS256 algorithm).
 		'''
 
 		try:
 			token = jwt.decode(accessToken, self.secretKey, algorithms=["HS256"])
 		except Exception as e:
 			logger.debug(f"Invalid token: {e}")
-			return None, grpc.StatusCode.PERMISSION_DENIED
+			raise grpc.StatusCode.PERMISSION_DENIED
 		
 		return token, None
 
 	def intercept(self, method, request, context, methodName):
+		'''This is the function that runs when the call is received.
+		'''
+		
 		logger.info("Starting server-side authentication interceptor")
 
-		# This isn't working but the error isn't being handled by the actual service
+		# Attempt to authorise the user for the request
 		err = self.authorise(methodName, context)
 		if err:
-			return err	
+			context.set_code(err)
+			return None
 		
+		# Return the result of the service/method call
 		return method(request, context)

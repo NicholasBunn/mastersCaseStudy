@@ -1,13 +1,12 @@
 # Standard library imports
-import os
-import time
 import logging
+import time
+import os
 
 # Third party imports
 import grpc
 from grpc_interceptor import ServerInterceptor
 import prometheus_client as prometheus
-
 
 # Logger setup
 try:
@@ -18,10 +17,11 @@ except:
 def pushToPrometheus(c, g, h, executionTime, serviceName, address, method, job, registry):
 	'''This function sets the labels for a Prometheus entry and pushes metrics to the push-gateway.
 	'''
-	c.labels(Role="Server", grpc_type = 'unary', grpc_service = serviceName, grpc_method = method).inc()
-	g.labels(Role="Server", grpc_type = 'unary', grpc_service = serviceName, grpc_method = method).set_to_current_time()
-	h.labels(Role="Server", grpc_type = 'unary', grpc_service = serviceName, grpc_method = method).observe(executionTime)
+	c.labels(Role="Server", grpc_type = 'unary', grpc_service = serviceName, grpc_method = method).inc() # Increment the call counter
+	g.labels(Role="Server", grpc_type = 'unary', grpc_service = serviceName, grpc_method = method).set_to_current_time() # Set last call time to the current time
+	h.labels(Role="Server", grpc_type = 'unary', grpc_service = serviceName, grpc_method = method).observe(executionTime) # Set the response latency to the execution time of the service
 	
+	# Post the metrics to the gateway
 	prometheus.push_to_gateway(address, job=job, registry=registry)
 	logger.info("Succesfully pushed metrics")
 
@@ -33,6 +33,8 @@ def sendMetrics(func):
 	@wraps(func)
 	def wrapper(*args, **kw):
 		logger.debug(" Starting Interceptor decorator")
+
+		# Extract the service name and method from the incoming request
 		if isinstance(args[3], grpc._server._Context):
 			servicerContext = args[3]
 			# This gives us <service>/<method name>
@@ -43,7 +45,9 @@ def sendMetrics(func):
 			raise Exception("Could not derive service name or method.")
 		
 		try:
+			# Set the start time of the call
 			startTime = time.time()
+			# Invoke the service call
 			result = func(*args, **kw, )
 			resultStatus = "Success"
 			logger.debug("Function call: {}".format(resultStatus))
@@ -52,7 +56,9 @@ def sendMetrics(func):
 			logger.warning("Function call: {}".format(resultStatus))
 			raise
 		finally:
+			# Calculate the time since the start of the call
 			responseTime = time.time() - startTime
+			# Push metrics to the Prometheus server
 			pushToPrometheus(args[0].c, args[0].g, args[0].h, responseTime, serviceName.rsplit(".")[2], args[0].address, methodName, args[0].microserviceName, args[0].registry)
 		return result
 	return wrapper
@@ -73,6 +79,9 @@ class MetricInterceptor(ServerInterceptor):
 
 	@sendMetrics
 	def intercept(self, method, request, context, methodName):
+		'''This is the function that runs when the call is received. In this interceptor the logic is performed by a decorater, wrapping this function with the required functionality.
+		'''
+		
 		logger.info("Starting server-side metric interceptor method")
 
 		return method(request, context)   
